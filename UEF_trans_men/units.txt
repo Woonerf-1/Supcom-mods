@@ -1,4 +1,4 @@
-Unit list of currently allowed units:
+Unit list of Units, that are added or will be added in the future:
 Base game
 
 UAA0303  - Corona: Air-Superiority Fighter
@@ -94,9 +94,6 @@ BAB4307  - Purger: Advanced Tactical Missile Defense
 BAL0310  - Wraith: Tech 3 Heavy Hover Tank
 BSLK004  - Uyanah: Lightning AA Tank
 Unit additions
-UEB8765  - Resource Storage Facility
-UAB8765  - Resource Storage Facility
-URB8765  - Resource Storage Facility
 XSB8765  - Hala-Vishual: Resource Storage Facility
 UEBSSG01 - SSD Hope: Experimental Squareshield
 UABSSG01 - Luminesc: Experimental Squareshield
@@ -106,3 +103,12 @@ WSB0104  - Dehgarwof: Tech 3 Engineering Station
 WRL0404  - Megaroach: Experimental Heavy Battle Roachbot (Brawler)
 WAB0201  - Saviour: Tech 3 Engineering Station
 VEB2302  - Flayer II: T4 SAM Launcher
+
+
+
+Units, that will Maybe be added in the future:
+
+Unit additions:
+UEB8765  - Resource Storage Facility
+UAB8765  - Resource Storage Facility
+URB8765  - Resource Storage Facility
