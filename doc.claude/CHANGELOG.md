@@ -18,7 +18,8 @@ Neueste Einträge oben. Format je Eintrag:
 
 - **Was:** Die Arbeitsdokumentation liegt jetzt im Git-Repository
 - **Wo:** von `LOUD\doc.claude\` nach `LOUD\usermods\doc.claude\`
-- **Wie:** Dateien vom Nutzer kopiert, Referenzen von Claude angepasst
+- **Wie:** Dateien vom Nutzer kopiert, Referenzen von Claude angepasst, alter Ordner
+  anschließend vom Nutzer gelöscht
 - **Warum:** Doku und Code im selben Repository → gemeinsame Versionsgeschichte
 - **Getestet:** entfällt (reine Doku)
 
@@ -35,9 +36,8 @@ Angepasste Verweise:
   Begründung und Nebenwirkung im Spiel ergänzt.
 - `referenz\README.md` — relative Verweise auf `..\`.
 
-⚠️ **Offen:** Der alte Ordner `LOUD\doc.claude\` existiert weiterhin (kopiert, nicht
-verschoben). Er muss gelöscht werden, sonst laufen zwei Stände auseinander. Liegt
-außerhalb der Schreibzone → erledigt der Nutzer. Steht in `TODO.md` unter „Dringend".
+✅ **Alter Ordner `LOUD\doc.claude\` gelöscht** (geprüft). Es gibt nur noch einen Stand,
+unter `LOUD\usermods\doc.claude\`.
 
 **Es wurden keine Spiel- oder Moddateien verändert.**
 

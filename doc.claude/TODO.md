@@ -22,11 +22,7 @@ LOUD-Team gepflegt und beim Update ersetzt. `usermods\` und `doc.claude\` bleibe
 
 ## Dringend
 
-- [ ] **Alte Doku unter `LOUD\doc.claude\` löschen.** Die Dateien wurden nach
-      `LOUD\usermods\doc.claude\` **kopiert**, nicht verschoben — es existieren zwei
-      Stände. Gepflegt wird ausschließlich der neue. Der alte muss weg, sonst laufen sie
-      auseinander und es wird irgendwann der falsche gelesen.
-      **Erledigt der Nutzer** — `LOUD\doc.claude\` liegt außerhalb der Schreibzone.
+_Nichts offen._
 
 ---
 
@@ -107,6 +103,7 @@ Modinhalten, kein LFS. Details in `13_GIT.md` §5.
 
 - [x] **2026-08-05** Doku nach `usermods\doc.claude\` umgezogen und alle Referenzen
       angepasst. Damit im Git-Repository und mitversioniert.
+      Alter Ordner `LOUD\doc.claude\` gelöscht — geprüft, es gibt nur noch einen Stand.
 
 - [x] **2026-08-05** Zugangsdaten bereinigt: Remote auf SSH umgestellt, Token aus
       `.git\config` und `.git\sourcetreeconfig.json` entfernt. Keine Zugangsdaten mehr

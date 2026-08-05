@@ -147,10 +147,8 @@ schaden sie nicht, sie sind nur Rauschen in der Historie.
 
 ## 6. Offene Punkte
 
-- [ ] **Alte Doku unter `LOUD\doc.claude\` löschen.** Die Dateien wurden nach
-      `usermods\doc.claude\` **kopiert**, nicht verschoben — es gibt derzeit zwei Stände.
-      Nur der neue wird gepflegt. Der alte muss weg, sonst laufen sie auseinander.
-      **Erledigt der Nutzer** (liegt außerhalb der Schreibzone).
+- [x] **Alte Doku unter `LOUD\doc.claude\` gelöscht** (05.08.2026, geprüft) — nur noch
+      ein Stand.
 - [ ] `test.txt` entfernen — Testartefakt mit Inhalt `"s"`, gehört zu keinem Mod.
 - [ ] `README.md` im Repo füllen — derzeit nur `"#Supcom-mods"`. Sinnvoll: kurze
       Übersicht der enthaltenen Mods und ein Verweis auf `doc.claude\`.
