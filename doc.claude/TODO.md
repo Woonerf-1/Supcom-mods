@@ -28,9 +28,11 @@ _Nichts offen._
 
 ## Als Nächstes
 
-- [ ] **Warten auf den inhaltlichen Zuschnitt.** Der Nutzer legt fest, was entstehen soll
-      („dazu später mehr"). Danach `12_NEUSCHNITT.md` §3 ausfüllen und mit dem ersten
-      neuen Mod nach dem Verfahren aus §5 beginnen.
+- [ ] **`Get-Units.ps1` ausführen** (durch den Nutzer) → erzeugt die vollständige
+      Einheitenliste in `doc.claude\units\`. Aufruf und Details: `16_UNITS.md`.
+- [ ] **Warten auf den inhaltlichen Zuschnitt.** Der Nutzer legt fest, was entstehen soll.
+      Danach `12_NEUSCHNITT.md` §3 ausfüllen und mit dem ersten neuen Mod nach dem
+      Verfahren aus §5 beginnen.
 - [ ] Nichts auf Verdacht nachbauen — der Bestand ist Vergleichsstand, keine Vorlage.
 
 ---
@@ -40,9 +42,10 @@ _Nichts offen._
 Punkte, die aus dem Quellcode nicht eindeutig hervorgehen und beim ersten praktischen
 Einsatz geklärt werden müssen. Ergebnis jeweils in der genannten Datei nachtragen.
 
-- [ ] **`ModBlueprints`-Hookpfad.** `hook\lua\system\Blueprints.lua` vs.
-      `hook\system\Blueprints.lua`. Test per `LOG()` am Funktionsanfang, Ergebnis im
-      `LOUD.log` prüfen. → nachtragen in `03_BLUEPRINTS.md` §5 und `10_VORLAGEN.md` §3.
+- [ ] **`ModBlueprints`-Hookpfad.** ~~`hook\lua\system\` vs. `hook\system\`~~
+      → **GEKLÄRT 05.08.2026 aus dem `LOUD.log`:** `hook\lua\system\Blueprints.lua`.
+      Beleg: LOUD-eigener Mod `Enhanced Resources`. Nachgetragen in `03_BLUEPRINTS.md` §5,
+      `10_VORLAGEN.md` §3, `15_LOG.md` §4.1.
 - [ ] **`mountpoints` / `hooks` in `mod_info.lua`.** ~~Undokumentierte LOUD-Erweiterung~~
       → **ERLEDIGT 2026-08-05:** Felder sind wirkungslos, werden von nichts ausgewertet.
       Dokumentiert in `11_DATAPATH.md` §2 und `08_BESTANDSAUFNAHME.md`.
@@ -87,9 +90,57 @@ Weiterhin **aktiv zu beachten** (kein Neuschnitt-Thema):
 Assets — **und die Dokumentation** (`usermods\doc.claude\`). Kein Ausschluss von
 Modinhalten, kein LFS. Details in `13_GIT.md` §5.
 
-- [ ] `test.txt` entfernen (Testartefakt, gehört zu keinem Mod)
+- [ ] `test.txt` entfernen — erzeugt bei **jedem Spielstart zwei Warnungen** im `LOUD.log`
+      (`Search path element ... is not a valid .zip file`), siehe `15_LOG.md` §4.2
 - [ ] `README.md` im Repo füllen — derzeit nur `"#Supcom-mods"`, sollte auf `doc.claude\`
-      verweisen
+      verweisen. Erzeugt ebenfalls zwei Warnungen pro Start; als Repo-README aber
+      an dieser Stelle sinnvoll — funktional folgenlos.
+
+---
+
+## Befundregister (`15_LOG.md` §5)
+
+Warnungen und Fehler aus dem `LOUD.log`, Schritt für Schritt im Code zurückverfolgt.
+
+- [ ] **R-01** `failed DecideWhatToBuild - "T3TeleportJammer"` (15.041×) → 🟡 **teilweise:**
+      `beb4209` existiert in
+      `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\blackops\mods\BlackOpsUnleashed\units\BEB4209\`,
+      der Mod ist aber in der Regel **nicht aktiv** → Blueprint nicht geladen.
+      Noch zu bestätigen: Mod-Liste im Referenzlauf; knüpft `BuildingTemplates.lua` den
+      Eintrag an eine Bedingung?
+- [x] **R-07** Lose Dateien in `usermods\` erzeugen Warnungen → geklärt (`mount_mods`).
+- [x] **R-08** `Hooked …` belegt den `ModBlueprints`-Pfad → geklärt.
+- [ ] **R-02** `Template "T2Bomber" for "Aeon" is empty` → in `PlatoonTemplates\` und
+      `GlobalPlatoonTemplate.lua` suchen
+- [ ] **R-03** `Error in file /lua/RuleInit.lua : Unknown exception` → `RuleInit.lua` lesen
+- [ ] **R-04** Lobby `Attempt to set attribute 'BadMap' on nil` → Traceback-Zeilen in
+      `ui\lobby\lobby.lua` nachschlagen
+- [ ] **R-05** `<Spieler> is trying to cheat!` → Meldungstext im Referenzcode suchen.
+      **Bis zur Klärung nicht bewerten.**
+- [ ] **R-06** `GetResource: Invalid name ""` → `GetResource` im Referenzcode suchen
+
+---
+
+## Einheitenliste ergänzen (Pfadfinderregel)
+
+`17_UNITLISTE.md` wird bei Gelegenheit um Namen und belegte Fraktionen ergänzt.
+Stand siehe dort in der Kopftabelle.
+
+**Bewährtes Verfahren, in dieser Reihenfolge probieren:**
+
+1. **Lokalisierungsdatei des Mods suchen** — eine Datei, alle Namen. Bei
+   `nomads-4-loud` waren es 128 Einträge in
+   `…\usermods\nomads-4-loud\loc\US\nomads_strings_core.lua`.
+   Auch die Pakete haben welche, z. B.
+   `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\loc_US\loc\US\strings_db.lua` (226 KB).
+2. **Sonst Blueprint einzeln** — kopieren, dann
+   `grep -oE "(UnitName|FactionName)\s*=\s*['\"][^'\"]*['\"]"`.
+   Etwa ein Vorgang pro Einheit, also nur für kleine Mods sinnvoll.
+
+- [ ] `usermods\UEF_trans_men` — 97 Blueprints, keine eigene Lokalisierung
+- [ ] `TotalMayhem` — 62 Einheiten, Fraktionen aus vier Stichproben belegt, Namen offen
+- [ ] `blackops`, `brewlan`, `WyvernBattlePack`, `4DC`, `loud_units`, `units`, `civ_units`
+      — zuerst nach `loc`-Ordnern in den Paketen sehen
 
 ---
 
@@ -100,6 +151,18 @@ Modinhalten, kein LFS. Details in `13_GIT.md` §5.
 ---
 
 ## Erledigt
+
+- [x] **2026-08-05** `17_UNITLISTE.md` um Namen ergänzt für `nomads-4-loud` (aus der
+      Lokalisierung), `NOMADS-try_b4_ur_BI` und `commanders` (aus den Blueprints).
+
+- [x] **2026-08-05** `16_UNITS.md` + `tools\Get-Units.ps1` angelegt (Generator für die
+      vollständige Einheitenliste). Ausführung steht aus.
+- [x] **2026-08-05** Werkzeugfalle dokumentiert: `search_files` liefert falsche negative
+      Ergebnisse über tiefe Verzeichnisbäume (`15_LOG.md` §6). R-01 entsprechend korrigiert.
+
+- [x] **2026-08-05** `15_LOG.md` als **Befundregister** angelegt (statt beschreibender
+      Log-Ablage). R-01 vollständig im Code zurückverfolgt.
+      Methodenfehler dokumentiert: Ziffern beim Gruppieren nicht wegnormalisieren.
 
 - [x] **2026-08-05** `doc.claude\tools\` angelegt mit Registry-Einträgen für `.scd` als
       gepackten Ordner (An/Aus, HKCU und systemweit). Doku: `14_TOOLS.md`.

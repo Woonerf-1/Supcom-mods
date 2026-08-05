@@ -14,6 +14,234 @@ Neueste Einträge oben. Format je Eintrag:
 
 ---
 
+## 2026-08-05 — Einheitenliste erhoben (`17_UNITLISTE.md`)
+
+- **Was:** Vollständige Liste aller Einheiten über alle Pakete, Mods und Fraktionen
+- **Wo:** `doc.claude\17_UNITLISTE.md` (neu); `16_UNITS.md` zurückgestuft,
+  `CLAUDE.md`, `README.md`, `TODO.md`
+- **Wie:** Auflisten der Blueprint-Verzeichnisse; Fraktion und Domäne über die
+  ID-Systematik abgeleitet
+- **Getestet:** entfällt (Bestandsaufnahme)
+
+**1145 Blueprint-Ordner** in 19 Mods. Größte: `units` (404),
+`BrewLAN_LOUD` (149), `civ_units` (117), `nomads-4-loud` (107), `UEF_trans_men` (97),
+`BlackOpsUnleashed` (84), `TotalMayhem` (62).
+
+Die Summe zählt Ordner, nicht eindeutige Einheiten — `UEF_trans_men`,
+`NOMADS-try_b4_ur_BI`, `commanders` und `test21000` überschreiben überwiegend fremde IDs.
+
+### Beim Erheben gefundene Besonderheiten
+
+- **`brewlan` ist tiefer verschachtelt** als die übrigen Pakete: `BrewLAN_Units` hat keinen
+  eigenen `units\`-Ordner, sondern enthält die Untermods `BrewIntel` und `BrewResearch`.
+  Ebenso `BrewLAN_Plenae` (`CityGeneration`, `Spomeniki`, `Logger`) und `BrewLAN_RNG`
+  (`CrateDrop`).
+- **Total Mayhem hat eine eigene ID-Systematik.** Alle IDs beginnen mit `BR`, die Fraktion
+  steckt im **3. Zeichen**. Aus `Categories` in vier Stichproben bestimmt:
+  `BRM` = Cybran, `BRN` = UEF, `BRO` = Aeon, `BRP` = Seraphim.
+- **Nomads ist die fünfte Fraktion** — 2. Zeichen `N`, in der Grundsystematik nicht
+  vorgesehen.
+- Weitere Abweichungen: `C` = Civilian im 3. Zeichen (`civ_units`, `CityGeneration`),
+  `K`-Kennung bei BlackOps, `ZZZ…`/`ZZCRATE`/`SNLMER1` ohne Fraktion, `…M…` in `units`,
+  benannte Objekte (`UEF_Bus` u. a.).
+- **Belegte Set-Präfixe:** `U` `X` `B` `D` `S` `L` `V` `W` `E` `Z` `C` `M` `N`.
+  Frei für eigene Einheiten u. a. `F` `G` `H` `I` `J` `K` `P` `Q` `T` `Y`.
+
+### ⚠️ Vorgehensfehler korrigiert
+
+Auf die Bitte um eine Liste hatte ich zunächst einen PowerShell-Generator gebaut
+(`tools\Get-Units.ps1`), statt die Verzeichnisse selbst durchzugehen — eigenmächtig und
+nicht das Gefragte. Das Skript bleibt als **optionales** Werkzeug bestehen (es kann
+zusätzlich den Anzeigenamen aus den Blueprints ziehen), `16_UNITS.md` ist entsprechend
+zurückgestuft. Maßgeblich ist `17_UNITLISTE.md`.
+
+Merksatz für künftige Fälle: **im Zweifel fragen, nicht ersatzweise etwas anderes bauen**
+(`CLAUDE.md` §5, Schritt 1).
+
+**Es wurden keine Spiel- oder Moddateien verändert.**
+
+---
+
+## 2026-08-05 — Einheitenliste: Generator angelegt; R-01 korrigiert
+
+- **Was:** Generator für die vollständige Einheitenliste; zwei eigene Fehler korrigiert
+- **Wo:** `doc.claude\tools\Get-Units.ps1` (neu), `doc.claude\16_UNITS.md` (neu),
+  `15_LOG.md`, `CLAUDE.md`, `README.md`, `tools\README.md`, `TODO.md`
+- **Getestet:** Verzeichnisstruktur aller Pakete geprüft; Skript selbst noch nicht gelaufen
+
+### ⚠️ Korrektur 1: R-01 war falsch geklärt
+
+Behauptet war, die Blueprint-IDs `beb4209` u. a. **existierten nicht**. Sie existieren:
+```
+C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\blackops\mods\BlackOpsUnleashed\units\BEB4209\BEB4209_unit.bp
+```
+Das `b`-Präfix steht für **BlackOps**, nicht BrewLAN.
+
+Die präzise Formulierung lautet: **nicht geladen**, nicht „existiert nicht". Blueprints
+eines Mods werden nur eingelesen, wenn der Mod in der Partie aktiv ist —
+`BlackOpsUnleashed` ist es in der Regel nicht. R-01 steht wieder auf 🟡.
+
+### ⚠️ Korrektur 2: `search_files` ist unzuverlässig
+
+Ursache des Irrtums. Nachgewiesen:
+
+| Suchwurzel | Muster | Ergebnis |
+|---|---|---|
+| `…\gamedata.entpackt\blackops` | `*4209*` | keine Treffer |
+| `…\gamedata.entpackt\blackops` | `BEB4209_unit.bp` | keine Treffer |
+| `…\BlackOpsUnleashed\units\BEB4209` | `BEB4209_unit.bp` | Treffer |
+
+**Ein negatives `search_files`-Ergebnis beweist nichts.** Dokumentiert in `15_LOG.md` §6,
+als Falle in `CLAUDE.md` Regel 4 aufgenommen.
+
+### Neu: `tools\Get-Units.ps1`
+
+PowerShell-Skript, das `gamedata.entpackt\` und `usermods\` nach `*_unit.bp` durchsucht und
+`units.csv`, `units.md`, `units-summary.md` nach `doc.claude\units\` schreibt.
+Spalten: Paket, Mod, UnitID, Fraktion, Tech, Domaene, Name, Datei.
+
+Fraktion/Tech/Domäne werden aus `Categories` gelesen, mit `General.FactionName` bzw.
+`General.TechLevel` und der ID-Systematik als Rückfallebenen. Nur lesend, keine Adminrechte.
+**Ausführung durch den Nutzer** (`CLAUDE.md` Regel 2).
+
+Erfasste Struktur der Pakete:
+```
+gamedata.entpackt\<Archiv>\mods\<Mod>\units\<ID>\<ID>_unit.bp
+gamedata.entpackt\<Archiv>\units\<ID>\<ID>_unit.bp          (units, civ_units)
+usermods\<Mod>\units\<ID>\<ID>_unit.bp
+```
+Mod-Ordner: `blackops` → BlackOpsUnleashed, BlackopsACUs · `brewlan` → BrewLAN_Units,
+BrewLAN_LOUD, BrewLAN_Plenae, BrewLAN_RNG · `TotalMayhem` → TotalMayhem ·
+`loud_units` → LOUD Unit Additions · `WyvernBattlePack` → BattlePack ·
+`4D-CompatibilityPack` → 4DC.
+
+**Es wurden keine Spiel- oder Moddateien verändert.**
+
+---
+
+## 2026-08-05 — Regel: Dateien immer mit vollständigem Pfad
+
+- **Was:** Neue Stilregel — jede Datei außerhalb von `$DOC` wird mit vollständigem
+  absolutem Pfad genannt, in Antworten wie in der Dokumentation
+- **Wo:** `CLAUDE.md` §6, `07_KONVENTIONEN.md` §7 (neu), `15_LOG.md` (Register umgestellt),
+  `TODO.md`
+- **Warum:** Angaben wie `BuildingTemplates.lua` oder `lua\lua\AI\aibuildstructures.lua`
+  zwingen zum Suchen. Der Pfad soll direkt kopierbar sein.
+
+```
+✅ C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\BuildingTemplates.lua  (Z. 77–78)
+❌ BuildingTemplates.lua
+❌ $SRC\lua\lua\BuildingTemplates.lua
+```
+
+Ausnahme: Verweise auf Dokumente innerhalb von `$DOC` — dort reicht der Dateiname.
+Die Kurzformen `$FA`/`$LOUD`/`$SRC`/`$MODS`/`$DOC` bleiben für Übersichtstabellen,
+sind aber **keine** Pfadangabe für eine konkrete Datei.
+
+Alle Belegstellen im Befundregister (`15_LOG.md` §5) entsprechend umgeschrieben.
+
+**Es wurden keine Spiel- oder Moddateien verändert.**
+
+---
+
+## 2026-08-05 — `15_LOG.md` als Befundregister umgebaut, R-01 geklärt
+
+- **Was:** Log wird nicht beschreibend abgelegt, sondern als Register geführt — jede
+  grundsätzliche Warnung wird Schritt für Schritt im Code zurückverfolgt
+- **Wo:** `doc.claude\15_LOG.md` (umgebaut), `TODO.md`, `CLAUDE.md`, `README.md`
+- **Getestet:** R-01 vollständig belegt
+
+### 🟢 R-01 geklärt: 15.041 Warnungen aus einem LOUD-Datenfehler
+
+Rückverfolgung in vier Schritten:
+
+1. Meldung stammt aus `lua\lua\AI\aibuildstructures.lua` Zeile 315, Funktion
+   `AIBuildBaseTemplateOrdered()`.
+2. Auslöser ist Zeile 249: `DecideWhatToBuild(...)` liefert `nil` → `else`-Zweig.
+3. `DecideWhatToBuild` ist eine **Engine-Methode** (`AIBrainMethods.DecideWhatToBuild`,
+   vgl. `sim\EngineerManager.lua` Z. 33/467) — kein Lua, nicht einsehbar.
+   Also die **Eingabedaten** prüfen.
+4. `lua\lua\BuildingTemplates.lua` ordnet `T2/T3TeleportJammer` die Blueprint-IDs
+   `beb4209`, `bab4209`, `brb4209`, `bsb4209` zu. **Suche nach `*4209*` über die gesamte
+   `gamedata.entpackt`: kein Treffer.** Die Einheiten existieren nicht.
+
+→ Datenfehler in LOUD (`b`-Präfix deutet auf BrewLAN), kein Modfehler. Die KI versucht in
+jedem Durchlauf einen Bau, der nie gelingen kann.
+
+### ⚠️ Eigener Methodenfehler korrigiert
+
+Im ersten Durchgang wurden beim Gruppieren alle Ziffern normalisiert
+(`sed 's/[0-9]\+/N/g'`). Dadurch wurde aus `T3TeleportJammer` ein `TNTeleportJammer` —
+und aus `T2Bomber` ein `TNBomber`. Die Tech-Stufe ist bei SupCom nie Rauschen; der
+vorherige Eintrag war insoweit falsch. Richtig ist `grep -o` auf den interessanten
+Teilstring. In `15_LOG.md` §1 als Fallstrick dokumentiert.
+
+### Register angelegt
+
+🟢 R-01, R-07 (lose Dateien in `usermods\`), R-08 (`ModBlueprints`-Hookpfad)
+🔴 R-02 leere Aeon-Platoon-Templates · R-03 `RuleInit.lua` · R-04 Lobby `BadMap` ·
+R-05 `is trying to cheat!` · R-06 `GetResource: Invalid name ""`
+
+Die §4.4-Tabelle mit einmaligen Beobachtungen aus der Partie ist entfallen — solche
+Details gehören nicht in die Doku, nur zurückverfolgte Grundsätzlichkeiten.
+
+**Es wurden keine Spiel- oder Moddateien verändert.**
+
+---
+
+## 2026-08-05 — `LOUD.log` ausgewertet, `15_LOG.md` angelegt
+
+- **Was:** Das Partie-Log als feste Analysequelle dokumentiert und erstmals durchgesehen
+- **Wo:** `doc.claude\15_LOG.md` (neu); Korrekturen in `02_MODSYSTEM.md`,
+  `03_BLUEPRINTS.md`, `06_WORKFLOW.md`, `08_BESTANDSAUFNAHME.md`, `10_VORLAGEN.md`,
+  `CLAUDE.md`, `README.md`, `TODO.md`
+- **Getestet:** Referenzlauf vom 05.08.2026, 22:11 — 23.392 Zeilen, 2,1 MB
+
+### ✅ Offene Frage geklärt: `ModBlueprints`-Hookpfad
+
+```
+info: Hooked /lua/system/Blueprints.lua with /mods/enhanced resources/hook/lua/system/Blueprints.lua
+```
+
+Der Pfad lautet **`hook\lua\system\Blueprints.lua`** — normales Hook-Muster. Der
+abweichende Kopfkommentar in `Blueprints.lua` ist irreführend. Zusätzlich bestätigt durch
+die Ordnerstruktur von `gamedata.entpackt\loud_misc\mods\Enhanced Resources\`.
+Nachgetragen in `03_BLUEPRINTS.md` §5 und `10_VORLAGEN.md` §3.
+
+### Neu entdeckt: LOUD bringt 24 eigene Mods mit
+
+`loud_misc.scd\mods\` wird über den Wurzel-Mount ebenfalls nach `/mods/` gemountet.
+Darunter `Enhanced Resources`, `BrewLAN_Gameplay`, `SupremeEconomy`, `LOUD Debug Tools`,
+`CommonModTools` und 19 weitere. Sie erscheinen im Mod-Manager neben unseren, hooken teils
+dieselben Dateien und werden bei jedem LOUD-Update ersetzt.
+Neuer Abschnitt `02_MODSYSTEM.md` §6.5.
+
+### Neu: lose Dateien in `usermods\` erzeugen Warnungen
+
+`README.md` und `test.txt` werden von `mount_mods()` wie Archive behandelt und schlagen
+fehl — je zwei Warnungen pro Spielstart. `.git\` wird als `/mods/.git/` gemountet
+(ohne Warnung, da Ordner). Siehe `15_LOG.md` §4.2.
+
+### Warnungsaufkommen
+
+15.041 der 15.136 Warnungen (64 % aller Logzeilen) stammen aus **einer** LOUD-KI-Schleife:
+`Eng N failed DecideWhatToBuild - "TNTeleportJammer" platoon nil`, verteilt auf fünf
+KI-Spieler. Kein Modfehler, aber bei der Fehlersuche zwingend zu filtern.
+`06_WORKFLOW.md` §2 entsprechend ergänzt.
+
+### ⚠️ Zwei eigene Befunde korrigiert
+
+- **`commanders`-Icon:** Der Pfad `/mods/nomads-4-loud/icons/nomads.bmp` ist **gültig** —
+  die Datei existiert. Früher als „Fremdreferenz/Fehler" notiert; tatsächlich eine
+  undeklarierte Abhängigkeit (fehlendes `requires`).
+- **`AcidPools`-Icon:** `BrewLAN_Gameplay` **existiert** (LOUD-eigener Mod), enthält aber
+  keinen Unterordner `AcidPools`. Der Pfad läuft ins Leere — Befund bleibt, Begründung
+  war falsch.
+
+**Es wurden keine Spiel- oder Moddateien verändert.**
+
+---
+
 ## 2026-08-05 — `doc.claude\tools\` angelegt
 
 - **Was:** Ordner für Hilfsmittel; Registry-Einträge, um `.scd` im Explorer als gepackten

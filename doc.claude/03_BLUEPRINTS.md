@@ -171,10 +171,13 @@ function ModBlueprints(all_bps)
 end
 ```
 
-> **Pfadhinweis:** Der Kopfkommentar in `Blueprints.lua` nennt `/mods/.../hook/system/Blueprints.lua`,
-> während alle vorhandenen Mods dem Muster `hook\lua\<vfs-pfad>` folgen (VFS-Pfad der Datei ist
-> `/lua/system/Blueprints.lua`). **Beim ersten Einsatz beides testen** und das Ergebnis hier
-> nachtragen — der Hook meldet sich über ein `LOG()` am Anfang der Funktion im `LOUD.log`.
+> **Pfad bestätigt (05.08.2026):** `hook\lua\system\Blueprints.lua` — also das normale
+> Hook-Muster. Der Kopfkommentar in `Blueprints.lua` nennt zwar `/mods/.../hook/system/`,
+> das ist aber irreführend. Beleg im `LOUD.log`:
+> `Hooked /lua/system/Blueprints.lua with /mods/enhanced resources/hook/lua/system/Blueprints.lua`
+> — und der LOUD-eigene Mod `Enhanced Resources`
+> (`gamedata.entpackt\loud_misc\mods\Enhanced Resources\`) hat genau diese Struktur.
+> Siehe `15_LOG.md` §4.1.
 
 ### LOUD-Besonderheit: Unit-Icons aus Usermods
 

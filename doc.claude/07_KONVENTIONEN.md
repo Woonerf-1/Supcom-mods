@@ -88,7 +88,31 @@ Defense = {
 },
 ```
 
-## 7. Dokumentationspflicht
+## 7. Dateiangaben — immer vollständig
+
+Jede Datei außerhalb von `$DOC` wird mit **vollständigem absolutem Pfad** genannt — in
+Antworten wie in der Dokumentation.
+
+```
+✅ C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\BuildingTemplates.lua  (Z. 77–78)
+
+❌ BuildingTemplates.lua
+❌ lua\lua\BuildingTemplates.lua
+❌ $SRC\lua\lua\BuildingTemplates.lua
+```
+
+Grund: der Pfad soll direkt kopierbar sein. Abkürzungen und Platzhalter zwingen zum Suchen.
+Zeilennummern gehören dahinter, wenn sie bekannt sind.
+
+**Ausnahme:** Verweise auf Dokumente innerhalb von `$DOC` — dort reicht der Dateiname
+(`03_BLUEPRINTS.md` §5), weil sie nebeneinander liegen.
+
+Die Kurzformen `$FA`, `$LOUD`, `$SRC`, `$MODS`, `$DOC` aus `CLAUDE.md` §2 dienen dem
+Überblick in Tabellen und Erklärungen — **nicht** als Pfadangabe für eine konkrete Datei.
+
+---
+
+## 8. Dokumentationspflicht
 
 Für jeden selbst gebauten Mod existiert `usermods\doc.claude\mods\<Modname>.md`
 (Vorlage: `doc.claude\mods\_VORLAGE.md`). Sie wird **gleichzeitig** mit dem Code
@@ -98,7 +122,7 @@ in denselben Commit.
 `CHANGELOG.md` bekommt einen Eintrag pro abgeschlossener Änderung, mit Datum, Mod und
 kurzer Beschreibung.
 
-## 8. Dateien, die nie angefasst werden
+## 9. Dateien, die nie angefasst werden
 
 ```
 LOUD\gamedata\                  gepackte Spieldaten

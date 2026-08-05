@@ -187,10 +187,9 @@ function ModBlueprints(all_bps)
 end
 ```
 
-> **Pfad noch nicht verifiziert:** der Kopfkommentar in `Blueprints.lua` nennt
-> `hook/system/Blueprints.lua`, das übliche Hook-Muster wäre `hook/lua/system/Blueprints.lua`.
-> Beim ersten Einsatz beides testen — die `LOG`-Zeile zeigt im `LOUD.log`, welcher greift.
-> Ergebnis anschließend in `03_BLUEPRINTS.md` §5 nachtragen.
+> **Pfad bestätigt (05.08.2026):** `hook\lua\system\Blueprints.lua`. Beleg im `LOUD.log`
+> durch den LOUD-eigenen Mod `Enhanced Resources`, siehe `15_LOG.md` §4.1.
+> Der abweichende Hinweis im Kopfkommentar von `Blueprints.lua` ist irreführend.
 
 ---
 

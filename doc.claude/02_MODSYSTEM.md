@@ -173,6 +173,36 @@ UI-Mods werden direkt aus den Preferences angewandt.
 
 ---
 
+## 6.5 LOUD bringt eigene Mods mit
+
+Neben `usermods\` gibt es eine zweite Quelle: `loud_misc.scd` enthält einen Ordner
+`mods\`, der über den Wurzel-Mount ebenfalls unter `/mods/` landet.
+
+Referenz: `gamedata.entpackt\loud_misc\mods\` — **24 Mods**, unter anderem:
+
+| Mod | Zweck (soweit erkennbar) |
+|---|---|
+| `Enhanced Resources` | hookt `/lua/system/Blueprints.lua` → Musterbeispiel für `ModBlueprints` |
+| `Enhanced Commanders`, `Enhanced Nukes`, `Enhanced Static HP` | Balance-Erweiterungen |
+| `BrewLAN_Gameplay`, `BrewLAN_Plenae`, `BrewLAN_RNG` | BrewLAN-Spielmodi |
+| `LOUD Debug Tools`, `CommonModTools` | **beim Entwickeln direkt nützlich** |
+| `SupremeEconomy`, `SupremeScoreBoard`, `HotStats`, `UI-Party` | UI-Erweiterungen |
+| `Disperse Move`, `SelectionDeprioritizer`, `zSUEKeybind` | Bedienhilfen |
+| `LOUD Evenflow Engineers`, `LOUD Integrated Storage`, `V2ExtractorUpgrades` | Mechanik |
+| `Artillery`, `No VO Alerts`, `SC_Music`, `pauseReplayAtTime`, `TanksysExperiments`, `UIMassFabManager`, `ZLOUD Structure Enhancements` | diverse |
+
+**Folgen für eigene Mods:**
+
+- Sie erscheinen im Mod-Manager **neben** unseren — die Liste dort ist keine Abbildung
+  von `usermods\`.
+- Sie hooken teils dieselben Dateien. Bei „eigener Hook wirkt nicht" auch hier nachsehen.
+- Sie werden **bei jedem LOUD-Update ersetzt** (`gamedata\` gehört dem LOUD-Team).
+- **Vor jedem eigenen Eingriff prüfen, ob LOUD dafür schon etwas mitbringt.**
+
+Welche davon in einer Partie aktiv waren, steht im `LOUD.log` (`15_LOG.md` §4.5).
+
+---
+
 ## 7. Karten-Mods
 
 Enthält ein Mod Karten, erscheinen sie automatisch in der Kartenliste. Wird eine solche Karte

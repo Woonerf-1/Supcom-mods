@@ -36,6 +36,9 @@ LOUD\usermods\                     ← Git-Repository (Woonerf-1/Supcom-mods)
     ├── 12_NEUSCHNITT.md          Freeze des Bestands, Befunde, Regeln für neue Mods
     ├── 13_GIT.md                 Git-Anbindung — Remote, Regeln, Geltungsbereich
     ├── 14_TOOLS.md               tools\ — Registry-Einträge, Hilfsskripte
+    ├── 15_LOG.md                 LOUD.log — Auswertung + Befundregister (R-01…)
+    ├── 16_UNITS.md               Einheitenliste — optionaler Generator
+    ├── 17_UNITLISTE.md           Einheitenliste — alle Pakete, Mods, Fraktionen
     │
     ├── CHANGELOG.md              chronologisches Änderungsprotokoll
     ├── TODO.md                   offene Punkte, Ideen, Blocker
@@ -47,9 +50,15 @@ LOUD\usermods\                     ← Git-Repository (Woonerf-1/Supcom-mods)
     │
     ├── tools\                    Hilfsmittel — kein Mod
     │   ├── README.md
+    │   ├── Get-Units.ps1           erzeugt units\ (Nutzer führt aus)
     │   ├── scd_als_ordner_an.reg   .scd als gepackten Ordner (HKCU, ohne Admin)
     │   ├── scd_als_ordner_aus.reg  Rücknahme
     │   └── scd_als_ordner_an_systemweit.reg   (HKCR, mit Admin)
+    │
+    ├── units\                    GENERIERT — nicht von Hand bearbeiten
+    │   ├── units.csv
+    │   ├── units.md
+    │   └── units-summary.md
     │
     └── mods\
         ├── _VORLAGE.md           Kopiervorlage für Mod-Dokumentation
@@ -102,3 +111,13 @@ Datei komplett ersetzen?        → shadow\  ← letztes Mittel, begründen
 `CommonDataPath.lua` das gesamte Dateisystem des Spiels aufbauen — inklusive der Regeln,
 nach denen `usermods\` gemountet wird und warum eigene Sounds stillschweigend verworfen
 werden können.
+
+## Nach einer Partie
+
+→ **`15_LOG.md`**. `LOUD\bin\LOUD.log` enthält immer das Log der zuletzt gespielten
+Partie — die wichtigste Quelle für „greift mein Hook?" und „warum tut der Mod nichts?".
+Wird bei jedem Start überschrieben.
+
+Dort liegt auch das **Befundregister**: jede grundsätzliche Warnung und Fehlermeldung wird
+Schritt für Schritt im Code zurückverfolgt, bis die Ursache belegt ist — statt sie nur zu
+beschreiben.

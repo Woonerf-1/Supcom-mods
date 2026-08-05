@@ -22,7 +22,7 @@ Alle Änderungen entstehen ausschließlich als eigenständige User-Mods unter `L
 | `$SRC` | `$LOUD\gamedata.entpackt` | **nur lesen** — Referenzquelle, entpackte Version von `$GAMEDATA` |
 | `$MODS` | `$LOUD\usermods` | **SCHREIBEN ERLAUBT** |
 | `$DOC` | `$MODS\doc.claude` | **SCHREIBEN ERLAUBT** (liegt seit 05.08.2026 **innerhalb** von `usermods`, damit im Git-Repo) |
-| `$LOG` | `$LOUD\bin\LOUD.log` | nur lesen (Laufzeit-Log des Spiels) |
+| `$LOG` | `$LOUD\bin\LOUD.log` | **nur lesen** — Log der zuletzt gespielten Partie, wird bei jedem Start überschrieben. Auswertung: `15_LOG.md` |
 | `$DATAPATH` | `$LOUD\bin\LoudDataPath.lua` + `CommonDataPath.lua` | **nur lesen** — bestimmt das gesamte VFS, siehe `11_DATAPATH.md` |
 
 ---
@@ -82,6 +82,12 @@ Daraus folgt auch:
 4. **Kein Raten bei Engine-APIs.** Jede verwendete Funktion, Blueprint-Feld oder Kategorie muss
    vorher in `$SRC` verifiziert werden (`search_files` / `read_text_file`). Wenn etwas nicht
    auffindbar ist: sagen, dass es unverifiziert ist — nicht plausibel erfinden.
+   **Zwei Fallen dabei:**
+   - **`search_files` beweist keine Nichtexistenz.** Über tiefe Verzeichnisbäume liefert es
+     falsche negative Ergebnisse (`15_LOG.md` §6). Für den Nachweis, dass etwas fehlt,
+     braucht es einen vollständigen Durchlauf per Skript in `$DOC\tools\`.
+   - **„Existiert nicht" ≠ „nicht geladen".** Ein Blueprint aus einem inaktiven Mod liegt
+     auf der Platte, ist im Spiel aber nicht vorhanden (`16_UNITS.md` §6).
 5. **Der vorhandene Mod-Bestand ist eingefroren.** Die sechs Ordner in `$MODS` (Stand
    2026-08-05) werden **nicht mehr verändert** — weder repariert noch aufgeräumt. Nicht
    weil sie jemand anderem gehören, sondern weil alles **neu gedacht** wird. Sie bleiben
@@ -116,6 +122,15 @@ kostet mehr als eine Rückfrage.
 ## 6. Antwort- und Codestil
 
 - **Sprache: Deutsch.** Codekommentare Deutsch, Bezeichner Englisch (Engine-Konvention).
+- **Dateien immer mit vollständigem Pfad nennen.** Nie nur `BuildingTemplates.lua` oder
+  `lua\AI\aibuildstructures.lua` — sondern:
+  ```
+  C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\BuildingTemplates.lua
+  ```
+  Der Nutzer soll den Pfad direkt kopieren können, ohne suchen zu müssen. Gilt für
+  Antworten **und** für die Dokumentation. Zeilennummern dahinter, wenn bekannt.
+  Ausnahme: Verweise auf Dokumente innerhalb von `$DOC` (dort reicht der Dateiname,
+  weil sie nebeneinander liegen).
 - **Knapp.** Kein Nacherzählen dessen, was ohnehin im Code steht.
 - **Vollständige Dateien** bei neuen Dateien; **gezielte Diffs/Edits** bei bestehenden.
 - Bei jedem Eingriff angeben: *welche Datei*, *welcher Mechanismus* (Hook/Merge/Shadow),
@@ -143,6 +158,9 @@ kostet mehr als eine Rückfrage.
 | `12_NEUSCHNITT.md` | **Konzept für den Neuschnitt der Mods** — Freeze, Befunde, Zielstruktur | vor jeder Arbeit an einem Mod |
 | `13_GIT.md` | **Git-Anbindung von `usermods\`** — Remote, Regeln, offene Punkte | bei Versionierungsfragen |
 | `14_TOOLS.md` | **`doc.claude\tools\`** — Registry-Einträge, Hilfsskripte | bei Werkzeugfragen |
+| `15_LOG.md` | **`LOUD.log`** — Auswertungsverfahren + **Befundregister** (Warnungen/Fehler mit Code-Rückverfolgung) | nach jedem Testlauf |
+| `16_UNITS.md` | Einheitenliste — Generator, Schema, Grenzen | ergänzend |
+| `17_UNITLISTE.md` | **Die Einheitenliste selbst** — alle Pakete, Mods, Fraktionen | bei Unit-IDs und Bestandsüberblick |
 | `referenz\` | Verbatim-Kopien der beiden DataPath-Dateien | zum Vergleich bei Verdacht auf Überschreibung |
 | `CHANGELOG.md` | Was wurde wann geändert | nach jeder Änderung |
 | `TODO.md` | Offene Punkte, Ideen, Blocker | Sessionstart/-ende |

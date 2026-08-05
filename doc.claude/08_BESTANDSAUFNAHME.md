@@ -54,8 +54,10 @@ hook\lua\sim\Unit.lua
 mod_info.lua
 ```
 Gewässer verursachen Schaden über Zeit. Hookt `Unit.lua`.
-⚠️ `icon` zeigt auf `/mods/BrewLAN_Gameplay/AcidPools/Corrosive.dds` — dieser Pfad existiert in
-dieser Installation nicht (der Mod liegt unter `/mods/acidpools/`). Kosmetisches Problem.
+⚠️ `icon` zeigt auf `/mods/BrewLAN_Gameplay/AcidPools/Corrosive.dds`. Der Mod
+`BrewLAN_Gameplay` **existiert** (LOUD-eigener Mod aus `loud_misc.scd`), enthält aber
+keinen Unterordner `AcidPools`. Der Pfad läuft also ins Leere — offenbar wurde der Mod
+aus einem BrewLAN-Bündel herausgelöst, ohne den Icon-Pfad anzupassen. Kosmetisch.
 
 ### `commanders` — Factions for Commanders
 Ersetzt die vier ACU-Ordner **vollständig** (kein Merge):
@@ -63,7 +65,9 @@ Ersetzt die vier ACU-Ordner **vollständig** (kein Merge):
 Nutzt die LOUD-Felder `mountpoints` und `hooks` (siehe unten).
 ⚠️ **Kollidiert mit `test21000`**, das ebenfalls `UEL0001` vollständig ersetzt. Welcher gewinnt,
 entscheidet die Ladereihenfolge (alphabetisch nach uid, sofern kein `before`/`after`).
-⚠️ `icon` verweist auf `/mods/nomads-4-loud/icons/nomads.bmp` — Fremdreferenz.
+ℹ️ `icon` verweist auf `/mods/nomads-4-loud/icons/nomads.bmp`. Diese Datei **existiert**
+— der Pfad ist also gültig, solange `nomads-4-loud` installiert ist. Es ist eine
+undeklarierte Abhängigkeit (kein `requires`), kein Fehler.
 
 ### `EscalatingBuildCosts` — **entfernt**
 Nicht mehr in `usermods\`. Bis dahin:
@@ -174,7 +178,9 @@ Vollständige Analyse: `11_DATAPATH.md` §2.
    Da die Standard-Ladereihenfolge **alphabetisch nach uid** ist, bestimmen diese Strings
    nebenbei, wer wen überschreibt.
 2. **Doppelbelegung `UEL0001`** durch `commanders` und `test21000`.
-3. **Falsche Icon-Pfade** in `AcidPools` und `commanders`.
+3. **Icon-Pfade:** `AcidPools` zeigt auf einen nicht existierenden Unterordner in
+   `BrewLAN_Gameplay` (kosmetisch). `commanders` verweist auf ein Icon aus
+   `nomads-4-loud` — gültig, aber eine undeklarierte Abhängigkeit.
 4. Kein Mod nutzt `requires`/`conflicts`/`before`/`after`, obwohl mehrere voneinander abhängen
    oder kollidieren. Bei `NOMADS-try_b4_ur_BI` wäre ein `requires` auf `nomads-4-loud`
    inhaltlich korrekt.

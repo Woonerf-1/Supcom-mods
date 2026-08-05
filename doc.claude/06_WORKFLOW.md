@@ -21,8 +21,12 @@ Einheiten, manche gar nicht, entfernte Felder behalten ihren alten Wert.
 
 **Datei:** `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\bin\LOUD.log`
 
-Wird bei jedem Start neu geschrieben. Neben ihr liegt `LOUD - Kopie.log` (manuelle Sicherung
-eines früheren Laufs — nicht überschreiben lassen, ggf. vor einem Testlauf selbst sichern).
+**Hier liegt immer das Log der zuletzt gespielten Partie.** Es wird bei jedem Start neu
+geschrieben — vor einer Analyse also sichern. Daneben liegt `LOUD - Kopie.log`, eine
+manuelle Sicherung eines früheren Laufs.
+
+→ **Ausführliche Auswertung, Suchmuster und Befunde: `15_LOG.md`.**
+Dort steht auch, warum man 23.000 Zeilen erst gruppieren und dann lesen sollte.
 
 ### Aufbau des Logs
 
@@ -42,10 +46,14 @@ info: Blueprints loaded
 | Frage | Wonach im Log suchen |
 |---|---|
 | Wird der Mod überhaupt gefunden? | `Mounting mod '<name>'` und `mounted as '/mods/<name>/'` |
+| **Greift mein Hook?** | **`Hooked /lua/... with /mods/...`** — der beste Beleg |
 | Ist `mod_info.lua` fehlerhaft? | `Problem loading ...mod_info.lua` (aus `LoadModInfo`) |
 | Werden Blueprints geladen? | `Loaded N resources from mod at ...` |
-| Lua-Fehler? | `error:`, `warning:`, `Problem `, `stack traceback` |
-| Hook aktiv? | eigenes `LOG("MEINMOD: hook aktiv")` am Anfang des Hooks |
+| Lua-Fehler? | `error:`, `Unknown exception`, `stack traceback` |
+
+> **Achtung:** Bei LOUD ist die Mehrzahl der `warning:`-Zeilen reine KI-Diagnose
+> (`*AI DEBUG`). Im Referenzlauf waren 15.041 von 15.136 Warnungen eine einzige
+> KI-Schleife. Vor der Fehlersuche filtern — siehe `15_LOG.md` §4.3.
 
 ### Eigene Logausgaben
 
@@ -113,9 +121,11 @@ Drei Wege, vom saubersten zum gröbsten:
 
 ## 6. Isoliert testen
 
-Bei unklarem Verhalten alle anderen Mods im Mod-Manager abwählen. In `usermods\` liegen
-mehrere große Fremdpakete (Nomads, BO Unleashed, …), die weitreichend in Sim und Blueprints
-eingreifen — sie sind eine häufige Ursache für „mein Mod tut nichts".
+Bei unklarem Verhalten alle anderen Mods im Mod-Manager abwählen. Zu bedenken sind dabei
+**zwei** Quellen: die großen Pakete in `usermods\` (Nomads, BO Unleashed, …) **und** die
+24 LOUD-eigenen Mods aus `loud_misc.scd` (`02_MODSYSTEM.md` §6.5). Beide greifen
+weitreichend in Sim und Blueprints ein und sind eine häufige Ursache für
+„mein Mod tut nichts".
 
 ---
 

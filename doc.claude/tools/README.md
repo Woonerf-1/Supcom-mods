@@ -13,9 +13,24 @@ Ausführliche Doku: [`..\14_TOOLS.md`](../14_TOOLS.md)
 
 | Datei | Zweck | Rechte |
 |---|---|---|
+| `Get-Units.ps1` | erzeugt die vollständige Einheitenliste nach `..\units\` | keine, **nur lesend** |
 | `scd_als_ordner_an.reg` | `.scd` im Explorer als gepackten Ordner anzeigen | nur aktueller Benutzer, **keine Adminrechte** |
 | `scd_als_ordner_aus.reg` | dasselbe rückgängig machen | nur aktueller Benutzer |
 | `scd_als_ordner_an_systemweit.reg` | Variante für alle Benutzer | **Adminrechte nötig** |
+
+---
+
+## Einheitenliste erzeugen
+
+```powershell
+cd "C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\doc.claude\tools"
+.\Get-Units.ps1
+```
+
+Falls PowerShell blockiert: `powershell -ExecutionPolicy Bypass -File .\Get-Units.ps1`
+
+Laufzeit einige Minuten. Ergebnis in `..\units\` (`units.csv`, `units.md`,
+`units-summary.md`). Details: [`..\16_UNITS.md`](../16_UNITS.md)
 
 ---
 
