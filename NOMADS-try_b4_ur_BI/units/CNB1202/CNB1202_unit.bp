@@ -114,6 +114,7 @@ UnitBlueprint{
             RULEUCC_Repair = false,
             RULEUCC_RetaliateToggle = false,
             RULEUCC_Stop = false,
+			RULEUCC_Pause = true,
             RULEUCC_Transport = false,
         },
         FactionName = "Nomads",
