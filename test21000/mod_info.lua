@@ -1,0 +1,10 @@
+name = "TEST21000"
+version = 1
+description = "DID YOU SAY YOU WANTED RESCOURESSSS?????!!!!!"
+copyright = "nope"
+author = "Colin"
+uid = "12345678901234567890test21000"
+selectable = true
+enabled = true
+exclusive = false
+ui_only = false

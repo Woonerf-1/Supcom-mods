@@ -1,0 +1,35 @@
+ProjectileBlueprint {
+    Audio = {
+        Impact = Sound {
+            Bank = 'UALDestroy',
+            Cue = 'UAB_Destroy_Lrg_PreDestroy',
+            LodCutoff = 'Weapon_LodCutoff',
+        },
+        ImpactTerrain = Sound {
+            Bank = 'UALDestroy',
+            Cue = 'UAB_Destroy_Lrg_PreDestroy',
+            LodCutoff = 'Weapon_LodCutoff',
+        },
+        ImpactWater = Sound {
+            Bank = 'UALDestroy',
+            Cue = 'UAB_Destroy_Lrg_PreDestroy',
+            LodCutoff = 'Weapon_LodCutoff',
+        },
+    },
+
+    Categories = {
+        'PROJECTILE',
+    },
+
+    Display = {
+        StrategicIconSize = 1,
+        UniformScale = 0.045,
+    },
+
+    Physics = {
+        DestroyOnWater = true,
+        LeadTarget = false,
+        StayUpright = false,
+        VelocityAlign = false,
+    },
+}

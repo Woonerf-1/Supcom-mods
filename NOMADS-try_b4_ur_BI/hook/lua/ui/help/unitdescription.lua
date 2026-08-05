@@ -1,0 +1,7 @@
+Description['cas0401'] = "A big ship that does boom boom"
+Description['cnb1202'] = "A higher level hydrocarbon power plant that goes brrrrr"
+Description['cnb1302'] = "This thing is litterally as good as two t3 power gens, what else could you want"
+Description['sab4401'] = "Gives all units in operational radius a shared shiled that gets redacted from the main shield"
+Description['sea0401'] = "t4 AA gunship... DONT let it land, it will break"
+Description['ssb3301'] = "Technology clearly stolen from the Seraphim at some point that allow the user to look at mobile land units"
+Description['wab0201'] = "t3 engineering station what more is there to say"

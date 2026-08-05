@@ -1,0 +1,341 @@
+UnitBlueprint {
+    AI = {
+        GuardReturnRadius = 80,
+        GuardScanRadius = 65,
+        
+        TargetBones = { 'Torpedo02','Exhaust02' },
+    },
+	
+    Audio = {
+        Killed          = Sound { Bank = 'UASDestroy', Cue = 'UAS0203_Destroy', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMove       = Sound { Bank = 'XSS', Cue = 'XSS0304_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMoveSub    = Sound { Bank = 'XSS', Cue = 'XSS0304_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        SubmergeStart   = Sound { Bank = 'XSS', Cue = 'XSS_Sub_Submerge', LodCutoff = 'UnitMove_LodCutoff'},
+        SurfaceStart    = Sound { Bank = 'XSS', Cue = 'XSS_Sub_Surface', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection     = Sound { Bank = 'SeraphimSelect', Cue = 'Seraphim_Select_Sub', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+	
+    Buffs = {
+        Regen = {
+            Level1 = 4,
+            Level2 = 8,
+            Level3 = 12,
+            Level4 = 16,
+            Level5 = 20,
+        },
+    },
+	
+    BuildIconSortPriority = 15,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'SERAPHIM',
+        'MOBILE',
+        'NAVAL',
+		'SUBMARINE',
+        'TECH3',
+        'SUBMERSIBLE',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYSONAR',
+    },
+	
+    CollisionOffsetX = 0.05,
+    CollisionOffsetY = -0.35,
+    CollisionOffsetZ = -0.01,
+	
+    Defense = {
+
+        MissileTorpDestroy = { AttachBone = {'Projectile01','Exhaust01'}, Radius = 3.3, RedirectRateOfFire = 9, ProjectileCategories = {'TORPEDO'} },
+    
+        ArmorType = 'Normal',
+        Health = 4000,
+        MaxHealth = 4000,
+        RegenRate = 6,
+
+        SubThreatLevel = 49,
+    },
+	
+    Description = '<LOC xss0304_desc>Submarine Hunter',
+    
+    Display = {
+        Abilities = {
+            '<LOC ability_torpedo>Torpedoes',
+            '<LOC ability_aa>Anti-Air',
+            '<LOC ability_personalstealth>Personal Stealth',
+            '<LOC ability_sonar>Sonar',
+            '<LOC ability_torpedodef>Torpedo Defense x2',
+        },
+        
+        CannonOpenAnimation = '/units/xss0304/xss0304_aopen.sca',
+       
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 100,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    ShaderName = 'Seraphim',
+                },
+                {
+                    AlbedoName = 'xss0304_lod1_albedo.dds',
+                    LODCutoff = 215,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    ShaderName = 'Seraphim',
+                    SpecularName = 'xss0304_lod1_specteam.dds',
+                },
+            },
+        },
+
+        MovementEffects = {
+            Sub     = { Effects = { { Bones = {'Exhaust01','Exhaust02'}, Scale = 1.75, Type = 'BackWake' } } },
+            Water   = { Effects = { { Bones = {'XSS0304'}, Offset = {0,0,-0.5}, Scale = 0.9, Type = 'BackWake' } } },
+        },
+
+        UniformScale = 0.035,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 42000,
+        BuildCostMass = 2150,
+        BuildTime = 5000,
+    },
+
+    General = {
+		CapCost = 3,
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_Dive = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Seraphim',
+        Icon = 'sea',
+
+        UnitName = '<LOC xss0304_name>Yathsou',
+    },
+	
+    Intel = {
+		FreeIntel = true,
+        
+		RadarStealth = true,
+
+        SonarRadius = 68,
+        VisionRadius = 36,
+        WaterVisionRadius = 40,
+    },
+	
+    Interface = {
+        HelpText = 'Submarine Hunter',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 1.5,
+    LifeBarSize = 0.75,
+	
+    Physics = {
+        BackUpDistance = 8,
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Sub = true,
+        },
+        CatchUpAcc = 10,
+		DiveSurfaceSpeed = 3,
+        DragCoefficient = 0.2,
+        Elevation = -3,
+
+        MaxAcceleration = 1.3,
+        MaxBrake = 2,
+        MaxSpeed = 3.8,
+        MaxSpeedReverse = 3.8,
+
+        MaxSteerForce = 5,
+        MeshExtentsX = 0.6,
+        MeshExtentsY = 0.65,
+        MeshExtentsZ = 2.5,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_SurfacingSub',
+        TurnRadius = 12,
+        TurnRate = 30,
+    },
+	
+    SelectionSizeX = 0.6,
+    SelectionSizeZ = 1.8,
+    SelectionThickness = 0.37,
+	
+    SizeX = 0.9,
+    SizeY = 0.72,
+    SizeZ = 2.3,
+	
+    StrategicIconName = 'icon_sub3_antinavy',
+    StrategicIconSortPriority = 165,
+	
+    Veteran = {
+        Level1 = 12,
+        Level2 = 24,
+        Level3 = 36,
+        Level4 = 48,
+        Level5 = 60,
+    },
+	
+    Weapon = {
+
+        {
+            advancedTracking = true,
+            
+            Audio = {
+                Fire            = Sound { Bank = 'XSS_Weapon', Cue = 'XSS0203_Uall_Torpedo', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+			
+            Damage = 450,
+            DamageType = 'Normal',
+
+            DisplayName = 'Uall Cavitation Torpedo',
+			
+            FireTargetLayerCapsTable = {
+                Sub = 'Seabed|Sub|Water',
+                Water = 'Seabed|Sub|Water',
+            },
+			
+			FiringRandomness = 22,
+            FiringTolerance = 15,
+			
+            Label = 'Torpedo',
+			
+            MaxRadius = 64,
+            MinRadius = 8,
+			
+            MuzzleSalvoDelay = 0.3,
+            MuzzleSalvoSize = 7,
+
+            MuzzleVelocity = 5.5,
+			MuzzleVelocityRandom = 0.8,
+            
+            NotExclusive = true,
+			
+            ProjectileId = '/projectiles/SANUallCavitationTorpedo03/SANUallCavitationTorpedo03_proj.bp',
+            ProjectileLifetime = 7.2,
+			
+            RackBones = {
+                { MuzzleBones = {'Projectile01','Projectile02','Projectile03'}, RackBone = 'Projectile02' },
+            },
+            
+            RackSalvoReloadTime = 3.9,
+
+            RangeCategory = 'UWRC_AntiNavy',
+			
+            RateOfFire = 0.167,		-- 7 torps of 450 every 6 seconds = 525 DPS -- controlled by muzzle and reload delays
+			
+            TargetCheckInterval = 3,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'SUBMARINE',
+				'NAVAL',
+				'MOBILE',
+                'DEFENSE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE, HOVER',
+			TrackingRadius = 1.2,
+        },
+
+        {
+            AboveWaterFireOnly = true,
+
+            AlwaysRecheckTarget = true,
+
+            Audio = {
+                Fire = Sound { Bank = 'XSS_Weapon', Cue = 'XSS0304_Losaare_AA', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 55,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Losaare AA Autocannon',
+			
+            FireTargetLayerCapsTable = {
+                Water = 'Air',
+            },
+			
+            FiringRandomness = 0,
+            FiringTolerance = 0.2,
+			
+            Label = 'AA',
+			
+			LeadTarget = true,
+			
+            MaxRadius = 55,
+			
+            MuzzleSalvoDelay = 0.1,
+            MuzzleSalvoSize = 4,
+
+            MuzzleVelocity = 85,
+            
+            NotExclusive = true,
+			
+            ProjectileId = '/projectiles/SAALosaareAutoCannon03/SAALosaareAutoCannon03_proj.bp',
+			ProjectileLifetime = 0.8,
+
+            RackBones = {
+                { MuzzleBones = {'Front_Turret_Muzzle01','Front_Turret_Muzzle02'}, RackBone = 'Front_Turret_Barrel01' },
+            },
+
+            RangeCategory = 'UWRC_AntiAir',
+			
+            RateOfFire = 2,		---- 440 DPS Air
+			
+            TargetCheckInterval = 1,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+				'TORPEDOBOMBER',
+                'BOMBER',
+                'GROUNDATTACK',
+                'MOBILE',
+            },
+			
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+			TargetRestrictOnlyAllow = 'AIR',
+			
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Front_Turret_Muzzle01',
+            TurretBonePitch = 'Front_Turret_Barrel01',
+            TurretBoneYaw = 'Front_Turret',
+
+            TurretPitch = 15,
+            TurretPitchRange = 90,
+            TurretPitchSpeed = 60,
+			
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 72,
+			
+            Turreted = true,
+        },
+        {
+            BelowWaterTargetsOnly = true,
+            Damage = 500,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = 'Normal',
+
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathWeapon',
+        },
+    },
+}

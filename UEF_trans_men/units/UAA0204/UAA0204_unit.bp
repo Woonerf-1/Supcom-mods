@@ -1,0 +1,279 @@
+UnitBlueprint {
+    AI = {
+        GuardReturnRadius = 96,
+        GuardScanRadius = 72,
+    },
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 1.6,
+        BankForward = false,
+		
+        BreakOffDistance = 38,
+        BreakOffIfNearNewTarget = true,
+        BreakOffTrigger = 20,
+		
+        CanFly = true,
+		
+        CombatTurnSpeed = 0.9,
+		
+        EngageDistance = 50,
+		
+        KLift = 3,
+        KLiftDamping = 2.5,
+		
+        KMove = 0.85,
+        KMoveDamping = 0.8,
+		
+        KRoll = 1.5,
+        KRollDamping = 1.5,
+		
+        KTurn = 0.85,
+        KTurnDamping = 0.95,
+		
+        LiftFactor = 7.5,
+		
+        MaxAirspeed = 16,
+        MinAirspeed = 10,
+		
+        StartTurnDistance = 2.5,
+		
+        Winged = true,
+    },
+	
+    Audio = {
+        Killed      = Sound { Bank = 'UAADestroy', Cue = 'UAA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        StartMove   = Sound { Bank = 'UAA', Cue = 'UAA0204_Move_Start', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection = Sound { Bank = 'Interface', Cue = 'Aeon_Select_Air', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+	
+    Buffs = {},
+	
+    BuildIconSortPriority = 20,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER2FACTORY',
+        'BUILTBYTIER3FACTORY',
+        'AEON',
+        'MOBILE',
+        'AIR',
+        'HIGHALTAIR',
+        'TECH2',
+        'ANTINAVY',
+        'TORPEDOBOMBER',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYSONAR',
+    },
+	
+    CollisionOffsetZ = 0.1,
+	
+    Defense = {
+        ArmorType = 'Light',
+
+        Health = 1350,
+        MaxHealth = 1550,
+
+        RegenRate = 4,
+
+        SubThreatLevel = 13,
+    },
+	
+    Description = '<LOC uaa0204_desc>Torpedo Bomber',
+	
+    Display = {
+        Abilities = {
+            '<LOC ability_sonar>Sonar',
+            "<LOC ability_torpedo>Torpedoes",
+        },
+
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 120,
+                    Scrolling = true,
+                    ShaderName = 'Aeon',
+                },
+                {
+                    AlbedoName = 'uaa0204_lod1_albedo.dds',
+                    LODCutoff = 215,
+                    ShaderName = 'Aeon',
+                    SpecularName = 'uaa0204_lod1_specteam.dds',
+                },
+            },
+        },
+
+        UniformScale = 0.1,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 24000,
+        BuildCostMass = 500,
+        BuildTime = 2500,
+    },
+
+    General = {
+
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Aeon',
+        Icon = 'air',
+        UnitName = '<LOC uaa0204_name>Skimmer',
+    },
+	
+    Intel = {
+		FreeIntel = true,
+        
+        SonarRadius = 60,
+        VisionRadius = 36,
+		WaterVisionRadius = 16,
+    },
+	
+    Interface = {
+        HelpText = 'Torpedo Bomber',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.4,
+    LifeBarSize = 1,
+	
+    Physics = {
+        AttackElevation = 3,
+		
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+            LAYER_Sub = true,
+        },
+		
+        Elevation = 15,
+		
+        FuelRechargeRate = 12,
+        FuelUseTime = 270,
+		
+        GroundCollisionOffset = 1.6,
+        MaxSpeed = 0.5,
+		
+        MeshExtentsX = 1.25,
+        MeshExtentsY = 0.25,
+        MeshExtentsZ = 1.25,
+        MotionType = 'RULEUMT_Air',
+    },
+	
+    SelectionSizeX = 0.75,
+    SelectionSizeZ = 0.7,
+    SelectionThickness = 0.49,
+	
+    SizeSphere = 1.5,
+	
+    SizeX = 1,
+    SizeY = 0.6,
+    SizeZ = 1,
+	
+    StrategicIconName = 'icon_bomber2_antinavy',
+    StrategicIconSortPriority = 65,
+	
+    Transport = {
+        AirClass = true,
+        TransportClass = 2,
+    },
+	
+    Veteran = {
+        Level1 = 2,
+        Level2 = 4,
+        Level3 = 6,
+        Level4 = 8,
+        Level5 = 10,
+    },
+	
+    Weapon = {
+        {
+            advancedTracking = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'UAAWeapon', Cue = 'UAA0204_Depth_Charge', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            AutoInitiateAttackCommand = true,
+
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+			
+            Damage = 372,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Chrono Torpedo',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Seabed|Sub|Water',
+                Land = 'Seabed|Sub|Water',
+            },
+            
+            EffectiveRadius = 40,
+			
+            FiringRandomness = 1.5,
+            FiringTolerance = 3,
+			
+            HeadingArcCenter = 0,
+            HeadingArcRange = 40,
+			
+            Label = 'Torpedo',
+			
+            MaxRadius = 32,
+            MinRadius = 8,
+			
+            MuzzleSalvoDelay = 0.3,
+            MuzzleSalvoSize = 3,
+
+            MuzzleVelocity = 8,
+
+            ProjectileId = '/projectiles/AANTorpedo01/AANTorpedo01_proj.bp',
+            ProjectileLifetime = 8,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'UAA0204'},
+                    RackBone = 'UAA0204',
+                },
+            },
+            
+            RackSalvoReloadTime = 6.1,      -- 7 seconds firing cycle
+
+			RangeCategory = 'UWRC_AntiNavy',
+			
+            RateOfFire = 1,	-- 900 every 7 = 128 DPS
+			
+            TargetCheckInterval = 2,
+            
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'CRUISER',
+                'SUBMARINE',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,HOVER,WALL',
+            TrackingRadius = 1.1,
+        },
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 150,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+        },
+    },
+}

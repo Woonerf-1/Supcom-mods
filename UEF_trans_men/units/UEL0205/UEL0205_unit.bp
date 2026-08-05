@@ -1,0 +1,230 @@
+UnitBlueprint {
+    AI = {
+		GuardReturnRadius = 45,
+        GuardScanRadius = 35,
+    },
+
+    Audio = {
+        Destroyed   = Sound { Bank = 'UELDestroy', Cue = 'UEL_Destroy_Med_Land', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMove   = Sound { Bank = 'UEL', Cue = 'UEL0205_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection = Sound { Bank = 'Interface', Cue = 'UEF_Select_Vehicle', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+
+    Buffs = {},
+	
+    BuildIconSortPriority = 90,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER2FACTORY',
+        'BUILTBYTIER3FACTORY',
+        'UEF',
+        'MOBILE',
+        'LAND',
+        'TECH2',
+        'ANTIAIR',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+    },
+	
+    Defense = {
+        AirThreatLevel = 14,
+        ArmorType = 'Normal',
+        Health = 1100,
+        MaxHealth = 1100,
+        RegenRate = 1,
+    },
+	
+    Description = '<LOC uel0205_desc>Flak Tank',
+	
+    Display = {
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 100,
+                    Scrolling = true,
+                    ShaderName = 'Unit',
+                },
+                {
+                    AlbedoName = 'uel0205_lod1_albedo.dds',
+                    LODCutoff = 215,
+                    ShaderName = 'Unit',
+                    SpecularName = 'uel0205_lod1_specteam.dds',
+                },
+            },
+        },
+        UniformScale = 0.2,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 800,
+        BuildCostMass = 200,
+        BuildTime = 1000,
+    },
+	
+    General = {
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'UEF',
+        Icon = 'land',
+        UnitName = '<LOC uel0205_name>Sky Boxer',
+    },
+	
+    Intel = {
+        VisionRadius = 24,
+    },
+	
+    Interface = {
+        HelpText = 'Mobile Flak',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.4,
+    LifeBarSize = 0.8,
+	
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+        },
+        DragCoefficient = 0.2,
+        MaxAcceleration = 1.5,
+        MaxBrake = 1.5,
+        MaxSpeed = 2.8,
+        MaxSpeedReverse = 2.8,
+        MaxSteerForce = 5,
+        MeshExtentsX = 0.9,
+        MeshExtentsY = 0.55,
+        MeshExtentsZ = 1.05,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_Land',
+        RotateOnSpot = false,
+        TurnRadius = 10,
+        TurnRate = 45,
+    },
+	
+    SelectionSizeX = 0.45,
+    SelectionSizeZ = 0.65,
+    SelectionThickness = 0.66,
+	
+    SizeX = 0.6,
+    SizeY = 0.4,
+    SizeZ = 0.85,
+	
+    StrategicIconName = 'icon_land2_antiair',
+    StrategicIconSortPriority = 125,
+	
+    Transport = {
+        TransportClass = 2,
+        CanFireFromTransport = true,
+    },
+	
+    Veteran = {
+        Level1 = 5,
+        Level2 = 10,
+        Level3 = 15,
+        Level4 = 20,
+        Level5 = 25,
+    },
+	
+    Weapon = {
+        {
+            AlwaysRecheckTarget = true,
+            Audio = {
+                Fire = Sound { Bank = 'UELWeapon', Cue = 'UEL0205_Artillery_Frag', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            BallisticArc = 'RULEUBA_None',
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 40,
+            DamageFriendly = false,
+            DamageRadius = 1.6,
+            DamageType = 'Normal',
+			
+            DetonatesAtTargetHeight = true,
+			
+            DisplayName = 'Fragmentation Flak',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Air',
+            },
+            FiringRandomness = 0.6,
+            FiringTolerance = 2,
+			
+            Label = 'AAGun',
+			LeadTarget = true,
+			
+            MaxRadius = 36,
+
+            MuzzleVelocity = 34,
+			
+            ProjectileId = '/projectiles/TAALightFragmentationShell01/TAALightFragmentationShell01_proj.bp',
+            ProjectileLifetimeUsesMultiplier = 1.4,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Turret_Muzzle_Left'},
+                    RackBone = 'Turret_Recoil_Left',
+                },
+                {
+                    MuzzleBones = {'Turret_Muzzle_Right'},
+                    RackBone = 'Turret_Recoil_Right',
+                },
+            },
+
+            RackFireTogether = true,
+
+            RackRecoilDistance = -0.25,
+
+            RangeCategory = 'UWRC_AntiAir',
+			
+            RateOfFire = 2,		---- 144 DPS Air
+			
+            TargetCheckInterval = 0.5,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'HIGHPRIAIR',
+                'BOMBER',
+                'GROUNDATTACK',
+                'AIR MOBILE',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+            TrackingRadius = 1.2,
+			
+            TurretBoneMuzzle = 'Turret_Muzzle_Left',
+            TurretBonePitch = 'Turret_Barrel',
+            TurretBoneYaw = 'Turret',
+			
+            TurretPitch = 35,
+            TurretPitchRange = 80,
+            TurretPitchSpeed = 180,
+			
+            TurretYaw = 0,
+            TurretYawRange = 360,
+            TurretYawSpeed = 120,
+			
+            Turreted = true,
+        },
+    },
+	
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.5,
+        HealthMult = 0.9,
+        MassMult = 0.5,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+        },
+    },
+}

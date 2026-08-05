@@ -1,0 +1,714 @@
+UnitBlueprint{
+    Description = "Naval Defense Firestation",
+
+    AI = {
+        TargetBones = {"Turret_Center","WEL0404"},
+    },
+
+    Audio = {
+        Destroyed      = Sound { Bank = 'UELDestroy', Cue = 'UEB_Destroy_Med_Land', LodCutoff = 'UnitMove_LodCutoff' },
+        DoneBeingBuilt = Sound { Bank = 'UEB',        Cue = 'UEB2109_Activate',     LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection    = Sound { Bank = 'Interface',  Cue = 'UEF_Select_Gun',       LodCutoff = 'UnitMove_LodCutoff' },
+    },
+
+    Buffs = {
+        Regen = {
+            Level1 = 10,
+            Level2 = 20,
+            Level3 = 30,
+            Level4 = 40,
+            Level5 = 50,
+        },
+    },
+
+    BuildIconSortPriority = 112,
+
+    Categories = {
+        "ANTINAVY",
+        "BUILTBYTIER4FIELD",
+        "DEFENSE",
+        "DIRECTFIRE",
+        "DRAGBUILD",
+        "EXPERIMENTAL",
+        "OVERLAYOMNI",
+        "OVERLAYRADAR",
+        "RECLAIMABLE",
+        "SELECTABLE",
+        "SORTDEFENSE",
+        "STRUCTURE",
+        "UEF",
+        "VISIBLETORECON",
+    },
+
+    Defense = {
+
+        -- 4x Personal Anti-Torp emitters --
+        
+        MissileTorpDestroy = { AttachBone = { "WEL0404","Riot_Gun_Right_Barrel_Muzzle01","Riot_Gun_Left_Barrel_Muzzle","Riot_Gun_Right_Barrel_Muzzle","Riot_Gun_Left_Barrel_Muzzle01",}, Radius = 3.9, RedirectRateOfFire = 9, ProjectileCategories = {'TORPEDO'} },
+    
+        ArmorType = "Structure",
+        Health = 39900,
+        MaxHealth = 39900,
+        RegenRate = 20,
+
+        SubThreatLevel = 40,
+        SurfaceThreatLevel = 250,
+    },
+
+    Display = {
+
+        Abilities = {
+            "<LOC ability_customizable>Customizable",
+            "<LOC ability_radar>Radar",
+            "<LOC ability_sonar>Sonar",           
+            "<LOC ability_torpedo>Torpedoes",
+            "<LOC ability_torpedodef>Torpedo Defense",
+        },
+        
+        IdleEffects = { Water = { Effects = { { Bones = { "WEL0404" }, Type = "Shoreline01" } } } },
+        
+        Mesh = {
+            IconFadeInZoom = 150,
+            LODs = {
+                { LODCutoff = 300, ShaderName = "Unit" },
+                { LODCutoff = 215, ShaderName = "Unit", AlbedoName = "/mods/UEF_trans_men/units/WEB0404/WEB0404_Albedo.dds", NormalsName = "/mods/UEF_trans_men/units/WEB0404/WEB0404_normalsTS.DDS", SpecularName = "/mods/UEF_trans_men/units/WEB0404/WEB0404_SpecTeam.dds" },
+            },
+        },
+
+        UniformScale = 0.15,
+    },
+
+    Economy = {
+        BuildCostEnergy = 150000,
+        BuildCostMass = 12000,
+        BuildRate = 20,
+        BuildTime = 12000,
+
+        RebuildBonusIds = { "WEL0404" },
+    },
+
+    Enhancements = {
+        InstallFactoryShield = {
+            BuildCostEnergy = 10500,
+            BuildCostMass = 790,
+            BuildTime = 2500,
+            Icon = "Shield",
+            ImpactEffects = "UEFShieldHit01",
+            ImpactMesh = "/effects/entities/ShieldSection01/ShieldSection01_mesh",
+            MaintenanceConsumptionPerSecondEnergy = 200,
+            Mesh = "/effects/entities/Shield01/Shield01_mesh",
+            MeshZ = "/effects/entities/Shield01/Shield01z_mesh",
+            Name = "Shield Dome",
+            RegenAssistMult = 60,
+            ShieldEnergyDrainRechargeTime = 6,
+            ShieldMaxHealth = 7000,
+            ShieldRechargeTime = 15,
+            ShieldRegenRate = 100,
+            ShieldRegenStartTime = 1,
+            ShieldSize = 8,
+            ShieldVerticalOffset = -1,
+            Slot = "Back",
+            UpgradeEffectBones = { "Turret_Center" },
+            UpgradeUnitAmbientBones = { "Turret_Center" },
+        },
+        InstallFactoryShieldRemove = {
+            BuildCostEnergy = 1,
+            BuildCostMass = 1,
+            BuildTime = 0.1,
+            Icon = "Shield",
+            Name = "Remove Shield",
+            Prerequisite = "InstallFactoryShield",
+            RemoveEnhancements = {"InstallFactoryShield","InstallFactoryShieldRemove"},
+            Slot = "Back",
+        },
+        InstallT3Radar = {
+            BuildCostEnergy = 30000,
+            BuildCostMass = 2000,
+            BuildTime = 6500,
+            Icon = "Radar_T3",
+            MaintenanceConsumptionPerSecondEnergy = 2000,
+            Name = "Install Radar Upgrade",
+            Slot = "Back",
+            UpgradeEffectBones = { "Turret_Center" },
+            UpgradeUnitAmbientBones = { "Turret_Center" },
+        },
+        InstallT3RadarRemove = {
+            BuildCostEnergy = 1,
+            BuildCostMass = 1,
+            BuildTime = 0.1,
+            Icon = "Radar_T3",
+            Name = "Remove T3 Radar",
+            Prerequisite = "InstallT3Radar",
+            RemoveEnhancements = {"InstallT3Radar","InstallT3RadarRemove"},
+            Slot = "Back",
+        },
+        Sequence = { "InstallFactoryShield" },
+        Slots = {
+            Back = {},
+            Command = {},
+            LCH = {},
+            RCH = {},
+        },
+    },
+    
+    Footprint = {
+        MinWaterDepth = 3,
+        SizeX = 4,
+        SizeZ = 4,
+    },
+    
+    General = {
+        CapCost = 6,
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = "UEF",
+        Icon = "sea",
+        SelectionPriority = 5,
+        UnitName = "Turtle",
+    },
+    
+    Intel = {
+        FreeIntel = true,
+
+        OmniRadius = 0,
+
+        RadarRadius = 92,
+        SonarRadius = 72,
+
+        VisionRadius = 48,
+        WaterVisionRadius = 48,
+    },
+    
+    LifeBarHeight = 0.1,
+    LifeBarOffset = 1,
+    LifeBarSize = 2,
+    
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = { LAYER_Water = true },
+        DragCoefficient = 0.2,
+        Elevation = 1,
+        MaxSteerForce = 0,
+        MeshExtentsX = 2.8,
+        MeshExtentsY = 1.5,
+        MeshExtentsZ = 2.8,
+        MinSpeedPercent = 0,
+        MotionType = "RULEUMT_None",
+        SkirtOffsetX = -0.5,
+        SkirtOffsetZ = -0.5,
+        SkirtSizeX = 5,
+        SkirtSizeZ = 5,
+        TurnRate = 0,
+    },
+    
+    SelectionSizeX = 2.2,
+    SelectionSizeZ = 2.2,
+    SelectionThickness = 0.3,
+
+    CollisionOffsetY = -1,
+    
+    SizeX = 3.5,
+    SizeY = 1.5,
+    SizeZ = 3.5,
+
+    StrategicIconName = "icon_structure4_antinavy",
+    StrategicIconSortPriority = 45,
+
+    Veteran = {
+        Level1 = 35,
+        Level2 = 70,
+        Level3 = 105,
+        Level4 = 140,
+        Level5 = 175,
+    },
+
+    Weapon = {
+    
+-- this is the large central turret -- 
+        {
+            AboveWaterFireOnly = true,
+            AboveWaterTargetsOnly = true,
+
+            Audio = {
+                BarrelLoop  = Sound { Bank = 'UES',       Cue = 'UES0302_Cannon_Loop',  LodCutoff = 'WeaponBig_LodCutoff' },
+                BarrelStart = Sound { Bank = 'UES',       Cue = 'UES0302_Cannon_Start', LodCutoff = 'WeaponBig_LodCutoff' },
+                BarrelStop  = Sound { Bank = 'UES',       Cue = 'UES0302_Cannon_Stop',  LodCutoff = 'WeaponBig_LodCutoff' },
+                Fire        = Sound { Bank = 'UESWeapon', Cue = 'UES0302_Cannon_Tri',   LodCutoff = 'WeaponBig_LodCutoff' },
+            },
+
+            AutoInitiateAttackCommand = true,
+
+            BallisticArc = "RULEUBA_LowArc",
+            
+            --CannotAttackGround = true,
+
+            CollideFriendly = false,
+
+            Damage = 900,
+            DamageFriendly = true,
+            DamageRadius = 2.5,
+            DamageType = "Normal",
+
+            DisplayName = "Ionized Gauss Cannon",
+            
+            EnergyRequired = 2500,      -- the E requirement is 50% discounted from the formula requirement for this weapon
+            EnergyDrainPerSecond = 926, -- 2.7 second charge
+
+            FireTargetLayerCapsTable = { Water = "Land|Water|Seabed" },
+
+            FiringRandomness = 0.38,
+            FiringTolerance = 2,
+
+            Label = "TurretLarge",
+
+            LeadTarget = true,
+
+            MaxRadius = 110,
+            MinRadius = 5,
+
+            MuzzleVelocity = 36,
+            MuzzleVelocityRandom = 2,
+
+            NotExclusive = true,
+
+            ProjectileId = "/projectiles/TDFGauss03/TDFGauss03_proj.bp",
+            ProjectileLifetime = 4.5,
+
+            RackBones = {
+                { MuzzleBones = { "Turret_Left02_Muzzle14" }, RackBone = "Turret_Left02_Barrel14" },
+                { MuzzleBones = { "Turret_Left02_Muzzle13" }, RackBone = "Turret_Left02_Barrel13" },
+                { MuzzleBones = { "Turret_Left02_Muzzle15" }, RackBone = "Turret_Left02_Barrel15" },
+            },
+
+            RackFireTogether = true,
+
+            RackRecoilDistance = -1.5,
+
+            RackSalvoFiresAfterCharge = true,
+
+            RackSlavedToTurret = true,
+
+            RangeCategory = "UWRC_IndirectFire",
+
+            RateOfFire = 0.38,     -- ROF controlled by charge = 2.7 seconds = 1000 DPS
+
+            TargetCheckInterval = 1,
+
+            TargetPriorities = {
+                "EXPERIMENTAL",
+                "SPECIALHIGHPRI",
+                "NAVAL",
+                "ALLUNITS -WALL",
+            },
+            TargetRestrictDisallow = "UNTARGETABLE",
+            TrackingRadius = 1.4,
+
+            TurretBoneMuzzle = "Turret_Left02_Muzzle13",
+            TurretBonePitch = "Turret_Left02_Barrel13",
+            TurretBoneYaw = "Turret_Center",
+
+            TurretPitch = 10,
+            TurretPitchRange = 24,
+            TurretPitchSpeed = 22,
+
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 22,
+
+            Turreted = true,
+        },
+        
+-- the next 4 are the smaller turrets
+        {
+            AboveWaterFireOnly = true,
+            AboveWaterTargetsOnly = true,
+
+            Audio = {
+                Fire = Sound { Bank = 'UELWeapon', Cue = 'UEL0401_Cannon_Exp_Lrg', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = "RULEUBA_LowArc",
+            
+            --CannotAttackGround = true,
+            CollideFriendly = false,
+
+            Damage = 250,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = "Normal",
+
+            DisplayName = "Cannon",
+            
+            EnergyRequired = 200,
+            EnergyDrainPerSecond = 100,
+
+            FireTargetLayerCapsTable = { Water = "Land|Water|Seabed" },
+
+            FiringRandomness = 0.5,
+            FiringTolerance = 2,
+
+            Label = "Turret",
+
+            MaxRadius = 85,
+            MinRadius = 4,
+
+            MuzzleVelocity = 28,
+            MuzzleVelocityRandom = 2,
+            MuzzleVelocityReduceDistance = 90,
+
+            NotExclusive = true,
+
+            ProjectileId = "/projectiles/TDFGauss04/TDFGauss04_proj.bp",
+            ProjectileLifetime = 3.5,
+            
+            RackBones = {
+                { MuzzleBones = { "Turret_Left02_Muzzle02" }, RackBone = "Turret_Left02_Barrel02" },
+                { MuzzleBones = { "Turret_Left02_Muzzle01" }, RackBone = "Turret_Left02_Barrel01" },
+                { MuzzleBones = { "Turret_Left02_Muzzle03" }, RackBone = "Turret_Left02_Barrel03" },
+            },
+            RackFireTogether = true,
+
+            RackRecoilDistance = -1,
+
+            RackSalvoFiresAfterCharge = true,
+
+            RackSlavedToTurret = true,
+
+            RangeCategory = "UWRC_DirectFire",
+
+            RateOfFire = 0.5,     -- rate of fire controlled by charge = 375 DPS
+            
+            TargetCheckInterval = 1,
+
+            TargetPriorities = {
+                "SPECIALHIGHPRI",
+                "MOBILE NAVAL",
+                "ALLUNITS -WALL",
+            },
+            TargetRestrictDisallow = "UNTARGETABLE",
+            TrackingRadius = 1.2,
+
+            TurretBoneMuzzle = "Turret_Left02_Muzzle02",
+            TurretBonePitch = "Turret_Left02_Barrel02",
+            TurretBoneYaw = "Turret_Right01",
+
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 30,
+
+            TurretYaw = -20,
+            TurretYawRange = 120,
+            TurretYawSpeed = 30,
+
+            Turreted = true,
+        },
+        {
+            AboveWaterFireOnly = true,
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                Fire = Sound { Bank = 'UELWeapon', Cue = 'UEL0401_Cannon_Exp_Lrg', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            BallisticArc = "RULEUBA_LowArc",
+            
+            --CannotAttackGround = true,
+            CollideFriendly = false,
+
+            Damage = 250,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = "Normal",
+
+            DisplayName = "Cannon",
+            
+            EnergyRequired = 200,
+            EnergyDrainPerSecond = 100,
+
+            FireTargetLayerCapsTable = { Water = "Land|Water|Seabed" },
+
+            FiringRandomness = 0.5,
+            FiringTolerance = 1,
+
+            Label = "Turret",
+
+            MaxRadius = 85,
+            MinRadius = 4,
+
+            MuzzleVelocity = 28,
+            MuzzleVelocityRandom = 2,
+            MuzzleVelocityReduceDistance = 60,
+
+            NotExclusive = true,
+            ProjectileId = "/projectiles/TDFGauss04/TDFGauss04_proj.bp",
+            ProjectileLifetime = 3.5,
+
+            RackBones = {
+                { MuzzleBones = { "Turret_Left02_Muzzle05" }, RackBone = "Turret_Left02_Barrel05" },
+                { MuzzleBones = { "Turret_Left02_Muzzle04" }, RackBone = "Turret_Left02_Barrel04" },
+                { MuzzleBones = { "Turret_Left02_Muzzle06" }, RackBone = "Turret_Left02_Barrel06" },
+            },
+            RackFireTogether = true,
+
+            RackRecoilDistance = -1,
+
+            RackSalvoFiresAfterCharge = true,
+
+            RackSlavedToTurret = true,
+
+            RateOfFire = 0.5,     -- controlled by charge = 375 DPS
+
+            TargetCheckInterval = 1,
+
+            TargetPriorities = {
+                "SPECIALHIGHPRI",
+                "MOBILE",
+                "ALLUNITS",
+            },
+            TargetRestrictDisallow = "UNTARGETABLE",
+            TrackingRadius = 1.1,
+
+            TurretBoneMuzzle = "Turret_Left02_Muzzle04",
+            TurretBonePitch = "Turret_Left02_Barrel04",
+            TurretBoneYaw = "Turret_Right02",
+
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 30,
+
+            TurretYaw = 30,
+            TurretYawRange = 120,
+            TurretYawSpeed = 30,
+
+            Turreted = true,
+        },
+        {
+            AboveWaterFireOnly = true,
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                Fire = Sound { Bank = 'UELWeapon', Cue = 'UEL0401_Cannon_Exp_Lrg', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            BallisticArc = "RULEUBA_LowArc",
+            
+            --CannotAttackGround = true,
+            CollideFriendly = false,
+
+            Damage = 250,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = "Normal",
+
+            DisplayName = "Cannon",
+            
+            EnergyRequired = 200,
+            EnergyDrainPerSecond = 100,
+
+            FireTargetLayerCapsTable = { Water = "Land|Water|Seabed" },
+
+            FiringRandomness = 0.5,
+            FiringTolerance = 1,
+
+            Label = "Turret",
+
+            MaxRadius = 85,
+            MinRadius = 4,
+
+            MuzzleVelocity = 28,
+            MuzzleVelocityRandom = 2,
+            MuzzleVelocityReduceDistance = 60,
+
+            NotExclusive = true,
+
+            ProjectileId = "/projectiles/TDFGauss04/TDFGauss04_proj.bp",
+            ProjectileLifetime = 3.5,
+            
+            RackBones = {
+                { MuzzleBones = { "Turret_Left02_Muzzle11" }, RackBone = "Turret_Left02_Barrel11" },
+                { MuzzleBones = { "Turret_Left02_Muzzle10" }, RackBone = "Turret_Left02_Barrel10" },
+                { MuzzleBones = { "Turret_Left02_Muzzle12" }, RackBone = "Turret_Left02_Barrel12" },
+            },
+            RackFireTogether = true,
+
+            RackRecoilDistance = -1,
+
+            RackSalvoFiresAfterCharge = true,
+
+            RackSlavedToTurret = true,
+
+            RateOfFire = 0.5,     -- controlled by charge - 2 seconds = 375 DPS
+
+            TargetCheckInterval = 1,
+            TargetPriorities = {
+                "SPECIALHIGHPRI",
+                "MOBILE",
+                "ALLUNITS",
+            },
+
+            TargetRestrictDisallow = "UNTARGETABLE",
+            TrackingRadius = 1.1,
+
+            TurretBoneMuzzle = "Turret_Left02_Muzzle10",
+            TurretBonePitch = "Turret_Left02_Barrel10",
+            TurretBoneYaw = "Turret_Left01",
+
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 30,
+
+            TurretYaw = 20,
+            TurretYawRange = 120,
+            TurretYawSpeed = 30,
+
+            Turreted = true,
+        },
+        {
+            AboveWaterFireOnly = true,
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                Fire = Sound { Bank = 'UELWeapon', Cue = 'UEL0401_Cannon_Exp_Lrg', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            BallisticArc = "RULEUBA_LowArc",
+            
+            --CannotAttackGround = true,
+            CollideFriendly = false,
+
+            Damage = 250,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = "Normal",
+
+            DisplayName = "Cannon",
+            
+            EnergyRequired = 200,
+            EnergyDrainPerSecond = 100,
+
+            FireTargetLayerCapsTable = { Water = "Land|Water|Seabed" },
+
+            FiringRandomness = 0.5,
+            FiringTolerance = 1,
+
+            Label = "Turret",
+
+            MaxRadius = 85,
+            MinRadius = 4,
+
+            MuzzleVelocity = 28,
+            MuzzleVelocityRandom = 2,
+            MuzzleVelocityReduceDistance = 60,
+
+            NotExclusive = true,
+
+            ProjectileId = "/projectiles/TDFGauss04/TDFGauss04_proj.bp",
+            ProjectileLifetime = 3.5,
+
+            RackBones = {
+                { MuzzleBones = { "Turret_Left02_Muzzle08" }, RackBone = "Turret_Left02_Barrel08" },
+                { MuzzleBones = { "Turret_Left02_Muzzle07" }, RackBone = "Turret_Left02_Barrel07" },
+                { MuzzleBones = { "Turret_Left02_Muzzle09" }, RackBone = "Turret_Left02_Barrel09" },
+            },
+            RackFireTogether = true,
+
+            RackRecoilDistance = -1,
+
+            RackSalvoFiresAfterCharge = true,
+
+            RackSlavedToTurret = true,
+
+            RateOfFire = 0.5,     -- ROF controlled by charge = 2 seconds = 375 DPS
+            TargetCheckInterval = 1,
+
+            TargetPriorities = {
+                "SPECIALHIGHPRI",
+                "MOBILE",
+                "ALLUNITS",
+            },
+            TargetRestrictDisallow = "UNTARGETABLE",
+            TrackingRadius = 1.1,
+
+            TurretBoneMuzzle = "Turret_Left02_Muzzle07",
+            TurretBonePitch = "Turret_Left02_Barrel07",
+            TurretBoneYaw = "Turret_Left02",
+
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 30,
+
+            TurretYaw = -30,
+            TurretYawRange = 120,
+            TurretYawSpeed = 30,
+
+            Turreted = true,
+        },
+
+-- T2 level torpedo launcher with more payload but w/o STUN -- 
+        
+        {
+            Audio = {
+                Fire = Sound { Bank = 'UELWeapon',    Cue = 'UEB2109_Torpedo',    LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = "RULEUBA_None",
+
+            CollideFriendly = false,
+
+            Damage = 550,
+            DamageRadius = 2,
+            DamageType = "Normal",
+
+            DisplayName = "Angler Torpedo",
+
+            FireTargetLayerCapsTable = { Water = "Seabed|Sub|Water" },
+
+            FiringTolerance = 360,
+
+            Label = "Torpedo",
+
+            MaxRadius = 60,
+
+            MuzzleSalvoDelay = 0.3,
+            MuzzleSalvoSize = 8,
+            
+            MuzzleVelocity = 3,
+
+            NotExclusive = true,
+			
+            ProjectileId = '/projectiles/TANAnglerTorpedo01/TANAnglerTorpedo01_proj.bp',
+            ProjectileLifetime = 7,
+
+            RackBones = {
+                { MuzzleBones = {"Riot_Gun_Right01","Riot_Gun_Left01","Riot_Gun_Right","Riot_Gun_Left" }, RackBone = "WEL0404" },
+            },
+            
+            RackSalvoReloadTime = 7.6,
+
+            RangeCategory = "UWRC_AntiNavy",
+
+            RateOfFire = 0.5,     -- controlled by salvo delay and reload = 10 seconds = 440 DPS
+
+            TargetCheckInterval = 2,
+
+            TargetPriorities = {
+                "SUBMARINE",
+                "SUBMERSIBLE",
+                "ALLUNITS -WALL",
+            },
+            TargetRestrictDisallow = "UNTARGETABLE, HOVER",
+            TrackingRadius = 1.1,
+        },
+
+    },
+
+    Wreckage = {
+        Blueprint = "/props/DefaultWreckage/DefaultWreckage_prop.bp",
+        EnergyMult = 0.1,
+        HealthMult = 0.4,
+        MassMult = 0.4,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Seabed = true,
+            Water = true,
+        },
+    },
+}

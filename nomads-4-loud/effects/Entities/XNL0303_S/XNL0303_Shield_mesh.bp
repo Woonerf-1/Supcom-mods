@@ -1,0 +1,18 @@
+MeshBlueprint {
+
+            IconFadeInZoom = 1300,
+            SortOrder = 1000,
+            StraddleWater = true,
+            LODs = {
+                {
+                    MeshName = 'XNL0303_Shield_mesh.scm',
+                    AlbedoName = '/effects/Entities/Shield05_stealth/Shield05_stealth_Albedo.dds',
+                    SpecularName = '/effects/Entities/Shield05_stealth/Shield05_stealth_Specular.dds',
+                    SecondaryName = '/effects/Entities/Shield05_stealth/Shield05_stealth_Secondary.dds',
+                    LookupName = '/effects/entities/PhaseShield/PhaseShieldLookup.dds',
+                    LODCutoff = 195,
+                    ShaderName = 'ShieldUEF',
+                },
+            },
+
+}

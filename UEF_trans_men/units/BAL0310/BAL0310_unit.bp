@@ -1,0 +1,343 @@
+UnitBlueprint {
+
+    AI = {
+        GuardScanRadius = 49,
+        TargetBones = {'BAL0310'},
+    },
+	
+    Audio = {
+        Destroyed   = Sound { Bank = 'UALDestroy', Cue = 'UAL_Destroy_Land', LodCutoff = 'UnitMove_LodCutoff' },
+        StartMove   = Sound { Bank = 'UAL', Cue = 'UAL0304_Move_Start', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection = Sound { Bank = 'Interface', Cue = 'Aeon_Select_Vehicle', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+	
+    Buffs = {
+        Regen = {
+            Level1 = 2,
+            Level2 = 4,
+            Level3 = 6,
+            Level4 = 8,
+            Level5 = 10,
+        },
+    },
+	
+    BuildIconSortPriority = 20,
+	
+	CollisionOffsetZ = 0.1,
+	CollisionOffsetY = - 0.15,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'AEON',
+        'MOBILE',
+        'LAND',
+        'TECH3',
+        'HOVER',
+		'AMPHIBIOUS',
+        'DIRECTFIRE',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+    },
+    
+    Defense = {
+        ArmorType = 'Normal',
+        Health = 5000,
+        MaxHealth = 5000,
+        RegenRate = 2,
+        SurfaceThreatLevel = 70.8,
+    },
+	
+    Description = '<LOC bal0310_desc>Heavy Hover Tank',
+	
+    Display = {
+	
+        Abilities = {
+            'Hovercraft',
+			'Powerful but slow firing main gun',
+			'Two secondary weapons',
+        },
+		
+        AnimationOpen = '/mods/UEF_trans_men/units/BAL0310/BAL0310_Aopen.sca',
+		
+        Mesh = { IconFadeInZoom = 130, LODs = { { LODCutoff = 215, Scrolling = true, ShaderName = 'Aeon' } } },
+
+        UniformScale = 0.10,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 18100,
+        BuildCostMass = 1600,
+        BuildTime = 5500,
+    },
+	
+    General = {
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Aeon',
+        Icon = 'amph',
+        UnitName = '<LOC bal0310_name>Wraith',
+    },
+    
+    Intel = {
+        VisionRadius = 32,
+        WaterVisionRadius = 12,
+    },
+    
+    Interface = {
+        HelpText = 'Heavy Hover Tank',
+    },
+    
+    LifeBarHeight = 0.08,
+    LifeBarOffset = 0.5,
+    LifeBarSize = 1,
+    
+    Physics = {
+        BackUpDistance = 6,
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+        },
+        DragCoefficient = 0.2,
+        Elevation = 0.3,
+        
+        MaxAcceleration = 1,
+        MaxBrake = 1.5,
+        MaxSpeed = 2.5,
+        MaxSpeedReverse = 3,
+        
+        MaxSteerForce = 100,
+        MeshExtentsX = 1.1,
+        MeshExtentsY = 0.7,
+        MeshExtentsZ = 2.0,
+        MinSpeedPercent = 0,
+
+        MotionType = 'RULEUMT_Hover',
+
+        RotateBodyWhileMoving = true,
+        RotateOnSpot = false,
+        
+        TurnFacingRate = 24,
+        TurnRadius = 3.5,
+        TurnRate = 26,
+    },
+	
+    SelectionSizeX = 1.0,
+    SelectionSizeZ = 1.4,
+    SelectionThickness = 0.3,
+    
+    SizeX = 1.0,
+    SizeY = 0.7,
+    SizeZ = 1.9,
+    
+    StrategicIconName = 'icon_surface3_directfire',
+    StrategicIconSortPriority = 115,
+    
+    Transport = {
+        CanFireFromTransport = false,
+        TransportClass = 3,
+    },
+    
+    Veteran = {
+        Level1 = 10,
+        Level2 = 20,
+        Level3 = 30,
+        Level4 = 40,
+        Level5 = 50,
+    },
+    
+    Weapon = {
+        {
+            AboveWaterTargetsOnly = true,
+            ArtilleryShieldBlocks = true,
+
+            Audio = {
+                Fire = Sound { Bank = 'UALWeapon', Cue = 'UAL0304_Artillery_Sonance', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+			
+            Damage = 600,
+            DamageFriendly = true,
+            DamageRadius = 1.6,
+            DamageType = 'ShieldMult1.1',
+			
+            DisplayName = 'Sonance Artillery',
+
+            EnergyChargeForFirstShot = false,
+
+            EnergyRequired = 438,
+            EnergyDrainPerSecond = 146,     -- 3 second charge
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Land|Water|Seabed',
+                Water = 'Land|Water|Seabed',
+            },
+			
+            FiringRandomness = 0.2,
+            FiringTolerance = 1,
+			
+            HeadingArcCenter = 0,
+            HeadingArcRange = 18,
+            
+            Label = 'MainGun',
+			
+            MaxRadius = 64,
+
+            LeadTarget = true,
+			
+            MuzzleChargeDelay = 0.2,
+
+            MuzzleVelocity = 26,
+			
+            NotExclusive = true,
+			
+            ProjectileId = '/mods/UEF_trans_men/projectiles/WraithShell01/WraithShell01_proj.bp',
+            ProjectileLifetime = 2.5,
+
+            RackBones = {
+                { MuzzleBones = {'Main_Turret_Muzzle'}, RackBone = 'Main_Turret_Barrel' },
+            },
+
+            RackRecoilDistance = -1,
+
+            RackSalvoFiresAfterCharge = true,
+
+            RangeCategory = 'UWRC_IndirectFire',
+			
+            RateOfFire = 0.3,	-- 240dps   -- controlled by 3 second charge
+
+            SlavedToBody = true,
+            SlavedToBodyArcRange = 30,
+            
+            TargetCheckInterval = 2,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'DEFENSE',
+                'MOBILE',
+                'ALLUNITS,-WALL',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+
+            TurretBoneMuzzle = 'Main_Turret_Muzzle',
+            TurretBonePitch = 'Main_Turret_Barrel',
+            TurretBoneYaw = 'Main_Turret_Barrel',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 45,
+            TurretPitchSpeed = 26,
+			
+            TurretYaw = 0,
+            TurretYawRange = 30,
+            TurretYawSpeed = 22,
+			
+            Turreted = true,
+        },
+        {
+            AboveWaterTargetsOnly = true,
+            AimsStraightOnDisable = true,
+
+            Audio = {
+                MuzzleChargeStart = Sound { Bank = 'UALWeapon', Cue = 'UAL0202_Cannon_Quantum', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+			
+            Damage = 150,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Quantum Cannon',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Land|Water|Seabed',
+                Water = 'Land|Water|Seabed',
+            },
+			
+            FiringRandomness = 0.1,
+            FiringTolerance = 1,
+			
+            HeadingArcCenter = 0,
+            HeadingArcRange = 20,
+            
+            Label = 'SideGuns',
+			
+            MaxRadius = 25,
+			
+            MuzzleChargeDelay = 0.4,
+
+            MuzzleVelocity = 45,
+            
+            NotExclusive = true,
+
+            ProjectileId = '/projectiles/ADFQuantumCannon02/ADFQuantumCannon02_proj.bp',
+            ProjectileLifetime = 0.9,
+
+            RackBones = {
+                { MuzzleBones = {'L_Turret_Muzzle'}, RackBone = 'Left_Gun_Barrel' },
+                { MuzzleBones = {'R_Turret_Muzzle'}, RackBone = 'Right_Gun_Barrel' },
+            },
+
+            RackRecoilDistance = -0.5,
+			
+            RangeCategory = 'UWRC_DirectFire',
+			
+            RateOfFire = 2, -- 240 dps
+			
+            TargetCheckInterval = 0.6,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'DEFENSE',
+                'ALLUNITS,-WALL',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.2,
+			
+            TurretBoneDualMuzzle = 'L_Turret_Muzzle',
+            TurretBoneDualPitch = 'Left_Gun_Pivot',
+
+            TurretBoneMuzzle = 'R_Turret_Muzzle',
+            TurretBonePitch = 'Right_Gun_Pivot',
+
+            TurretBoneYaw = 'BAL0310',
+
+            TurretDualManipulators = true,
+			
+            TurretPitch = 0,
+            TurretPitchRange = 50,
+            TurretPitchSpeed = 25,
+			
+            TurretYaw = 0,
+            TurretYawRange = 20,
+            TurretYawSpeed = 10,
+			
+            Turreted = true,
+
+            WeaponRepackTimeout = 1.5,
+            WeaponUnpackAnimation = '/mods/UEF_trans_men/units/BAL0310/BAL0310_Aopen.sca',
+            WeaponUnpackAnimationRate = 2,
+            WeaponUnpacks = true,
+        },
+    },
+
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.35,
+        HealthMult = 0.9,
+        MassMult = 0.35,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Water = true,
+        },
+    },
+}

@@ -1,0 +1,306 @@
+UnitBlueprint {
+    AI = {
+        GuardReturnRadius = 72,
+        GuardScanRadius = 48,
+        TargetBones = {'UEA0204'},
+    },
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 3,
+        BankForward = false,
+        BreakOffDistance = 30,
+        BreakOffIfNearNewTarget = true,
+        BreakOffTrigger = 20,
+        CanFly = true,
+		
+        CombatTurnSpeed = 1.1,
+        EngageDistance = 50,
+		
+        KLift = 3,
+        KLiftDamping = 2.5,
+		
+        KMove = 0.8,
+        KMoveDamping = 0.8,
+		
+        KRoll = 1.4,
+        KRollDamping = 1.4,
+		
+        KTurn = 0.8,
+        KTurnDamping = 0.8,
+		
+        LiftFactor = 6,
+		
+        MaxAirspeed = 12,
+        MinAirspeed = 9,
+		
+        StartTurnDistance = 2,
+		
+        Winged = true,
+    },
+	
+    Audio = {
+        Killed      = Sound { Bank = 'UEADestroy',   Cue = 'UEA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        StartMove   = Sound { Bank = 'UEA',          Cue = 'UEA0204_Move_Start',     LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection = Sound { Bank = 'Interface',    Cue = 'UEF_Select_Air',         LodCutoff = 'UnitMove_LodCutoff' },
+    },
+	
+    Buffs = {},
+	
+    BuildIconSortPriority = 50,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER1FACTORY',
+        'BUILTBYTIER2FACTORY',
+        'BUILTBYTIER3FACTORY',
+        'NOMADS',
+        'MOBILE',
+        'AIR',
+        'HIGHALTAIR',
+        'TECH1',
+        'ANTINAVY',
+        'TORPEDOBOMBER',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYSONAR',
+    },
+	
+    CollisionOffsetY = -0.2,
+    CollisionOffsetZ = -0.1,
+	
+    Defense = {
+
+        ArmorType = 'Light',
+
+        Health = 265,
+        MaxHealth = 265,
+        RegenRate = 1,
+
+        SubThreatLevel = 6,
+    },
+	
+    Description = '<LOC sair0106>Light Torpedo Bomber',
+	
+    Display = {
+        Abilities = {
+            '<LOC ability_sonar>Sonar',
+            '<LOC ability_torpedo>Torpedoes',
+        },
+        
+        IdleEffects = {
+            Water = {
+                Effects = { { Bones = {0}, Scale = 0.7, Type = 'SeaIdle02' } },
+            },
+        },
+        
+        LayerChangeEffects = {
+            AirLand = { Effects = { { Bones = {0}, Type = 'Landing01' } } },
+            LandAir = { Effects = { { Bones = {0}, Type = 'TakeOff01' } } },
+            AirWater = { Effects = { { Bones = {'UEA0204'}, Type = 'Submerge02' } } },
+            WaterAir = { Effects = { { Bones = {0}, Type = 'Surface02' } } },
+        },
+        
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 140,
+                    ShaderName = 'Unit',
+                    AlbedoName = '/units/uea0204/uea0204_albedo.dds',
+                    NormalsName = '/units/uea0204/uea0204_normalsTS.dds',
+                    SpecularName = '/units/uea0204/uea0204_specteam.dds',
+                },
+                {
+                    LODCutoff = 215,
+                    ShaderName = 'Unit',
+                    AlbedoName = '/units/uea0204/uea0204_lod1_albedo.dds',
+                    NormalsName = '/units/uea0204/uea0204_lod1_normalsTS.dds',
+                    SpecularName = '/units/uea0204/uea0204_lod1_specteam.dds',
+                },
+            },
+        },
+        MovementEffects = {
+            Air = {
+                Contrails = { Bones = {'Contrail_Left','Contrail_Right'}, ZOffset = 0, },
+                Effects = { { Bones = {'Exhaust_Left'}, Type = 'AirExhaust01' } },
+            },
+            
+            BeamExhaust = { Bones = {'Exhaust_Left'}, Cruise = true, Idle = false },
+        },
+        
+        UniformScale = 0.04,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 3500,
+        BuildCostMass = 55,
+        BuildTime = 400,
+    },
+	
+    Footprint = {
+        MaxSlope = 0.25,
+        SizeX = 1,
+        SizeZ = 1,
+    },
+	
+    General = {
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'UEF',
+        Icon = 'air',
+        UnitName = '<LOC sea0106_name>Seagull',
+    },
+	
+    Intel = {
+		FreeIntel = true,
+
+        SonarRadius = 56,
+        VisionRadius = 32,
+		WaterVisionRadius = 16,
+    },
+	
+    Interface = {
+        HelpText = '<LOC sair0106>Light Torpedo Bomber',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.3*.85,
+    LifeBarSize = 1.25*.85,
+	
+    Physics = {
+	
+        AttackElevation = 3.5,
+		
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+            LAYER_Water = true,
+        },
+		
+        Elevation = 15,
+		
+        
+		
+        GroundCollisionOffset = 1.4,
+		
+        MaxSpeed = 0.5,
+        MeshExtentsX = 2,
+        MeshExtentsY = 0.55,
+        MeshExtentsZ = 1.25,
+        MotionType = 'RULEUMT_Air',
+    },
+	
+    SelectionSizeX = 1.1*.85,
+    SelectionSizeZ = 0.6*.85,
+    SelectionThickness = 0.4,
+	
+    SizeSphere = 1.3,
+	
+    SizeX = 1,
+    SizeY = 0.5,
+    SizeZ = 1,
+	
+    StrategicIconName = 'icon_bomber1_antinavy',
+    StrategicIconSortPriority = 65,
+	
+    Transport = {
+        AirClass = true,
+        TransportClass = 1,
+    },
+	
+    Veteran = {
+        Level1 = 1,
+        Level2 = 2,
+        Level3 = 3,
+        Level4 = 4,
+        Level5 = 5,
+    },
+	
+    Weapon = {
+        {
+            Audio = {
+                Fire = Sound { Bank = 'UEAWeapon', Cue = 'UEA0204_Torpedo', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            
+            AutoInitiateAttackCommand = true,
+
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+			
+            Damage = 300,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Angler Torpedo',
+            
+            EffectiveRadius = 40,
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Seabed|Sub|Water',
+                Land = 'Seabed|Sub|Water',
+            },
+			
+            FiringRandomness = 1.5,
+            FiringTolerance = 3,
+			
+            HeadingArcCenter = 0,
+            HeadingArcRange = 30,
+			
+            Label = 'Torpedo',
+			
+            MaxRadius = 32,
+            MinRadius = 6,
+			
+            MuzzleSalvoDelay = 0.3,
+            MuzzleSalvoSize = 1,
+
+            MuzzleVelocity = 8,
+			
+            ProjectileId = '/projectiles/TANAnglerTorpedo01/TANAnglerTorpedo01_proj.bp',
+            ProjectileLifetime = 7.5,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'UEA0204'},
+                    RackBone = 'Projectile',
+                },
+            },
+            
+            RackSalvoReloadTime = 4.7,
+			
+            RateOfFire = 1,	-- 300 damage every 5 = 60 DPS
+			
+            TargetCheckInterval = 2,
+
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'CRUISER',
+                'SUBMARINE',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE, HOVER, WALL',
+
+            TrackingRadius = 1.1,
+        },
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 100,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+            WeaponCategory = 'Death',
+        },
+    },
+}

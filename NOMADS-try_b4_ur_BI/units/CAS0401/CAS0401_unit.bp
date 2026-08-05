@@ -1,0 +1,918 @@
+UnitBlueprint {
+    AI = {
+        AttackAngle = 10,
+        GuardReturnRadius = 105,
+        GuardScanRadius = 85,
+
+        TargetBones = {'T_Big_Yaw','MB1_Turret','MB2_Turret','MB3_Turret','AS1_Turret','AS2_Turret'},
+    },
+
+    Audio = {
+        AmbientMove = Sound {Bank = 'UAS',        Cue = 'UAS0302_Move_Loop',  LodCutoff = 'UnitMove_LodCutoff'},
+          StartMove = Sound {Bank = 'UAS',        Cue = 'UAS0302_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+           StopMove = Sound {Bank = 'UAS',        Cue = 'UAS0302_Move_Stop',  LodCutoff = 'UnitMove_LodCutoff'},
+             Killed = Sound {Bank = 'UASDestroy', Cue = 'UAS0302_Destroy',    LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection = Sound {Bank = 'Interface',  Cue = 'Aeon_Select_Naval',  LodCutoff = 'UnitMove_LodCutoff'},
+    },
+
+    Buffs = {
+        Regen = {
+            Level1 = 7,
+            Level2 = 14,
+            Level3 = 21,
+            Level4 = 28,
+            Level5 = 35,
+        },
+    },
+    
+    BuildIconSortPriority = 130,
+    
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER4COMMANDER',
+        'NEEDMOBILEBUILD',
+        'NOMADS',
+        'MOBILE',
+        'NAVAL',
+        'EXPERIMENTAL',
+        'DIRECTFIRE',
+        'BOMBARDMENT',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'DRAGBUILD',
+        'BATTLESHIP',
+        'OVERLAYRADAR',
+        'OVERLAYSONAR',
+        'OVERLAYCOUNTERMEASURE',
+    },
+    
+    CollisionOffsetY = -1,
+    
+    Defense = {
+
+        ArmorType = 'Normal',
+
+        Health = 13050,
+        MaxHealth = 13050,
+        RegenRate = 14,
+
+        AirThreatLevel = 60,
+        EconomyThreatLevel = 180,   -- represents the mini-Salavation
+        SurfaceThreatLevel = 200,
+        
+        Shield = {
+            ImpactEffects = 'AeonShieldHit01',
+            Mesh = '/mods/NOMADS-try_b4_ur_BI/units/cas0401/cas0401_personalshield_mesh',
+            MeshZ = '/mods/NOMADS-try_b4_ur_BI/units/cas0401/cas0401_personalshieldz_mesh',
+            ImpactMesh = '/mods/NOMADS-try_b4_ur_BI/units/cas0401/cas0401_psimpact_',
+            RegenAssistMult = 60,
+            ShieldEnergyDrainRechargeTime = 12,
+            ShieldMaxHealth = 27000,
+            ShieldRechargeTime = 24,
+            ShieldRegenRate = 280,
+            ShieldRegenStartTime = 2,
+            ShieldVerticalOffset = -1.4,
+            StartOn = true,
+            ShieldSize = 0.075,  --Needs to match uniform scale
+            --Collision size based on unit size, impact effects hard coded expecting this size.
+        },
+    },
+    
+    Description = '<LOC cas0401_desc>Experimental Light Battlecruiser (Bombardment)',
+    
+    Display = {
+        Abilities = {
+            '<LOC ability_radar>Radar',
+            '<LOC ability_sonar>Sonar',
+            '<LOC ability_personalshield>Personal Shield',
+            '<LOC ability_torpedodef>Torpedo Defense',
+        },
+
+        AnimationDeath = {
+            {
+                Animation = '/mods/NOMADS-try_b4_ur_BID/units/cas0401/cas0401_adeath01.sca',
+                Mesh = '/mods/NOMADS-try_b4_ur_BI/units/cas0401/cas0401_death01_mesh',
+                AnimationRateMax = 0.17,
+                AnimationRateMin = 0.15,
+                Weight = 50
+            },
+            {Animation = '/mods/NOMADS-try_b4_ur_BI/units/cas0401/cas0401_adeath02.sca', Weight = 50},
+            {Animation = '/mods/NOMADS-try_b4_ur_BI/units/cas0401/cas0401_adeath03.sca', Weight = 50},
+            {Animation = '/mods/NOMADS-try_b4_ur_BI/units/cas0401/cas0401_adeath04.sca', Weight = 50},
+        },
+
+        IdleEffects = { Water = { Effects = { { Bones = {0}, Scale = 2.9, Type = 'SeaIdle01' } } } },
+
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {LODCutoff = 128, ShaderName = 'Aeon'},
+                {LODCutoff = 256, ShaderName = 'Aeon'},
+                {LODCutoff = 512, ShaderName = 'Aeon'},
+                {LODCutoff = 1024, ShaderName = 'Aeon'},
+                {LODCutoff = 2048, ShaderName = 'Aeon'},
+            },
+        },
+
+        MovementEffects = {
+            Water = {
+                Effects = {
+                    {Bones = {'Node_Port'}, Scale = 1, Type = 'LeftFrontWake'},
+                    {Bones = {'Node_Starboard'}, Scale = 1, Type = 'RightFrontWake'},
+                    {Bones = {'Mast'}, Scale = 1, Type = 'BackWake'},
+                },
+            },
+        },
+
+        UniformScale = 0.075,   --Needs to match shield size
+    },
+    
+    Economy = {
+        BuildCostEnergy = 505250,
+        BuildCostMass = 24000,
+        BuildTime = 20000,
+        
+        MaintenanceConsumptionPerSecondEnergy = 1266,
+    },
+    
+    Footprint = {
+        MinWaterDepth = 2.5,
+        SizeX = 1,
+        SizeZ = 9,
+    },
+	
+    General = {
+        CapCost = 12,
+
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        ToggleCaps = { RULEUTC_ShieldToggle = true },
+
+        OrderOverrides = {
+            RULEUTC_ShieldToggle = {bitmapId = 'shield-personal', helpText = 'toggle_shield_personal'},
+        },
+
+        FactionName = 'Aeon',
+        Icon = 'sea',
+
+        UnitName = '<LOC cas0401_name>Deluge Class',
+    },
+    
+    Intel = {
+        FreeIntel = true,
+
+        RadarRadius = 144,
+        SonarRadius = 72,
+
+        VisionRadius = 40,
+        WaterVisionRadius = 24,
+    },
+  
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 3.4,
+    LifeBarSize = 3,
+    
+    Physics = {
+        BackUpDistance = 10,
+        BankingSlope = 0,
+        BuildOnLayerCaps = {LAYER_Water = true},
+        CatchUpAcc = 10,
+        DragCoefficient = 0.2,
+        
+        MaxAcceleration = 0.75,
+        MaxBrake = 1.5,
+        MaxSpeed = 3.7,
+        MaxSpeedReverse = 3.7,
+        
+        MaxSteerForce = 5,
+        
+        MeshExtentsX = 2,
+        MeshExtentsY = 3,
+        MeshExtentsZ = 9,
+        
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_Water',
+        
+        SkirtOffsetX = -0.5,
+		SkirtOffsetZ = -4.5,
+        
+        SkirtSizeX = 5,
+        SkirtSizeZ = 13,
+        
+        TurnRadius = 12,
+        TurnRate = 19,
+    },
+    
+    SelectionSizeX = 1.2,
+    SelectionSizeZ = 7.5,
+    SelectionThickness = 0.14,
+    
+    SizeX = 2,
+    SizeY = 1.5,
+    SizeZ = 10.7,
+    
+    StrategicIconName = 'icon_ship4_artillery',
+    StrategicIconSortPriority = 46,
+    
+    Veteran = {
+        Level1 = 32,
+        Level2 = 64,
+        Level3 = 96,
+        Level4 = 128,
+        Level5 = 160,
+    },
+    
+    Weapon = {
+        -- Main batteries
+        { --Starboard facing, restricted arc, blind area forward, rear, and port
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                       BarrelLoop = Sound {Bank = 'UAS',       Cue = 'UAS_Turret_Lrg_Loop',        LodCutoff = 'WeaponBig_LodCutoff'},
+                      BarrelStart = Sound {Bank = 'UAS',       Cue = 'UAS_Turret_Lrg_Start',       LodCutoff = 'WeaponBig_LodCutoff'},
+                             Fire = Sound {Bank = 'UASWeapon', Cue = 'UAS0302_Cannon_Oblivion',    LodCutoff = 'WeaponBig_LodCutoff'},
+                MuzzleChargeStart = Sound {Bank = 'UASWeapon', Cue = 'UAS0302_Cannon_Oblv_Charge', LodCutoff = 'WeaponBig_LodCutoff'},
+            },
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+            
+            Damage = 1000,
+            DamageRadius = 2,
+            DamageType = 'Normal',
+            
+            DisplayName = 'Oblivion Cannon',
+            
+            FireTargetLayerCapsTable = {
+                Water = 'Land|Water|Seabed',
+            },
+            FiringRandomness = 0.2,
+            FiringTolerance = 2,
+            
+            Label = 'Oblivion',
+            
+            MaxRadius = 85,
+            
+            MuzzleChargeDelay = 0.4,
+
+            MuzzleVelocity = 50,
+            
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/ADFOblivionCannon02/ADFOblivionCannon02_proj.bp',
+            ProjectileLifetime = 2,            
+
+            RackBones = {
+                {MuzzleBones = {'MB3_Barrel_1'}, RackBone = 'MB3_Barrel_1', TelescopeBone = 'MB3_Barrel_1', TelescopeRecoilDistance = -5},
+                {MuzzleBones = {'MB3_Barrel_2'}, RackBone = 'MB3_Barrel_2', TelescopeBone = 'MB3_Barrel_2', TelescopeRecoilDistance = -5},
+                {MuzzleBones = {'MB3_Barrel_3'}, RackBone = 'MB3_Barrel_3', TelescopeBone = 'MB3_Barrel_3', TelescopeRecoilDistance = -5},
+            },
+
+            RackRecoilDistance = -0.25,
+            
+            RangeCategory = 'UWRC_DirectFire',
+            
+            RateOfFire = 0.4,       -- 400 DPS
+            
+            TargetCheckInterval = 8,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'NAVAL MOBILE',
+                'SPECIALLOWPRI',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+            
+            TurretBoneMuzzle = 'MB3_Barrel_2',
+            TurretBonePitch = 'MB3_Turret',
+            TurretBoneYaw = 'MB3_Turret',
+            TurretDualManipulators = false,
+            
+            TurretPitch = 10,
+            TurretPitchRange = 25,
+            TurretPitchSpeed = 10,
+            
+            TurretYaw = 0,
+            TurretYawRange = 80,
+            TurretYawSpeed = 48,
+            
+            Turreted = true,
+        },
+        
+        { --Front facing, wide arc, blind spot behind
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                       BarrelLoop = Sound {Bank = 'UAS',       Cue = 'UAS_Turret_Lrg_Loop',        LodCutoff = 'WeaponBig_LodCutoff'},
+                      BarrelStart = Sound {Bank = 'UAS',       Cue = 'UAS_Turret_Lrg_Start',       LodCutoff = 'WeaponBig_LodCutoff'},
+                             Fire = Sound {Bank = 'UASWeapon', Cue = 'UAS0302_Cannon_Oblivion',    LodCutoff = 'WeaponBig_LodCutoff'},
+                MuzzleChargeStart = Sound {Bank = 'UASWeapon', Cue = 'UAS0302_Cannon_Oblv_Charge', LodCutoff = 'WeaponBig_LodCutoff'},
+            },
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+            
+            Damage = 1000,
+            DamageRadius = 2,
+            DamageType = 'Normal',
+            
+            DisplayName = 'Oblivion Cannon',
+            
+            FireTargetLayerCapsTable = {
+                Water = 'Land|Water|Seabed',
+            },
+            FiringRandomness = 0.2,
+            FiringTolerance = 2,
+            
+            Label = 'Oblivion',
+            
+            MaxRadius = 85,
+            
+            MuzzleChargeDelay = 0.4,
+
+            MuzzleVelocity = 50,
+            
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/ADFOblivionCannon02/ADFOblivionCannon02_proj.bp',
+            ProjectileLifetime = 2,
+
+            RackBones = {
+                {MuzzleBones = {'MB1_Barrel_1'}, RackBone = 'MB1_Barrel_1', TelescopeBone = 'MB1_Barrel_1', TelescopeRecoilDistance = -5},
+                {MuzzleBones = {'MB1_Barrel_2'}, RackBone = 'MB1_Barrel_2', TelescopeBone = 'MB1_Barrel_2', TelescopeRecoilDistance = -5},
+                {MuzzleBones = {'MB1_Barrel_3'}, RackBone = 'MB1_Barrel_3', TelescopeBone = 'MB1_Barrel_3', TelescopeRecoilDistance = -5},
+            },
+
+            RackRecoilDistance = -0.25,
+            
+            RateOfFire = 0.4,       -- another 400 DPS
+
+            TargetCheckInterval = 8,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'NAVAL MOBILE',
+                'SPECIALLOWPRI',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+            
+            TurretBoneMuzzle = 'MB1_Barrel_2',
+            TurretBonePitch = 'MB1_Turret',
+            TurretBoneYaw = 'MB1_Turret',
+            TurretDualManipulators = false,
+            
+            TurretPitch = 10,
+            TurretPitchRange = 25,
+            TurretPitchSpeed = 10,
+            
+            TurretYaw = 0,
+            TurretYawRange = 150,
+            TurretYawSpeed = 48,
+            
+            Turreted = true,
+        },
+        
+        { --Port facing, wide arc, blind spot behind and rear-starboard
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                       BarrelLoop = Sound {Bank = 'UAS',       Cue = 'UAS_Turret_Lrg_Loop',        LodCutoff = 'WeaponBig_LodCutoff'},
+                      BarrelStart = Sound {Bank = 'UAS',       Cue = 'UAS_Turret_Lrg_Start',       LodCutoff = 'WeaponBig_LodCutoff'},
+                             Fire = Sound {Bank = 'UASWeapon', Cue = 'UAS0302_Cannon_Oblivion',    LodCutoff = 'WeaponBig_LodCutoff'},
+                MuzzleChargeStart = Sound {Bank = 'UASWeapon', Cue = 'UAS0302_Cannon_Oblv_Charge', LodCutoff = 'WeaponBig_LodCutoff'},
+            },
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+            
+            Damage = 1000,
+            DamageRadius = 2,
+            DamageType = 'Normal',
+            
+            DisplayName = 'Oblivion Cannon',
+            
+            FireTargetLayerCapsTable = {
+                Water = 'Land|Water|Seabed',
+            },
+            FiringRandomness = 0.2,
+            FiringTolerance = 2,
+            
+            Label = 'Oblivion',
+            
+            MaxRadius = 85,
+            
+            MuzzleChargeDelay = 0.4,
+
+            MuzzleVelocity = 50,
+            
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/ADFOblivionCannon02/ADFOblivionCannon02_proj.bp',
+            ProjectileLifetime = 1.9,
+
+            RackBones = {
+                {MuzzleBones = {'MB2_Barrel_1'}, RackBone = 'MB2_Barrel_1', TelescopeBone = 'MB2_Barrel_1', TelescopeRecoilDistance = -5},
+                {MuzzleBones = {'MB2_Barrel_2'}, RackBone = 'MB2_Barrel_2', TelescopeBone = 'MB2_Barrel_2', TelescopeRecoilDistance = -5},
+                {MuzzleBones = {'MB2_Barrel_3'}, RackBone = 'MB2_Barrel_3', TelescopeBone = 'MB2_Barrel_3', TelescopeRecoilDistance = -5},
+            },
+
+            RackRecoilDistance = -0.25,
+            
+            RateOfFire = 0.4,       -- another 400 DPS
+
+            TargetCheckInterval = 8,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'NAVAL MOBILE',
+                'SPECIALLOWPRI',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+            
+            TurretBoneMuzzle = 'MB2_Barrel_2',
+            TurretBonePitch = 'MB2_Turret',
+            TurretBoneYaw = 'MB2_Turret',
+            TurretDualManipulators = false,
+            
+            TurretPitch = 10,
+            TurretPitchRange = 25,
+            TurretPitchSpeed = 10,
+            
+            TurretYaw = 0,
+            TurretYawRange = 155,
+            TurretYawSpeed = 48,
+            
+            Turreted = true,
+        },
+
+        --Anti-torpedo
+        {
+            Audio = {
+                Fire = Sound {Bank = 'XAS_Weapon', Cue = 'XAS0306_AntiTorpedo', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+            
+            CountedProjectile = true,
+
+            Damage = 2,
+            DamageType = 'Normal',
+
+            FireTargetLayerCapsTable = { Water = 'Sub|Water|Seabed' },
+
+            FiringTolerance = 90,
+			
+            HeadingArcCenter = 85,
+            HeadingArcRange = 90,
+
+            Label = 'AntiTorpedo',
+
+            MaxRadius = 28,
+
+            MuzzleSalvoDelay = 0.7,
+            MuzzleSalvoSize = 2,
+            MuzzleVelocity = 6,
+
+            ProjectileId = '/projectiles/AIMAntiTorpedo01/AIMAntiTorpedo01_proj.bp',
+            ProjectileLifetime = 3,
+
+            RackBones = {
+                { MuzzleBones = {'Node_Port'}, RackBone = 'Node_Port' },
+            },
+
+            RangeCategory = 'UWRC_Countermeasure',
+
+            RateOfFire = 1, -- controlled by MuzzleSalvo and WeaponRepack
+
+            TargetCheckInterval = 1,
+            
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TargetRestrictOnlyAllow = 'TORPEDO',
+            TargetType = 'RULEWTT_Projectile',
+
+            TrackingRadius = 1.1,
+            
+            WeaponRepackTimeout = 1.6,
+        },
+        
+        {
+            advancedTracking = true,
+            
+            Audio = {
+                Fire = Sound {Bank = 'XAS_Weapon', Cue = 'XAS0306_AntiTorpedo', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+            
+            CountedWeapon = true,
+
+            Damage = 2,
+            DamageType = 'Normal',
+
+            FireTargetLayerCapsTable = { Water = 'Sub|Water|Seabed' },
+            
+            FiringTolerance = 90,
+			
+            HeadingArcCenter = -85,
+            HeadingArcRange = 90,
+
+            Label = 'AntiTorpedo',
+
+            MaxRadius = 28,
+            
+            MuzzleSalvoDelay = 0.7,
+            MuzzleSalvoSize = 2,
+            MuzzleVelocity = 6,
+
+            ProjectileId = '/projectiles/AIMAntiTorpedo01/AIMAntiTorpedo01_proj.bp',
+            ProjectileLifetime = 3,
+
+            RackBones = {
+                { MuzzleBones = {'Node_Starboard'}, RackBone = 'Node_Starboard' },
+            },
+
+            RangeCategory = 'UWRC_Countermeasure',
+
+            RateOfFire = 1,
+
+            TargetCheckInterval = 1,
+            
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TargetRestrictOnlyAllow = 'TORPEDO',
+            TargetType = 'RULEWTT_Projectile',
+
+            TrackingRadius = 1.1,
+
+            WeaponRepackTimeout = 1.6,            
+        },
+        
+        -- Bombardment artillery
+        { --Literally the mini-salvation, less range, damage, AOE and RoF.
+        
+            AboveWaterTargetsOnly = true,
+            
+            ArtilleryShieldBlocks = true,
+            
+            Audio = {
+                 BarrelLoop = Sound {Bank = 'UAB',        Cue = 'UAB2302_Turret_Loop',     LodCutoff = 'WeaponBig_LodCutoff'},
+                BarrelStart = Sound {Bank = 'XAL_Weapon', Cue = 'XAB2307_Turret',          LodCutoff = 'WeaponBig_LodCutoff'},
+                       Fire = Sound {Bank = 'XAL_Weapon', Cue = 'XAB2307_Rapid_Artillery', LodCutoff = 'WeaponBig_LodCutoff'},
+            },
+            
+            BallisticArc = 'RULEUBA_HighArc',
+            CollideFriendly = false,
+            
+            Damage = 120,       -- approx 620 DPS -- a smaller casing delivers less damage per shell
+            DamageRadius = 1.6,
+            DamageType = 'ShieldMult0.8',
+            
+            DisplayName = 'Rapid-Fire Artillery Cannon',
+            
+            EnergyDrainPerSecond = 750,
+            EnergyRequired = 4500,     -- 6 second charge cycle
+            
+            EnergyChargeForFirstShot = false,
+            
+            FireTargetLayerCapsTable = {
+                Water = 'Land|Water|Seabed',
+            },
+            FiringRandomness = 0.39,
+            FiringTolerance = 0.05,
+            
+            Label = 'Salvation',
+            
+            MaxRadius = 175,
+            MinRadius = 80,
+            
+            MuzzleChargeDelay = 0.5,
+
+            MuzzleVelocity = 72,
+            MuzzleVelocityReduceDistance = 300,
+            
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/AIFFragmentationSensorShell01/AIFFragmentationSensorShell01_proj.bp',
+            ProjectileLifetime = 50,
+
+            ProjectilesPerOnFire = 36,      -- just here for reference --
+            
+            RackBones = {
+                {
+                    MuzzleBones = {'T_Big_Muzzle'},
+                    RackBone = 'T_Big_Muzzle',
+                    TelescopeBone = 'T_Big_Pitch',
+                    TelescopeRecoilDistance = 7
+                },
+            },
+            RackRecoilDistance = -3,
+
+            RackSalvoFiresAfterCharge = true,
+
+            RangeCategory = 'UWRC_IndirectFire',
+            
+            RateOfFire = 0.17,     -- determined by charge
+            
+            TargetCheckInterval = 2,
+            
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'STRUCTURE',
+                'SPECIALLOWPRI',
+                'ALLUNITS -WALL',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            
+            TurretBoneMuzzle = 'T_Big_Muzzle',
+            TurretBonePitch = 'T_Big_Pitch',
+            TurretBoneYaw = 'T_Big_Yaw',
+            TurretDualManipulators = false,
+            
+            TurretPitch = 0,
+            TurretPitchRange = 90,
+            TurretPitchSpeed = 6,
+            
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 6,
+            
+            Turreted = true,
+        },
+
+        --Anti Air
+        
+        { --Forward
+
+            advancedTracking = true,
+        
+            AlwaysRecheckTarget = true,
+
+            Audio = {
+                Fire = Sound {Bank = 'UASWeapon', Cue = 'UAS0202_SAM', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            BallisticArc = 'RULEUBA_None',
+            CannotAttackGround = true,
+            CollideFriendly = false,
+            
+            Damage = 440,
+            DamageType = 'Normal',
+            
+            DisplayName = 'Zealot AA Missile',
+            
+            FireTargetLayerCapsTable = { Water = 'Air' },
+            FiringTolerance = 20,
+            
+            Label = 'Zealot',
+            
+            MaxRadius = 55,
+
+            MuzzleVelocity = 33,
+            
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/AAAZealotMissile01/AAAZealotMissile01_proj.bp',
+            ProjectileLifetime = 6,
+            
+            RackBones = {
+                { MuzzleBones = {'AA1_Muzzle'}, RackBone = 'AA1_Muzzle' },
+            },
+            
+            RangeCategory = 'UWRC_AntiAir',
+            
+            RateOfFire = 0.5,
+            
+            TargetCheckInterval = 0.3,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'HIGHPRIAIR',
+                'TORPEDOBOMBER',
+                'BOMBER',
+                'SPECIALLOWPRI',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE, SATELLITE',
+            TrackingRadius = 1.1,
+            
+            TurretBoneMuzzle = 'AA1_Muzzle',
+            TurretBonePitch = 'AA1_Turret',
+            TurretBoneYaw = 'AA1_Turret',
+            
+            TurretPitch = 10,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 60,
+            
+            TurretYaw = 10,
+            TurretYawRange = 100,
+            TurretYawSpeed = 60,
+            
+            Turreted = true,
+        },
+        
+        { --Slightly less forward
+
+            advancedTracking = true,
+        
+            AlwaysRecheckTarget = true,
+
+            Audio = {
+                Fire = Sound {Bank = 'UASWeapon', Cue = 'UAS0202_SAM', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            BallisticArc = 'RULEUBA_None',
+            CannotAttackGround = true,
+            CollideFriendly = false,
+            
+            Damage = 440,
+            DamageType = 'Normal',
+            
+            DisplayName = 'Zealot AA Missile',
+            
+            FireTargetLayerCapsTable = { Water = 'Air' },
+            FiringTolerance = 20,
+            
+            Label = 'Zealot',
+            
+            MaxRadius = 55,
+
+            MuzzleVelocity = 33,
+            
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/AAAZealotMissile01/AAAZealotMissile01_proj.bp',
+            ProjectileLifetime = 6,
+            
+            RackBones = {
+                { MuzzleBones = {'AA2_Muzzle'}, RackBone = 'AA2_Muzzle' },
+            },
+            
+            RateOfFire = 1,
+            
+            TargetCheckInterval = 0.3,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'HIGHPRIAIR',
+                'TORPEDOBOMBER',
+                'BOMBER',
+                'SPECIALLOWPRI',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+            TrackingRadius = 1.2,
+            
+            TurretBoneMuzzle = 'AA2_Muzzle',
+            TurretBonePitch = 'AA2_Turret',
+            TurretBoneYaw = 'AA2_Turret',
+            TurretDualManipulators = false,
+            
+            TurretPitch = 10,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 60,
+            
+            TurretYaw = -10,
+            TurretYawRange = 100,
+            TurretYawSpeed = 60,
+
+            Turreted = true,
+        },
+
+        -- Shield disruptors
+        {
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                MuzzleChargeStart = Sound {Bank = 'UALWeapon', Cue = 'UAL0201_Cannon_Disruptor', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+            
+            Damage = 5,
+            DamageRadius = 0,
+            DamageToShields = 1300,
+            DamageType = 'Normal',
+            
+            DisplayName = 'Shield Disruptor Cannon',
+            
+            FireTargetLayerCapsTable = {
+                Water = 'Land|Water|Seabed',
+            },
+            FiringTolerance = 1,
+            
+            Label = 'Disruptor',
+            
+            MaxRadius = 80,
+            
+            MuzzleChargeDelay = 0.5,
+
+            MuzzleVelocity = 30,
+            
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/ADFShieldDisruptor01/ADFShieldDisruptor01_proj.bp',
+            ProjectileLifetime = 3,
+            
+            RackBones = {
+                {
+                    MuzzleBones = {'AS1_Muzzle'},
+                    RackBone = 'AS1_Turret',
+                },
+            },
+
+            RackSlavedToTurret = true,
+            
+            RateOfFire = 0.5,       -- 650 DPS Shields
+            
+            TargetCheckInterval = 0.75,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'SHIELD',
+                'DEFENSE',
+                'SPECIALLOWPRI',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+            
+            TurretBoneMuzzle = 'AS1_Muzzle',
+            TurretBonePitch = 'AS1_Turret',
+            TurretBoneYaw = 'AS1_Turret',
+            TurretDualManipulators = false,
+            
+            TurretPitch = 0,
+            TurretPitchRange = 20,
+            TurretPitchSpeed = 60,
+            
+            TurretYaw = 0,
+            TurretYawRange = 155,
+            TurretYawSpeed = 60,
+            
+            Turreted = true,
+        },
+        {
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                MuzzleChargeStart = Sound {Bank = 'UALWeapon', Cue = 'UAL0201_Cannon_Disruptor', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+            Damage = 5,
+            DamageRadius = 0,
+            DamageToShields = 1300,
+            
+            DamageType = 'Normal',
+            
+            DisplayName = 'Shield Disruptor Cannon',
+            
+            FireTargetLayerCapsTable = {
+                Water = 'Land|Water|Seabed',
+            },
+            FiringTolerance = 1,
+            
+            Label = 'Disruptor',
+            
+            MaxRadius = 80,
+            
+            MuzzleChargeDelay = 0.5,
+
+            MuzzleVelocity = 30,
+            
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/ADFShieldDisruptor01/ADFShieldDisruptor01_proj.bp',
+            ProjectileLifetime = 3,
+            
+            RackBones = {
+                { MuzzleBones = {'AS2_Muzzle'}, RackBone = 'AS2_Turret' },
+            },
+
+            RackSlavedToTurret = true,
+            
+            RateOfFire = 0.5,
+            
+            TargetCheckInterval = 0.75,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'SHIELD',
+                'DEFENSE',
+                'SPECIALLOWPRI',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+            
+            TurretBoneMuzzle = 'AS2_Muzzle',
+            TurretBonePitch = 'AS2_Turret',
+            TurretBoneYaw = 'AS2_Turret',
+            
+            TurretPitch = 0,
+            TurretPitchRange = 20,
+            TurretPitchSpeed = 60,
+            
+            TurretYaw = 0,
+            TurretYawRange = 80,
+            TurretYawSpeed = 60,
+            
+            Turreted = true,
+        },
+
+    },
+}

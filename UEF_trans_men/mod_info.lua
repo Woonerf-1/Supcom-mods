@@ -1,0 +1,11 @@
+name = "Trans men are sexy"
+version = 2.0
+description = "This modification adds experimental Transporters and more.(btw max loves trans men)"
+copyright = "nope"
+author = "Colin"
+uid = "d59081a9-603b-46f1-becd-3b6520614469+1"
+icon = "/mods/UEF_trans_men/icons/modicon.bmp"
+selectable = true
+enabled = true
+exclusive = false
+ui_only = false

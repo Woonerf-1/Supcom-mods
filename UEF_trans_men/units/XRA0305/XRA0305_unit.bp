@@ -1,0 +1,373 @@
+UnitBlueprint {
+    AI = {
+        GuardReturnRadius = 96,
+        GuardScanRadius = 64,
+    },
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 0.2,
+        BankForward = false,
+		
+        CanFly = true,
+		
+        CirclingElevationChangeRatio = 0.75,
+		
+		CirclingFlightChangeFrequency = 6,
+		
+        CirclingRadiusChangeMaxRatio = 0.95,
+        CirclingRadiusChangeMinRatio = 0.4,
+		
+        CirclingTurnMult = 3,
+		
+        KLift = 2,
+        KLiftDamping = 2,
+		
+        KMove = 0.6,
+        KMoveDamping = 0.75,
+
+        KTurn = 0.6,
+        KTurnDamping = 1,
+		
+        LiftFactor = 2,
+		
+        MaxAirspeed = 10,
+        MinAirspeed = 3,
+		
+        StartTurnDistance = 1,
+
+        Winged = false,        
+    },
+	
+    Audio = {
+        Killed      = Sound { Bank = 'URADestroy', Cue = 'URA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        StartMove   = Sound { Bank = 'XRA', Cue = 'XRA0305_Move_Start', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection = Sound { Bank = 'Interface', Cue = 'Cybran_Select_Air', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+
+    Buffs = {
+        Regen = {
+            Level1 = 5,
+            Level2 = 10,
+            Level3 = 15,
+            Level4 = 20,
+            Level5 = 25,
+        },
+    },
+	
+    BuildIconSortPriority = 50,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'CYBRAN',
+        'MOBILE',
+        'AIR',
+        'TECH3',
+        'GROUNDATTACK',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYDIRECTFIRE',
+    },
+
+    Defense = {
+        ArmorType = 'Light',
+        Health = 4400,
+        MaxHealth = 4400,
+        RegenRate = 10,
+        
+        AirThreatLevel = 8,
+        SurfaceThreatLevel = 20,
+    },
+	
+    Description = '<LOC xra0305_desc>Advanced Gunship',
+	
+    Display = {
+        Abilities = {
+            "<LOC ability_aa>Anti-Air",
+            '<LOC ability_personalstealth>Personal Stealth',
+        },
+        
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 150,
+                    ShaderName = 'Insect',
+                },
+                {
+                    AlbedoName = 'xra0305_lod1_albedo.dds',
+                    LODCutoff = 215,
+                    ShaderName = 'Insect',
+                    SpecularName = 'xra0305_lod1_specteam.dds',
+                },
+            },
+        },
+
+        UniformScale = 0.05,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 89250,
+        BuildCostMass = 1525,
+        BuildTime = 5000,
+
+        MaintenanceConsumptionPerSecondEnergy = 25,
+    },
+
+    General = {
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Cybran',
+        Icon = 'air',
+        
+        OrderOverrides = {
+            RULEUTC_StealthToggle = { bitmapId = 'stealth-personal', helpText = 'toggle_stealth_personal' },
+        },
+        
+        ToggleCaps = { RULEUTC_StealthToggle = true },
+        
+        UnitName = '<LOC xra0305_name>Wailer',
+    },
+	
+    Intel = {
+		RadarStealth = true,
+        VisionRadius = 36,
+    },
+	
+    Interface = {
+        HelpText = 'Assault Gunship',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.8,
+    LifeBarSize = 1.5,
+	
+    Physics = {
+        BankingSlope = 0.5,
+		
+        BuildOnLayerCaps = { LAYER_Air = true },
+		
+        Elevation = 13,
+		
+        FuelRechargeRate = 12,
+        FuelUseTime = 420,
+		
+        GroundCollisionOffset = 1.6,
+		
+		MaxSpeed = 1,	-- removing this causes unit to crash game
+
+        MeshExtentsX = 1.75,
+        MeshExtentsY = 0.7,
+        MeshExtentsZ = 1.75,
+
+        MotionType = 'RULEUMT_Air',
+    },
+	
+    SelectionSizeX = 1,
+    SelectionSizeZ = 1.2,
+    SelectionThickness = 0.4,
+	
+	SizeSphere = 1.05,
+
+    SizeX = 1.7,
+    SizeY = 0.55,
+    SizeZ = 1.7,
+	
+    StrategicIconName = 'icon_gunship3_directfire',
+    StrategicIconSortPriority = 55,
+	
+    Transport = {
+        AirClass = true,
+        TransportClass = 3,
+    },
+	
+    Veteran = {
+        Level1 = 10,
+        Level2 = 20,
+        Level3 = 30,
+        Level4 = 40,
+        Level5 = 50,
+    },
+	
+    Weapon = {
+        {
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                Fire = Sound { Bank = 'XRA_Weapon', Cue = 'XRA0305_Disintegrator', LodCutoff = 'Weapon_LodCutoff'},
+            },
+			
+            AutoInitiateAttackCommand = true,
+			
+            BallisticArc = 'RULEUBA_None',
+			
+            CollideFriendly = false,
+			
+            Damage = 200,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Disintegrator',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land|Water|Seabed',
+                Land = 'Air|Land|Water',
+            },
+			
+			FiringRandomness = 0.3,
+            FiringTolerance = 0.5,
+			
+            Label = 'Disintegrator01',
+			
+            MaxRadius = 32,
+
+            MuzzleVelocity = 60,
+			
+            ProjectileId = '/projectiles/CDFLaserDisintegrator04/CDFLaserDisintegrator04_proj.bp',
+            ProjectileLifetime = 0.8,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Turret_Down_Muzzle_01'},
+                    RackBone = 'Turret_Down_Barrel_01',
+                },
+                {
+                    MuzzleBones = {'Turret_Down_Muzzle_02'},
+                    RackBone = 'Turret_Down_Barrel_02',
+                },
+            },
+
+            RangeCategory = 'UWRC_DirectFire',
+			
+            RateOfFire = 2,		-- 200 DPS Ground
+			
+            TargetCheckInterval = 0.5,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+				'ANTIAIR',
+                'ALLUNITS,-WALL',
+            },
+            TargetRestrictDisallow = 'HIGHALTAIR, UNTARGETABLE, SATELLITE',
+			
+            TurretBoneDualMuzzle = 'Turret_Down_Muzzle_02',
+            TurretBoneDualPitch = 'Turret_Down_Barrel_02',
+
+            TurretBoneMuzzle = 'Turret_Down_Muzzle_01',
+            TurretBonePitch = 'Turret_Down_Barrel_01',
+
+            TurretBoneYaw = 'Turret_Down_01',
+
+            TurretDualManipulators = true,
+			
+            TurretPitch = -20,
+            TurretPitchRange = 80,
+            TurretPitchSpeed = 50,
+			
+            TurretYaw = 0,
+            TurretYawRange = 120,
+            TurretYawSpeed = 50,
+			
+            Turreted = true,
+            UseFiringSolutionInsteadOfAimBone = true,
+        },
+        {
+            Audio = {
+                Fire = Sound { Bank = 'XRA_Weapon', Cue = 'XRA0305_Missile', LodCutoff = 'Weapon_LodCutoff' },
+            },
+			
+            BallisticArc = 'RULEUBA_None',
+			
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 80,
+            DamageFriendly = false,
+            DamageType = 'Light',
+			
+            DisplayName = 'Nanite Missile Launcher',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air',
+            },
+			
+            FiringTolerance = 5,
+
+            Label = 'Missiles1',
+			
+            MaxRadius = 36,
+			
+            MuzzleSalvoDelay = 0.4,
+            MuzzleSalvoSize = 2,
+
+            MuzzleVelocity = 45,
+			
+            ProjectileId = '/projectiles/CAAMissileNanite03/CAAMissileNanite03_proj.bp',
+            ProjectileLifetime = 1.8,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Turret_Up_Muzzle_01','Turret_Up_Muzzle_02'},
+                    RackBone = 'Turret_Up_Barrel',
+                },
+            },
+
+            RangeCategory = 'UWRC_AntiAir',
+			
+            RateOfFire = 1,		-- 80 DPS Air
+			
+            TargetCheckInterval = 1.0,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+            },
+			
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+			
+            TurretBoneMuzzle = 'Turret_Up_Barrel',
+            TurretBonePitch = 'Turret_Up_Barrel',
+            TurretBoneYaw = 'Turret_Up',
+			
+            TurretPitch = 20,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 60,
+			
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 60,
+            Turreted = true,
+        },
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 300,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+            WeaponCategory = 'Death',
+        },
+    },
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.1,
+        HealthMult = 0.6,
+        MassMult = 0.6,
+		LifeTime = 600,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Water = true,
+        },
+    },
+}

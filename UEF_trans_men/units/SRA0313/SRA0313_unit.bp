@@ -1,0 +1,540 @@
+UnitBlueprint {
+    AI = {
+        GuardReturnRadius = 96,
+        GuardScanRadius = 64,
+		TargetBones = {'Hat'},
+    },
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 1.8,
+        BankForward = false,
+        BreakOffDistance = 22,
+        BreakOffTrigger = 30,
+		
+        CanFly = true,
+		
+        CombatTurnSpeed = 1.25,
+		
+        EngageDistance = 55,
+		
+        KLift = 4,
+        KLiftDamping = 3,
+		
+        KMove = 1.7,
+        KMoveDamping = 0.92,
+		
+        KRoll = 1.45,
+        KRollDamping = 1.45,
+		
+        KTurn = 1.6,
+        KTurnDamping = 1.4,
+		
+        LiftFactor = 8,
+		
+        MaxAirspeed = 28,
+        MinAirspeed = 14,
+		
+		RandomMinChangeCombatStateTime = 3,
+		RandomMaxChangeCombatStateTime = 8,
+		
+        StartTurnDistance = 4,
+		
+        TightTurnMultiplier = 1.02,
+		
+        Winged = true,
+    },
+	
+    Audio = {
+        AirUnitWaterImpact = Sound {Bank = 'Explosions', Cue = 'Expl_Water_Lrg_01', LodCutoff = 'UnitMove_LodCutoff' },
+               AmbientMove = Sound {Bank = 'URA', Cue = 'URA0303_Move_Loop', LodCutoff = 'UnitMove_LodCutoff' },
+                 Destroyed = Sound {Bank = 'URADestroy', Cue = 'URA_Destroy_Air', LodCutoff = 'UnitMove_LodCutoff' },
+                    Killed = Sound {Bank = 'URADestroy', Cue = 'URA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+                   Landing = Sound {Bank = 'URA', Cue = 'URA0303_Move_Land', LodCutoff = 'UnitMove_LodCutoff' },
+                 Refueling = Sound {Bank = 'UEA', Cue = 'UEA_Repair_Refuel', LodCutoff = 'UnitMove_LodCutoff' },
+                 StartMove = Sound {Bank = 'URA', Cue = 'URA0303_Move_Start', LodCutoff = 'UnitMove_LodCutoff' },
+                  StopMove = Sound {Bank = 'URA', Cue = 'URA0303_Move_Stop', LodCutoff = 'UnitMove_LodCutoff' },
+                  Thruster = Sound {Bank = 'URA', Cue = 'URA0303_Move_Thruster', LodCutoff = 'UnitMove_LodCutoff' },
+               UISelection = Sound {Bank = 'Interface', Cue = 'Cybran_Select_Air', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+	
+    Buffs = {},
+	
+    BuildIconSortPriority = 32,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'CYBRAN',
+        'MOBILE',
+        'AIR',
+        'HIGHALTAIR',
+        'SPECIALHIGHPRI',
+        'TECH3',
+        'ANTIAIR',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYRADAR',
+        'RESEARCHLOCKED',
+    },
+	
+    Defense = {
+        AirThreatLevel = 96,
+        ArmorType = 'Light',
+
+        Health = 3800,
+        MaxHealth = 3800,
+        RegenRate = 16,
+    },
+	
+    Description = '<LOC sra0313_desc>Penetration Fighter',
+	
+    Display = {
+        Abilities = {
+            "<LOC ability_aa>Anti-Air",
+			'<LOC ability_radar>Radar',
+            '<LOC ability_personalstealth>Personal Stealth',
+        },
+        
+        LayerChangeEffects = {
+            AirLand = {
+                Effects = {
+                    {Bones = {0}, Type = 'Landing01'},
+                },
+            },
+            LandAir = {
+                Effects = {
+                    {Bones = {0}, Type = 'TakeOff01'},
+                },
+            },
+        },
+        
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {LODCutoff = 130, ShaderName = 'Insect'},
+                {LODCutoff = 260, ShaderName = 'Insect'},
+            },
+        },
+        
+        MovementEffects = {
+            Air = {
+                Contrails = {
+                    Bones = {'Tip_001', 'Tip_009'},
+                },
+                Effects = {
+                    {
+                        Bones = {'Exhaust'},
+                        Type = 'AirMoveExhaust',
+                    },
+                },
+            },
+        },
+
+        UniformScale = 0.036,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 100000,
+        BuildCostMass = 1390,
+        BuildTime = 13000,
+		
+        ResearchMultEnergy = 0.2,
+        MaintenanceConsumptionPerSecondEnergy = 75,
+    },
+	
+    Footprint = {
+        MaxSlope = 0.25,
+        SizeX = 2,
+        SizeZ = 2,
+    },
+	
+    General = {
+        CapCost = 2,
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Cybran',
+        Icon = 'air',
+        
+        OrderOverrides = {
+            RULEUTC_StealthToggle = { bitmapId = 'stealth-personal', helpText = 'toggle_stealth_personal' },
+        },
+        
+        ToggleCaps = { RULEUTC_StealthToggle = true },
+        
+        UnitName = '<LOC sra0313_name>Twilight Patron',
+    },
+	
+    Intel = {
+		FreeIntel = true,
+        
+		RadarRadius = 56,
+        RadarStealth = true,
+        VisionRadius = 56,
+		Cloak = true,
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.85,
+    LifeBarSize = 1.5,
+	
+    Physics = {
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+        },
+        Elevation = 25,
+		
+        FuelRechargeRate = 5,
+        FuelUseTime = 480,
+        GroundCollisionOffset = 3,
+        MaxSpeed = 0.5,
+        MotionType = 'RULEUMT_Air',
+    },
+	
+    SelectionSizeX = 1,
+    SelectionSizeZ = 1.1,
+    SelectionThickness = 0.36,
+	
+    SizeSphere = 2.8,
+	
+    SizeX = 1.35,
+    SizeY = 0.36,
+    SizeZ = 2.05,
+	
+    StrategicIconName = 'icon_fighter3_antimissile',
+    StrategicIconSortPriority = 55,
+	
+    Transport = {
+        AirClass = true,
+        TransportClass = 3,
+    },
+	
+    Veteran = {
+        Level1 = 12,
+        Level2 = 24,
+        Level3 = 36,
+        Level4 = 48,
+        Level5 = 60,
+    },
+	
+    Weapon = {
+        {
+            Audio = {Fire = Sound {Bank = 'URLWeapon', Cue = 'URB2301_Cannon_Sgl', LodCutoff = 'Weapon_LodCutoff'}},
+
+            AutoInitiateAttackCommand = true,            
+
+            BallisticArc = 'RULEUBA_None',
+			
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.2,
+			
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 60,				-- 120 dmg per shot
+            DamageFriendly = false,
+            DamageType = 'Light',
+			
+            DisplayName = 'Particle Cannon',
+            
+            EnergyDrainPerSecond = 110,
+            EnergyRequired = 50,        -- every half second
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land|water',
+            },
+
+            FiringTolerance = 1.1,
+			
+            Label = 'Laser',
+			
+            NotExclusive = true,
+			
+            MaxRadius = 47,
+			
+            RackBones = {
+                {
+                    MuzzleBones = {'Tip_002'},
+                    RackBone = 'Tip_002',
+                },
+            },
+
+            RackSalvoFiresAfterCharge = true,
+
+            RangeCategory = 'UWRC_AntiAir',
+			
+            RateOfFire = 2,		-- 2 x 120 = 240 dps by charge
+			
+            ReTargetOnMiss = true,
+
+            TargetCheckInterval = 0.2,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+            TrackingRadius = 1.1,
+
+            TurretBoneMuzzle = 'Tip_002',
+            TurretBonePitch = 'Tip_002',
+            TurretBoneYaw = 'Tip_002',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 75,
+			
+            TurretYaw = 0,
+            TurretYawRange = 55,
+            TurretYawSpeed = 75,
+			
+            Turreted = true,
+            UseFiringSolutionInsteadOfAimBone = true,
+        },
+        {
+            Audio = {Fire = Sound {Bank = 'URLWeapon', Cue = 'URB2301_Cannon_Sgl', LodCutoff = 'Weapon_LodCutoff'}},
+
+            BallisticArc = 'RULEUBA_None',
+			
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.3,
+			
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 40,
+            DamageFriendly = false,
+            DamageType = 'Light',
+			
+            DisplayName = 'Particle Cannon',
+            
+            EnergyDrainPerSecond = 110,
+            EnergyRequired = 50,
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land|water',
+                Land = 'Air',
+                Water = 'Air',
+            },
+
+            FiringTolerance = 1.1,
+			
+            Label = 'Laser',
+			
+            NotExclusive = true,
+			
+            MaxRadius = 47,
+            
+            RackBones = {
+                {
+                    MuzzleBones = {'Tip_003'},
+                    RackBone = 'Tip_003',
+                },
+            },
+
+            RackSalvoFiresAfterCharge = true,
+
+            RateOfFire = 2,
+			
+            ReTargetOnMiss = true,
+
+            TargetCheckInterval = 0.2,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+			TargetRestrictOnlyAllow = 'AIR',
+			
+            TurretBoneMuzzle = 'Tip_003',
+            TurretBonePitch = 'Tip_003',
+            TurretBoneYaw = 'Tip_003',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 75,
+			
+            TurretYaw = 0,
+            TurretYawRange = 55,
+            TurretYawSpeed = 75,
+			
+            Turreted = true,
+            UseFiringSolutionInsteadOfAimBone = true,
+        },
+        {
+            Audio = {Fire = Sound {Bank = 'URLWeapon', Cue = 'URB2301_Cannon_Sgl', LodCutoff = 'Weapon_LodCutoff'}},
+            AutoInitiateAttackCommand = false,
+            BallisticArc = 'RULEUBA_None',
+			
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.4,
+			
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 30,
+            DamageFriendly = false,
+            DamageType = 'Light',
+			
+            DisplayName = 'Particle Cannon',
+            
+            EnergyDrainPerSecond = 110,
+            EnergyRequired = 50,
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land|water',
+            },
+
+            FiringTolerance = 2,
+			
+            Label = 'Laser',
+            
+			NotExclusive = true,
+			
+            MaxRadius = 47,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Tip_007'},
+                    RackBone = 'Tip_007',
+                },
+            },
+
+            RackSalvoFiresAfterCharge = true,
+
+            RateOfFire = 2,
+			
+            ReTargetOnMiss = true,
+
+            TargetCheckInterval = 0.2,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+			TargetRestrictOnlyAllow = 'AIR',
+			
+            TurretBoneMuzzle = 'Tip_007',
+            TurretBonePitch = 'Tip_007',
+            TurretBoneYaw = 'Tip_007',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 75,
+			
+            TurretYaw = 0,
+            TurretYawRange = 55,
+            TurretYawSpeed = 75,
+			
+            Turreted = true,
+            UseFiringSolutionInsteadOfAimBone = true,
+        },
+        {
+            Audio = {Fire = Sound {Bank = 'URLWeapon', Cue = 'URB2301_Cannon_Sgl', LodCutoff = 'Weapon_LodCutoff'}},
+            
+            BallisticArc = 'RULEUBA_None',
+			
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.1,
+			
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 120,
+            DamageFriendly = false,
+            DamageType = 'Light',
+			
+            DisplayName = 'Particle Cannon',
+            
+            EnergyDrainPerSecond = 110,
+            EnergyRequired = 50,
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land|water',
+            },
+
+            FiringTolerance = 1.1,
+			
+            Label = 'Laser',
+			
+            NotExclusive = true,
+			
+            MaxRadius = 47,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Tip_008'},
+                    RackBone = 'Tip_008',
+                },
+            },
+
+            RackSalvoFiresAfterCharge = true,
+
+            RateOfFire = 2,
+            
+            ReTargetOnMiss = true,
+
+            TargetCheckInterval = 0.2,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+			
+            TurretBoneMuzzle = 'Tip_008',
+            TurretBonePitch = 'Tip_008',
+            TurretBoneYaw = 'Tip_008',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 75,
+			
+            TurretYaw = 0,
+            TurretYawRange = 55,
+            TurretYawSpeed = 75,
+			
+            Turreted = true,
+            UseFiringSolutionInsteadOfAimBone = true,
+        },
+
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 460,
+            DamageFriendly = true,
+            DamageRadius = 2.5,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+            WeaponCategory = 'Death',
+        },
+    },
+
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.1,
+        HealthMult = 0.3,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Water = true,
+        },
+    },
+}

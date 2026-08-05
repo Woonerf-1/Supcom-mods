@@ -1,0 +1,236 @@
+UnitBlueprint {
+
+    AI = {
+        InitialAutoMode = true,
+        TargetBones = {'Door_03','Door_04'},
+    },
+	
+    Audio = {
+        Destroyed   = Sound { Bank = 'UALDestroy', Cue = 'UAB_Destroy_Huge', LodCutoff = 'UnitMove_LodCutoff' },
+        Open        = Sound { Bank = 'UAB', Cue = 'UAB2108_Doors', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection = Sound { Bank = 'Interface', Cue = 'Aeon_Select_Gun', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+	
+    Buffs = {
+        Regen = {
+            Level1 = 1,
+            Level2 = 2,
+            Level3 = 3,
+            Level4 = 4,
+            Level5 = 5,
+        },
+    },
+	
+    BuildIconSortPriority = 150,
+	
+    Categories = {
+        'SELECTABLE',
+        'AEON',
+        'STRUCTURE',
+		'DEFENSE',
+        'TECH3',
+        'INDIRECTFIRE',
+        'TACTICALMISSILEPLATFORM',
+        'DRAGBUILD',
+        'SILO',
+        'SIZE4',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'SORTSTRATEGIC',
+    },
+
+    Defense = {
+        ArmorType = 'Structure',
+        Health = 4500,
+        MaxHealth = 4500,
+        SurfaceThreatLevel = 95,
+    },
+	
+    Description = '<LOC bab2308_desc>Advanced Tactical Missile Launcher',
+	
+    Display = {
+	
+        Abilities = {
+            'Requires Manual Launch',
+			'Can be built underwater',
+			'Fires a missile that splits into 6 missiles',
+        },
+		
+        Mesh = { IconFadeInZoom = 130, LODs = { { LODCutoff = 215, Scrolling = true, ShaderName = 'Aeon' } } },
+
+        UniformScale = 0.1,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 25500,
+        BuildCostMass = 1200,
+        BuildTime = 4500,
+		
+        BuildRate = 200,	-- for missiles
+		
+        RebuildBonusIds = {'bab2308'},
+    },
+	
+    Footprint = {
+        SizeX = 1,
+        SizeZ = 1,
+    },
+	
+    General = {
+		CapCost = 4,
+        CommandCaps = {
+            RULEUCC_Pause = true,
+            RULEUCC_SiloBuildTactical = true,
+            RULEUCC_Stop = true,
+            RULEUCC_Tactical = true,
+        },
+        FactionName = 'Aeon',
+        Icon = 'land',
+        SelectionPriority = 5,
+        UnitName = '<LOC bab2308_name>Purifier',
+        UpgradesFrom = 'uab2108',
+    },
+	
+    Intel = {
+        VisionRadius = 24,
+    },
+	
+    Interface = {
+        HelpText = 'Advanced Tactical Missile Launcher',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.45,
+    LifeBarSize = 1,
+	
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+            LAYER_Seabed = true,
+        },
+        DragCoefficient = 0.2,
+        FlattenSkirt = true,
+        MaxSteerForce = 0,
+        MeshExtentsX = 0.5,
+        MeshExtentsY = 0.35,
+        MeshExtentsZ = 1.5,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_None',
+        SkirtOffsetX = -0.5,
+        SkirtOffsetZ = -0.5,
+        SkirtSizeX = 2,
+        SkirtSizeZ = 2,
+        TurnRate = 0,
+    },
+	
+    SelectionSizeX = 0.47,
+    SelectionSizeZ = 0.8,
+    SelectionThickness = 0.5,
+	
+    SizeX = 0.45,
+    SizeY = 0.35,
+    SizeZ = 1,
+	
+    SplitDamage = {
+        DamageAmount = 2000,
+        DamageRadius = 4,
+    },
+	
+    StrategicIconName = 'icon_structure2_missile',
+    StrategicIconSortPriority = 180,
+	
+    Veteran = {
+        Level1 = 18,
+        Level2 = 32,
+        Level3 = 54,
+        Level4 = 72,
+        Level5 = 90,
+    },
+	
+    Weapon = {
+        {
+            AboveWaterTargetsOnly = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'UALWeapon', Cue = 'UAB2108_Missile_Serpent2', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            
+            BallisticArc = 'RULEUBA_None',
+           
+            CollideFriendly = false,
+            CountedProjectile = true,
+			
+            Damage = 1500,          -- but this will split into 6 of 2000 = 9000 damage
+            DamageFriendly = true,
+            DamageRadius = 4,       -- with a radius of 2.4
+            DamageType = 'Normal',
+			
+            DisplayName = 'Serpentine Missile',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Land|Water|Seabed',
+                Seabed = 'Land|Water|Seabed',
+            },
+			
+            FiringTolerance = 5,
+            ForceSingleFire = false,
+			
+            InitialProjectileStorage = 2,
+			
+            Label = 'CruiseMissile',
+			
+            ManualFire = true,
+
+            MaxProjectileStorage = 8,
+			
+            MaxRadius = 256,
+            MinRadius = 70,
+
+            MuzzleVelocity = 5,
+			
+            ProjectileId = '/mods/UEF_trans_men/projectiles/MirvSerpentine01/MirvSerpentine01_proj.bp',
+            ProjectileLifetime = 600,
+			
+            RackBones = {
+                { MuzzleBones = {'Attachpoint01'}, RackBone = 'Turret01' },
+                { MuzzleBones = {'Attachpoint02'}, RackBone = 'Turret02' },
+                { MuzzleBones = {'Attachpoint03'}, RackBone = 'Turret03' },
+                { MuzzleBones = {'Attachpoint04'}, RackBone = 'Turret04' },
+            },
+
+            RackSalvoReloadTime = 4,
+
+            RangeCategory = 'UWRC_IndirectFire',
+			
+            RateOfFire = 0.25,
+			
+            TargetCheckInterval = 1.0,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+				'EXPERIMENTAL',
+                'STRUCTURE DEFENSE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+
+            Turreted = false,
+
+            WeaponRepackTimeout = 3,
+            WeaponUnpackAnimation = '/mods/UEF_trans_men/units/BAB2308/BAB2308_Aopen.sca',
+            WeaponUnpackAnimationRate = 3,
+            WeaponUnpacks = true,
+        },
+    },
+
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.5,
+        HealthMult = 0.9,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+        },
+    },
+}

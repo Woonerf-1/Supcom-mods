@@ -1,0 +1,431 @@
+UnitBlueprint {
+    AI = {
+        GuardReturnRadius = 72,
+        GuardScanRadius = 56,
+    },
+	
+	-- this is a very heavy ponderous beast
+	-- slow in almost every way --
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 0.2,
+        BankForward = false,
+		
+        CanFly = true,
+		
+        CirclingElevationChangeRatio = 0.75,
+		
+		CirclingFlightChangeFrequency = 8,		
+		
+        CirclingRadiusChangeMaxRatio = 0.9,
+        CirclingRadiusChangeMinRatio = 0.3,
+		
+        CirclingRadiusVsAirMult = 0.66,
+		
+        CirclingTurnMult = 3,
+		
+        KLift = 2,
+        KLiftDamping = 2,
+		
+        KMove = 0.55,
+        KMoveDamping = 0.75,
+		
+        KTurn = 0.6,
+        KTurnDamping = 1,
+		
+        LiftFactor = 1.5,
+		
+        MaxAirspeed = 9,
+        MinAirspeed = 3,
+		
+        StartTurnDistance = 1,
+
+        Winged = false,
+    },
+	
+    Audio = {
+        AirUnitWaterImpact  = Sound { Bank = 'Explosions', Cue = 'Expl_Water_Lrg_01', LodCutoff = 'UnitMove_LodCutoff'},
+        Destroyed           = Sound { Bank = 'UAADestroy', Cue = 'UAA_Destroy_Air', LodCutoff = 'UnitMove_LodCutoff'},
+        Killed              = Sound { Bank = 'UAADestroy', Cue = 'UAA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMove           = Sound { Bank = 'XAA', Cue = 'XAA0305_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection         = Sound { Bank = 'Interface', Cue = 'Aeon_Select_Air', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+	
+    Buffs = {
+        Regen = {
+            Level1 = 3,
+            Level2 = 6,
+            Level3 = 9,
+            Level4 = 12,
+            Level5 = 15,
+        },
+    },
+	
+    BuildIconSortPriority = 50,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'AEON',
+        'MOBILE',
+        'AIR',
+        'TECH3',
+        'GROUNDATTACK',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+		'SPECIALHIPRI',
+    },
+	
+    CollisionOffsetY = 0.3,
+	
+    Defense = {
+        AirThreatLevel = 12,
+        ArmorType = 'Light',
+        Health = 4500,
+        MaxHealth = 4500,
+        RegenRate = 6,
+        SurfaceThreatLevel = 19,
+    },
+	
+    Description = '<LOC xaa0305_desc>AA Gunship',
+	
+    Display = {
+        Abilities = {
+			'Ground Attack',
+            "<LOC ability_aa>Anti-Air",
+        },
+
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 120,
+                    ShaderName = 'Aeon',
+                },
+                {
+                    AlbedoName = 'xaa0305_lod1_albedo.dds',
+                    LODCutoff = 215,
+                    ShaderName = 'Aeon',
+                    SpecularName = 'xaa0305_lod1_specteam.dds',
+                },
+            },
+        },
+
+        UniformScale = 0.35,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 97125,
+        BuildCostMass = 1562,
+        BuildTime = 5000,
+    },
+
+    General = {
+        CapCost = 1.5,
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Aeon',
+        Icon = 'air',
+        TechLevel = 'RULEUTL_Secret',
+        UnitName = '<LOC xaa0305_name>Restorer',
+        UnitWeight = 1,
+    },
+	
+    Intel = {
+        VisionRadius = 36,
+    },
+	
+    Interface = {
+        HelpText = 'AA Gunship',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.6,
+    LifeBarSize = 1,
+	
+    Physics = {
+	
+        BuildOnLayerCaps = { LAYER_Air = true },
+		
+        Elevation = 13,
+		
+        FuelRechargeRate = 12,
+        FuelUseTime = 420,
+		
+        GroundCollisionOffset = 2.5,
+		
+        MaxSpeed = 1,
+		
+        MeshExtentsX = 1.75,
+        MeshExtentsY = 0.7,
+        MeshExtentsZ = 1.75,
+		
+        MotionType = 'RULEUMT_Air',
+    },
+	
+    SelectionSizeX = 1.0,
+    SelectionSizeZ = 1.2,
+    SelectionThickness = 0.4,
+	
+	SizeSphere = 1.5,
+	
+    SizeX = 1.7,
+    SizeY = 0.67,
+    SizeZ = 1.7,
+	
+    StrategicIconName = 'icon_gunship3_antiair',
+    StrategicIconSortPriority = 65,
+	
+    Transport = {
+        AirClass = true,
+        TransportClass = 3,
+    },
+	
+    Veteran = {
+        Level1 = 10,
+        Level2 = 20,
+        Level3 = 30,
+        Level4 = 40,
+        Level5 = 50,
+    },
+	
+    Weapon = {
+        {
+            AboveWaterTargetsOnly = true,
+
+            Audio = {
+                Fire = Sound { Bank = 'XAA_Weapon', Cue = 'XAA0305_Quad_Light_Laser', LodCutoff = 'Weapon_LodCutoff' },
+            },
+			
+            AutoInitiateAttackCommand = true,
+			
+            BallisticArc = 'RULEUBA_None',
+			
+            CollideFriendly = false,
+			
+            Damage = 195,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Light Laser',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land|Water|Seabed',
+                Land = 'Air|Land|Water',
+            },
+			
+			FiringRandomness = 0.4,
+            FiringTolerance = 1,
+			
+            Label = 'Turret',
+			
+            MaxRadius = 32,
+			
+            MuzzleSalvoDelay = 0.4,
+            MuzzleSalvoSize = 2,
+            MuzzleVelocity = 39,
+			
+            ProjectileId = '/projectiles/ADFQuadLaserLight01/ADFQuadLaserLight01_proj.bp',
+            ProjectileLifetime = 0.9,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Turret_Muzzle03','Turret_Muzzle04'},
+                    RackBone = 'C_Barrel',
+                },
+            },
+
+            RangeCategory = 'UWRC_DirectFire',
+			
+            RateOfFire = 1,	-- 186 DPS Ground
+			
+            TargetCheckInterval = 1.0,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'ALLUNITS,-WALL',
+            },
+            TargetRestrictDisallow = 'HIGHALTAIR, UNTARGETABLE, SATELLITE',
+			
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Turret_Muzzle03',
+            TurretBonePitch = 'C_Barrel',
+            TurretBoneYaw = 'C_Turret',
+			
+            TurretDualManipulators = false,
+			
+            TurretPitch = -20,
+            TurretPitchRange = 70,
+            TurretPitchSpeed = 60,
+
+            TurretYaw = 0,
+            TurretYawRange = 90,
+            TurretYawSpeed = 60,
+            Turreted = true,
+        },
+		
+        {
+            AlwaysRecheckTarget = true,
+
+            Audio = {
+                Fire = Sound { Bank = 'XAA_Weapon', Cue = 'XAA0305_Zealot_Missile', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            AutoInitiateAttackCommand = false,
+
+            BallisticArc = 'RULEUBA_None',
+
+            CannotAttackGround = true,
+
+            CollideFriendly = false,
+			
+            Damage = 200,
+            DamageType = 'Light',
+			
+            DisplayName = 'Zealot AA Missile',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air',
+            },
+			
+            FiringTolerance = 10,
+			
+            Label = 'AAGun',
+			
+            MaxRadius = 38,
+
+            MuzzleVelocity = 30,
+			
+            ProjectileId = '/projectiles/AAAZealotMissile02/AAAZealotMissile02_proj.bp',
+            ProjectileLifetime = 2,
+			
+            RackBones = {
+                { MuzzleBones = {'Turret_Muzzle01'}, RackBone = 'R_Barrel' },
+            },
+
+            RangeCategory = 'UWRC_AntiAir',
+			
+            RateOfFire = 0.5,	-- 60 DPS Air
+			
+            TargetCheckInterval = 0.6,
+            TargetPriorities = {
+                'HIGHPRIAIR',
+                'MOBILE',
+            },
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Turret_Muzzle01',
+            TurretBonePitch = 'R_Barrel',
+            TurretBoneYaw = 'R_Turret',
+			
+            TurretPitch = 20,
+            TurretPitchRange = 180,
+            TurretPitchSpeed = 60,
+
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 60,
+
+            Turreted = true,
+        },
+        {
+            AlwaysRecheckTarget = true,
+
+            Audio = {
+                Fire = Sound { Bank = 'XAA_Weapon', Cue = 'XAA0305_Zealot_Missile', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 200,
+            DamageType = 'Light',
+			
+            DisplayName = 'Zealot AA Missile',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air',
+            },
+			
+            FiringTolerance = 10,
+			
+            Label = 'AAGun',
+			
+            MaxRadius = 38,
+
+            MuzzleVelocity = 30,
+			
+            ProjectileId = '/projectiles/AAAZealotMissile02/AAAZealotMissile02_proj.bp',
+            ProjectileLifetime = 2,
+            RackBones = {
+                {
+                    MuzzleBones = {'Turret_Muzzle02'},
+                    RackBone = 'L_Barrel',
+                },
+            },
+			
+            RateOfFire = 0.5,		-- another 60 DPS Air
+			
+            TargetCheckInterval = 0.6,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+            },
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+			
+            TrackingRadius = 1.1,
+
+            TurretBoneMuzzle = 'Turret_Muzzle02',
+            TurretBonePitch = 'L_Barrel',
+            TurretBoneYaw = 'L_Turret',
+			
+            TurretPitch = 20,
+            TurretPitchRange = 180,
+            TurretPitchSpeed = 60,
+			
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 60,
+
+            Turreted = true,
+        },
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 300,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+            WeaponCategory = 'Death',
+        },
+    },
+	
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.1,
+        HealthMult = 0.6,
+        MassMult = 0.5,
+		LifeTime = 600,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Water = true,
+        },
+    },
+}

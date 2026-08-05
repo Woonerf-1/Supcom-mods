@@ -1,0 +1,53 @@
+ProjectileBlueprint {
+
+    Audio = {
+        ImpactTerrain   = Sound { Bank = 'XSL', Cue = 'XSL0402_Spawn', LodCutoff = 'Weapon_LodCutoff'},
+        ImpactWater     = Sound { Bank = 'Explosions', Cue = 'Cybran_Nuke_Impact', LodCutoff = 'Weapon_LodCutoff'},
+        NukeExplosion   = Sound { Bank = 'XSL', Cue = 'XSL0402_Spawn', LodCutoff = 'Weapon_LodCutoff'},
+    },
+
+    Categories = {
+        'PROJECTILE',
+        'TACTICAL',
+        'MISSILE',
+        'NOSPLASHDAMAGE',
+    },
+
+    Defense = {
+        Health = 3,
+        MaxHealth = 3,
+    },
+
+    Economy = {
+        BuildCostEnergy = 6000,
+        BuildCostMass = 5,
+        BuildTime = 300,
+    },
+
+    DesiredShooterCap = 1,
+
+    Display = {
+        Mesh = { IconFadeInZoom = 200, LODs = { {ShaderName = 'TMeshAlpha'} } },
+        UniformScale = 1,
+    },
+    
+    Physics = {
+        Acceleration = 5,
+        CollideEntity = false,
+        CollideSurface = true,
+        DestroyOnWater = true,
+        InitialSpeed = 5,
+        Lifetime = 600,
+        MaxSpeed = 60,
+        MaxZigZag = 5,
+        RotationalVelocity = 300,
+        RotationalVelocityRange = 300,
+        TrackTarget = true,
+        TrackTargetGround = true,
+        TurnRate = 150,
+        UseGravity = false,
+        VelocityAlign = true,
+        ZigZagFrequency = 0.5,
+    },
+
+}

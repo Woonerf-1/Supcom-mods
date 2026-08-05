@@ -1,0 +1,144 @@
+EmitterBlueprint {
+    BlueprintId = 'nomads_apcannon_muzzle_flash_01_emit',
+    Lifetime = 1.00,
+    Repeattime = 1.00,
+    TextureFramecount = 1.00,
+    Blendmode = 3.00,
+    LocalVelocity = true,
+    LocalAcceleration = false,
+    Gravity = false,
+    AlignRotation = false,
+    AlignToBone = false,
+    Flat = true,
+    LODCutoff = 100.00,
+    EmitIfVisible = true,
+    CatchupEmit = true,
+    CreateIfVisible = true,
+    SnapToWaterline = true,
+    OnlyEmitOnWater = false,
+    InterpolateEmission = true,
+    TextureStripcount = 1.00,
+    SortOrder = 0.00,
+    Texture = [[/textures/particles/nomads/textures/misc/nomads_cloud_fire_smoke_alpha_01.dds]],
+    RampTexture = [[/textures/particles/nomads/ramp/ramp_white_orange_nomads.dds]],
+    XDirectionCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=0.00,z=0.00 },
+        },
+    },
+    YDirectionCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=0.00,z=0.00 },
+        },
+    },
+    ZDirectionCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=0.00,z=0.00 },
+        },
+    },
+    EmitRateCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.01,y=2.00,z=0.00 },
+        },
+    },
+    LifetimeCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.56,y=1.30,z=0.00 },
+        },
+    },
+    VelocityCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=1.00,z=0.11 },
+        },
+    },
+    XAccelCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=0.00,z=0.00 },
+        },
+    },
+    YAccelCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=0.00,z=0.00 },
+        },
+    },
+    ZAccelCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=0.00,z=0.00 },
+        },
+    },
+    SizeCurve = {
+        XRange = 0.10,
+        Keys = {
+            { x=0.02,y=0.02,z=0.00 },
+        },
+    },
+    XPosCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.00,y=0.00,z=0.00 },
+        },
+    },
+    YPosCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.00,y=0.00,z=0.00 },
+        },
+    },
+    ZPosCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.00,y=0.00,z=0.00 },
+        },
+    },
+    StartSizeCurve = {
+        XRange = 5.0,
+        Keys = {
+            { x=1.0,y=1.0,z=0.10 },
+        },
+    },
+    EndSizeCurve = {
+        XRange = 0.10,
+        Keys = {
+            { x=0.04,y=0.1,z=0.10 },
+        },
+    },
+    InitialRotationCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=180.00,z=360.00 },
+        },
+    },
+    RotationRateCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=0.00,z=0.00 },
+        },
+    },
+    FrameRateCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=1.00,z=0.00 },
+        },
+    },
+    TextureSelectionCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=0.00,z=0.00 },
+        },
+    },
+    RampSelectionCurve = {
+        XRange = 1.00,
+        Keys = {
+            { x=0.50,y=0.00,z=0.00 },
+        },
+    },
+}

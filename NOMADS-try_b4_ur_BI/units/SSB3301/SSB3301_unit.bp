@@ -1,0 +1,171 @@
+UnitBlueprint {
+
+    Abilities = {
+        TargetLocation = { bitmapId = 'skry-target', helpText = 'scry_spy_target', preferredSlot = 12, script = 'TargetLocation' },
+    },
+	
+    Audio = {
+        ActiveLoop      = Sound { Bank = 'XAB', Cue = 'XAB3301_Active',      LodCutoff = 'UnitMove_LodCutoff' },
+        DoneBeingBuilt  = Sound { Bank = 'XAB', Cue = 'XAB3301_Activate',    LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection     = Sound { Bank = 'Interface', Cue = 'Aeon_Select_Radar',             LodCutoff = 'UnitMove_LodCutoff' },
+        DeathExplosion  = Sound { Bank = 'UALDestroy', Cue = 'UAB_Destroy_Lrg_PreDestroy',   LodCutoff = 'UnitMove_LodCutoff' },
+        Destroyed       = Sound { Bank = 'UALDestroy', Cue = 'UAB_Destroy_Huge',             LodCutoff = 'UnitMove_LodCutoff' },
+    },
+	
+    BuildIconSortPriority = 200,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3ENGINEER',
+        'BUILTBYTIER3COMMANDER',
+        'NOMADS',
+        'INTELLIGENCE',
+        'STRUCTURE',
+        'TECH3',
+        'SIZE16',
+        'OPTICS',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'ABILITYBUTTON',
+        'SORTINTEL',
+        'DRAGBUILD',
+    },
+	
+    CollisionOffsetY = -0.25,
+	
+    Defense = {
+        ArmorType = 'Structure',
+
+        Health = 1250,
+        MaxHealth = 1250,
+        RegenRate = 2,
+
+        EconomyThreatLevel = 400,
+    },
+	
+    Description = '<LOC ssb3301_desc>Optics Tracking Facility',
+	
+    Display = {
+
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 200,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    Scrolling = true,
+                    ShaderName = 'Seraphim',
+                    MeshName = '/units/XSC1301/XSC1301_lod0.scm',
+                    AlbedoName = '/units/XSC1301/XSC1301_albedo.dds',
+                    NormalsName = '/units/XSC1301/XSC1301_normalsts.dds',
+                    SpecularName = '/units/XSC1301/XSC1301_specteam.dds',
+                },
+                {
+                    LODCutoff = 400,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    ShaderName = 'Seraphim',
+                    MeshName = '/units/XSC1301/XSC1301_lod1.scm',
+                    AlbedoName = '/units/XSC1301/XSC1301_lod1_albedo.dds',
+                    NormalsName = '/units/XSC1301/XSC1301_lod1_normalsts.dds',
+                    SpecularName = '/units/XSC1301/XSC1301_lod1_specteam.dds',
+                },
+            },
+        },
+
+        Tarmacs = {
+            {
+                Albedo = 'Tarmacs/Tar8x_seraphim_01_albedo',
+                DeathLifetime = 300,
+                FadeOut = 150,
+                Length = 10,
+                Normal = 'Tarmacs/Tar8x_seraphim_01_normals',
+                Orientations = {0,90,180,270},
+                RemoveWhenDead = true,
+                Width = 10,
+            },
+        },
+
+        UniformScale = 0.05,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 59500,
+        BuildCostMass = 3000,
+        BuildTime = 3900,
+		MaintenanceConsumptionPerSecondEnergy = 4000,
+        RebuildBonusIds = {'ssb3301'},
+    },
+	
+    Footprint = {
+        SizeX = 3,
+        SizeZ = 3,
+    },
+	
+    General = {
+
+        FactionName = 'Seraphim',
+
+        Icon = 'land',
+        ToggleCaps = { RULEUTC_IntelToggle = true },
+        SelectionPriority = 5,
+
+        UnitName = '<LOC ssb3301_name>Eye of pifpuff',
+    },
+	
+    Intel = {
+        VisionRadius = 12,
+
+        Viewtime = -1,      -- disable the auto shutdown
+        ReactivateTime = 0, -- no cooldown
+
+        RemoteViewingRadius = 10,           -- starting size
+        RemoteViewingRadiusFinal = 20,      -- full size
+        RemoteViewingEnergyDrain = 21000,   -- firing cost
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.9,
+    LifeBarSize = 1.25,
+	
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+        },
+        DragCoefficient = 0.2,
+        FlattenSkirt = true,
+        MaxSteerForce = 0,
+        MeshExtentsX = 1.5,
+        MeshExtentsY = 3.1,
+        MeshExtentsZ = 1.5,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_None',
+        SkirtOffsetX = -1.5,
+        SkirtOffsetZ = -1.5,
+        SkirtSizeX = 6,
+        SkirtSizeZ = 6,
+        TurnRate = 0,
+    },
+	
+    SelectionSizeX = 1.5,
+    SelectionSizeZ = 1.5,
+    SelectionThickness = 0.4,
+	
+    SizeX = 2,
+    SizeY = 5,
+    SizeZ = 2,
+	
+    StrategicIconName = 'icon_structure3_intel',
+    StrategicIconSortPriority = 225,
+	
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0,
+        HealthMult = 0.3,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+        },
+    },
+}

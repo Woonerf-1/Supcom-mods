@@ -1,0 +1,233 @@
+UnitBlueprint {
+    AI = {
+        InitialAutoMode = true,
+    },
+
+    Audio = {
+        Close       = Sound { Bank = 'UAB', Cue = 'UAB2108_Doors_Close', LodCutoff = 'UnitMove_LodCutoff'},
+        Open        = Sound { Bank = 'UAB', Cue = 'UAB2108_Doors', LodCutoff = 'UnitMove_LodCutoff'},
+        Destroyed   = Sound { Bank = 'UALDestroy', Cue = 'UAB_Destroy_Huge', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection = Sound { Bank = 'Interface', Cue = 'Aeon_Select_Gun', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+
+    Buffs = {},
+	
+    BuildIconSortPriority = 150,
+
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER2ENGINEER',
+        'BUILTBYTIER3ENGINEER',
+        'BUILTBYTIER2COMMANDER',
+        'BUILTBYTIER3COMMANDER',
+        'AEON',
+        'STRUCTURE',
+        'STRATEGIC',
+        'TECH2',
+        'INDIRECTFIRE',
+        'TACTICALMISSILEPLATFORM',
+        'DRAGBUILD',
+        'SILO',
+        'SIZE4',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'SORTSTRATEGIC',
+    },
+
+    Defense = {
+        ArmorType = 'Structure',
+        EconomyThreatLevel = 7,
+        Health = 1500,
+        MaxHealth = 1500,
+        RegenRate = 0,
+    },
+
+    Description = '<LOC uab2108_desc>Tactical Missile Launcher',
+
+    Display = {
+        Abilities = {
+            'Manual Launch required',
+        },
+
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 100,
+                    Scrolling = true,
+                    ShaderName = 'Aeon',
+                },
+                {
+                    AlbedoName = 'uab2108_lod1_albedo.dds',
+                    LODCutoff = 215,
+                    ShaderName = 'Aeon',
+                    SpecularName = 'uab2108_lod1_specteam.dds',
+                },
+            },
+        },
+
+        UniformScale = 0.04,
+    },
+
+    Economy = {
+        BuildCostEnergy = 3500,
+        BuildCostMass = 700,
+        BuildRate = 25,
+        BuildTime = 700,
+
+        RebuildBonusIds = {'uab2108'},
+        BuildableCategory = {'uab2108','bab2308'},
+    },
+
+    Footprint = {
+        SizeX = 1,
+        SizeZ = 1,
+    },
+
+    General = {
+        CommandCaps = {
+            RULEUCC_Pause = true,
+            RULEUCC_SiloBuildTactical = true,
+            RULEUCC_Stop = true,
+            RULEUCC_Tactical = true,
+        },
+        FactionName = 'Aeon',
+        Icon = 'land',
+        SelectionPriority = 5,
+        UnitName = '<LOC uab2108_name>Serpentine',
+        UpgradesTo = 'bab2308',
+    },
+
+    Intel = {
+        VisionRadius = 16,
+    },
+
+    Interface = {
+        HelpText = 'Tactical Missile Launcher',
+    },
+
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.45,
+    LifeBarSize = 1,
+
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+        },
+        DragCoefficient = 0.2,
+        FlattenSkirt = true,
+        MaxSteerForce = 0,
+        MeshExtentsX = 0.75,
+        MeshExtentsY = 0.35,
+        MeshExtentsZ = 1.5,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_None',
+        SkirtOffsetX = -0.5,
+        SkirtOffsetZ = -0.5,
+        SkirtSizeX = 2,
+        SkirtSizeZ = 2,
+        TurnRate = 0,
+    },
+
+    SelectionSizeX = 0.47,
+    SelectionSizeZ = 0.8,
+    SelectionThickness = 0.5,
+
+    SizeX = 0.65,
+    SizeY = 0.35,
+    SizeZ = 1,
+
+    StrategicIconName = 'icon_structure2_missile',
+    StrategicIconSortPriority = 180,
+
+    Veteran = {
+        Level1 = 10,
+        Level2 = 20,
+        Level3 = 30,
+        Level4 = 40,
+        Level5 = 50,
+    },
+
+    Weapon = {
+        {
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                Fire = Sound { Bank = 'UALWeapon', Cue = 'UAB2108_Missile_Serpent2', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+
+            CountedProjectile = true,
+
+            Damage = 6000,
+            DamageRadius = 2,
+
+            DamageType = 'Normal',
+
+            DisplayName = 'Serpentine Missile',
+
+            FireTargetLayerCapsTable = {
+                Land = 'Land|Water|Seabed',
+                Seabed = 'Land|Water|Seabed',
+            },
+            FiringTolerance = 5,
+
+            ForceSingleFire = true,
+
+            InitialProjectileStorage = 0,
+
+            Label = 'CruiseMissile',
+
+            ManualFire = true,
+
+            MaxProjectileStorage = 12,
+
+            MaxRadius = 240,
+            MinRadius = 15,
+
+            MuzzleVelocity = 5,
+
+            ProjectileId = '/projectiles/AIFMissileTactical01/AIFMissileTactical01_proj.bp',
+            ProjectileLifetime = 30,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Turret'},
+                    RackBone = 'Turret',
+                },
+            },
+            
+            RackSalvoChargeTime = .3,
+            RackSalvoReloadTime = .7, 
+
+            RangeCategory = 'UWRC_IndirectFire',
+            RateOfFire = 1,
+
+            TargetCheckInterval = 2,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'STRUCTURE -WALL',
+                'ALLUNITS -AIR -WALL',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+
+            WeaponRepackTimeout = 2.5,
+            WeaponUnpackAnimation = '/units/uab2108/uab2108_aopen.sca',
+            WeaponUnpackAnimationRate = 3,
+            WeaponUnpacks = true,
+        },
+    },
+
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.3,
+        HealthMult = 0.9,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+        },
+    },
+}

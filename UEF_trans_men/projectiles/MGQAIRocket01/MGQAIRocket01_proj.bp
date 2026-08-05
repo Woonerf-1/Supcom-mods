@@ -1,0 +1,43 @@
+ProjectileBlueprint {
+
+    Categories = {
+        'PROJECTILE',
+        'TACTICAL',
+        'MISSILE',
+    },
+
+    Defense = {
+        Health = 2,
+        MaxHealth = 2,
+    },
+    
+    Display = {
+        Mesh = {
+            LODs = {
+                {LODCutoff = 150,ShaderName = 'NormalMappedAlpha'},
+            },
+        },
+        StrategicIconSize = 1,
+        UniformScale = 0.16,
+    },
+
+    Interface = {
+        HelpText = 0,
+    },
+
+    Physics = {
+        Acceleration = 3,
+        DestroyOnWater = true,
+        InitialSpeed = 5,
+        LifeTime = 30,
+
+        MaxSpeed = 24,
+
+        TrackTarget = false,
+        TrackTargetGround = false,
+
+        TurnRate = 10,
+
+        VelocityAlign = true,
+    },
+}

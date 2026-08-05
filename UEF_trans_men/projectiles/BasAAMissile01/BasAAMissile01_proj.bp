@@ -1,0 +1,53 @@
+ProjectileBlueprint {
+
+    Audio = {
+		Arc = Sound {
+            Bank = 'URLWeapon',
+            Cue = 'URL0402_Beam_Start',
+            LodCutoff = 'Weapon_LodCutoff',
+        }, 
+        Impact = Sound {
+            Bank = 'Impacts',
+            Cue = 'CYB_Expl_Med_Impact',
+            LodCutoff = 'Weapon_LodCutoff',
+        },
+    },
+
+    Categories = {
+        'PROJECTILE',
+        'ANTIAIR',
+    },
+
+    Display = {
+        Mesh = {
+            LODs = {
+                {
+                    AlbedoName = '/mods/BlackOpsUnleashed/projectiles/BasAAMissile01/BasAAMissile01_albedo.dds',
+                    LODCutoff = 150,
+                    MeshName = '/mods/BlackOpsUnleashed/projectiles/BasAAMissile01/BasAAMissile01_lod0.scm',
+                    ShaderName = 'TMeshAlpha',
+                },
+            },
+        },
+        StrategicIconSize = 1,
+        UniformScale = 0.3,
+    },
+
+    Physics = {
+        Acceleration = 16,
+        DestroyOnWater = true,
+        InitialSpeed = 1,
+        LeadTarget = false,
+        Lifetime = 4,
+        MaxSpeed = 65,
+        MaxZigZag = 1,
+        OnLostTargetLifetime = 0.5,
+		RotationalVelocity = 100,
+        RotationalVelocityRange = 200,
+        TrackTarget = true,
+        TurnRate = 180,
+        UseGravity = false,
+        VelocityAlign = true,
+        ZigZagFrequency = 0.1,
+    },
+}

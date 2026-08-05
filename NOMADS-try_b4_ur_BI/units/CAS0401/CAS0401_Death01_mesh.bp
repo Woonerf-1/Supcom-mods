@@ -1,0 +1,21 @@
+MeshBlueprint {
+    LODs = {
+        {
+            MeshName = 'cas0401_death01_lod0.scm',
+            AlbedoName = 'cas0401_albedo.dds',
+            NormalsName = 'cas0401_normalsts.dds',
+            SpecularName = 'cas0401_specteam.dds',
+            ShaderName = 'Aeon',
+            LODCutoff = 512,
+        },
+        {
+            MeshName = 'cas0401_death01_lod1.scm',
+            AlbedoName = 'cas0401_albedo.dds',
+            NormalsName = 'cas0401_normalsts.dds',
+            SpecularName = 'cas0401_specteam.dds',
+            ShaderName = 'Aeon',
+            LODCutoff = 2048,
+        },
+    },
+    --SortOrder = 500,
+}

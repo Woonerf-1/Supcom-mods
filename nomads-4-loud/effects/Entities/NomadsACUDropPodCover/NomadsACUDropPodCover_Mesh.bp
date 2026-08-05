@@ -1,0 +1,13 @@
+MeshBlueprint {
+    IconFadeInZoom = 130,
+    LODs = {
+        {
+            AlbedoName = '/units/XNA0001/XNA0001_Albedo.dds',
+            LODCutoff = 300,
+            MeshName = '/units/XNA0001/XNA0001_Cover_Lod0.scm',
+            NormalsName = '/units/XNA0001/XNA0001_NormalsTS.dds',
+            ShaderName = "Aeon",
+            SpecularName = '/units/XNA0001/XNA0001_SpecTeam.dds',
+        },
+    },
+}

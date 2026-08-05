@@ -1,0 +1,11 @@
+name = "NOMAD BI men"
+version = 1
+description = "This modification adds units that complement UEF trans men but for NOMDS"
+copyright = "nope"
+author = "Colin"
+uid = "2100thousendmilliontest31"
+icon = "/mods/NOMADS-try_b4_ur_BI/icon/modicon.bmp"
+selectable = true
+enabled = true
+exclusive = false
+ui_only = false

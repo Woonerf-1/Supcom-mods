@@ -1,0 +1,401 @@
+UnitBlueprint {
+    AI = {
+        InitialAutoMode = false,
+        GuardScanRadius = 200,
+    },
+	
+    Audio = {
+        Killed                  = Sound { Bank = 'UASDestroy', Cue = 'UAS0304_Destroy', LodCutoff = 'UnitMove_LodCutoff'},
+        NuclearLaunchDetected   = Sound { Bank = 'XGG', Cue = 'Computer_Computer_MissileLaunch_01351' },
+        StartMove               = Sound { Bank = 'UAS', Cue = 'UAS0203_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMoveSub            = Sound { Bank = 'UAS', Cue = 'UAS0203_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection             = Sound { Bank = 'Interface', Cue = 'Aeon_Select_Sub', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+	
+    Buffs = {
+        Regen = {
+            Level1 = 5,
+            Level2 = 10,
+            Level3 = 15,
+            Level4 = 20,
+            Level5 = 25,
+        },
+    },
+	
+    BuildIconSortPriority = 15,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'AEON',
+        'MOBILE',
+        'NAVAL',
+        'TECH3',
+        'SUBMERSIBLE',
+        'INDIRECTFIRE',
+        'NUKE',
+        'SILO',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYSONAR',
+        --'NUKESUB',
+    },
+	
+    CollisionOffsetY = -0.375,
+	
+    Defense = {
+
+        MissileTorpDestroy = { AttachBone = {'UAS0304'}, Radius = 3.2, RedirectRateOfFire = 9, ProjectileCategories = {'TORPEDO'} },
+
+        ArmorType = 'Normal',
+
+        Health = 3750,
+        MaxHealth = 3750,
+        RegenRate = 4,
+
+        SurfaceThreatLevel = 30,
+    },
+	
+    Description = '<LOC uas0304_desc>Strategic Missile Submarine',
+	
+    Display = {
+        Abilities = {
+            'Manual Launch',
+            '<LOC ability_sonar>Sonar',
+            '<LOC ability_personalstealth>Personal Stealth',
+            "<LOC ability_torpedodef>Torpedo Defense",
+        },
+		
+        IdleEffects = { Water = { Effects = { { Bones = {0}, Scale = 0.6, Type = 'SeaIdle01' } } } },
+
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                { LODCutoff = 100, ShaderName = 'Aeon' },
+                { LODCutoff = 215, ShaderName = 'Aeon', AlbedoName = 'uas0304_lod1_albedo.dds', SpecularName = 'uas0304_lod1_specteam.dds' },
+            },
+        },
+		
+        MovementEffects = {
+            Sub = {
+                Effects = {
+                    { Bones = {'Exhaust_01','Exhaust_02'}, Scale = 2.5, Type = 'BackWake' },
+                },
+            },
+            Water = {
+                Effects = {
+                    { Bones = {'Exhaust_01','Exhaust_02'}, Scale = 0.65, Type = 'BackWake' },
+                },
+            },
+        },
+
+        UniformScale = 0.045,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 380000,
+        BuildCostMass = 10000,
+        BuildRate = 600,	-- was 1000
+        BuildTime = 52632,
+    },
+
+    General = {
+		CapCost = 3,
+        
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_Dive = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Nuke = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_SiloBuildNuke = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Aeon',
+        Icon = 'sea',
+        UnitName = '<LOC uas0304_name>Silencer',
+    },
+	
+    Intel = {
+		FreeIntel = true,
+
+		RadarStealth = true,	
+
+        SonarRadius = 72,
+        VisionRadius = 36,
+        WaterVisionRadius = 36,
+    },
+	
+    Interface = {
+        HelpText = 'Strategic Missile Submarine',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 1.4,
+    LifeBarSize = 1.5,
+	
+    Physics = {
+        BackUpDistance = 10,
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Sub = true,
+        },
+        CatchUpAcc = 10,
+        DragCoefficient = 0.1,
+        Elevation = -2.5,
+
+        MaxAcceleration = 1.4,
+        MaxBrake = 1.1,
+        MaxSpeed = 3.8,
+        MaxSpeedReverse = 3.8,
+
+        MaxSteerForce = 5,
+        MeshExtentsX = 1,
+        MeshExtentsY = 1,
+        MeshExtentsZ = 3.75,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_SurfacingSub',
+
+        TurnRadius = 12,
+        TurnRate = 36,
+    },
+	
+    SelectionSizeX = 0.6,
+    SelectionSizeZ = 2.2,
+    SelectionThickness = 0.32,
+	
+    SizeX = 0.63,
+    SizeY = 0.63,
+    SizeZ = 3.1,
+	
+    StrategicIconName = 'icon_sub3_nuke',
+    StrategicIconSortPriority = 145,
+	
+    Veteran = {
+        Level1 = 12,
+        Level2 = 24,
+        Level3 = 36,
+        Level4 = 48,
+        Level5 = 60,
+    },
+	
+    Weapon = {
+        {
+            Audio = {
+                Fire = Sound { Bank = 'UASWeapon', Cue = 'UAS0201_Torpedo', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            AutoInitiateAttackCommand = true,
+ 
+            BallisticArc = 'RULEUBA_None',
+			
+            Buffs = {
+            	{
+                    Add = { OnImpact = true },
+                    AppliedToTarget = true,
+                    BuffType = 'STUN',
+                    Duration = 0.3,
+                    Radius = 2,
+                    TargetAllow = 'LAND TECH1,NAVAL TECH1,SUBMARINE TECH2',
+                    TargetDisallow = 'WALL,COMMAND,EXPERIMENTAL',
+                },
+            },
+
+            CollideFriendly = false,
+			
+            Damage = 200,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Chrono Torpedo',
+			
+            FireTargetLayerCapsTable = {
+                Sub = 'Seabed|Sub|Water',
+                Water = 'Seabed|Sub|Water',
+            },
+			
+            FiringTolerance = 60,
+			
+            Label = 'Torpedo',
+			
+            MaxRadius = 48,
+            MinRadius = 8,
+			
+            MuzzleSalvoDelay = 0.2,
+            MuzzleSalvoSize = 4,
+
+            MuzzleVelocity = 2,
+			
+            ProjectileId = '/projectiles/AANTorpedo01/AANTorpedo01_proj.bp',
+            ProjectileLifetime = 6.7,
+			
+            RackBones = {
+                { MuzzleBones = {'Exhaust_01','Exhaust_02'}, RackBone = 'Exhaust_01' },
+            },
+            
+            RackSalvoReloadTime = 7.2,
+
+            RangeCategory = 'UWRC_AntiNavy',
+			
+            RateOfFire = 0.5,		-- 4 torps of 200 = 800 damage every 8 seconds = 100 DPS Sub
+			
+            TargetCheckInterval = 4,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'SUBMARINE',
+				'NAVAL',
+				'MOBILE',
+                'DEFENSE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE, HOVER',
+			TrackingRadius = 1.1,
+        },
+
+        {
+            AboveWaterTargetsOnly = true,
+
+            Audio = {
+                Fire = Sound { Bank = 'UALWeapon', Cue = 'UAL0111_Missile_Serpent', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+
+            CollideFriendly = false,
+            
+            CountedProjectile = false,
+			
+            Damage = 625,
+            DamageFriendly = true,
+            DamageRadius = 2.5,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Serpentine Tactical Missile Rack',
+			
+            FireTargetLayerCapsTable = {
+                Sub = 'Land|Water|Seabed',
+                Water = 'Land|Water|Seabed',
+            },
+			
+            FiringTolerance = 2,
+			
+            Label = 'Missiles',
+			
+            MaxRadius = 200,
+            MinRadius = 20,
+			
+            MuzzleSalvoDelay = 0.7,
+            MuzzleSalvoSize = 6,
+            MuzzleVelocity = 5,
+			
+			NotExclusive = true,
+			
+            ProjectileId = '/projectiles/AIFMissileSerpentine02/AIFMissileSerpentine02_proj.bp',
+			ProjectileLifetime = 50,
+
+            RackBones = {
+                { MuzzleBones = { 'Muzzle_01', 'Muzzle_02', 'Muzzle_03', 'Muzzle_04' }, RackBone = 'Muzzle_01' },
+            },
+            
+            RackSalvoReloadTime = 7.8,
+
+            RangeCategory = 'UWRC_DirectFire',
+			
+            RateOfFire = 0.5,		-- 3750 dmg every 12 seconds = 312 DPS Surface
+			
+            TargetCheckInterval = 4,
+            
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'ALLUNITS',
+            },
+
+            TargetRestrictDisallow = 'UNTARGETABLE,WALL',
+			TrackingRadius = 1.1,
+        },
+		
+        {
+            AboveWaterTargetsOnly = true,
+
+            AttackGroundTries = 1,
+
+            Audio = {
+                Fire = Sound { Bank = 'UASWeapon', Cue = 'UAS0304_Missile_Quantum', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+			
+            CollideFriendly = false,
+			
+            CountedProjectile = true,
+			
+            Damage = 0,
+            DamageFriendly = true,
+            DamageRadius = 0,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Nuclear Warhead',
+			
+            FireTargetLayerCapsTable = {
+                Sub = 'Land|Water|Seabed',
+                Water = 'Land|Water|Seabed',
+            },
+			
+            FiringTolerance = 2,
+			
+            InitialProjectileStorage = 0,
+			
+            Label = 'SubNukeMissiles',
+			
+            ManualFire = 1,
+			
+            MaxProjectileStorage = 3,
+			
+            MaxRadius = 1024,
+            MinRadius = 128,
+
+            MuzzleVelocity = 0,
+			
+            NukeInnerRingDamage = 60000,
+            NukeInnerRingRadius = 18,
+            NukeInnerRingTicks = 24,
+            NukeInnerRingTotalTime = 0,
+            NukeOuterRingDamage = 500,
+            NukeOuterRingRadius = 32,
+            NukeOuterRingTicks = 20,
+            NukeOuterRingTotalTime = 0,
+			
+            NukeWeapon = true,
+			
+            ProjectileId = '/projectiles/AIFQuantumWarhead01/AIFQuantumWarhead01_proj.bp',
+			
+            RackBones = {
+                { MuzzleBones = {'Muzzle_05'}, RackBone = 'Muzzle_05' },
+            },
+
+            RangeCategory = 'UWRC_IndirectFire',
+			
+            RateOfFire = 1,
+			
+            TargetCheckInterval = 2,
+			
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            
+            WeaponRepackTimeout = 10,
+            WeaponUnpacks = true,
+        },
+        {
+            BelowWaterTargetsOnly = true,
+            Damage = 500,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = 'Normal',
+
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathWeapon',
+        },
+    },
+}

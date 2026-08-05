@@ -1,0 +1,271 @@
+UnitBlueprint {
+    AI = {
+        GuardReturnRadius = 96,
+        GuardScanRadius = 72,
+    },
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 1.6,
+        BankForward = false,
+        BreakOffDistance = 38,
+        BreakOffIfNearNewTarget = true,
+        BreakOffTrigger = 20,
+        CanFly = true,
+		
+        CombatTurnSpeed = 0.9,
+		
+        EngageDistance = 50,
+		
+        KLift = 3,
+        KLiftDamping = 2.5,
+		
+		KMove = 0.85,
+		KMoveDamping = 0.8,
+		
+        KRoll = 1.5,
+        KRollDamping = 1.5,
+		
+        KTurn = 0.85,
+        KTurnDamping = 0.95,
+		
+        LiftFactor = 7.5,
+		
+        MaxAirspeed = 16,
+        MinAirspeed = 10,
+		
+        StartTurnDistance = 2.5,
+		
+        Winged = true,
+    },
+	
+    Audio = {
+        Killed      = Sound { Bank = 'XSA_Destroy', Cue = 'XSA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        StartMove   = Sound { Bank = 'XSA', Cue = 'XSA0204_Move_Start', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection = Sound { Bank = 'SeraphimSelect', Cue = 'Seraphim_Select_Air', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+	
+    Buffs = {},
+	
+    BuildIconSortPriority = 20,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER2FACTORY',
+        'BUILTBYTIER3FACTORY',
+        'SERAPHIM',
+        'MOBILE',
+        'AIR',
+        'HIGHALTAIR',
+        'TECH2',
+        'ANTINAVY',
+        'TORPEDOBOMBER',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYSONAR',
+    },
+	
+    CollisionOffsetZ = 0.1,
+	
+    Defense = {
+        ArmorType = 'Light',
+
+        Health = 1350,
+        MaxHealth = 1550,
+        RegenRate = 5,
+
+        SubThreatLevel = 12,
+    },
+	
+    Description = '<LOC xsa0204_desc>Torpedo Bomber',
+	
+    Display = {
+        Abilities = {
+            '<LOC ability_sonar>Sonar',
+            "<LOC ability_torpedo>Torpedoes",
+        },
+        
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 120,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    Scrolling = true,
+                    ShaderName = 'Seraphim',
+                },
+                {
+                    AlbedoName = 'xsa0204_lod1_albedo.dds',
+                    LODCutoff = 215,
+                    ShaderName = 'Seraphim',
+                    SpecularName = 'xsa0204_lod1_specteam.dds',
+                },
+            },
+        },
+
+        UniformScale = 0.09,
+    },
+
+    Economy = {
+        BuildCostEnergy = 28000,
+        BuildCostMass = 500,
+        BuildTime = 2500,
+    },
+
+    General = {
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Seraphim',
+        Icon = 'air',
+        UnitName = '<LOC xsa0204_name>Uosioz',
+    },
+	
+    Intel = {
+		FreeIntel = true,
+
+        SonarRadius = 60,
+        VisionRadius = 32,
+		WaterVisionRadius = 8,
+    },
+	
+    Interface = {
+        HelpText = 'Torpedo Bomber',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.45,
+    LifeBarSize = 0.8,
+	
+    Physics = {
+        AttackElevation = 4,
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+            LAYER_Sub = true,
+        },
+        Elevation = 13,
+		
+        FuelRechargeRate = 12,
+        FuelUseTime = 270,
+		
+        GroundCollisionOffset = 1.6,
+        MaxSpeed = 0.5,
+        MeshExtentsX = 1.25,
+        MeshExtentsY = 0.25,
+        MeshExtentsZ = 1.25,
+        MotionType = 'RULEUMT_Air',
+    },
+	
+    SelectionSizeX = 0.55,
+    SelectionSizeZ = 0.6,
+    SelectionThickness = 0.7,
+	
+    SizeSphere = 1.6,
+	
+    SizeX = 1,
+    SizeY = 0.6,
+    SizeZ = 1,
+	
+    StrategicIconName = 'icon_bomber2_antinavy',
+    StrategicIconSortPriority = 65,
+	
+    Transport = {
+        AirClass = true,
+        TransportClass = 2,
+    },
+	
+    Veteran = {
+        Level1 = 1,
+        Level2 = 2,
+        Level3 = 3,
+        Level4 = 4,
+        Level5 = 5,
+    },
+	
+    Weapon = {
+        {
+            Audio = {
+                Fire = Sound { Bank = 'XSA_Weapon', Cue = 'XSA0204_Heavy_Torpedo', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            AutoInitiateAttackCommand = true,
+
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+			
+            Damage = 372,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Torpedo Launcher',
+			
+            EffectiveRadius = 40,
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Seabed|Sub|Water',
+                Land = 'Seabed|Sub|Water',
+            },
+			
+            FiringRandomness = 3,
+            FiringTolerance = 3,
+			
+            HeadingArcCenter = 0,
+            HeadingArcRange = 40,
+			
+            Label = 'Torpedo',
+			
+            MaxRadius = 32,
+            MinRadius = 8,
+			
+            MuzzleSalvoDelay = 0.3,
+            MuzzleSalvoSize = 2,
+
+            MuzzleVelocity = 8,
+			
+            ProjectileId = '/projectiles/SANHeavyCavitationTorpedo01/SANHeavyCavitationTorpedo01_proj.bp',
+            ProjectileLifetime = 15,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'XSA0204'},
+                    RackBone = 'XSA0204',
+                },
+            },
+            
+            RackSalvoReloadTime = 4.7,  -- 5 second cycle = 120 DPS
+
+			RangeCategory = 'UWRC_AntiNavy',
+			
+            RateOfFire = 1,
+			
+            TargetCheckInterval = 3.5,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'CRUISER',
+                'SUBMARINE',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,HOVER,WALL',
+            TrackingRadius = 1.1,
+        },
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 150,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+            MaxRadius = 1,
+        },
+    },
+}

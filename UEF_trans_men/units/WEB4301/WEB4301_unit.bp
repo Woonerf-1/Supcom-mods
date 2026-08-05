@@ -1,0 +1,190 @@
+UnitBlueprint{
+    Description = "Beam-based Tac Missile Defense",
+    
+    AI = {
+        TargetBones = { "Turret" },
+    },
+    
+    Audio = {
+        Destroyed      = Sound { Bank = 'UELDestroy', Cue = 'UEB_Destroy_Huge', LodCutoff = 'UnitMove_LodCutoff' },
+        DoneBeingBuilt = Sound { Bank = 'UEB',        Cue = 'UEB4201_Activate', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection    = Sound { Bank = 'Interface',  Cue = 'UEF_Select_Gun',   LodCutoff = 'UnitMove_LodCutoff' },
+    },
+    
+    BuildIconSortPriority = 155,
+    
+    Categories = {
+        "ANTIMISSILE",
+        "DEFENSE",
+        "DRAGBUILD",
+        "RECLAIMABLE",
+        "SELECTABLE",
+        "SIZE4",
+        "SORTSTRATEGIC",
+        "STRUCTURE",
+        "TECH3",
+        "UEF",
+        "VISIBLETORECON",
+    },
+    
+    Defense = {
+        ArmorType = "Structure",
+        
+        EconomyThreatLevel = 12,
+        Health = 1800,
+        MaxHealth = 1800,
+        RegenRate = 2,
+    },
+    
+    Display = {
+        Abilities = {
+            "<LOC ability_aquatic>Aquatic: can be built on water",
+            "<LOC ability_tacmissiledef>Tactical Missile Defense",
+        },
+        
+        Mesh = { IconFadeInZoom = 130, LODs = { { LODCutoff = 230, ShaderName = "Unit" } } },
+        
+        UniformScale = 0.16,
+    },
+    
+    Economy = {
+        BuildCostEnergy = 12800,
+        BuildCostMass = 650,
+        BuildTime = 950,
+
+        RebuildBonusIds = { "ueb4201","web4301" },
+    },
+    
+    Footprint = { MinWaterDepth = 2 },
+    
+    General = {
+        CapCost = 2,
+        CommandCaps = { RULEUCC_RetaliateToggle = true },
+        FactionName = "UEF",
+        Icon = "amph",
+        SelectionPriority = 5,
+        UnitName = "Protector",
+        UpgradesFrom = 'ueb4201',
+    },
+    
+    Intel = { VisionRadius = 28 },
+    
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.6,
+    LifeBarSize = 1.25,
+    
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+            LAYER_Water = true,
+        },
+        DragCoefficient = 0.2,
+        FlattenSkirt = true,
+        MaxSteerForce = 0,
+        MeshExtentsX = 1.5,
+        MeshExtentsY = 1.5,
+        MeshExtentsZ = 1.5,
+        MinSpeedPercent = 0,
+        MotionType = "RULEUMT_None",
+        SkirtOffsetX = -0.5,
+        SkirtOffsetZ = -0.5,
+        SkirtSizeX = 2,
+        SkirtSizeZ = 2,
+        TurnRate = 0,
+    },
+    
+    SelectionSizeX = 0.9,
+    SelectionSizeZ = 0.9,
+    SelectionThickness = 0.3,
+    
+    CollisionOffsetY = -0.25,
+    
+    SizeX = 1,
+    SizeY = 1.2,
+    SizeZ = 1,
+    
+    StrategicIconName = "icon_structure3_antimissile",
+    StrategicIconSortPriority = 200,
+    
+    Weapon = {
+        {
+            AboveWaterTargetsOnly = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'BattlePackSB', Cue = 'UEFRevampTank_AntiMissile_Fire', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            BallisticArc = "RULEUBA_None",
+
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.1,
+
+            CollideFriendly = false,
+
+            Damage = 2,
+
+            DamageType = "Normal",
+
+            EnergyRequired = 96,
+            EnergyDrainPerSecond = 120,        -- .8 second charge
+	
+            FireTargetLayerCapsTable = {
+                Land = "Air",
+                Water = "Air",
+            },
+            FiringTolerance = 0,
+
+            Label = "TMDBeam",
+
+            MaxRadius = 36,
+            MaximumBeamLength = 36,
+
+            NeedPrep = true,
+
+            RackBones = {
+                { MuzzleBones = { "Turret_Muzzle" }, RackBone = "Turret_Barrel" },
+            },
+
+            RackSalvoFiresAfterCharge = true,
+            RackSalvoReloadTime = 0.9, 
+
+            RangeCategory = "UWRC_Countermeasure",
+
+            RateOfFire = 1.1,     -- firing cycle should be 9 ticks
+
+            TargetCheckInterval = 1,
+
+            TargetRestrictDisallow = "UNTARGETABLE,SATELLITE",
+            TargetRestrictOnlyAllow = "TACTICAL MISSILE",
+            TargetType = "RULEWTT_Projectile",
+
+            TrackingRadius = 1,
+
+            TurretBoneMuzzle = "Turret_Muzzle",
+            TurretBonePitch = "Turret_Barrel",
+            TurretBoneYaw = "Turret",
+
+            TurretPitch = 45,
+            TurretPitchRange = 90,
+            TurretPitchSpeed = 60,
+
+            TurretYaw = 0,
+            TurretYawRange = 360,
+            TurretYawSpeed = 70,
+
+            Turreted = true,
+        },
+    },
+    
+    Wreckage = {
+        Blueprint = "/props/DefaultWreckage/DefaultWreckage_prop.bp",
+        EnergyMult = 0.5,
+        HealthMult = 0.9,
+        MassMult = 0.4,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Water = true,
+        },
+    },
+}

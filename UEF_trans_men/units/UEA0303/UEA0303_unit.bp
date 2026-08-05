@@ -1,0 +1,270 @@
+UnitBlueprint {
+    AI = {
+        GuardReturnRadius = 96,
+        GuardScanRadius = 64,
+    },
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 2,
+        BankForward = false,
+        BreakOffDistance = 12,
+        BreakOffTrigger = 22,
+        CanFly = true,
+
+        CombatTurnSpeed = 1.2,
+
+        EngageDistance = 55,
+		
+        KLift = 3.5,
+        KLiftDamping = 3,
+		
+        KMove = 1.8,
+        KMoveDamping = 0.94,
+		
+        KRoll = 1.5,
+        KRollDamping = 1.4,
+		
+        KTurn = 1.6,
+        KTurnDamping = 1.4,
+		
+        LiftFactor = 8,
+		
+        MaxAirspeed = 24,
+        MinAirspeed = 12,
+		
+		RandomMinChangeCombatStateTime = 3,
+		RandomMaxChangeCombatStateTime = 7,
+		
+        StartTurnDistance = 4,
+
+        Winged = true,
+    },
+	
+    Audio = {
+        Killed      = Sound { Bank = 'UEADestroy', Cue = 'UEA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMove   = Sound { Bank = 'UEA', Cue = 'UEA0303_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection = Sound { Bank = 'Interface', Cue = 'UEF_Select_Air', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+	
+    Buffs = {},
+	
+    BuildIconSortPriority = 30,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'UEF',
+        'MOBILE',
+        'AIR',
+        'HIGHALTAIR',
+        'TECH3',
+        'ANTIAIR',
+        'VISIBLETORECON',
+		'OVERLAYRADAR',
+        'RECLAIMABLE',
+    },
+	
+    Defense = {
+        AirThreatLevel = 41,
+        ArmorType = 'Light',
+        Health = 2300,
+        MaxHealth = 2300,
+        RegenRate = 6,
+    },
+	
+    Description = '<LOC uea0303_desc>Air-Superiority Fighter',
+	
+    Display = {
+        Abilities = {
+            "<LOC ability_aa>Anti-Air",
+			'<LOC ability_radar>Radar',
+        },
+
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 150,
+                    ShaderName = 'Unit',
+                },
+                {
+                    AlbedoName = 'uea0303_lod1_albedo.dds',
+                    LODCutoff = 215,
+                    ShaderName = 'Unit',
+                    SpecularName = 'uea0303_lod1_specteam.dds',
+                },
+            },
+        },
+
+        UniformScale = 0.1,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 48000,
+        BuildCostMass = 660,
+        BuildTime = 5000,
+    },
+
+    General = {
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'UEF',
+        Icon = 'air',
+        UnitName = '<LOC uea0303_name>Wasp',
+    },
+	
+    Intel = {
+		RadarRadius = 48,
+        VisionRadius = 36,
+    },
+	
+    Interface = {
+        HelpText = 'Air-Superiority Fighter',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.65,
+    LifeBarSize = 1.1,
+	
+    Physics = {
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+        },
+        Elevation = 20,
+		
+        FuelRechargeRate = 15,
+        FuelUseTime = 400,
+		
+        GroundCollisionOffset = 2,
+        MaxSpeed = 0.5,
+        MeshExtentsX = 1.6,
+        MeshExtentsY = 0.4,
+        MeshExtentsZ = 1.6,
+        MotionType = 'RULEUMT_Air',
+    },
+	
+    SelectionSizeX = 1.1,
+    SelectionSizeZ = 1,
+    SelectionThickness = 0.42,
+	
+    SizeSphere = 2.25,
+	
+    SizeX = 1.5,
+    SizeY = 0.3,
+    SizeZ = 1.5,
+	
+    StrategicIconName = 'icon_fighter3_antiair',
+    StrategicIconSortPriority = 55,
+	
+    Transport = {
+        AirClass = true,
+        TransportClass = 3,
+    },
+	
+    Veteran = {
+        Level1 = 12,
+        Level2 = 24,
+        Level3 = 36,
+        Level4 = 48,
+        Level5 = 60,
+    },
+	
+    Weapon = {
+        {
+            Audio = {
+                Fire = Sound { Bank = 'UEAWeapon', Cue = 'UEA0303_Pulse_Beam', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+			AlwaysRecheckTarget = true,
+
+            AutoInitiateAttackCommand = true,
+
+            BallisticArc = 'RULEUBA_None',
+
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 205,
+            DamageFriendly = false,
+            DamageType = 'Light',
+			
+            DisplayName = 'Ginsu Pulse',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land',
+                Land = 'Air',
+            },
+			
+            FiringTolerance = 0,
+			
+            Label = 'Beam',
+			
+            MaxRadius = 40,
+
+            MuzzleVelocity = 80,
+			
+            ProjectileId = '/projectiles/TDFGinsu01/TDFGinsu01_proj.bp',
+			ProjectileLifetime = 0.7,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Muzzle02'},
+                    RackBone = 'Muzzle02',
+                },
+            },
+
+            RangeCategory = 'UWRC_AntiAir',
+			
+            RateOfFire = 2,
+			
+            SlavedToBody = true,
+            SlavedToBodyArcRange = 52,
+			
+            TargetCheckInterval = 0.3,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+				'EXPERIMENTAL',
+                'MOBILE',
+            },
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Muzzle02',
+            TurretBonePitch = 'Muzzle02',
+            TurretBoneYaw = 'Muzzle02',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 52,
+            TurretPitchSpeed = 60,
+			
+            TurretYaw = 0,
+            TurretYawRange = 52,
+            TurretYawSpeed = 60,
+			
+            Turreted = true,
+            UseFiringSolutionInsteadOfAimBone = true,
+        },
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 250,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+        },
+    },
+}

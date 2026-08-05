@@ -1,0 +1,31 @@
+ProjectileBlueprint {
+    Audio = {
+        Impact = Sound {
+            Bank = 'Impacts',
+            Cue = 'UEF_Expl_Med_Impact',
+            LodCutoff = 'Weapon_LodCutoff',
+        },
+    },
+
+    Categories = {
+        'PROJECTILE',
+    },
+
+    Display = {
+        StrategicIconSize = 1,
+    },
+
+    Interface = {
+        HelpText = 0,
+    },
+
+    Physics = {
+        DestroyOnWater = true,
+        DetonateAboveHeight = 8,
+        InitialSpeed = 20,
+        LeadTarget = false,
+        Lifetime = 3,
+        UseGravity = false,
+        VelocityAlign = true,
+    },
+}

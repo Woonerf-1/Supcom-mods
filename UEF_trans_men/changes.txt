@@ -1,0 +1,20 @@
+30.7.2026
+
+UEF Trans Men:
+Cybran shield change reverted (kein extra schild mehr)
+Transport fixed MKT0409
+Advanced Mass extractors 12.6k health -> 9k health (MA standard)
+Cybran MA: 	Cloak 6->7
+		Stealth 6->14
+		Energy cons. 600->400
+UEF MA:		Removed Area assist button
+		Energy cons. 600->400
+Sera. MA:	Energy cons. 600->400
+		25k HP -> 16k HP
+Aeon MA:	9k Shield -> 6k Shield
+
+31.7.2026
+
+SEL0324 Longbow doesn't break after dismounting Transport
+MKT0409 can now fire at ground units again
+All Nomads units now have fuel time (exept engineers)

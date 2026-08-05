@@ -1,0 +1,4 @@
+CNB1202  - Improved Hydrocarbon Power Plant
+CNB1302  - Advanced Hydrocarbon Power Plant
+XRB0104  - Pearl: Engineering Station
+SAB4401  - Pillar of Prominence: Experimental Shield Generator

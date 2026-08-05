@@ -1,0 +1,659 @@
+UnitBlueprint {
+    AI = {
+		GuardRadius = 100,
+        GuardReturnRadius = 150,
+        GuardScanRadius = 100,
+		
+        TargetBones = {
+            'Right_Rear_Autocannon_Muzzle',
+            'Left_Rear_Autocannon_Muzzle',
+            'Tail_Extent',
+            'XSA0402',
+            'Left_Front_Autocannon_Muzzle',
+            'Right_Front_Autocannon_Muzzle',
+        },
+    },
+	
+    Air = {
+	
+        AutoLandTime = 3.9,
+        BankFactor = 1.9,
+        
+        BankForward = false,
+        
+        BreakOffDistance = 68,
+        BreakOffIfNearNewTarget = true,
+        
+        BreakOffTrigger = 35,
+        
+        CanFly = true,
+        
+        CombatTurnSpeed = 0.8,
+        
+        EngageDistance = 60,
+		
+        KLift = 3.6,
+        KLiftDamping = 2.8,
+		
+        KMove = 1,
+        KMoveDamping = 0.9,
+		
+        KRoll = 1.9,
+        KRollDamping = 2.5,
+		
+        KTurn = 0.81,
+        KTurnDamping = 1.45,
+		
+        LiftFactor = 11,
+		
+        MaxAirspeed = 20,
+        MinAirspeed = 18,
+		
+        --PredictAheadForBombDrop = 6,
+		
+        StartTurnDistance = 20,
+        
+        SustainedTurnThreshold = 16,
+		
+        TightTurnMultiplier = 0,
+		
+        TurnSpeed = 0.69,
+		
+        Winged = true,
+    },
+	
+    Audio = {
+		EnemyUnitDetectedAeon   = Sound { Bank = 'XGG', Cue = 'XGG_HQ_GD1_04189'},
+		EnemyUnitDetectedUEF    = Sound { Bank = 'XGG', Cue = 'XGG_HQ_GD1_04189'},
+		EnemyUnitDetectedCybran = Sound { Bank = 'XGG', Cue = 'XGG_HQ_GD1_04189'},
+        AirUnitWaterImpact      = Sound { Bank = 'Explosions', Cue = 'Expl_Water_Lrg_01', LodCutoff = 'UnitMove_LodCutoff'},
+        Destroyed               = Sound { Bank = 'XSA_Destroy', Cue = 'XSA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff'},
+        Killed                  = Sound { Bank = 'XSA_Destroy', Cue = 'XSA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMove               = Sound { Bank = 'XSA', Cue = 'XSA0402_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection             = Sound { Bank = 'SeraphimSelect', Cue = 'Seraphim_Select_Air', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+	
+    Buffs = {
+        Regen = {
+            Level1 = 10,
+            Level2 = 15,
+            Level3 = 20,
+            Level4 = 25,
+            Level5 = 30,
+        },
+    },
+	
+    BuildIconSortPriority = 210,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER4COMMANDER',
+        'SERAPHIM',
+        'MOBILE',
+        'AIR',
+        'HIGHALTAIR',
+        'EXPERIMENTAL',
+		'BOMBER',
+        'NEEDMOBILEBUILD',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'SHOWATTACKRETICLE',
+		'OVERLAYRADAR',
+        'DRAGBUILD',
+    },
+	
+    CollisionOffsetY = -1.5,
+	
+    Defense = {
+	
+        AirThreatLevel = 160,
+        ArmorType = 'Light',
+        Health = 52500,
+        MaxHealth = 52500,
+        RegenRate = 10,
+		
+        SurfaceThreatLevel = 120,
+    },
+	
+    Description = '<LOC xsa0402_desc>Experimental Heavy Bomber (Bomber)',
+	
+    Display = {
+	
+        Abilities = {
+			'<LOC ability_radar>Radar',
+			'Implosion Dump Bomb',
+            "<LOC ability_aa>Anti-Air x4",
+        },
+		
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 350,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    Scrolling = true,
+                    SecondaryName = '/units/uaa0310/uaa0310_secondary.dds',
+                    ShaderName = 'Seraphim',
+                },
+                {
+                    AlbedoName = 'xsa0402_lod1_albedo.dds',
+                    LODCutoff = 500,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    ShaderName = 'Seraphim',
+                    SpecularName = 'xsa0402_lod1_specteam.dds',
+                },
+            },
+        },
+		
+		MovementEffects = {
+            Air = {
+                Contrails = { Bones = {'Tail_Extent'} },
+                Effects = { { Bones = {'Tail_Extent'}, Type = 'SerOHWAirMoveExhaust01' },
+                    { Bones = {'Exhaust01'}, Type = 'SerOHWAirMoveExhaust02' },
+                },
+            },
+        },
+
+        UniformScale = 0.030,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 900000,
+        BuildCostMass = 42000,
+        BuildTime = 77400,
+		
+		MaintenanceConsumptionPerSecondEnergy = 1000,
+    },
+	
+    Footprint = {
+        MaxSlope = 0.2,
+        SizeX = 9,
+        SizeZ = 9,
+    },
+	
+    General = {
+		CapCost = 8,
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Seraphim',
+        Icon = 'air',
+
+        UnitName = '<LOC xsa0402_name>Ahwassa',
+    },
+	
+    Intel = {
+		RadarRadius = 72,
+        VisionRadius = 44,
+    },
+	
+    Interface = {
+        HelpText = 'Heavy Bomber',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 8.5,
+    LifeBarSize = 10,
+	
+    Physics = {
+        AttackElevation = 21,
+        BackUpDistance = 5,
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+        },
+        Elevation = 27.5,
+        MaxSpeed = 0.5,
+        MeshExtentsX = 4,
+        MeshExtentsY = 2,
+        MeshExtentsZ = 4,
+        MotionType = 'RULEUMT_Air',
+        SkirtOffsetX = -1.5,
+        SkirtOffsetZ = -0.5,
+        SkirtSizeX = 11,
+        SkirtSizeZ = 11,
+    },
+	
+    SelectionSizeX = 5.5,
+    SelectionSizeZ = 5.5,
+    SelectionThickness = 0.22,
+	
+    SizeX = 9.8,
+    SizeY = 2.7,
+    SizeZ = 9.8,
+	
+    StrategicIconName = 'icon_air4_directfire',
+    StrategicIconSortPriority = 55,
+	
+    Transport = {
+        TransportClass = 10,
+    },
+	
+    Veteran = {
+        Level1 = 90,
+        Level2 = 180,
+        Level3 = 270,
+        Level4 = 360,
+        Level5 = 450,
+    },
+	
+    Weapon = {
+        {
+            AboveWaterTargetsOnly = true,
+			
+            Audio = {
+                Fire = Sound { Bank = 'XSA_Weapon', Cue = 'XSA0402_Strategic_Bomb', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            
+            AttackGroundTries = 2,
+			
+            AutoInitiateAttackCommand = true,
+			
+            BallisticArc = 'RULEUBA_None',
+			
+            --BombDropThreshold = 11,
+            
+            CollideFriendly = false,
+			
+            Damage = 10590,
+            DamageFriendly = true,
+            DamageRadius = 14,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Ohwalli Strategic Bomb',
+
+            EnergyChargeForFirstShot = false,   -- weapon is charged on creation
+            
+            EnergyDrainPerSecond = 2380,    -- in addition to the 1000 it already drains - u might think this is excessive - but not even close.
+                                            -- According to formula, this weapon should require close to 30k drain to recharge in 10 seconds
+            EnergyRequired = 35700,         -- we'll charge it in 15 seconds as a mild compensation but reduce the damage
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Land|Water|Seabed',
+                Land = 'Land|Water|Seabed',
+            },
+
+            FiringTolerance = 0.85,
+
+            FixBombTrajectory = true,
+            
+			HeadingArcCenter = 0,
+			HeadingArcRange = 14,
+			
+            Label = 'Bomb', 
+            
+            MaxRadius = 40,
+
+            MuzzleVelocity = 0,
+            
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/SBOOhwalliStrategicBomb01/SBOOhwalliStrategicBomb01_proj.bp',
+
+            RackBones = {
+                {
+                    MuzzleBones = {'XSA0402'},
+                    RackBone = 'XSA0402',
+                },
+            },
+
+            RackSalvoFiresAfterCharge = true,
+			
+            RangeCategory = 'UWRC_DirectFire',
+
+            RateOfFire = 2,         -- LIMITED by charge 15 seconds -- but fires 'on the half second'
+
+            SlavedToBody = true,
+            SlavedToBodyArcRange = 14,
+			
+            TargetCheckInterval = 0.5,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI -AIR',
+				'EXPERIMENTAL -AIR',
+                'STRUCTURE -WALL',
+                'MOBILE -AIR',
+				'ENGINEER',
+                'ALLUNITS -WALL',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,WALL',
+            TrackingRadius = 1,
+        },
+		
+		-- Right Left AA
+        {
+            Audio = {
+                Fire = Sound { Bank = 'XSA_Weapon', Cue = 'XSA0402_AA_Autocannon', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 100,
+            DamageType = 'Light',
+			
+            DisplayName = 'Losaare AA Autocannon',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land',
+            },
+			
+			FiringRandomness = 0.1,
+            FiringTolerance = 0.1,
+			
+            HeadingArcCenter = 310,
+            HeadingArcRange = 60,
+			
+            Label = 'Autocannon',
+			LeadTarget = true,
+			
+            MaxRadius = 42,
+			
+            MuzzleSalvoDelay = 0.2,
+            MuzzleSalvoSize = 2,
+			
+            MuzzleVelocity = 75,
+            
+            NotExclusive = true,
+			
+            ProjectileId = '/projectiles/SAALosaareAutoCannon02/SAALosaareAutoCannon02_proj.bp',
+			ProjectileLifetime = 0.8,
+			
+            RackBones = {
+                {
+                    MuzzleBones = {'Right_Front_Autocannon_Muzzle'},
+                    RackBone = 'Right_Front_Autocannon_Muzzle',
+                },
+            },
+
+            RangeCategory = 'UWRC_AntiAir',
+			
+            RateOfFire = 2,		---- 400 DPS Air
+			
+            TargetCheckInterval = 0.5,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'AIR MOBILE -INTELLIGENCE',
+                'AIR MOBILE',
+            },
+			
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+			
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Right_Front_Autocannon_Muzzle',
+            TurretBonePitch = 'Right_Front_Autocannon_Muzzle',
+            TurretBoneYaw = 'Right_Front_Autocannon_Muzzle',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 60,
+
+            TurretYaw = 0,
+            TurretYawRange = 60,
+            TurretYawSpeed = 60,
+
+            Turreted = true,
+        },
+
+		-- Left Right AA
+        {
+            Audio = {
+                Fire = Sound { Bank = 'XSA_Weapon', Cue = 'XSA0402_AA_Autocannon', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 100,
+            DamageType = 'Light',
+			
+            DisplayName = 'Losaare AA Autocannon',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land',
+            },
+			
+			FiringRandomness = 0.1,
+            FiringTolerance = 0.1,
+			
+            HeadingArcCenter = 60,
+            HeadingArcRange = 60,
+			
+            Label = 'Autocannon',
+			LeadTarget = true,
+			
+            MaxRadius = 42,
+			
+            MuzzleSalvoDelay = 0.2,
+            MuzzleSalvoSize = 2,
+			
+            MuzzleVelocity = 75,
+
+            NotExclusive = true,
+            
+            ProjectileId = '/projectiles/SAALosaareAutoCannon02/SAALosaareAutoCannon02_proj.bp',
+			ProjectileLifetime = 0.8,
+			
+            RackBones = {
+                {
+                    MuzzleBones = {'Left_Front_Autocannon_Muzzle'},
+                    RackBone = 'Left_Front_Autocannon_Muzzle',
+                },
+            },
+
+            RateOfFire = 2,		---- 400 DPS Air
+			
+            TargetCheckInterval = 0.5,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'AIR MOBILE',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+			
+            TrackingRadius = 1.2,
+			
+            TurretBoneMuzzle = 'Left_Front_Autocannon_Muzzle',
+            TurretBonePitch = 'Left_Front_Autocannon_Muzzle',
+            TurretBoneYaw = 'Left_Front_Autocannon_Muzzle',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 60,
+
+            TurretYaw = 0,
+            TurretYawRange = 60,
+            TurretYawSpeed = 60,
+
+            Turreted = true,
+        },
+
+		-- Right Rear AA
+        {
+            Audio = {
+                Fire = Sound { Bank = 'XSA_Weapon', Cue = 'XSA0402_AA_Autocannon', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 100,
+            DamageType = 'Light',
+			
+            DisplayName = 'Losaare AA Autocannon',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land',
+            },
+			
+			FiringRandomness = 0.1,
+            FiringTolerance = 0.1,
+			
+            HeadingArcCenter = 180,
+            HeadingArcRange = 60,
+			
+            Label = 'Autocannon',
+			LeadTarget = true,
+			
+            MaxRadius = 42,
+			
+            MuzzleSalvoDelay = 0.1,
+            MuzzleSalvoSize = 2,
+			
+            MuzzleVelocity = 75,
+
+            NotExclusive = true,
+
+            ProjectileId = '/projectiles/SAALosaareAutoCannon02/SAALosaareAutoCannon02_proj.bp',
+			ProjectileLifetime = 0.8,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Right_Rear_Autocannon_Muzzle'},
+                    RackBone = 'Right_Rear_Autocannon_Muzzle',
+                },
+            },
+
+            RateOfFire = 2,	-- 400 DPS Air
+
+            TargetCheckInterval = 0.5,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'AIR MOBILE',
+            },
+			
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+			
+            TrackingRadius = 1.2,
+			
+            TurretBoneMuzzle = 'Right_Rear_Autocannon_Muzzle',
+            TurretBonePitch = 'Right_Rear_Autocannon_Muzzle',
+            TurretBoneYaw = 'Right_Rear_Autocannon_Muzzle',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 60,
+
+            TurretYaw = 0,
+            TurretYawRange = 60,
+            TurretYawSpeed = 60,
+
+            Turreted = true,
+        },
+
+		-- Left Rear AA
+        {
+            Audio = {
+                Fire = Sound { Bank = 'XSA_Weapon', Cue = 'XSA0402_AA_Autocannon', LodCutoff = 'Weapon_LodCutoff' },
+            },
+
+            BallisticArc = 'RULEUBA_None',
+
+            CannotAttackGround = true,
+            CollideFriendly = false,
+			
+            Damage = 100,
+            DamageType = 'Light',
+			
+            DisplayName = 'Losaare AA Autocannon',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land',
+            },
+			
+			FiringRandomness = 0.1,
+            FiringTolerance = 0.1,
+			
+            HeadingArcCenter = 180,
+            HeadingArcRange = 60,
+			
+            Label = 'Autocannon',
+			LeadTarget = true,
+			
+            MaxRadius = 42,
+			
+            MuzzleSalvoDelay = 0.1,
+            MuzzleSalvoSize = 2,
+            MuzzleVelocity = 75,
+
+            NotExclusive = true,
+
+            ProjectileId = '/projectiles/SAALosaareAutoCannon02/SAALosaareAutoCannon02_proj.bp',
+			ProjectileLifetime = 0.8,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Left_Rear_Autocannon_Muzzle'},
+                    RackBone = 'Left_Rear_Autocannon_Muzzle',
+                },
+            },
+
+            RateOfFire = 2,		-- 400 DPS Air
+			
+            TargetCheckInterval = 0.5,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'AIR MOBILE',
+            },
+			
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+			
+            TrackingRadius = 1.2,
+			
+            TurretBoneMuzzle = 'Left_Rear_Autocannon_Muzzle',
+            TurretBonePitch = 'Left_Rear_Autocannon_Muzzle',
+            TurretBoneYaw = 'Left_Rear_Autocannon_Muzzle',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 60,
+
+            TurretYaw = 0,
+            TurretYawRange = 60,
+            TurretYawSpeed = 60,
+
+            Turreted = true,
+        },
+
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 4000,
+            DamageFriendly = true,
+            DamageRadius = 7,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            Label = 'DeathImpact',
+            WeaponCategory = 'Death',
+        },
+    },
+
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.05,
+        HealthMult = 0.5,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Seabed = true,
+            Water = true,
+        },
+    },
+}
