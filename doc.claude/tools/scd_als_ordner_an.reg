@@ -1,0 +1,17 @@
+Windows Registry Editor Version 5.00
+
+; ============================================================================
+; .scd im Explorer als gepackten Ordner anzeigen
+;
+; .scd-Dateien sind umbenannte ZIP-Archive. Dieser Eintrag sagt dem Explorer,
+; dass er sie wie ZIPs behandeln soll - Doppelklick oeffnet dann den Inhalt.
+;
+; Variante: NUR fuer den aktuellen Benutzer (HKEY_CURRENT_USER).
+; Braucht KEINE Administratorrechte.
+;
+; Rueckgaengig: scd_als_ordner_aus.reg
+; Doku:         ..\14_TOOLS.md
+; ============================================================================
+
+[HKEY_CURRENT_USER\Software\Classes\.scd]
+@="CompressedFolder"

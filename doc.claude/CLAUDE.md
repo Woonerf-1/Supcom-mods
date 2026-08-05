@@ -42,7 +42,7 @@ Innerhalb von `usermods\` gilt derzeit:
 
 ```
 Bestand (6 Mod-Ordner, Stand 2026-08-05)  →  EINGEFROREN. Vergleichsstand, wird abgelöst.
-doc.claude\                               →  diese Dokumentation. ✅ schreiben.
+doc.claude\                               →  Dokumentation + tools\. ✅ schreiben.
 neue Mods                                 →  hier entsteht alles Neue. Wird neu gedacht.
 .git\                                     →  Werkzeugbereich. NICHT anfassen.
 ```
@@ -142,6 +142,7 @@ kostet mehr als eine Rückfrage.
 | `11_DATAPATH.md` | **`LoudDataPath.lua` / `CommonDataPath.lua`** — VFS-Aufbau, `mount_mods` | bei jeder Pfad-, Mount- oder Sound-Frage |
 | `12_NEUSCHNITT.md` | **Konzept für den Neuschnitt der Mods** — Freeze, Befunde, Zielstruktur | vor jeder Arbeit an einem Mod |
 | `13_GIT.md` | **Git-Anbindung von `usermods\`** — Remote, Regeln, offene Punkte | bei Versionierungsfragen |
+| `14_TOOLS.md` | **`doc.claude\tools\`** — Registry-Einträge, Hilfsskripte | bei Werkzeugfragen |
 | `referenz\` | Verbatim-Kopien der beiden DataPath-Dateien | zum Vergleich bei Verdacht auf Überschreibung |
 | `CHANGELOG.md` | Was wurde wann geändert | nach jeder Änderung |
 | `TODO.md` | Offene Punkte, Ideen, Blocker | Sessionstart/-ende |

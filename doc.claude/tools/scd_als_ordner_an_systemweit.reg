@@ -1,0 +1,19 @@
+Windows Registry Editor Version 5.00
+
+; ============================================================================
+; VARIANTE FUER ALLE BENUTZER  -  braucht ADMINISTRATORRECHTE
+;
+; Nur verwenden, wenn die Zuordnung systemweit gelten soll.
+; Fuer den Normalfall reicht scd_als_ordner_an.reg (nur aktueller Benutzer,
+; keine Adminrechte noetig).
+;
+; ACHTUNG: HKEY_CLASSES_ROOT ist eine Verschmelzung aus HKLM\Software\Classes
+; und HKCU\Software\Classes. Schreibvorgaenge landen in HKLM. Eine eventuell
+; vorhandene Zuordnung fuer .scd wird ueberschrieben.
+;
+; Rueckgaengig: [-HKEY_CLASSES_ROOT\.scd]
+; Doku:         ..\14_TOOLS.md
+; ============================================================================
+
+[HKEY_CLASSES_ROOT\.scd]
+@="CompressedFolder"

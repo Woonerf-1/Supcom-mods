@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Repository-Wurzel** | `LOUD\usermods\` |
-| **Enthält** | alle Mods + die Arbeitsdokumentation (`doc.claude\`) |
+| **Enthält** | alle Mods + Dokumentation (`doc.claude\`, inkl. `tools\`) |
 | **Remote** | `origin` → `git@github.com:Woonerf-1/Supcom-mods.git` (**SSH**) |
 | **Push-URL** | identisch, SSH |
 | **Branch** | `main` (folgt `origin/main`) |
@@ -59,6 +59,9 @@ wiederherstellbar, ein versehentliches Überschreiben ist reversibel. Der Grunds
 usermods\
 ├── .git\                      Repository
 ├── doc.claude\                Arbeitsdokumentation (seit 05.08.2026 hier)
+│   ├── referenz\              Verbatim-Kopien der DataPath-Dateien
+│   ├── tools\                 Hilfsmittel, kein Mod (14_TOOLS.md)
+│   └── mods\                  je ein Dokument pro eigenem Mod
 ├── README.md                  Inhalt derzeit nur "#Supcom-mods"
 ├── test.txt                   Inhalt "s" — Testartefakt, kann weg
 ├── AcidPools\
@@ -102,7 +105,7 @@ Arbeitsdokumentation.** Das ist eine bewusste Entscheidung, keine offene Frage.
 | Binärdateien (`.scm`, `.dds`, `.sca`, `.bmp`) | **mitversioniert**. Ein Mod ohne seine Assets ist kein Mod. |
 | Git LFS | nicht eingerichtet. Bei Bedarf später nachrüstbar, derzeit kein Thema. |
 | `.gitignore` | **kein Ausschluss von Modinhalten.** Falls überhaupt, dann nur für Systemmüll, der zu keinem Mod gehört (siehe unten). |
-| `doc.claude\` | **liegt seit 05.08.2026 im Repo** (`usermods\doc.claude\`) und wird mitversioniert. Vorher außerhalb — Entscheidung revidiert. |
+| `doc.claude\` | **liegt seit 05.08.2026 im Repo** (`usermods\doc.claude\`) und wird mitversioniert. Vorher außerhalb — Entscheidung revidiert. Enthält auch `tools\` → `14_TOOLS.md`. **Keine Zugangsdaten darin.** |
 | LOUD-Spieldaten | draußen — werden vom LOUD-Team gepflegt |
 
 ### Warum die Doku mit ins Repo gehört

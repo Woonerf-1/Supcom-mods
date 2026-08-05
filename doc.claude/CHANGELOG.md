@@ -14,6 +14,46 @@ Neueste Einträge oben. Format je Eintrag:
 
 ---
 
+## 2026-08-05 — `doc.claude\tools\` angelegt
+
+- **Was:** Ordner für Hilfsmittel; Registry-Einträge, um `.scd` im Explorer als gepackten
+  Ordner anzuzeigen
+- **Wo:** `usermods\doc.claude\tools\` (neu), `doc.claude\14_TOOLS.md` (neu)
+- **Wie:** neu; Verweise ergänzt in `CLAUDE.md`, `README.md`, `01_ARCHITEKTUR.md`,
+  `08_BESTANDSAUFNAHME.md`, `13_GIT.md`, `TODO.md`
+- **Getestet:** Dateiformat von `.sca` empirisch geprüft (siehe unten)
+
+Angelegte Dateien:
+- `tools\README.md` — Kurzübersicht
+- `tools\scd_als_ordner_an.reg` — `HKCU\Software\Classes\.scd`, **ohne Adminrechte**
+- `tools\scd_als_ordner_aus.reg` — Rücknahme
+- `tools\scd_als_ordner_an_systemweit.reg` — `HKEY_CLASSES_ROOT`, mit Adminrechten
+
+Zunächst als `usermods\tools\` angelegt, auf Wunsch nach `usermods\doc.claude\tools\`
+verschoben.
+
+**Abweichung von der Vorlage:** Der eingereichte Registry-Eintrag enthielt zusätzlich
+`[HKEY_CLASSES_ROOT\.sca]` mit `CompressedFolder`. Das ist nicht korrekt — `.sca` sind
+Animationen, keine Archive. Geprüft an
+`gamedata.entpackt\units\units\UEL0001\UEL0001_A001.sca`:
+Magic Bytes `41 4E 49 4D` („ANIM“) statt `50 4B 03 04` („PK“); `unzip` meldet
+„End-of-central-directory signature not found“. Der Eintrag würde bewirken, dass ein
+Doppelklick auf eine `.sca` den ZIP-Handler öffnet und fehlschlägt. Weggelassen,
+Begründung in `14_TOOLS.md` §1.
+
+Zusätzlich gewählt: **HKCU statt HKCR** als Standardvariante — wirkt für den angemeldeten
+Benutzer, braucht keine erhöhten Rechte, sauber zurücknehmbar. Die systemweite Variante
+liegt daneben, falls gewünscht.
+
+Hinweis in `01_ARCHITEKTUR.md` §4 präzisiert: `mount_mods()` mountet nur die **direkten**
+Unterordner von `usermods\`. `doc.claude\` wird als `/mods/doc.claude/` gemountet, die
+tiefer liegenden `tools\` und `referenz\` bekommen **keinen** eigenen Mountpunkt.
+Damit ist die Lage unterhalb von `doc.claude\` auch aus VFS-Sicht die sauberere Wahl.
+
+**Es wurden keine Spiel- oder Moddateien verändert.**
+
+---
+
 ## 2026-08-05 — Doku nach `usermods\doc.claude\` umgezogen
 
 - **Was:** Die Arbeitsdokumentation liegt jetzt im Git-Repository

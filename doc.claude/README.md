@@ -35,6 +35,7 @@ LOUD\usermods\                     ← Git-Repository (Woonerf-1/Supcom-mods)
     ├── 11_DATAPATH.md            LoudDataPath.lua / CommonDataPath.lua — VFS-Aufbau
     ├── 12_NEUSCHNITT.md          Freeze des Bestands, Befunde, Regeln für neue Mods
     ├── 13_GIT.md                 Git-Anbindung — Remote, Regeln, Geltungsbereich
+    ├── 14_TOOLS.md               tools\ — Registry-Einträge, Hilfsskripte
     │
     ├── CHANGELOG.md              chronologisches Änderungsprotokoll
     ├── TODO.md                   offene Punkte, Ideen, Blocker
@@ -43,6 +44,12 @@ LOUD\usermods\                     ← Git-Repository (Woonerf-1/Supcom-mods)
     │   ├── README.md
     │   ├── LoudDataPath.lua.txt    Verbatim-Kopie (Stand 2026-08-05)
     │   └── CommonDataPath.lua.txt  Verbatim-Kopie (Stand 2026-08-05)
+    │
+    ├── tools\                    Hilfsmittel — kein Mod
+    │   ├── README.md
+    │   ├── scd_als_ordner_an.reg   .scd als gepackten Ordner (HKCU, ohne Admin)
+    │   ├── scd_als_ordner_aus.reg  Rücknahme
+    │   └── scd_als_ordner_an_systemweit.reg   (HKCR, mit Admin)
     │
     └── mods\
         ├── _VORLAGE.md           Kopiervorlage für Mod-Dokumentation
@@ -56,7 +63,7 @@ LOUD\usermods\                     ← Git-Repository (Woonerf-1/Supcom-mods)
 | Zone | Pfad | Status |
 |---|---|---|
 | **Neue** Mods | `LOUD\usermods\` (neue Ordner) | ✅ schreiben |
-| Diese Doku | `LOUD\usermods\doc.claude\` | ✅ schreiben |
+| Diese Doku | `LOUD\usermods\doc.claude\` | ✅ schreiben (inkl. `tools\`, Ausführen: Nutzer) |
 | **Bestehende** Mods | `LOUD\usermods\` (6 Mod-Ordner) | ❄️ eingefroren — gehören uns, werden aber abgelöst |
 | Git-Verwaltung | `LOUD\usermods\.git\` | ⛔ tabu — Claude führt kein Git aus |
 | Referenzcode | `LOUD\gamedata.entpackt\` | 🔒 nur lesen |

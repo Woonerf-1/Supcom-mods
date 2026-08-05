@@ -33,8 +33,9 @@ Die Spalte „Ersetzt durch" in der Übersicht wird gepflegt, sobald ein Neuschn
 | `test21000` | TEST21000 | Colin | `12345678901234567890test21000` | `units\UEL0001` (Vollersatz) | — |
 | `UEF_trans_men` | Trans men are sexy | Colin | `d59081a9-603b-46f1-becd-3b6520614469+1` | `hook`, `units`, `lua`, Assets | — |
 
-Außerdem im Repository-Wurzelverzeichnis: `doc.claude\` (diese Dokumentation),
-`README.md` (Inhalt nur `"#Supcom-mods"`) und `test.txt` (Inhalt `"s"`, Testartefakt).
+Außerdem im Repository-Wurzelverzeichnis: `doc.claude\` (diese Dokumentation, inkl.
+`tools\`), `README.md` (Inhalt nur `"#Supcom-mods"`) und `test.txt` (Inhalt `"s"`,
+Testartefakt).
 
 ### Entfallen
 

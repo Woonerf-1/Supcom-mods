@@ -101,6 +101,10 @@ Modinhalten, kein LFS. Details in `13_GIT.md` §5.
 
 ## Erledigt
 
+- [x] **2026-08-05** `doc.claude\tools\` angelegt mit Registry-Einträgen für `.scd` als
+      gepackten Ordner (An/Aus, HKCU und systemweit). Doku: `14_TOOLS.md`.
+      `.sca` bewusst ausgelassen — kein ZIP (Magic `ANIM`, geprüft).
+
 - [x] **2026-08-05** Doku nach `usermods\doc.claude\` umgezogen und alle Referenzen
       angepasst. Damit im Git-Repository und mitversioniert.
       Alter Ordner `LOUD\doc.claude\` gelöscht — geprüft, es gibt nur noch einen Stand.

@@ -14,7 +14,7 @@ C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\
     ├── maps\  usermaps\  sounds\
     └── usermods\        ← unsere Mods  ✅ schreibbar, Git-Repository
         ├── .git\            ⛔ tabu
-        ├── doc.claude\      ← unsere Doku  ✅ schreibbar
+        ├── doc.claude\      ← unsere Doku (inkl. tools\)  ✅ schreibbar
         └── <Mod-Ordner>\
 ```
 
@@ -132,10 +132,12 @@ protocols = { 'http', 'https' }
 
 - **`usermods\<Name>\` wird zu `/mods/<name>/`** im VFS (kleingeschrieben!).
   Bestätigt im Log: `AddSearchPath: '...\loud\usermods\acidpools', mounted as '/mods/acidpools/'`
-- **Das gilt für jeden Unterordner** — auch für `usermods\doc.claude\`, das als
+- **Das gilt für jeden direkten Unterordner** — auch für `usermods\doc.claude\`, das als
   `/mods/doc.claude/` gemountet wird. Da dort keine `mod_info.lua` liegt, wird kein Mod
-  registriert; die `.md`-Dateien werden von der Engine nie gelesen. Harmlos, aber gut zu
-  wissen — der Ordner taucht im `LOUD.log` bei den Mounts auf.
+  registriert; `.md`- und `.reg`-Dateien liest die Engine ohnehin nie. Harmlos, aber gut
+  zu wissen — der Ordner taucht im `LOUD.log` bei den Mounts auf.
+  Tiefer liegende Ordner (`doc.claude\tools\`, `doc.claude\referenz\`) bekommen **keinen**
+  eigenen Mountpunkt.
 - `mount_mods` ist speziell: es hängt zusätzlich Unterordner wie `sounds\` eines Mods
   an die passenden globalen Mountpunkte an
   (Log: `...\usermods\nomads-4-loud\sounds', mounted as '/sounds/'`).
