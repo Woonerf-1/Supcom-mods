@@ -18,10 +18,14 @@ Massgeblich ist der **Ablageort des Blueprints**, nicht das ID-Praefix:
 
 | Kategorie | Ort | Einheiten | Geprueft | Datei |
 |---|---|---:|---|---|
-| basegame | `gamedata.entpackt\units\units\` | 432 | ja | [units\basegame.md](units/basegame.md) |
-| mod | `gamedata.entpackt\<Archiv>\...\units\` | 525 | ja | [units\mods.md](units/mods.md) |
-| usermod | `usermods\<Mod>\units\` | 218 | ja | [units\usermods.md](units/usermods.md) |
-| **Gesamt** | | **1175** | | |
+| basegame | `gamedata.entpackt\units\units\` | 425 | ja | [units\basegame.md](units/basegame.md) |
+| mod | `gamedata.entpackt\<Archiv>\...` | 668 | ja | [units\mods.md](units/mods.md) |
+| usermod | `usermods\<Mod>\...` | 218 | ja | [units\usermods.md](units/usermods.md) |
+| **Gesamt** | | **1311** | | |
+
+Gezaehlt werden `*_unit.bp`-Dateien, rekursiv - Stand 2026-08-06 aus
+[units\_generiert\units.csv](units/_generiert/units.csv).
+1107 verschiedene IDs (case-insensitiv), **187 davon mehrfach belegt**.
 
 Die ID-Systematik taugt **nicht** als Kriterium: `UAB8765` und `XSB8765` tragen
 Basisspiel-Praefixe, liegen aber in `LOUD Unit Additions`; umgekehrt liegen 13 Eintraege
@@ -34,60 +38,71 @@ mit `B`/`D`/`S`-Praefix im Basisverzeichnis. Sie ist eine Lesehilfe, kein Ordnun
 | Frage | Datei |
 |---|---|
 | **Wird diese ID von einem Mod ueberschrieben?** | [units\ueberschreibungen.md](units/ueberschreibungen.md) |
-| Einheiten des Basisspiels, mit Namen | [units\basegame.md](units/basegame.md) |
+| **Wie heisst Einheit X?** | [units\_generiert\units.csv](units/_generiert/units.csv) - alle 1311 mit Namen |
+| Einheiten des Basisspiels | [units\basegame.md](units/basegame.md) |
 | Mod-Einheiten aus `gamedata` - Uebersicht | [units\mods.md](units/mods.md) |
 | - Detaillisten je Paket | [units\pakete.md](units/pakete.md) |
-| Einheiten unserer eigenen Mods, mit Namen | [units\usermods.md](units/usermods.md) |
+| - LOUD-eigene Mods aus `loud_misc` | [units\loud_misc.md](units/loud_misc.md) |
+| Einheiten unserer eigenen Mods | [units\usermods.md](units/usermods.md) |
 | Volle Analyse einer einzelnen Einheit | `units\<UNITID>.md`, Vorlage: [units\_VORLAGE.md](units/_VORLAGE.md) |
 | Format- und Pruefregeln | [units\README.md](units/README.md) |
-| Liste maschinell neu erzeugen | [16_UNITS.md](16_UNITS.md) -> `tools\Get-Units.ps1` |
+| Liste neu erzeugen | [16_UNITS.md](16_UNITS.md) -> `tools\Get-Units.ps1` |
 
 ---
 
 ## Bestand
 
-| Paket | Mod | Einheiten | Kategorie | Datei |
-|---|---|---:|---|---|
-| `units` | - | 432 | basegame | [units\basegame.md](units/basegame.md) |
-| `brewlan` | BrewLAN_LOUD | 149 | mod | [units\pakete.md](units/pakete.md) |
-| `civ_units` | - | 117 | mod | [units\pakete.md](units/pakete.md) |
-| `usermods` | nomads-4-loud | 107 | usermod | [units\usermods.md](units/usermods.md) |
-| `usermods` | UEF_trans_men | 97 | usermod | [units\usermods.md](units/usermods.md) |
-| `blackops` | BlackOpsUnleashed | 86 | mod | [units\pakete.md](units/pakete.md) |
-| `TotalMayhem` | TotalMayhem | 62 | mod | [units\pakete.md](units/pakete.md) |
-| `loud_units` | LOUD Unit Additions | 26 | mod | [units\pakete.md](units/pakete.md) |
-| `WyvernBattlePack` | BattlePack | 25 | mod | [units\pakete.md](units/pakete.md) |
-| `brewlan` | BrewLAN_Units\BrewResearch | 20 | mod | [units\pakete.md](units/pakete.md) |
-| `4D-CompatibilityPack` | 4DC | 15 | mod | [units\pakete.md](units/pakete.md) |
-| `blackops` | BlackopsACUs | 9 | mod | [units\pakete.md](units/pakete.md) |
-| `usermods` | NOMADS-try_b4_ur_BI | 9 | usermod | [units\usermods.md](units/usermods.md) |
-| `brewlan` | BrewLAN_Plenae\CityGeneration | 8 | mod | [units\pakete.md](units/pakete.md) |
-| `brewlan` | BrewLAN_Units\BrewIntel | 5 | mod | [units\pakete.md](units/pakete.md) |
-| `usermods` | commanders | 4 | usermod | [units\usermods.md](units/usermods.md) |
-| `brewlan` | BrewLAN_Plenae\Spomeniki | 2 | mod | [units\pakete.md](units/pakete.md) |
-| `brewlan` | BrewLAN_RNG\CrateDrop | 1 | mod | [units\pakete.md](units/pakete.md) |
-| `usermods` | test21000 | 1 | usermod | [units\usermods.md](units/usermods.md) |
-| **Summe** | | **1175** | | |
+| Paket | Mod | Einheiten | Kategorie |
+|---|---|---:|---|
+| `units` | units | 425 | basegame |
+| `brewlan` | BrewLAN_LOUD | 152 | mod |
+| `usermods` | nomads-4-loud | 107 | usermod |
+| `civ_units` | civ_units | 100 | mod |
+| `usermods` | UEF_trans_men | 97 | usermod |
+| `blackops` | BlackOpsUnleashed | 86 | mod |
+| `loud_misc` | LOUD Integrated Storage | 84 | mod |
+| `TotalMayhem` | TotalMayhem | 62 | mod |
+| `loud_misc` | ZLOUD Structure Enhancements | 36 | mod |
+| `loud_units` | LOUD Unit Additions | 26 | mod |
+| `WyvernBattlePack` | BattlePack | 25 | mod |
+| `brewlan` | BrewLAN_Units | 25 | mod |
+| `brewlan` | BrewLAN_RNG | 18 | mod |
+| `4D-CompatibilityPack` | 4DC | 15 | mod |
+| `brewlan` | BrewLAN_Plenae | 14 | mod |
+| `blackops` | BlackopsACUs | 9 | mod |
+| `usermods` | NOMADS-try_b4_ur_BI | 9 | usermod |
+| `loud_misc` | Enhanced Nukes | 8 | mod |
+| `usermods` | commanders | 4 | usermod |
+| `loud_misc` | Artillery | 4 | mod |
+| `loud_misc` | Enhanced Commanders | 4 | mod |
+| `usermods` | test21000 | 1 | usermod |
+| **Summe** | | **1311** | |
 
-Die Summe zaehlt **Blueprint-Ordner, nicht eindeutige Einheiten** - 1075 verschiedene IDs.
+## Verteilung
+
+| Fraktion | Einheiten | | Techstufe | Einheiten |
+|---|---:|---|---|---:|
+| UEF | 339 | | T3 | 421 |
+| Cybran | 317 | | T1 | 307 |
+| Seraphim | 269 | | T2 | 284 |
+| Aeon | 247 | | unbestimmt | 155 |
+| Nomads | 115 | | Experimental | 144 |
+| keine | 24 | | | |
 
 ## Ueberschreibungen
 
-**99 IDs kommen an mehr als einem Ablageort vor.** Vollstaendig geprueft am 2026-08-05
-gegen alle 19 Verzeichnislisten.
+**187 IDs kommen an mehr als einem Ablageort vor** (case-insensitiv gerechnet).
+**120 der 425 Basiseinheiten werden von mindestens einem Mod ersetzt** - fast jede dritte.
 
-| Ueberschreibender Mod | ersetzt basegame | ersetzt mod | Summe |
+| Mod | Einheiten | davon Ersatz | Anteil |
 |---|---:|---:|---:|
-| `UEF_trans_men` | 39 | 49 | 88 |
-| `NOMADS-try_b4_ur_BI` | 1 | 5 | 6 |
-| `commanders` | 4 | 0 | 4 |
-| `nomads-4-loud` | 1 | 0 | 1 |
-| `test21000` | 1 | 0 | 1 |
-
-`UEL0001` wird von `commanders` **und** `test21000` ersetzt, daher 99 statt 100.
-
-**Alle ueberschreibenden Mods liegen in `usermods\`.** Die Pakete aus `gamedata`
-kollidieren untereinander nicht - jede ID kommt dort nur einmal vor.
+| `UEF_trans_men` | 97 | 88 | 91 % |
+| `LOUD Integrated Storage` | 84 | 56 | 67 % |
+| `ZLOUD Structure Enhancements` | 36 | 32 | 89 % |
+| `BrewLAN_LOUD` | 152 | 23 | 15 % |
+| `BlackOpsUnleashed` | 86 | 20 | 23 % |
+| `LOUD Unit Additions` | 26 | 12 | 46 % |
+| `Enhanced Nukes`, `Artillery`, `Enhanced Commanders`, `commanders`, `test21000` | | | 100 % |
 
 Einzelheiten: [units\ueberschreibungen.md](units/ueberschreibungen.md)
 

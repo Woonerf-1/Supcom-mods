@@ -13,18 +13,17 @@ Eingefroren, siehe `../08_BESTANDSAUFNAHME.md`. `AcidPools` enthaelt keine Einhe
 
 Geprueft am 2026-08-05: alle fuenf Verzeichnislisten abgeglichen, Summe stimmt.
 
-| Mod | Einheiten | ersetzt basegame | Namen |
+| Mod | Einheiten | ersetzt | Namen |
 |---|---:|---:|---|
 | [nomads-4-loud](#mod-nomads-4-loud) | 107 | 1 | 98 von 107 |
-| [UEF_trans_men](#mod-uef_trans_men) | 97 | 39 | offen |
-| [NOMADS-try_b4_ur_BI](#mod-nomads-try_b4_ur_bi) | 9 | 1 | vollstaendig |
+| [UEF_trans_men](#mod-uef_trans_men) | 97 | 88 | vollstaendig bis auf 2 |
+| [NOMADS-try_b4_ur_BI](#mod-nomads-try_b4_ur_bi) | 9 | 6 | vollstaendig |
 | [commanders](#mod-commanders) | 4 | 4 | kein `UnitName` im Blueprint |
 | [test21000](#mod-test21000) | 1 | 1 | kein `UnitName` im Blueprint |
-| **Summe** | **218** | **45** | |
+| **Summe** | **218** | **100** | |
 
-Die Spalte "ersetzt basegame" zaehlt IDs, die auch in `gamedata.entpackt\units\units\`
-vorkommen - geprueft. Wie viele IDs zusaetzlich Blueprints aus den **mod-Paketen**
-ersetzen, ist noch nicht ermittelt ([ueberschreibungen.md](ueberschreibungen.md)).
+Die Spalte "ersetzt" zaehlt IDs, die auch an einem anderen Ablageort vorkommen -
+geprueft aus `_generiert\units.csv` (Stand 2026-08-06, case-insensitiv).
 
 `UEL0001` kommt in `commanders` **und** `test21000` vor - die einzige Kollision
 innerhalb der Usermods.
@@ -212,71 +211,147 @@ Namen ohne zugehoerigen Blueprint-Ordner: `xnb0201` `xnb0202` `xnb0203` `xnb0301
 C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\UEF_trans_men\units\
 ```
 
-97 Einheiten, davon **39 Ueberschreibungen von basegame** (geprueft). Wie viele der
-uebrigen 58 Blueprints aus mod-Paketen ersetzen, ist nicht ermittelt.
+97 Einheiten, davon **88 Ueberschreibungen** (91 Prozent). Nur 9 IDs sind eigenstaendig.
 
-Der Mod hat keine eigene Lokalisierungsdatei; Namen stuenden einzeln in den 97
-Blueprints. Nachtrag bei Gelegenheit, siehe `../TODO.md`.
+Namen und Herkunft aus `_generiert\units.csv` (Stand 2026-08-06).
+Spalte "Ersetzt aus": Ablageorte derselben ID. `**neu**` = kein Gegenstueck.
 
-### Ueberschreibt basegame (39)
+### Eigenstaendige Einheiten (9)
 
-| ID | Original |
+| ID | Name |
 |---|---|
-| `UAA0204` | Skimmer |
-| `UAA0303` | Corona |
-| `UAB1302` | Mass Extractor |
-| `UAB2108` | Serpentine |
-| `UAB4201` | Volcano |
-| `UAL0301` | Support Armored Command Unit |
-| `UAS0203` | Sylph |
-| `UAS0304` | Silencer |
-| `UEA0204` | Stork |
-| `UEA0303` | Wasp |
-| `UEA0305` | Broadsword |
-| `UEB1302` | Mass Pump 3 |
-| `UEB3106` | - |
-| `UEB4201` | Buzzkill |
-| `UEL0205` | Sky Boxer |
-| `UEL0401` | Fatboy |
-| `UES0203` | Tigershark |
-| `UES0304` | Ace |
-| `UES0401` | Atlantis |
-| `URA0204` | Cormorant |
-| `URA0303` | Gemini |
-| `URB1302` | Mass Extractor |
-| `URB4203` | Twilight |
-| `URS0203` | Sliver |
-| `URS0304` | Plan B |
-| `XAA0305` | Restorer |
-| `XAA0306` | Solace |
-| `XAB3301` | Eye of Rhianne |
-| `XAS0306` | Torrent Class |
-| `XES0102` | Cooper |
-| `XRA0305` | Wailer |
-| `XSA0204` | Uosioz |
-| `XSA0303` | Iazyne |
-| `XSA0402` | Ahwassa |
-| `XSB1302` | Hyalatoh |
-| `XSL0402` | Othuy |
-| `XSS0203` | Sou-istle |
-| `XSS0303` | Iavish |
-| `XSS0304` | Yathsou |
+| `MKT0409` | Acclamator |
+| `SAB0104` | Pearl |
+| `SAB1312` | - |
+| `SEB1312` | Mass Pump 3E |
+| `SRA4212` | Orlok |
+| `SRB1312` | - |
+| `SRB4313` | Nightshade |
+| `SRB5383` | The Lost |
+| `SSB1312` | Hyalatoh |
 
-### Uebrige 58
+Die vier `*B1312` sind vermutlich eigene Massextraktor-Varianten - drei davon ohne
+Namenseintrag.
 
-Herkunft nicht geprueft. Praefixe deuten auf `blackops` (`B...`), `brewlan` (`S...`),
-`loud_units` (`V...`), `WyvernBattlePack` (`W...`).
+### Ersetzt basegame (39)
 
-`BAB1202` `BAB1302` `BAB2308` `BAB4307` `BAL0310` `BEB1202` `BEB1302` `BRB1202`
-`BRB1302` `BSA0310` `BSB1202` `BSB1302` `BSB2402` `BSB4205` `BSL0005` `BSLK004`
-`MKT0409` `SAA0306` `SAA0313` `SAB0104` `SAB1312` `SEA0310` `SEA0313` `SEB1312`
-`SEB3404` `SEL0324` `SES0319` `SRA0201` `SRA0313` `SRA4212` `SRB1312` `SRB2221`
-`SRB4313` `SRB4402` `SRB5383` `SRL0319` `SRL0320` `SSA0001` `SSA0313` `SSA0314`
-`SSB1312` `SSL0324` `SSL0403` `UABSSG01` `UAL0310` `UAL0402` `UEBSSG01` `UEL0402`
-`UES0206` `URBSSG01` `VEB2302` `WEB0404` `WEB4301` `WEL0401` `WRL0404` `WSB0104`
-`WSL0404` `XSBSSG01`
+| ID | Name | Ersetzt aus |
+|---|---|---|
+| `UAA0204` | Skimmer | basegame |
+| `UAA0303` | Corona | basegame |
+| `UAB1302` | Advanced Mass Extractor | basegame, LOUD Integrated Storage |
+| `UAB2108` | Serpentine | basegame |
+| `UAB4201` | Volcano | basegame |
+| `UAL0301` | Support Armored Command Unit | basegame |
+| `UAS0203` | Sylph | basegame |
+| `UAS0304` | Silencer | basegame, Enhanced Nukes |
+| `UEA0204` | Stork | basegame |
+| `UEA0303` | Wasp | basegame |
+| `UEA0305` | Broadsword | basegame |
+| `UEB1302` | Advanced Mass Extractor | basegame, LOUD Integrated Storage |
+| `UEB3106` | Advanced Mass Storage | basegame |
+| `UEB4201` | Buzzkill | basegame |
+| `UEL0205` | Sky Boxer | basegame |
+| `UEL0401` | Fatboy | basegame |
+| `UES0203` | Tigershark | basegame |
+| `UES0304` | Ace | basegame, Enhanced Nukes |
+| `UES0401` | Atlantis | basegame |
+| `URA0204` | Cormorant | basegame |
+| `URA0303` | Gemini | basegame |
+| `URB1302` | Advanced Mass Extractor | basegame, LOUD Integrated Storage |
+| `URB4203` | Twilight | basegame, ZLOUD Structure Enhancements |
+| `URS0203` | Sliver | basegame |
+| `URS0304` | Plan B | basegame, Enhanced Nukes |
+| `XAA0305` | Restorer | basegame |
+| `XAA0306` | Solace | basegame |
+| `XAB3301` | Eye of Rhianne | basegame |
+| `XAS0306` | Torrent Class | basegame |
+| `XES0102` | Cooper | basegame |
+| `XRA0305` | Wailer | basegame |
+| `XSA0204` | Uosioz | basegame |
+| `XSA0303` | Iazyne | basegame |
+| `XSA0402` | Ahwassa | basegame |
+| `XSB1302` | Advanced Mass Extractor | basegame, LOUD Integrated Storage |
+| `XSL0402` | Incarna | basegame |
+| `XSS0203` | Sou-istle | basegame |
+| `XSS0303` | Iavish | basegame |
+| `XSS0304` | Yathsou | basegame |
 
-`MKT0409` folgt keiner bekannten Systematik und hat vermutlich kein Gegenstueck.
+### Ersetzt BrewLAN_LOUD (18)
+
+| ID | Name |
+|---|---|
+| `SAA0306` | Bayblade |
+| `SAA0313` | Helios |
+| `SEA0310` | Wild Weasel |
+| `SEA0313` | Tomcat |
+| `SEB3404` | Panopticon |
+| `SEL0324` | NG3 Longbow |
+| `SES0319` | Patch Class |
+| `SRA0201` | Blade Raven |
+| `SRA0313` | Twilight Patron |
+| `SRB2221` | Whisper |
+| `SRB4402` | Darkness |
+| `SRL0319` | Dr. Greg House |
+| `SRL0320` | Slink |
+| `SSA0001` | Engineering Drone |
+| `SSA0313` | Ialosaare |
+| `SSA0314` | Sinnaino |
+| `SSL0324` | Yenesel |
+| `SSL0403` | Iyadesu |
+
+### Ersetzt BlackOpsUnleashed (16)
+
+| ID | Name | zusaetzlich in |
+|---|---|---|
+| `BAB1202` | Improved Hydrocarbon Plant | - |
+| `BAB1302` | Advanced Hydrocarbon Plant | LOUD Integrated Storage |
+| `BAB2308` | Purifier | - |
+| `BAB4307` | Purger | - |
+| `BAL0310` | Wraith | - |
+| `BEB1202` | HCPP - X2000 | - |
+| `BEB1302` | HCPP - X3000 | LOUD Integrated Storage |
+| `BRB1202` | Improved Hydrocarbon Power Plant | - |
+| `BRB1302` | Advanced Hydrocarbon Power Plant | LOUD Integrated Storage |
+| `BSA0310` | Vulthatha-Ioz | - |
+| `BSB1202` | Uya-atoh | - |
+| `BSB1302` | Uya-atoh | LOUD Integrated Storage |
+| `BSB2402` | Haasioz-Iya | - |
+| `BSB4205` | Au-iya | - |
+| `BSL0005` | Hala Othuum | - |
+| `BSLK004` | Uyanah | - |
+
+### Ersetzt LOUD Unit Additions (7)
+
+| ID | Name | zusaetzlich in |
+|---|---|---|
+| `UABSSG01` | Luminesc | LOUD Integrated Storage |
+| `UEBSSG01` | SSD Hope | LOUD Integrated Storage |
+| `URBSSG01` | ED-X | LOUD Integrated Storage |
+| `XSBSSG01` | Thanatos | LOUD Integrated Storage |
+| `VEB2302` | Flayer II | - |
+| `WRL0404` | Megaroach | - |
+| `WSB0104` | Dehgarwof | - |
+
+### Ersetzt BattlePack (4)
+
+| ID | Name |
+|---|---|
+| `WEB0404` | Turtle |
+| `WEB4301` | Protector |
+| `WEL0401` | Littleman |
+| `WSL0404` | Yath-Yen |
+
+### Ersetzt 4DC (4)
+
+| ID | Name |
+|---|---|
+| `UAL0310` | Vindicator |
+| `UAL0402` | Overlord |
+| `UEL0402` | Rampage |
+| `UES0206` | Barnacle |
+
+Besonders heikel: `4DC` ist die **Kompatibilitaetsschicht** zwischen den Paketen.
 
 ---
 
@@ -349,8 +424,8 @@ Vollersatz des UEF-ACU mit acht geaenderten Feldern, alle in `Economy`
 
 | Was | Stand |
 |---|---|
-| Verzeichnislisten aller fuenf Mods | geprueft 2026-08-05, Summe 218 |
-| Ueberschreibungen von basegame | geprueft, 45 IDs |
-| Ueberschreibungen von mod-Paketen | **ungeprueft** |
+| Bestand aller fuenf Mods | geprueft 2026-08-06, Summe 218 |
+| Ueberschreibungen | geprueft, 100 IDs, case-insensitiv |
 | Namen `nomads-4-loud` | aus Lokalisierung, 98 von 107 |
-| Namen `UEF_trans_men` | offen |
+| Namen `UEF_trans_men` | aus Blueprints, 95 von 97 |
+| Namen `commanders`, `test21000` | kein `UnitName` im Blueprint |

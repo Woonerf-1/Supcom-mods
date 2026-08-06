@@ -11,10 +11,10 @@ Massgeblich ist der **Ablageort des Blueprints**, nicht das ID-Praefix:
 
 | Kategorie | Ablageort | Einheiten | Datei |
 |---|---|---:|---|
-| basegame | `gamedata.entpackt\units\units\` | 432 | [basegame.md](basegame.md) |
-| mod | `gamedata.entpackt\<Archiv>\...\units\` | 525 | [mods.md](mods.md) -> [pakete.md](pakete.md) |
-| usermod | `usermods\<Mod>\units\` | 218 | [usermods.md](usermods.md) |
-| **Gesamt** | | **1175** | |
+| basegame | `gamedata.entpackt\units\units\` | 425 | [basegame.md](basegame.md) |
+| mod | `gamedata.entpackt\<Archiv>\...` | 668 | [mods.md](mods.md), [pakete.md](pakete.md), [loud_misc.md](loud_misc.md) |
+| usermod | `usermods\<Mod>\...` | 218 | [usermods.md](usermods.md) |
+| **Gesamt** | | **1311** | |
 
 Die ID-Systematik ist eine **Lesehilfe, kein Ordnungsmerkmal**: `UAB8765` und `XSB8765`
 tragen Basisspiel-Praefixe, liegen aber in `LOUD Unit Additions`; umgekehrt liegen 13
@@ -26,13 +26,31 @@ Eintraege mit `B`/`D`/`S`-Praefix im Basisverzeichnis.
 
 | Datei | Inhalt | IDs geprueft | Namen |
 |---|---|---|---|
-| [basegame.md](basegame.md) | Paket `units`, 432 Einheiten | ja | 391 von 432 |
-| [mods.md](mods.md) | Uebersicht der 13 Erweiterungspakete, 525 | ja | - |
-| [pakete.md](pakete.md) | Detaillisten je Paket | ja | offen |
-| [usermods.md](usermods.md) | eigene Mods, 218 Einheiten | ja | teilweise |
-| [ueberschreibungen.md](ueberschreibungen.md) | 99 mehrfach belegte IDs | ja | - |
+| [basegame.md](basegame.md) | Paket `units`, 425 Blueprints | ja | 421 von 425 |
+| [mods.md](mods.md) | Uebersicht der 18 Erweiterungspakete, 668 | ja | - |
+| [pakete.md](pakete.md) | Index ueber die Paketdateien | ja | - |
+| [brewlan.md](brewlan.md) | BrewLAN, 209 Einheiten | ja | ja |
+| [blackops.md](blackops.md) | BlackOpsUnleashed, 86 | ja | ja |
+| [loud_misc.md](loud_misc.md) | LOUD-eigene Mods, 136 | ja | ja |
+| [civ_units.md](civ_units.md) | Zivileinheiten, 100 | ja | ja |
+| [totalmayhem.md](totalmayhem.md) | TotalMayhem, 62 | ja | ja |
+| [kleinpakete.md](kleinpakete.md) | LOUD Unit Additions, BattlePack, 4DC, BlackopsACUs, 75 | ja | ja |
+| [usermods.md](usermods.md) | eigene Mods, 218 Blueprints | ja | ja |
+| [ueberschreibungen.md](ueberschreibungen.md) | 187 mehrfach belegte IDs | ja | - |
+| [_generiert\](_generiert/) | Skriptausgabe, Rohdaten | ja | ja |
 | `<UNITID>.md` | Einzeleinheit, volle Blueprint-Analyse | nach Bedarf | |
 | [_VORLAGE.md](_VORLAGE.md) | Kopiervorlage fuer Einzeleinheiten | - | |
+
+**Alle 1311 Einheiten sind erfasst, benannt und gegen das Dateisystem geprueft.**
+
+### WICHTIG: Zaehlweise
+
+Alle Dateien zaehlen jetzt einheitlich **`*_unit.bp`-Dateien, rekursiv** - so wie das
+Skript. Die fruehere Zaehlweise "Ordner unter `units\`" ergab 1175 und hatte zwei blinde
+Flecken: sie uebersah Blueprints ausserhalb von `units\`-Ordnern (und damit das gesamte
+Archiv `loud_misc` mit 136 Einheiten) und zaehlte leere Ordner mit.
+
+Einzelheiten: [_generiert\README.md](_generiert/README.md)
 
 ---
 
@@ -69,12 +87,19 @@ Ebene klein genug, um sie ganz zu lesen.
 8. **Vollstaendige Pfade** zu Blueprint- und Lokalisierungsdateien
    (`../07_KONVENTIONEN.md` Abschnitt 7).
 
+9. **Unit-IDs sind case-insensitiv.** Vor jedem Vergleich auf Grossschreibung
+   normalisieren - 24 IDs kommen im Bestand in beiden Schreibweisen vor
+   ([ueberschreibungen.md](ueberschreibungen.md)).
+10. **Rekursiv suchen, nicht nur `units\`-Ordner auflisten.** Blueprints liegen auch
+   ausserhalb, und ganze Archive koennen sonst durchrutschen - so wurde `loud_misc`
+   mit 136 Einheiten uebersehen.
+
 ## Namenskonvention
 
 | Ebene | Dateiname |
 |---|---|
 | Kategorie basegame | `basegame.md` |
-| Kategorie mod | `mods.md` plus `pakete.md` |
+| Kategorie mod | `mods.md` (Uebersicht), `pakete.md` (Index), dann je Paket |
 | Kategorie usermod | `usermods.md` |
 | Einzeleinheit | `<UNITID>.md` in Grossbuchstaben, z. B. `UEL0001.md` |
 | Querschnittsthema | sprechender Name, z. B. `ueberschreibungen.md` |
@@ -103,8 +128,9 @@ So wurde am 2026-08-05 bestaetigt, dass alle 19 Ablageorte vollstaendig erfasst 
 
 ## Abgrenzung
 
-- **Generierte Dateien** aus `../tools/Get-Units.ps1` gehoeren nach `units\_generiert\`,
-  nicht hierher. Was hier liegt, ist von Hand gepflegt.
+- **Generierte Dateien** aus `../tools/Get-Units.ps1` liegen in
+  [_generiert\](_generiert/) und werden bei jedem Lauf ueberschrieben. Was hier liegt,
+  ist von Hand gepflegt.
 - **Mod-Dokumentation** - was ein Mod tut, warum, mit welchen Risiken - gehoert nach
   `../mods/<modname>.md`. Hier stehen nur Einheitendaten.
 

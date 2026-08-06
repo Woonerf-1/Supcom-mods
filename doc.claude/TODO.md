@@ -28,8 +28,8 @@ _Nichts offen._
 
 ## Dringend
 
-_Nichts offen._ Die Ueberschreibungen wurden am 2026-08-05 vollstaendig aus den
-Verzeichnislisten neu ermittelt: 99 mehrfach belegte IDs.
+_Nichts offen._ Die Einheitendaten sind vollstaendig erhoben, benannt und gegen das
+Dateisystem geprueft (Stand 2026-08-06).
 
 ---
 
@@ -135,7 +135,15 @@ Begründung und Konsequenzen in `units\README.md`.
 
 ---
 
-## Einheitenliste ergänzen (Pfadfinderregel)
+## Einheitenliste ergaenzen (Pfadfinderregel)
+
+**Erledigt.** Alle 1311 Einheiten sind erfasst, benannt und verifiziert.
+Restliche Kleinigkeiten:
+
+- [ ] Vier Einheiten ohne Namen klaeren: `UAM0004` `UEM0006` `URM0004` `XSM0001`
+      (die `M`-Kennungen im Basisspiel)
+- [ ] `SAB1312` und `SRB1312` in `UEF_trans_men` ohne Namenseintrag
+- [ ] `ZZZ2220` `ZZZ2402` `ZZZ5301` in BrewLAN_LOUD ohne Namen
 
 `17_UNITLISTE.md` wird bei Gelegenheit um Namen und belegte Fraktionen ergänzt.
 Stand siehe dort in der Kopftabelle.
@@ -184,6 +192,25 @@ Offene Fragen betreffen nur noch die Herkunft einzelner Einträge:
 ---
 
 ## Erledigt
+
+- [x] **2026-08-06** **Einheitendaten abgeschlossen.** Alle 1311 Einheiten in acht
+      Paketdateien erfasst, benannt und gegen das Dateisystem verifiziert:
+      `basegame.md` (425), `brewlan.md` (209), `loud_misc.md` (136), `civ_units.md` (100),
+      `blackops.md` (86), `kleinpakete.md` (75), `totalmayhem.md` (62),
+      `usermods.md` (218). `pakete.md` ist Index.
+
+- [x] **2026-08-06** `basegame.md` (425) und `usermods.md` (218) aus der CSV neu erzeugt:
+      Namen fast vollstaendig, Spalte "Ersetzt durch" mit Modnamen. Verifiziert gegen
+      die CSV, reines ASCII.
+
+- [x] **2026-08-06** `loud_misc` nachgetragen (`units\loud_misc.md`): 136 Einheiten in
+      5 LOUD-eigenen Mods, 104 davon Ueberschreibungen. Kollisionen case-insensitiv neu
+      gerechnet: **187** statt 163. Basiseinheiten mit Ersatz: **120 von 425**.
+      Neue Regeln 9 und 10 in `units\README.md`.
+
+- [x] **2026-08-06** `Get-Units.ps1` gelaufen: 1311 Einheiten mit Namen, Fraktion und
+      Techstufe. Ausgabe nach `units\_generiert\` verschoben, Abgleich gegen die
+      Handerhebung dokumentiert (`units\_generiert\README.md`).
 
 - [x] **2026-08-05** Alle 19 Ablageorte gegen das Dateisystem geprueft. Bestand:
       432 basegame + 525 mod + 218 usermod = **1175** Blueprint-Ordner, 1075

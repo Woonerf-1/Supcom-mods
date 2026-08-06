@@ -14,6 +14,79 @@ Neueste Einträge oben. Format je Eintrag:
 
 ---
 
+## 2026-08-06 - Skriptlauf deckt uebersehenes Archiv auf; Bestand korrigiert
+
+- **Was:** `Get-Units.ps1` gelaufen (durch den Nutzer); Ergebnis gegen die Handerhebung
+  abgeglichen und die Doku korrigiert
+- **Wo:** `units\_generiert\` (neu), `units\mods.md`, `units\ueberschreibungen.md`,
+  `units\README.md`, `17_UNITLISTE.md`, `TODO.md`
+- **Getestet:** ja - Abgleich Skriptausgabe gegen alle Handerhebungen
+
+### Der Fehler
+
+**`loud_misc` wurde in der Handerhebung vollstaendig uebersehen** - 136 Einheiten in
+fuenf LOUD-eigenen Mods: `LOUD Integrated Storage` (84),
+`ZLOUD Structure Enhancements` (36), `Enhanced Nukes` (8), `Artillery` (4),
+`Enhanced Commanders` (4).
+
+In `02_MODSYSTEM.md` Abschnitt 6.5 stand seit dem 05.08., dass `loud_misc.scd` 24
+LOUD-eigene Mods enthaelt - bei der Einheitenerhebung wurde dort trotzdem nie
+hineingesehen. Dieselbe Sorte Fehler wie zuvor: **einen Vorbehalt dokumentiert, statt
+ihn anzuwenden.**
+
+Zwei weitere blinde Flecken der Methode "Ordner unter `units\` auflisten":
+
+- **Blueprints ausserhalb von `units\`** - 17 `PING_*_unit.bp` in
+  `brewlan\mods\BrewLAN_RNG\CrateDrop\effects\entities\`; `BrewLAN_Plenae\Logger`
+  hat 3 Einheiten statt null.
+- **Ordner ohne Blueprint** wurden mitgezaehlt: im Paket `units` sieben
+  (`UEL0003` `URB0401` `URB3302` `URB4301` `XAA0002` `XRL0201` `XRL0404`), in
+  `civ_units` 17 - darunter die fuenf Strassenobjekte.
+
+### Korrigierte Zahlen
+
+| Angabe | vorher | jetzt |
+|---|---:|---:|
+| basegame | 432 | **425** |
+| mod | 525 | **661** |
+| usermod | 218 | 218 |
+| Gesamt | 1175 | **1311** |
+| verschiedene IDs | 1075 | **1131** |
+| mehrfach belegte IDs | 99 | **163** |
+
+### Neue Erkenntnis: zwei Sorten von Mods
+
+| Typ | Beispiele | Ersatzanteil |
+|---|---|---|
+| Inhaltspakete | `civ_units`, `TotalMayhem`, `BrewLAN_Units`, `BrewLAN_RNG`, `BrewLAN_Plenae` | 0 % |
+| Aenderungsmods | `Enhanced Nukes`, `Artillery`, `Enhanced Commanders` | 100 % |
+| | `LOUD Integrated Storage` | 67 % |
+
+`LOUD Integrated Storage` ersetzt 56 Blueprints - 40 aus dem Basisspiel, dazu welche aus
+BlackOps und `LOUD Unit Additions` - um Lager in Gebaeude einzubauen. Fuer diesen Modtyp
+ist Ersetzen die Arbeitsweise, nicht ein Mangel.
+
+**Damit faellt auch eine fruehere Aussage:** die `gamedata`-Pakete kollidieren sehr wohl
+untereinander. Alle solchen Faelle gehen von `loud_misc` aus.
+
+**96 der 425 Basiseinheiten werden von mindestens einem Mod ersetzt** - fast jede vierte.
+Bei neun IDs konkurrieren drei Fassungen.
+
+### Aufgeraeumt
+
+Die drei Ausgabedateien lagen direkt in `units\`. Nach der eigenen Regel gehoeren
+generierte Dateien nach `units\_generiert\` - verschoben, mit `README.md`, die den
+Abgleich beider Zaehlweisen festhaelt.
+
+### Offen
+
+Namen aus `units.csv` in `pakete.md`, `usermods.md` und `basegame.md` uebernehmen;
+`pakete.md` um die fuenf `loud_misc`-Mods erweitern.
+
+**Es wurden keine Spiel- oder Moddateien veraendert.**
+
+---
+
 ## 2026-08-05 - Alle 19 Ablageorte geprueft, Ueberschreibungen vollstaendig ermittelt
 
 - **Was:** `pakete.md` neu erhoben und geschrieben; Ueberschreibungen aus
