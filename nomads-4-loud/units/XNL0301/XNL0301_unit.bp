@@ -388,7 +388,7 @@ UnitBlueprint{
             Name = "<LOC NomadsSCUEnh_ResourceAllocation_Help>Resource Allocation System",
             NewDeathWeapon = "RASDeathWeapon",
             ProductionPerSecondEnergy = 200,
-            ProductionPerSecondMass = 3,
+            ProductionPerSecondMass = 2,
             ShowBones = { "Backpack" },
             Slot = "Back",
             StorageEnergy = 1000,
