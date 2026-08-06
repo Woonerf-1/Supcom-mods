@@ -186,7 +186,7 @@ UnitBlueprint{
             CannotAttackGround = true,
             CollideFriendly = false,
             Damage = 200,
-            DamageRadius = 2,
+            DamageRadius = 0,
             DamageType = "Normal",
             DisplayName = "Skyfire Missile",
             EffectiveRadius = 0,
