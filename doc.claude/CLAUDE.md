@@ -141,6 +141,19 @@ kostet mehr als eine Rückfrage.
 
 ## 7. Modularisierung der Doku
 
+**Prinzip: Index oben, Details unten.** Große Datenmengen liegen in Unterordnern mit
+eigener `README.md` als Index; die Datei eine Ebene höher verweist nur darauf. So bleibt
+jede Ebene klein genug, um sie ganz zu lesen — und man muss nie alles laden, um etwas zu
+finden.
+
+```
+17_UNITLISTE.md → units\README.md → units\<paket>.md → units\<UNITID>.md
+```
+
+Beim Anlegen neuer Daten: **erst prüfen, ob ein Index vorhanden ist**, dort eintragen und
+verlinken. Keine Daten doppelt führen — wandert Inhalt in eine Detaildatei, verschwindet
+er aus der übergeordneten und wird nur noch verlinkt.
+
 | Datei | Inhalt | Wann lesen |
 |---|---|---|
 | `README.md` | Index & Einstieg | Orientierung |
@@ -159,8 +172,9 @@ kostet mehr als eine Rückfrage.
 | `13_GIT.md` | **Git-Anbindung von `usermods\`** — Remote, Regeln, offene Punkte | bei Versionierungsfragen |
 | `14_TOOLS.md` | **`doc.claude\tools\`** — Registry-Einträge, Hilfsskripte | bei Werkzeugfragen |
 | `15_LOG.md` | **`LOUD.log`** — Auswertungsverfahren + **Befundregister** (Warnungen/Fehler mit Code-Rückverfolgung) | nach jedem Testlauf |
-| `16_UNITS.md` | Einheitenliste — Generator, Schema, Grenzen | ergänzend |
-| `17_UNITLISTE.md` | **Die Einheitenliste selbst** — alle Pakete, Mods, Fraktionen | bei Unit-IDs und Bestandsüberblick |
+| `16_UNITS.md` | Einheitenliste — optionaler Generator | ergänzend |
+| `17_UNITLISTE.md` | **Einheiten-Index** — Bestand, ID-Systematik, Verweise nach `units\` | Einstieg bei Unit-Fragen |
+| `units\` | **Einheitendaten** — `units.md`, `pakete.md`, `usermods.md`, `ueberschreibungen.md` | Details |
 | `referenz\` | Verbatim-Kopien der beiden DataPath-Dateien | zum Vergleich bei Verdacht auf Überschreibung |
 | `CHANGELOG.md` | Was wurde wann geändert | nach jeder Änderung |
 | `TODO.md` | Offene Punkte, Ideen, Blocker | Sessionstart/-ende |

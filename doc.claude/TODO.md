@@ -26,7 +26,19 @@ _Nichts offen._
 
 ---
 
-## Als Nächstes
+## Dringend
+
+- [ ] **Ueberschreibungen neu ermitteln - aus Verzeichnislisten, nicht aus Markdown.**
+      Der bisherige Abgleich hat die ID-Listen aus der Doku geparst und dabei auch IDs
+      erfasst, die dort nur im Fliesstext standen. Nachgewiesene Falschtreffer:
+      `UAM0004` `UEM0006` `URM0004` `XSM0001` (2026-08-05 korrigiert).
+      Gesichert ist nur: **45 der 432 basegame-Blueprints werden ueberschrieben**,
+      davon 39 durch `UEF_trans_men`. Die Zahlen fuer die mod-Pakete sind unbelegt.
+      Verfahren in `units\ueberschreibungen.md`.
+
+---
+
+## Als Naechstes
 
 - [ ] **`Get-Units.ps1` ausführen** (durch den Nutzer) → erzeugt die vollständige
       Einheitenliste in `doc.claude\units\`. Aufruf und Details: `16_UNITS.md`.
@@ -121,6 +133,13 @@ Warnungen und Fehler aus dem `LOUD.log`, Schritt für Schritt im Code zurückver
 
 ---
 
+## Zu entscheiden
+
+_Nichts offen._ Ablageformat: **Markdown bleibt** (entschieden 2026-08-05).
+Begründung und Konsequenzen in `units\README.md`.
+
+---
+
 ## Einheitenliste ergänzen (Pfadfinderregel)
 
 `17_UNITLISTE.md` wird bei Gelegenheit um Namen und belegte Fraktionen ergänzt.
@@ -138,9 +157,31 @@ Stand siehe dort in der Kopftabelle.
    Etwa ein Vorgang pro Einheit, also nur für kleine Mods sinnvoll.
 
 - [ ] `usermods\UEF_trans_men` — 97 Blueprints, keine eigene Lokalisierung
+      → `units\usermods.md`
 - [ ] `TotalMayhem` — 62 Einheiten, Fraktionen aus vier Stichproben belegt, Namen offen
-- [ ] `blackops`, `brewlan`, `WyvernBattlePack`, `4DC`, `loud_units`, `units`, `civ_units`
-      — zuerst nach `loc`-Ordnern in den Paketen sehen
+      → `units\pakete.md`
+- [ ] `blackops`, `brewlan`, `WyvernBattlePack`, `4DC`, `loud_units`, `civ_units`
+      — zuerst nach `loc`-Ordnern in den Paketen sehen → `units\pakete.md`
+- [ ] Bei Bedarf `units\pakete.md` aufteilen (`blackops.md`, `brewlan.md` …), wenn sie
+      zu groß wird — Index in `units\README.md` mitpflegen
+- [ ] **Uebrige Pakete gegen das Dateisystem abgleichen** - erledigt fuer `units` (432)
+      und `UEF_trans_men` (97). Offen: `pakete.md` (alle mod-Pakete) und die uebrigen
+      Eintraege in `usermods.md`. Beide Male hat die Pruefung Fehler aufgedeckt.
+- [ ] **`pakete.md` und `usermods.md` auf das neue Format bringen**: reines ASCII,
+      einspaltige Tabellen, Spalte "Ueberschrieben von" statt Symbol. Regeln in
+      `units\README.md`, Vorbild `units\basegame.md`.
+
+## Basisspiel/Mod-Trennung prüfen (`units\mods.md`)
+
+Die Kategorisierung folgt seit 2026-08-05 dem **Ablageort**, nicht der ID.
+Offene Fragen betreffen nur noch die Herkunft einzelner Einträge:
+
+- [ ] Herkunft der `B`-Ergänzungen im Paket `units` klären:
+      `BAA0001` `BAA0309` `BRA0309` `BSA0309` — kein Namenseintrag, Zweck unklar
+- [ ] Herkunft der `S`-Gebäude klären: `SEB1401` `SRB1401` `SSB1401` — `1401` entspricht
+      im Basisspiel dem Aeon-Paragon, also vermutlich Gegenstücke für die anderen
+      Fraktionen. `S` ist auch BrewLAN-Präfix, die Dateien liegen aber in `units\units\`.
+- [ ] Warum tragen `UAB8765`/`XSB8765` (in `LOUD Unit Additions`) Basisspiel-Präfixe?
 
 ---
 
@@ -151,6 +192,31 @@ Stand siehe dort in der Kopftabelle.
 ---
 
 ## Erledigt
+
+- [x] **2026-08-05** `units\basegame.md`, `mods.md`, `ueberschreibungen.md` und
+      `units\README.md` auf reines ASCII und einspaltige Tabellen umgestellt;
+      Ueberschreibungen als eigene Spalte statt Symbol. Formatregeln in
+      `units\README.md`.
+
+- [x] **2026-08-05** Kategorisierung auf den **Ablageort** umgestellt:
+      `basegame` (`units\units\`, 432) · `mod` (`gamedata.entpackt\<Archiv>\…\units\`, 523) ·
+      `usermod` (`usermods\<Mod>\units\`, 218). Die ID-Systematik ist Lesehilfe, kein
+      Ordnungsmerkmal.
+
+- [x] **2026-08-05** Ablageformat entschieden: **Markdown**. Fehlerquelle war nicht das
+      Format, sondern zweispaltige Tabellen → künftig einspaltig, plus Pflicht zur
+      Zählprüfung (`units\README.md`).
+- [x] **2026-08-05** `basegame.md` + `mods.md` gegen das Dateisystem verifiziert:
+      419 + 13 = 432, kein Eintrag fehlt oder ist erfunden. Frühere Angabe „404" war
+      eine Fehlzählung; Gesamtsumme daher 1173 statt 1145.
+
+- [x] **2026-08-05** `units\` in **Basisspiel** (`basegame.md`, 391) und **Mods**
+      (`mods.md` als Übersicht, 754) getrennt.
+
+- [x] **2026-08-05** Einheitendaten nach `units\` ausgelagert, `17_UNITLISTE.md` zum
+      Index umgebaut. Prinzip „Index oben, Details unten" in `CLAUDE.md` §7 verankert.
+- [x] **2026-08-05** Namen des Basispakets ergänzt (385 von 404 aus `strings_db.lua`);
+      98 Überschreibungen ermittelt → `units\ueberschreibungen.md`.
 
 - [x] **2026-08-05** `17_UNITLISTE.md` um Namen ergänzt für `nomads-4-loud` (aus der
       Lokalisierung), `NOMADS-try_b4_ur_BI` und `commanders` (aus den Blueprints).

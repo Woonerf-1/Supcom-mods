@@ -38,7 +38,16 @@ LOUD\usermods\                     ← Git-Repository (Woonerf-1/Supcom-mods)
     ├── 14_TOOLS.md               tools\ — Registry-Einträge, Hilfsskripte
     ├── 15_LOG.md                 LOUD.log — Auswertung + Befundregister (R-01…)
     ├── 16_UNITS.md               Einheitenliste — optionaler Generator
-    ├── 17_UNITLISTE.md           Einheitenliste — alle Pakete, Mods, Fraktionen
+    ├── 17_UNITLISTE.md           Einheiten-INDEX — verweist nach units\
+    │
+    ├── units\                    Einheitendaten
+    │   ├── README.md               Ordner-Index
+    │   ├── basegame.md             Paket units\units\, 432 Einheiten
+    │   ├── mods.md                 Mods aus gamedata, 523 Einheiten
+    │   ├── pakete.md               ↳ Detaillisten je Paket
+    │   ├── usermods.md             eigene Mods, 218 Einheiten
+    │   ├── ueberschreibungen.md    98 mehrfach belegte IDs
+    │   └── _VORLAGE.md             Vorlage für <UNITID>.md
     │
     ├── CHANGELOG.md              chronologisches Änderungsprotokoll
     ├── TODO.md                   offene Punkte, Ideen, Blocker
@@ -94,6 +103,17 @@ Befunde und Verfahren: **`12_NEUSCHNITT.md`**.
 Das Repo umfasst die Mods — vollständig inkl. Assets — **und diese Dokumentation**.
 
 ---
+
+## Prinzip: Index und Verknüpfungen
+
+Große Datenmengen liegen in Unterordnern mit eigener `README.md` als Index; die Ebene
+darüber verweist nur darauf.
+
+```
+17_UNITLISTE.md → units\README.md → units\<paket>.md → units\<UNITID>.md
+```
+
+So bleibt jede Datei klein genug zum Ganzlesen, und nichts wird doppelt geführt.
 
 ## Faustregel für den Eingriffspunkt
 
