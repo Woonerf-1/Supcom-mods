@@ -12,9 +12,9 @@ Massgeblich ist der **Ablageort des Blueprints**, nicht das ID-Praefix:
 | Kategorie | Ablageort | Einheiten | Datei |
 |---|---|---:|---|
 | basegame | `gamedata.entpackt\units\units\` | 432 | [basegame.md](basegame.md) |
-| mod | `gamedata.entpackt\<Archiv>\...\units\` | 523 | [mods.md](mods.md) -> [pakete.md](pakete.md) |
+| mod | `gamedata.entpackt\<Archiv>\...\units\` | 525 | [mods.md](mods.md) -> [pakete.md](pakete.md) |
 | usermod | `usermods\<Mod>\units\` | 218 | [usermods.md](usermods.md) |
-| **Gesamt** | | **1173** | |
+| **Gesamt** | | **1175** | |
 
 Die ID-Systematik ist eine **Lesehilfe, kein Ordnungsmerkmal**: `UAB8765` und `XSB8765`
 tragen Basisspiel-Praefixe, liegen aber in `LOUD Unit Additions`; umgekehrt liegen 13
@@ -27,10 +27,10 @@ Eintraege mit `B`/`D`/`S`-Praefix im Basisverzeichnis.
 | Datei | Inhalt | IDs geprueft | Namen |
 |---|---|---|---|
 | [basegame.md](basegame.md) | Paket `units`, 432 Einheiten | ja | 391 von 432 |
-| [mods.md](mods.md) | Uebersicht der Erweiterungspakete, 523 | nein | - |
-| [pakete.md](pakete.md) | Detaillisten je Paket | nein | - |
-| [usermods.md](usermods.md) | eigene Mods, 218 Einheiten | nein | teilweise |
-| [ueberschreibungen.md](ueberschreibungen.md) | alle 98 mehrfach belegten IDs | ja | - |
+| [mods.md](mods.md) | Uebersicht der 13 Erweiterungspakete, 525 | ja | - |
+| [pakete.md](pakete.md) | Detaillisten je Paket | ja | offen |
+| [usermods.md](usermods.md) | eigene Mods, 218 Einheiten | ja | teilweise |
+| [ueberschreibungen.md](ueberschreibungen.md) | 99 mehrfach belegte IDs | ja | - |
 | `<UNITID>.md` | Einzeleinheit, volle Blueprint-Analyse | nach Bedarf | |
 | [_VORLAGE.md](_VORLAGE.md) | Kopiervorlage fuer Einzeleinheiten | - | |
 
@@ -95,10 +95,11 @@ comm -13 ids.txt real.txt    # auf Platte, aber nicht erfasst -> fehlt
 grep -P '[^\x00-\x7F]' datei.md   # Sonderzeichen
 ```
 
-So wurde am 2026-08-05 bestaetigt, dass `basegame.md` exakt dem Verzeichnis entspricht
-(432 IDs, keine erfunden, keine fehlend, reines ASCII).
+So wurde am 2026-08-05 bestaetigt, dass alle 19 Ablageorte vollstaendig erfasst sind:
+432 basegame + 525 mod + 218 usermod = 1175 Blueprint-Ordner, 1075 verschiedene IDs,
+99 davon mehrfach belegt. Keine erfundene ID, keine fehlende, reines ASCII.
 
-**Noch ungeprueft:** `pakete.md` und `usermods.md`.
+**Offen:** Namen der mod-Pakete und von `UEF_trans_men`.
 
 ## Abgrenzung
 

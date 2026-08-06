@@ -23,29 +23,34 @@ Die ID-Systematik (`../17_UNITLISTE.md`) taugt **nicht** als Kriterium: `UAB8765
 `XSB8765` tragen Basisspiel-Praefixe, liegen aber in `LOUD Unit Additions`; umgekehrt
 liegen 13 Eintraege mit `B`/`D`/`S`-Praefix im Basisverzeichnis.
 
-**45 dieser 523 Blueprints werden von Usermods ueberschrieben**
-- siehe [ueberschreibungen.md](ueberschreibungen.md).
+**Wie viele dieser 523 Blueprints von Usermods ueberschrieben werden, ist nicht
+ermittelt.** Die Praefixe in `usermods\UEF_trans_men\units\` deuten auf rund 50 Faelle,
+belegt ist das nicht - siehe [ueberschreibungen.md](ueberschreibungen.md).
 
 ---
 
 ## Die Pakete
 
-| Archiv | Mod | Einheiten | ueberschrieben | Besonderheit |
-|---|---|---:|---:|---|
-| `brewlan` | BrewLAN_LOUD | 149 | 22 | groesstes Einzelpaket |
-| `civ_units` | - (direkt `units\`) | 117 | 0 | 3. Zeichen `C` = Civilian |
-| `blackops` | BlackOpsUnleashed | 84 | 15 | enthaelt die `*B4209`-Teleport-Jammer |
-| `TotalMayhem` | TotalMayhem | 62 | 0 | eigene ID-Systematik `BR[MNOP]...` |
-| `loud_units` | LOUD Unit Additions | 26 | 4 | Praefixe `L`, `V`, `W` |
-| `WyvernBattlePack` | BattlePack | 25 | 4 | Praefix `W` |
-| `brewlan` | BrewLAN_Units\BrewResearch | 20 | 0 | verschachtelter Untermod |
-| `4D-CompatibilityPack` | 4DC | 15 | 4 | Kompatibilitaetsschicht |
-| `blackops` | BlackopsACUs | 9 | 0 | Praefix `E`, alternative ACUs |
-| `brewlan` | BrewLAN_Plenae\CityGeneration | 8 | 0 | Stadtgenerierung |
-| `brewlan` | BrewLAN_Units\BrewIntel | 5 | 0 | verschachtelter Untermod |
-| `brewlan` | BrewLAN_Plenae\Spomeniki | 2 | 0 | Denkmaeler |
-| `brewlan` | BrewLAN_RNG\CrateDrop | 1 | 0 | Beutekiste |
-| **Summe** | | **523** | **45** | |
+| Archiv | Mod | Einheiten | Besonderheit |
+|---|---|---:|---|
+| `brewlan` | BrewLAN_LOUD | 149 | groesstes Einzelpaket |
+| `civ_units` | - (direkt `units\`) | 117 | 3. Zeichen `C` = Civilian |
+| `blackops` | BlackOpsUnleashed | 84 | enthaelt die `*B4209`-Teleport-Jammer |
+| `TotalMayhem` | TotalMayhem | 62 | eigene ID-Systematik `BR[MNOP]...` |
+| `loud_units` | LOUD Unit Additions | 26 | Praefixe `L`, `V`, `W` |
+| `WyvernBattlePack` | BattlePack | 25 | Praefix `W` |
+| `brewlan` | BrewLAN_Units\BrewResearch | 20 | verschachtelter Untermod |
+| `4D-CompatibilityPack` | 4DC | 15 | Kompatibilitaetsschicht |
+| `blackops` | BlackopsACUs | 9 | Praefix `E`, alternative ACUs |
+| `brewlan` | BrewLAN_Plenae\CityGeneration | 8 | Stadtgenerierung |
+| `brewlan` | BrewLAN_Units\BrewIntel | 5 | verschachtelter Untermod |
+| `brewlan` | BrewLAN_Plenae\Spomeniki | 2 | Denkmaeler |
+| `brewlan` | BrewLAN_RNG\CrateDrop | 1 | Beutekiste |
+| **Summe** | | **523** | |
+
+Die Spalte "Einheiten" stammt aus der ersten Erhebung und ist **nicht gegen das
+Dateisystem geprueft**. Bei `basegame` hat genau diese Pruefung einen Zaehlfehler
+aufgedeckt (404 statt 432).
 
 ---
 

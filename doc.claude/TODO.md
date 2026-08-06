@@ -28,13 +28,8 @@ _Nichts offen._
 
 ## Dringend
 
-- [ ] **Ueberschreibungen neu ermitteln - aus Verzeichnislisten, nicht aus Markdown.**
-      Der bisherige Abgleich hat die ID-Listen aus der Doku geparst und dabei auch IDs
-      erfasst, die dort nur im Fliesstext standen. Nachgewiesene Falschtreffer:
-      `UAM0004` `UEM0006` `URM0004` `XSM0001` (2026-08-05 korrigiert).
-      Gesichert ist nur: **45 der 432 basegame-Blueprints werden ueberschrieben**,
-      davon 39 durch `UEF_trans_men`. Die Zahlen fuer die mod-Pakete sind unbelegt.
-      Verfahren in `units\ueberschreibungen.md`.
+_Nichts offen._ Die Ueberschreibungen wurden am 2026-08-05 vollstaendig aus den
+Verzeichnislisten neu ermittelt: 99 mehrfach belegte IDs.
 
 ---
 
@@ -164,12 +159,9 @@ Stand siehe dort in der Kopftabelle.
       — zuerst nach `loc`-Ordnern in den Paketen sehen → `units\pakete.md`
 - [ ] Bei Bedarf `units\pakete.md` aufteilen (`blackops.md`, `brewlan.md` …), wenn sie
       zu groß wird — Index in `units\README.md` mitpflegen
-- [ ] **Uebrige Pakete gegen das Dateisystem abgleichen** - erledigt fuer `units` (432)
-      und `UEF_trans_men` (97). Offen: `pakete.md` (alle mod-Pakete) und die uebrigen
-      Eintraege in `usermods.md`. Beide Male hat die Pruefung Fehler aufgedeckt.
-- [ ] **`pakete.md` und `usermods.md` auf das neue Format bringen**: reines ASCII,
-      einspaltige Tabellen, Spalte "Ueberschrieben von" statt Symbol. Regeln in
-      `units\README.md`, Vorbild `units\basegame.md`.
+- [x] **Uebrige Pakete gegen das Dateisystem abgleichen** - **erledigt 2026-08-05.**
+      Alle 19 Ablageorte geprueft: 432 + 525 + 218 = 1175.
+- [x] **`pakete.md` und `usermods.md` auf das neue Format bringen** - erledigt.
 
 ## Basisspiel/Mod-Trennung prüfen (`units\mods.md`)
 
@@ -192,6 +184,12 @@ Offene Fragen betreffen nur noch die Herkunft einzelner Einträge:
 ---
 
 ## Erledigt
+
+- [x] **2026-08-05** Alle 19 Ablageorte gegen das Dateisystem geprueft. Bestand:
+      432 basegame + 525 mod + 218 usermod = **1175** Blueprint-Ordner, 1075
+      verschiedene IDs, **99 mehrfach belegt**. Korrekturen: BlackOpsUnleashed 86 statt
+      84, mod-Summe 525 statt 523, Gesamt 1175 statt 1173.
+      `units\pakete.md`, `usermods.md`, `ueberschreibungen.md` neu geschrieben.
 
 - [x] **2026-08-05** `units\basegame.md`, `mods.md`, `ueberschreibungen.md` und
       `units\README.md` auf reines ASCII und einspaltige Tabellen umgestellt;

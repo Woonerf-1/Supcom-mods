@@ -14,6 +14,68 @@ Neueste Einträge oben. Format je Eintrag:
 
 ---
 
+## 2026-08-05 - Alle 19 Ablageorte geprueft, Ueberschreibungen vollstaendig ermittelt
+
+- **Was:** `pakete.md` neu erhoben und geschrieben; Ueberschreibungen aus
+  Verzeichnislisten statt aus Markdown ermittelt
+- **Wo:** `units\pakete.md`, `units\usermods.md`, `units\ueberschreibungen.md`,
+  `units\mods.md`, `units\README.md`, `17_UNITLISTE.md`, `TODO.md`
+- **Getestet:** ja - jede der 19 Verzeichnislisten gegen die Doku gediffed
+
+### Bestand, jetzt vollstaendig belegt
+
+| Kategorie | Ablageort | Einheiten |
+|---|---|---:|
+| basegame | `gamedata.entpackt\units\units\` | 432 |
+| mod | 13 Pakete in `gamedata.entpackt\` | 525 |
+| usermod | 5 Mods in `usermods\` | 218 |
+| **Gesamt** | | **1175** |
+
+1075 verschiedene IDs, **99 davon mehrfach belegt**.
+
+### Korrigierte Zahlen
+
+| Angabe | vorher | jetzt |
+|---|---:|---:|
+| `BlackOpsUnleashed` | 84 | **86** |
+| mod-Summe | 523 | **525** |
+| Gesamtbestand | 1173 | **1175** |
+| mehrfach belegte IDs | 98 (fehlerhaft) | **99** |
+
+### Ueberschreibungen
+
+| Mod | ersetzt basegame | ersetzt mod | Summe |
+|---|---:|---:|---:|
+| `UEF_trans_men` | 39 | 49 | **88** |
+| `NOMADS-try_b4_ur_BI` | 1 | 5 | 6 |
+| `commanders` | 4 | 0 | 4 |
+| `nomads-4-loud` | 1 | 0 | 1 |
+| `test21000` | 1 | 0 | 1 |
+
+**Die 13 gamedata-Pakete kollidieren untereinander nicht.** Alle 99 Faelle entstehen
+durch Usermods, 88 davon durch `UEF_trans_men` allein - das sind **91 Prozent** dieses
+Mods. Eigenstaendig sind dort nur 9 IDs: `MKT0409` `SAB0104` `SAB1312` `SEB1312`
+`SRA4212` `SRB1312` `SRB4313` `SRB5383` `SSB1312`.
+
+Anteilig am staerksten betroffen: `LOUD Unit Additions` (8 von 26, 31 %) und `4DC`
+(4 von 15, 27 %). Bei `4DC` besonders heikel - das Paket ist die Kompatibilitaetsschicht
+zwischen den anderen.
+
+### Neu entdeckt
+
+- `UABSSG01`, `UEBSSG01`, `URBSSG01`, `XSBSSG01` stammen aus `LOUD Unit Additions`,
+  nicht aus `units` - die fruehere Zuordnung war falsch.
+- `4DC` kollidiert **nicht** mit basegame, obwohl seine IDs Basisspiel-Praefixe tragen.
+  Es sind eigene Einheiten.
+- `XEL0307` und `XRS0402` liegen in `BlackOpsUnleashed`, ebenfalls ohne Kollision.
+
+**Damit sind alle Einheitendaten geprueft.** Offen bleiben nur die Namen der mod-Pakete
+und von `UEF_trans_men`.
+
+**Es wurden keine Spiel- oder Moddateien veraendert.**
+
+---
+
 ## 2026-08-05 - Einheitendateien auf ASCII und einspaltige Tabellen; Fehler in der Ueberschreibungsliste
 
 - **Was:** Formatumstellung von `units\`; dabei ein Datenfehler aufgedeckt
