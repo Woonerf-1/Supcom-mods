@@ -1,9 +1,7 @@
-# 16 — Einheitenliste: Generator (optional)
+# 16 — Einheitenliste: der Generator
 
-> **Die eigentliche Liste steht in `17_UNITLISTE.md`** — dort direkt aus den
-> Blueprint-Verzeichnissen erhoben, ohne Skript. Dieses Dokument beschreibt nur ein
-> **optionales Werkzeug**, das die Liste maschinell neu erzeugen und um den Anzeigenamen
-> aus dem Blueprint ergänzen kann.
+> **Die Einheitendaten stehen in `17_UNITLISTE.md` und `units\`.**
+> Dieses Dokument beschreibt das Werkzeug, das sie erzeugt.
 
 Erzeugt durch:
 ```
@@ -11,26 +9,44 @@ C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\
 ```
 Ausgabe nach:
 ```
-C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\doc.claude\units\
+C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\doc.claude\units\_generiert\
 ```
+
+> **Das Skript ist am 2026-08-06 gelaufen.** Ergebnis: 1311 Einheiten mit Namen,
+> Fraktion und Techstufe. Die Ausgabe liegt in `units\_generiert\` und ist in die
+> handgepflegten Dateien eingearbeitet. Der Lauf hat ein komplett uebersehenes Archiv
+> aufgedeckt (`loud_misc`, 136 Einheiten) - Einzelheiten in
+> `units\_generiert\README.md`.
+>
+> **Achtung:** Fruehere Fassungen des Skripts schrieben nach `..\units\`. Seit
+> 2026-08-06 ist der Standardpfad `..\units\_generiert\`. Abweichend setzbar mit
+> `-OutDir`.
 
 ---
 
-## 1. Wann das Skript sinnvoll ist
+## 1. Warum das Skript unverzichtbar ist
 
-Die Liste in `17_UNITLISTE.md` entstand durch Auflisten der Blueprint-Verzeichnisse.
-Das liefert Mod, Unit-ID und — über die ID-Systematik — Fraktion und Domäne.
+Die erste Erhebung entstand durch Auflisten der `units\`-Verzeichnisse. Das lieferte Mod,
+Unit-ID und - über die ID-Systematik - Fraktion und Domäne, hatte aber **drei blinde
+Flecken**, die der Skriptlauf aufgedeckt hat:
 
-**Was dabei fehlt:** der Anzeigename (`General.UnitName`) und die verlässliche Fraktion
-aus `Categories`. Beides steckt in den einzelnen `<ID>_unit.bp` — bei über 1100 Einheiten
-nicht über Einzelabrufe erreichbar.
+1. **Ganze Archive rutschen durch.** `loud_misc` mit 136 Einheiten in fünf LOUD-eigenen
+   Mods wurde übersehen.
+2. **Blueprints ausserhalb von `units\`-Ordnern** werden nicht gefunden - etwa die 17
+   `PING_*_unit.bp` in `brewlan\mods\BrewLAN_RNG\CrateDrop\effects\entities\`.
+3. **Ordner ohne Blueprint** werden mitgezählt - im Paket `units` sieben, in `civ_units`
+   siebzehn.
 
-Dafür gibt es das Skript. Es ist **kein Ersatz** für `17_UNITLISTE.md`, sondern eine
-Ergänzung für den Fall, dass Namen oder eine maschinenlesbare CSV gebraucht werden.
+Ergebnis: 1175 statt der tatsächlichen 1311.
 
-Außerdem: **`search_files` liefert falsche negative Ergebnisse** und rekursiert über tiefe
-Bäume nicht zuverlässig (`15_LOG.md` §6). Für den Nachweis, dass eine ID **nicht**
-existiert, taugt nur ein vollständiger Durchlauf.
+Dazu liefert das Skript, was über Verzeichnislisten gar nicht zu bekommen ist:
+**Namen** aus `General.UnitName`, **Fraktion** aus `Categories` und die **Techstufe**.
+Die Pakete haben keine Lokalisierungsdateien - die Namen stehen inline in jedem einzelnen
+Blueprint. Bei 1311 Einheiten ist das über Einzelzugriffe nicht erreichbar.
+
+Ausserdem: **`search_files` liefert falsche negative Ergebnisse** und rekursiert über
+tiefe Bäume nicht zuverlässig (`15_LOG.md` Abschnitt 6). Für den Nachweis, dass eine ID
+**nicht** existiert, taugt nur ein vollständiger Durchlauf.
 
 ## 2. Ausführen
 
@@ -51,13 +67,16 @@ geschrieben wird ausschließlich nach `doc.claude\units\`.
 
 | Datei | Inhalt |
 |---|---|
-| `units.csv` | alle Einheiten, Semikolon-getrennt, UTF-8 — für Excel |
+| `units.csv` | alle Einheiten, Semikolon-getrennt, UTF-8 — für Excel; **die kanonische Datenquelle** |
 | `units.md` | nach Paket/Mod gruppierte Tabellen, zum Lesen |
 | `units-summary.md` | Zählungen je Paket/Mod, je Fraktion, je Techstufe |
 
 Spalten: `Paket · Mod · UnitID · Fraktion · Tech · Domaene · Name · Datei`
 
 **Generiert — nicht von Hand bearbeiten.** Bei Änderungen das Skript erneut laufen lassen.
+
+> `units.md` ist die **Skriptausgabe** und nicht zu verwechseln mit den handgepflegten
+> Paketdateien in `units\` (`basegame.md`, `brewlan.md`, `blackops.md` …).
 
 ## 4. Wo die Blueprints liegen
 

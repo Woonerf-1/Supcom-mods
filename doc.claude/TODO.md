@@ -4,18 +4,74 @@ Arbeitsliste. Wird zu Sessionbeginn gelesen und zu Sessionende gepflegt.
 
 ---
 
-## Nach jedem LOUD-Update — Checkliste für den Nutzer
+## Ungeprueftes - Pflichtliste
+
+**Regel (`CLAUDE.md` Abschnitt 6):** Jede Vermutung in der Doku steht hier als Aufgabe.
+Eine Vermutung ohne Eintrag hier ist ein Fehler.
+
+### Aus der Einheitenerhebung
+
+- [ ] **Wer gewinnt bei mehrfach belegten IDs?** Beispiel `UEL0001` - `units`,
+      `commanders` und `test21000` beanspruchen dieselbe ID. Die uid-Sortierung ist nur
+      die Standardreihenfolge und **erzwingt nichts**; `before`/`after` in `mod_info.lua`
+      koennen sie ueberschreiben. Betrifft alle 187 Faelle.
+      Pruefen: Mods aktivieren, im Spiel nachsehen, `LOUD.log` auswerten.
+- [ ] **Zweck der `M`-Kennungen** `UAM0004` `UEM0006` `URM0004` `XSM0001` - kein
+      `UnitName`, keine bekannte Domaenenkennung.
+- [ ] **Herkunft der `B`- und `S`-Ergaenzungen im Basispaket** (`BAA0309` u. a.,
+      `SEB1401` u. a.). Namen sind bekannt (Illuminate, Apotheosis ...), die Herkunft nicht.
+- [ ] **Einteilung "Inhaltspakete vs. Aenderungsmods"** in `units\ueberschreibungen.md`
+      ist eine Deutung der Zahlen, keine Aussage der Modautoren.
+- [ ] **`XNO...` und `XNY...`** in `nomads-4-loud` - Domaenenkennung ungeklaert.
+- [ ] **Ohne Namenseintrag:** `SAB1312` `SRB1312` `ZZZ2220` `ZZZ2402` `ZZZ5301`.
+
+### Aus dem Log
+
+- [ ] R-02 bis R-06 in `15_LOG.md` - offene Befunde, naechster Schritt jeweils notiert.
+
+### Aus der Modsystem-Doku
+
+- [ ] **`/schook` gegen mod-eigenes `hook\`** - Reihenfolge der Ausfuehrung.
+- [ ] **`CustomUnits\LOUD_Buildings.lua`** - Mechanismus nie gelesen.
+
+### Verifikation der Doku selbst
+
+- [x] **Sechs Paketdateien gegengeprueft** (2026-08-06). Ergebnis: vier Fehler gefunden
+      und behoben - zwei Kopfzahlen in `blackops.md`, zwei Fraktionszahlen und 62 nicht
+      auffindbare IDs in `civ_units.md`. Verfahren jetzt in `units\README.md`,
+      Abschnitt "Zaehlung pruefen".
+- [x] **Zwischenueberschriften nachgerechnet** - alle acht Paketdateien ohne Abweichung.
+- [x] **Veraltete Zahlen in aelteren Dateien geprueft** (2026-08-06). Befund: `08_BESTANDSAUFNAHME.md`,
+      `12_NEUSCHNITT.md` und `16_UNITS.md` enthielten **keine** veralteten Gesamtzahlen -
+      der TODO-Eintrag war selbst eine ungepruefte Vermutung. Gefunden wurde anderes:
+      die uid-Aussage in `08_BESTANDSAUFNAHME.md` (zweimal) und der falsche Ausgabepfad
+      in `16_UNITS.md`. Beides behoben.
+- [x] **Tote Links geprueft** - keine gefunden. Der Verweis auf `units.md` in
+      `16_UNITS.md` meint die **Skriptausgabe**, nicht die frueher so benannte
+      Paketdatei; zur Klarstellung ergaenzt.
+
+---
+
+## Nach jedem LOUD-Update - Checkliste
 
 `LOUD\gamedata\`, `LOUD\bin\`, `LOUD\doc\`, `LOUD\maps\`, `LOUD\sounds\` werden vom
-LOUD-Team gepflegt und beim Update ersetzt. `usermods\` und `doc.claude\` bleiben erhalten.
+LOUD-Team gepflegt und beim Update ersetzt. `usermods\` bleibt erhalten.
 
-- [ ] **`gamedata.entpackt\` neu erzeugen** — sonst arbeiten wir gegen veralteten
-      Referenzcode. Prüfverfahren: `01_ARCHITEKTUR.md` §2.
-- [ ] **`nomads-4-loud\CopyLoudDataPath.bat` ausführen**, falls Nomads gespielt werden soll.
-      Ohne das fehlen die Nomads-Einheiten kommentarlos. → `11_DATAPATH.md` §4.
+- [ ] **`gamedata.entpackt\` neu erzeugen** - sonst arbeiten wir gegen veralteten
+      Referenzcode. Pruefverfahren: `01_ARCHITEKTUR.md` Abschnitt 2.
+- [ ] **`tools\Get-Units.ps1` neu laufen lassen** - erzeugt `units\_generiert\` neu.
+- [ ] **Claude den Abgleich machen lassen:** alte gegen neue `units.csv` diffen,
+      geaenderte und neue Einheiten benennen, betroffene Paketdateien nachziehen.
+- [ ] **`tools\Compare-Units.ps1` bauen** - vergleicht zwei `units.csv` und gibt
+      Hinzugefuegtes, Entferntes und Geaendertes aus. Damit wird der Abgleich nach einem
+      Update eine Minute statt einer Sitzung. Voraussetzung: die alte CSV vor dem
+      Neulauf sichern.
+- [ ] **`nomads-4-loud\CopyLoudDataPath.bat` ausfuehren**, falls Nomads gespielt werden
+      soll. Ohne das fehlen die Nomads-Einheiten kommentarlos - `11_DATAPATH.md`
+      Abschnitt 4.
 - [ ] **Referenzkopien in `doc.claude\referenz\` erneuern.**
-- [ ] **Eigene Hooks gegen die neuen Originale prüfen** — hat sich eine gehookte Funktion
-      geändert? Besonders bei `shadow`-Dateien zwingend.
+- [ ] **Eigene Hooks gegen die neuen Originale pruefen** - hat sich eine gehookte
+      Funktion geaendert? Bei `shadow`-Dateien zwingend.
 - [ ] Datum des Updates in `CHANGELOG.md` vermerken.
 
 ---

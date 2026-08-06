@@ -10,7 +10,7 @@
 # Optional:
 #     .\Get-Units.ps1 -Root "D:\Pfad\zu\LOUD" -OutDir "C:\temp\units"
 #
-# Ausgabe (Standard: ..\units\ ):
+# Ausgabe (Standard: ..\units\_generiert\ ):
 #     units.csv        alle Einheiten, Semikolon-getrennt (Excel-tauglich)
 #     units.md         nach Paket/Mod gruppiert, zum Lesen
 #     units-summary.md Zaehlungen je Paket/Mod und je Fraktion
@@ -29,7 +29,7 @@ param(
 $ErrorActionPreference = 'Stop'
 
 if ([string]::IsNullOrWhiteSpace($OutDir)) {
-    $OutDir = Join-Path (Split-Path -Parent $PSScriptRoot) 'units'
+    $OutDir = Join-Path (Split-Path -Parent $PSScriptRoot) 'units\_generiert'
 }
 
 $srcRoot  = Join-Path $Root 'gamedata.entpackt'

@@ -122,6 +122,20 @@ kostet mehr als eine Rückfrage.
 ## 6. Antwort- und Codestil
 
 - **Sprache: Deutsch.** Codekommentare Deutsch, Bezeichner Englisch (Engine-Konvention).
+- **Keine Vermutungen als Befund.** Was nicht belegt ist, wird nicht behauptet.
+  Drei Moeglichkeiten, keine vierte:
+  1. **belegen** - Quelle mit vollstaendigem Pfad und Zeilenangabe,
+  2. **als ungeprueft kennzeichnen** und **gleichzeitig als Aufgabe in `TODO.md`
+     eintragen**,
+  3. **weglassen**.
+
+  Eine Vermutung ohne TODO-Eintrag ist ein Fehler. Formulierungen wie "vermutlich",
+  "duerfte", "ist bei vielen Spielern aktiv" sind Warnzeichen - dort steht meist eine
+  unbelegte Behauptung, die spaeter als Tatsache gelesen wird.
+
+  Erlebte Faelle: "`commanders` gewinnt gegen `test21000`" (aus der uid-Sortierung
+  abgeleitet, die aber nichts erzwingt), "`LOUD Integrated Storage` ist bei vielen
+  Spielern aktiv" (frei erfunden - auf dieser Installation ist er nicht aktiv).
 - **Dateien immer mit vollständigem Pfad nennen.** Nie nur `BuildingTemplates.lua` oder
   `lua\AI\aibuildstructures.lua` — sondern:
   ```
@@ -135,7 +149,8 @@ kostet mehr als eine Rückfrage.
 - **Vollständige Dateien** bei neuen Dateien; **gezielte Diffs/Edits** bei bestehenden.
 - Bei jedem Eingriff angeben: *welche Datei*, *welcher Mechanismus* (Hook/Merge/Shadow),
   *welche Original-Referenz aus `$SRC`*.
-- Unsicherheiten explizit markieren: `-- UNGEPRÜFT:` im Code, „nicht verifiziert" im Text.
+- Unsicherheiten explizit markieren: `-- UNGEPRÜFT:` im Code, „nicht verifiziert" im Text
+  — **und in `TODO.md` eintragen** (siehe oben).
 
 ---
 

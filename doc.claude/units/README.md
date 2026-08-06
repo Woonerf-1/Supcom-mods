@@ -82,6 +82,9 @@ Ebene klein genug, um sie ganz zu lesen.
    Ueberschreibungsliste zusammenfuehren und als Markdown ausgeben.
 5. **Jede Datei beginnt mit Rueckverweisen** auf `../17_UNITLISTE.md` und diese Datei.
 6. **Jede Unit-ID in Backticks** - so ist sie dateiuebergreifend auffindbar.
+   **Keine Bereichsschreibweise** wie "XEC8001 bis XEC8020": wer nach einer einzelnen ID
+   sucht, findet sie sonst nicht. Auch 40 gleichnamige Mauersegmente werden einzeln
+   aufgefuehrt.
 7. **Keine Daten doppelt fuehren.** Wandert Inhalt in eine Detaildatei, verschwindet er
    aus der uebergeordneten und wird nur noch verlinkt.
 8. **Vollstaendige Pfade** zu Blueprint- und Lokalisierungsdateien
@@ -109,22 +112,70 @@ dieser Index angepasst.
 
 ## Pflicht: Zaehlung pruefen
 
-Nach jeder Aenderung an einer Einheitentabelle die Eintraege gegen die Kopfangabe pruefen
-und die Summe gegen das Dateisystem. Verfahren: Datei in die Analyseumgebung kopieren,
-Verzeichnisliste danebenlegen, dann
+Nach jeder Aenderung an einer Einheitentabelle **alle drei** Pruefungen laufen lassen.
+
+### 1. IDs gegen `_generiert\units.csv`
 
 ```bash
-grep -oE '`[A-Za-z]{3}[0-9]{4}`' datei.md | tr -d '`' | sort -u > ids.txt
-comm -23 ids.txt real.txt    # in der Doku, aber nicht auf Platte -> erfunden
-comm -13 ids.txt real.txt    # auf Platte, aber nicht erfasst -> fehlt
-grep -P '[^\x00-\x7F]' datei.md   # Sonderzeichen
+grep -oE '`[A-Za-z][A-Za-z0-9_]{4,}`' datei.md | tr -d '`' | sort -u > ids.txt
+comm -23 ids.txt soll.txt    # in der Doku, nicht in den Daten -> erfunden
+comm -13 ids.txt soll.txt    # in den Daten, nicht in der Doku -> fehlt
 ```
 
-So wurde am 2026-08-05 bestaetigt, dass alle 19 Ablageorte vollstaendig erfasst sind:
-432 basegame + 525 mod + 218 usermod = 1175 Blueprint-Ordner, 1075 verschiedene IDs,
-99 davon mehrfach belegt. Keine erfundene ID, keine fehlende, reines ASCII.
+IDs, die nur im Fliesstext erwaehnt werden, tauchen als "erfunden" auf. Meist harmlos -
+aber jeden Treffer einzeln ansehen, nicht pauschal abtun.
 
-**Offen:** Namen der mod-Pakete und von `UEF_trans_men`.
+### 2. Abschnittszahlen gegen Tabellenzeilen
+
+Die Zahl in einer Ueberschrift wie "Aeon (28)" wird von Hand gesetzt und verrutscht
+leicht. **Nur Zeilen zaehlen, die mit einer ID in Backticks beginnen** - sonst zaehlen
+Erwaehnungen im Fliesstext mit und erzeugen Fehlalarme.
+
+```python
+import re
+row  = re.compile(r'^\|\s*`([A-Za-z][A-Za-z0-9_]{4,})`')
+head = re.compile(r'^(#+)\s+(.*)$')
+cnt  = re.compile(r'\((\d+)\)')
+for f in ["basegame","brewlan","blackops","loud_misc",
+          "civ_units","totalmayhem","kleinpakete","usermods"]:
+    cur=None; k=None; n=0
+    for line in open(f+".md", encoding="utf-8"):
+        m = head.match(line)
+        if m:
+            if cur and k is not None and n>0 and n!=k:
+                print(f"{f}: {cur} Kopf:{k} Zeilen:{n}")
+            cur=m.group(2); c=cnt.search(cur)
+            k=int(c.group(1)) if c else None; n=0
+        elif row.match(line): n+=1
+```
+
+### 3. Sonderzeichen
+
+```bash
+grep -P '[^\x00-\x7F]' datei.md   # darf nichts liefern
+```
+
+### Erfahrung
+
+Am 2026-08-06 lief die Pruefung ueber alle acht Paketdateien und fand vier Fehler, die
+beim Lesen unsichtbar geblieben waren:
+
+| Datei | Fehler |
+|---|---|
+| `blackops.md` | Kopfzahl UEF 14 statt 15 |
+| `blackops.md` | Kopfzahl Seraphim 32 statt 31 |
+| `civ_units.md` | Fraktionszahlen UEF 52 statt 49, Cybran 46 statt 47 |
+| `civ_units.md` | 62 IDs nur als Bereich notiert - nicht auffindbar |
+
+Der letzte Punkt ist der schwerste: **Bereichsschreibweise bricht Regel 6.** Wer nach
+`XRC8107` sucht, findet nichts.
+
+**Stand nach der Korrektur:** alle acht Dateien ohne Abweichung zwischen Kopfzahl und
+Tabellenzeilen, ohne Sonderzeichen, vollstaendig gegen `_generiert\units.csv`
+abgeglichen - 1311 Einheiten.
+
+**Offen:** neun Einheiten ohne Namenseintrag (`UAM0004` `UEM0006` `URM0004` `XSM0001`
+`SAB1312` `SRB1312` `ZZZ2220` `ZZZ2402` `ZZZ5301`).
 
 ## Abgrenzung
 

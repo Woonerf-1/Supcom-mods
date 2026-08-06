@@ -63,8 +63,10 @@ aus einem BrewLAN-Bündel herausgelöst, ohne den Icon-Pfad anzupassen. Kosmetis
 Ersetzt die vier ACU-Ordner **vollständig** (kein Merge):
 `UAL0001` (Aeon), `UEL0001` (UEF), `URL0001` (Cybran), `XSL0001` (Seraphim).
 Nutzt die LOUD-Felder `mountpoints` und `hooks` (siehe unten).
-⚠️ **Kollidiert mit `test21000`**, das ebenfalls `UEL0001` vollständig ersetzt. Welcher gewinnt,
-entscheidet die Ladereihenfolge (alphabetisch nach uid, sofern kein `before`/`after`).
+⚠️ **Kollidiert mit `test21000`**, das ebenfalls `UEL0001` vollständig ersetzt.
+**Welcher gewinnt, ist nicht ermittelt.** Die uid-Sortierung ist nur die
+Standardreihenfolge und erzwingt nichts; über `before`/`after` in `mod_info.lua` lässt
+sich die Reihenfolge gezielt festlegen. Steht in `TODO.md`.
 ℹ️ `icon` verweist auf `/mods/nomads-4-loud/icons/nomads.bmp`. Diese Datei **existiert**
 — der Pfad ist also gültig, solange `nomads-4-loud` installiert ist. Es ist eine
 undeklarierte Abhängigkeit (kein `requires`), kein Fehler.
@@ -175,9 +177,11 @@ Vollständige Analyse: `11_DATAPATH.md` §2.
 
 1. **`uid`-Qualität:** Nur `EscalatingBuildCosts` und `UEF_trans_men` haben GUID-artige uids.
    Die anderen nutzen Freitext (`THISoneIS4myBOImax`). Funktioniert, ist aber kollisionsanfällig.
-   Da die Standard-Ladereihenfolge **alphabetisch nach uid** ist, bestimmen diese Strings
-   nebenbei, wer wen überschreibt.
-2. **Doppelbelegung `UEL0001`** durch `commanders` und `test21000`.
+   Die uid-Sortierung ist die **Standardreihenfolge**, wenn nichts anderes angegeben ist —
+   sie erzwingt nichts. Wer die Reihenfolge braucht, setzt `before`/`after`.
+2. **Doppelbelegung `UEL0001`** durch `commanders` und `test21000`. Einer von 187
+   mehrfach belegten IDs insgesamt — vollständige Aufstellung in
+   `units\ueberschreibungen.md`.
 3. **Icon-Pfade:** `AcidPools` zeigt auf einen nicht existierenden Unterordner in
    `BrewLAN_Gameplay` (kosmetisch). `commanders` verweist auf ein Icon aus
    `nomads-4-loud` — gültig, aber eine undeklarierte Abhängigkeit.

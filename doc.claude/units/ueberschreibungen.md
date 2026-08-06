@@ -4,13 +4,29 @@ Zurueck: [README.md](README.md) - [../17_UNITLISTE.md](../17_UNITLISTE.md)
 Verwandt: [basegame.md](basegame.md) - [mods.md](mods.md) - [pakete.md](pakete.md) - [usermods.md](usermods.md)
 
 Mods aendern nicht nur eigene Einheiten - sie **ersetzen Blueprints vorhandener
-Einheiten**. Steht dieselbe Unit-ID an zwei Ablageorten, gilt im Spiel nur eine Fassung:
-die des zuletzt angewandten aktiven Mods (`../02_MODSYSTEM.md` Abschnitt 5 -
-Ladereihenfolge alphabetisch nach `uid`, sofern kein `before`/`after` gesetzt ist).
+Einheiten**. Steht dieselbe Unit-ID an zwei Ablageorten, gilt im Spiel nur eine Fassung.
 
 **187 IDs kommen an mehr als einem Ablageort vor** - bei 1107 verschiedenen IDs
 insgesamt. Ermittelt am 2026-08-06 aus `_generiert\units.csv`, das alle 1311
-`*_unit.bp`-Dateien rekursiv erfasst. **Case-insensitiv gerechnet** (siehe unten).
+`*_unit.bp`-Dateien rekursiv erfasst. Case-insensitiv gerechnet.
+
+---
+
+## Was diese Datei NICHT sagt
+
+**Sie sagt nicht, welcher Blueprint im Spiel gilt.** Dafuer fehlen zwei Angaben:
+
+1. **Welche Mods sind aktiv?** Ein Blueprint wirkt nur, wenn sein Mod in der Partie
+   aktiviert ist. `LOUD Integrated Storage` etwa ist auf dieser Installation **nicht
+   aktiv** (Stand 2026-08-06). Welche Mods liefen, steht im `LOUD.log`
+   (`../15_LOG.md`).
+2. **In welcher Reihenfolge werden sie angewandt?** Die uid-Sortierung ist die
+   Standardreihenfolge, wenn nichts anderes angegeben ist - sie **erzwingt** nichts.
+   Ueber `before` und `after` in `mod_info.lua` laesst sich die Reihenfolge gezielt
+   festlegen (`../02_MODSYSTEM.md` Abschnitt 5).
+
+Diese Datei sagt nur: **hier gibt es mehr als eine Fassung.** Wer gewinnt, ist in jedem
+Einzelfall zu pruefen - steht als Aufgabe in `../TODO.md`.
 
 ---
 
@@ -18,18 +34,17 @@ insgesamt. Ermittelt am 2026-08-06 aus `_generiert\units.csv`, das alle 1311
 
 Blueprint-IDs sind **case-insensitiv** - die Engine behandelt `uab0301` und `UAB0301` als
 dieselbe Einheit. Im Datenbestand kommen 24 IDs in beiden Schreibweisen vor: alle in
-`ZLOUD Structure Enhancements`, das die Basisfabriken, Flak, Artillerie und
+`ZLOUD Structure Enhancements`, das Basisfabriken, Flak, Artillerie und
 Reparaturplattformen kleingeschrieben ersetzt.
 
-Wer beim Vergleichen nicht auf Grossschreibung normalisiert, uebersieht 24
-Ueberschreibungen. Genau das ist bei der ersten Auswertung passiert - Ergebnis damals
-163 statt 187.
+Wer beim Vergleichen nicht normalisiert, uebersieht diese 24. Genau das ist bei der
+ersten Auswertung passiert - Ergebnis damals 163 statt 187.
 
 ---
 
 ## Uebersicht
 
-| Mod | Kategorie | Einheiten | davon Ersatz | Anteil |
+| Mod | Kategorie | Einheiten | mehrfach belegt | Anteil |
 |---|---|---:|---:|---:|
 | `UEF_trans_men` | usermod | 97 | 88 | 91 % |
 | `LOUD Integrated Storage` | mod (loud_misc) | 84 | 56 | 67 % |
@@ -37,78 +52,69 @@ Ueberschreibungen. Genau das ist bei der ersten Auswertung passiert - Ergebnis d
 | `BrewLAN_LOUD` | mod | 152 | 23 | 15 % |
 | `BlackOpsUnleashed` | mod | 86 | 20 | 23 % |
 | `LOUD Unit Additions` | mod | 26 | 12 | 46 % |
-| `Enhanced Nukes` | mod (loud_misc) | 8 | 8 | **100 %** |
+| `Enhanced Nukes` | mod (loud_misc) | 8 | 8 | 100 % |
 | `NOMADS-try_b4_ur_BI` | usermod | 9 | 6 | 67 % |
 | `BattlePack` | mod | 25 | 4 | 16 % |
 | `4DC` | mod | 15 | 4 | 27 % |
 | `BlackopsACUs` | mod | 9 | 4 | 44 % |
-| `Artillery` | mod (loud_misc) | 4 | 4 | **100 %** |
-| `Enhanced Commanders` | mod (loud_misc) | 4 | 4 | **100 %** |
-| `commanders` | usermod | 4 | 4 | **100 %** |
+| `Artillery` | mod (loud_misc) | 4 | 4 | 100 % |
+| `Enhanced Commanders` | mod (loud_misc) | 4 | 4 | 100 % |
+| `commanders` | usermod | 4 | 4 | 100 % |
 | `nomads-4-loud` | usermod | 107 | 1 | 1 % |
-| `test21000` | usermod | 1 | 1 | **100 %** |
+| `test21000` | usermod | 1 | 1 | 100 % |
 | `units` (basegame) | basegame | 425 | 120 | 28 % |
-
-Die Spalte "davon Ersatz" zaehlt IDs, die auch anderswo vorkommen - sie sagt nicht, wer
-gewinnt. Das entscheidet die Ladereihenfolge.
-
-**120 der 425 Basiseinheiten werden von mindestens einem Mod ersetzt** - fast jede dritte.
 
 ---
 
 ## Zwei Sorten von Mods
 
-Die Erhebung zeigt einen Unterschied, der fuer den Neuschnitt wesentlich ist:
+**Beobachtung aus den Zahlen, keine Aussage der Modautoren.**
 
-**Inhaltspakete** fuegen Einheiten hinzu und lassen den Bestand in Ruhe:
+**Inhaltspakete** fuegen hinzu und lassen den Bestand in Ruhe:
 `civ_units` (0 von 100), `TotalMayhem` (0 von 62), `BrewLAN_Units` (0 von 25),
 `BrewLAN_RNG` (0 von 18), `BrewLAN_Plenae` (0 von 14).
 
-**Aenderungsmods** ersetzen bestehende Blueprints, um Eigenschaften einzubauen:
+**Aenderungsmods** ersetzen bestehende Blueprints:
 `Enhanced Nukes`, `Artillery`, `Enhanced Commanders` (je 100 Prozent),
-`LOUD Integrated Storage` (67 Prozent).
+`ZLOUD Structure Enhancements` (89 Prozent), `LOUD Integrated Storage` (67 Prozent).
 
-Bei den Aenderungsmods ist Ersetzen kein Fehler, sondern die Arbeitsweise -
-`LOUD Integrated Storage` baut in 56 Basisgebaeude ein Lager ein, das geht nicht anders
-als ueber den Blueprint. Bei `UEF_trans_men` (91 Prozent) ist es dagegen kein erkennbares
-Konzept.
+Bei den Aenderungsmods liegt nahe, dass Ersetzen die Arbeitsweise ist - ein Lager laesst
+sich nur ueber den Blueprint in ein bestehendes Gebaeude einbauen. Bei `UEF_trans_men`
+(91 Prozent) ist kein solches Konzept erkennbar.
 
 ---
 
-## Ueberschreibungen von basegame (96)
+## Ueberschreibungen von basegame (120)
 
-| Ueberschreibender Mod | Kategorie | IDs |
-|---|---|---:|
-| `UEF_trans_men` | usermod | 39 |
-| `LOUD Integrated Storage` | mod | 40 |
-| `ZLOUD Structure Enhancements` | mod | 8 |
-| `Enhanced Nukes` | mod | 8 |
-| `commanders` | usermod | 4 |
-| `Artillery` | mod | 3 |
-| `nomads-4-loud` | usermod | 1 |
-| `NOMADS-try_b4_ur_BI` | usermod | 1 |
-| `test21000` | usermod | 1 |
-
-Summe 105, verschiedene IDs 96 - einige werden von zwei Mods zugleich beansprucht.
-
-### Mehrfachkonflikte
+120 der 425 Basiseinheiten kommen auch anderswo vor. Aufschluesselung nach Muster:
 
 | Muster | IDs |
 |---|---:|
-| basegame + `LOUD Integrated Storage` + `UEF_trans_men` | 4 |
-| basegame + `Enhanced Nukes` + `UEF_trans_men` | 3 |
-| basegame + `ZLOUD Structure Enhancements` + `UEF_trans_men` | 1 |
-| basegame + `commanders` + `test21000` | 1 (`UEL0001`) |
+| `LOUD Integrated Storage` | 36 |
+| `ZLOUD Structure Enhancements` | 31 |
+| `UEF_trans_men` | 31 |
+| `Enhanced Nukes` | 5 |
+| `LOUD Integrated Storage` + `UEF_trans_men` | 4 |
+| `commanders` | 3 |
+| `Enhanced Nukes` + `UEF_trans_men` | 3 |
+| `Artillery` | 3 |
+| `nomads-4-loud` | 1 |
+| `commanders` + `test21000` | 1 (`UEL0001`) |
+| `ZLOUD Structure Enhancements` + `UEF_trans_men` | 1 |
+| `NOMADS-try_b4_ur_BI` | 1 |
+| **Summe** | **120** |
 
-Bei diesen neun IDs konkurrieren **drei** Fassungen. Welche gewinnt, entscheidet allein
-die uid-Sortierung - im Spiel nicht geprueft.
+**Bei neun IDs konkurrieren drei Fassungen** - die vier mit `LOUD Integrated Storage`,
+drei mit `Enhanced Nukes`, eine mit `ZLOUD Structure Enhancements` und `UEL0001`.
+
+**Zwei Drittel der Faelle gehen von LOUD-eigenen Mods aus** (`loud_misc`): 79 der 120.
+Auf dieser Installation sind sie nicht aktiv - dann bleibt der Basisstand.
 
 ---
 
 ## Ueberschreibungen zwischen mod-Paketen
 
-Anders als in der ersten Erhebung angenommen, kollidieren die `gamedata`-Pakete
-**durchaus** untereinander - alle Faelle gehen von `loud_misc` aus:
+Die `gamedata`-Pakete kollidieren untereinander - alle Faelle gehen von `loud_misc` aus:
 
 | Muster | IDs |
 |---|---:|
@@ -118,9 +124,6 @@ Anders als in der ersten Erhebung angenommen, kollidieren die `gamedata`-Pakete
 | `LOUD Unit Additions` + `LOUD Integrated Storage` + `UEF_trans_men` | 4 |
 | `BlackopsACUs` + `Enhanced Commanders` | 4 |
 | `BrewLAN_LOUD` + `Artillery` | 1 |
-
-`LOUD Integrated Storage` greift also nicht nur in das Basisspiel ein, sondern auch in
-BlackOps und die LOUD-eigenen Einheitenerweiterungen.
 
 ---
 
@@ -140,14 +143,15 @@ C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\
 | `units` | basegame | 39 |
 | `BrewLAN_LOUD` | mod | 18 |
 | `BlackOpsUnleashed` | mod | 16 |
-| `LOUD Unit Additions` | mod | 7 |
 | `LOUD Integrated Storage` | mod | 12 |
+| `LOUD Unit Additions` | mod | 7 |
 | `BattlePack` | mod | 4 |
 | `4DC` | mod | 4 |
 | `Enhanced Nukes` | mod | 3 |
 | `ZLOUD Structure Enhancements` | mod | 1 |
 
 Summe der Quellen uebersteigt 88, weil einzelne IDs an drei Orten vorkommen.
+Vollstaendige Listen: [usermods.md](usermods.md).
 
 Erster Kandidat fuers Aufraeumen (`../12_NEUSCHNITT.md`).
 
@@ -162,7 +166,7 @@ Erster Kandidat fuers Aufraeumen (`../12_NEUSCHNITT.md`).
 | `nomads-4-loud` | 1 | `XSS0302` (Hauthuum) |
 | `test21000` | 1 | `UEL0001`, acht geaenderte Felder |
 
-`NOMADS-try_b4_ur_BI` benennt drei davon um: `SSB3301` wird zu "Eye of pifpuff".
+`NOMADS-try_b4_ur_BI` benennt drei um: `SSB3301` wird zu "Eye of pifpuff".
 Eigenstaendig sind dort nur `CAS0401`, `CNB1202` (Eckard), `CNB1302` (Guenter).
 
 ---
@@ -170,26 +174,26 @@ Eigenstaendig sind dort nur `CAS0401`, `CNB1202` (Eckard), `CNB1302` (Guenter).
 ## Was daraus folgt
 
 1. **Ein Name in den Bestandslisten ist der Stand des jeweiligen Ablageorts, nicht
-   zwingend der im Spiel.** Bei mehrfach belegten IDs haengt es davon ab, welche Mods
-   aktiv sind.
-2. **Vor jeder Blueprint-Aenderung hier nachsehen.** Fast jede vierte Basiseinheit ist
-   betroffen.
+   zwingend der im Spiel.**
+2. **Vor jeder Blueprint-Aenderung hier nachsehen.** Fast jede dritte Basiseinheit ist
+   mehrfach belegt.
 3. **`Merge = true` schuetzt nicht.** Ein Merge wirkt gegenueber dem Original, nicht
    gegenueber einem spaeter angewandten Vollersatz.
-4. **Auch LOUD-eigene Mods ueberschreiben.** `LOUD Integrated Storage` ersetzt 56
-   Blueprints, davon 40 aus dem Basisspiel. Wer ein Basisgebaeude anfasst, konkurriert
-   mit einem Mod, der bei vielen Spielern aktiv ist.
+4. **Auch LOUD-eigene Mods ersetzen.** 79 der 120 basegame-Faelle stammen aus
+   `loud_misc`. Ob sie wirken, haengt davon ab, ob der Spieler sie aktiviert hat.
+5. **Ladereihenfolge ist gestaltbar.** Wer Konflikte vermeiden will, setzt `before` oder
+   `after` in `mod_info.lua`, statt sich auf die uid-Sortierung zu verlassen.
 
 ## Ermittlungsverfahren
 
 Aus `_generiert\units.csv` (Skriptlauf), das alle `*_unit.bp` rekursiv erfasst:
 
 ```
-1. Spalten Paket, Mod, UnitID extrahieren
+1. Spalten Paket, Mod, UnitID extrahieren, UnitID auf Grossschreibung normalisieren
 2. IDs zaehlen, die in mehr als einer Paket/Mod-Kombination vorkommen
 ```
 
-**Zwei fruehere Verfahren waren unzureichend:**
+**Drei fruehere Verfahren waren unzureichend:**
 
 - *Parsen der Dokumentation* erfasste IDs, die dort nur im Fliesstext standen
   (`UAM0004`, `UEM0006`, `URM0004`, `XSM0001` galten faelschlich als ersetzt).
@@ -208,5 +212,4 @@ Erfasst sind **Blueprint-Dateien**. Nicht erfasst:
 - **Verhaltens-Hooks** (`hook\lua\sim\Unit.lua` u. ae.) aendern kein Blueprint, wohl aber
   das Verhalten aller Einheiten.
 - **Nicht-Unit-Blueprints** (Projektile, Props, Meshes, Emitter).
-- **Welcher Mod tatsaechlich gewinnt** - das haengt von der Ladereihenfolge und davon ab,
-  welche Mods aktiv sind.
+- **Welcher Mod tatsaechlich gewinnt** - siehe Abschnitt "Was diese Datei NICHT sagt".

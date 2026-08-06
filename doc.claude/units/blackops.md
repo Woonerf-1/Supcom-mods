@@ -10,6 +10,8 @@ C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\
 **86 Einheiten, 20 davon mehrfach belegt** (23 Prozent). Ueberwiegend Set-Praefix `B`.
 Stand 2026-08-06 aus `_generiert\units.csv`.
 
+Aufteilung: Aeon 16, UEF 15, Cybran 24, Seraphim 31.
+
 Spalte "Auch in": weitere Ablageorte derselben ID. `-` heisst: nur hier.
 
 > Enthaelt die Teleport-Jammer `BAB4209` `BEB4209` `BRB4209` `BSB4209`. Auf sie verweist
@@ -40,7 +42,7 @@ Spalte "Auch in": weitere Ablageorte derselben ID. `-` heisst: nur hier.
 | `BAL0403` | Interrogater | - |
 | `BALK003` | Redeemer | - |
 
-## UEF (14)
+## UEF (15)
 
 | ID | Name | Auch in |
 |---|---|---|
@@ -89,7 +91,7 @@ Spalte "Auch in": weitere Ablageorte derselben ID. `-` heisst: nur hier.
 | `BRS0402` | SeaDragon MKII | - |
 | `XRS0402` | SeaDragon Class | - |
 
-## Seraphim (32)
+## Seraphim (31)
 
 | ID | Name | Auch in |
 |---|---|---|
