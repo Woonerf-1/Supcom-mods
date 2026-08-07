@@ -12,10 +12,17 @@ Eine Vermutung ohne Eintrag hier ist ein Fehler.
 ### Aus der Einheitenerhebung
 
 - [ ] **Wer gewinnt bei mehrfach belegten IDs?** Beispiel `UEL0001` - `units`,
-      `commanders` und `test21000` beanspruchen dieselbe ID. Die uid-Sortierung ist nur
-      die Standardreihenfolge und **erzwingt nichts**; `before`/`after` in `mod_info.lua`
-      koennen sie ueberschreiben. Betrifft alle 187 Faelle.
-      Pruefen: Mods aktivieren, im Spiel nachsehen, `LOUD.log` auswerten.
+      `commanders` und `test21000` beanspruchen dieselbe ID.
+      **Code gelesen 2026-08-06** (`02_MODSYSTEM.md` Abschnitt 5): `before`/`after`
+      steuern die Reihenfolge, die uid-Sortierung ist nur Rueckfall und erzwingt nichts.
+      Beide Mods setzen weder `before` noch `after`, also greift die uid-Sortierung -
+      **im Spiel aber nicht nachgeprueft**.
+- [ ] **Wirkt `before`/`after` tatsaechlich wie gelesen?** Nur aus dem Code abgeleitet.
+      Test: zwei kleine Mods, die dasselbe Blueprint-Feld unterschiedlich setzen, mit und
+      ohne `after` starten und das Ergebnis im Spiel vergleichen.
+- [ ] **Ist die Nicht-Transitivitaet von `before`/`after` praktisch relevant?**
+      `ModComp` ist ein Paarvergleich, keine topologische Sortierung. Bei drei Mods in
+      einer Kette ist die Reihenfolge nicht garantiert - ungetestet.
 - [ ] **Zweck der `M`-Kennungen** `UAM0004` `UEM0006` `URM0004` `XSM0001` - kein
       `UnitName`, keine bekannte Domaenenkennung.
 - [ ] **Herkunft der `B`- und `S`-Ergaenzungen im Basispaket** (`BAA0309` u. a.,

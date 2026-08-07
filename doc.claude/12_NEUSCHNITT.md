@@ -1,6 +1,6 @@
 # 12 — Neuschnitt der Mods
 
-**Status: offen. Der Zuschnitt wird noch festgelegt.**
+**Status: Zuschnitt festgelegt (2026-08-06), Vorlagen angelegt, noch ohne Inhalt.**
 
 Alles in `usermods\` gehört uns — unabhängig davon, welcher Autor in einer `mod_info.lua`
 steht. Es gibt hier keine fremden Besitzstände.
@@ -58,17 +58,43 @@ Analyseumgebung kopieren, `diff` laufen lassen. Bei `test21000` waren so in eine
 
 ---
 
-## 3. Zuschnitt — noch offen
+## 3. Zuschnitt
 
-Der Nutzer legt fest, was inhaltlich entstehen soll. Dieser Abschnitt bleibt leer, bis das
-geklärt ist. **Kein Nachbauen des Bestands auf Verdacht** — was nicht mehr gewollt ist,
-wird nicht neu gebaut, sondern in `08_BESTANDSAUFNAHME.md` als verworfen vermerkt.
+**Festgelegt am 2026-08-06.** Drei Mods, **ohne Abhaengigkeiten untereinander**.
 
-Sobald das Zielbild steht, wird hier eingetragen:
+| Mod | Ordner | uid | Anliegen |
+|---|---|---|---|
+| Basegame Bugfixes | `usermods\BasegameBugfixes\` | `EFD7502E-1682-4DC2-BBA7-CC4243E74B71` | Fehler in Basiseinheiten beheben |
+| T4 Mass Extractors | `usermods\T4MassExtractors\` | `F778CB9A-FA72-413F-99A1-80AE74CFE37B` | Massextraktoren der Experimental-Stufe |
+| PlayTest | `usermods\PlayTest\` | `3786F645-B959-44F1-9C52-E3B3C5CA09AA` | Testmod, nicht fuer den Spielbetrieb |
 
-```
-| Neuer Mod | Anliegen | Mechanismus | Ersetzt (falls zutreffend) |
-```
+Angelegt als **leere Vorlagen** - jeweils nur `mod_info.lua`, noch ohne Inhalt.
+Je ein Dokument unter `mods\`:
+[BasegameBugfixes.md](mods/BasegameBugfixes.md) -
+[T4MassExtractors.md](mods/T4MassExtractors.md) -
+[PlayTest.md](mods/PlayTest.md)
+
+### Warum ohne Abhaengigkeiten
+
+Jeder Mod ist fuer sich aktivierbar und ergibt fuer sich Sinn - das war Regel 1 aus
+Abschnitt 4. Keine `requires`, keine `before`/`after`.
+
+Das bedeutet auch: **die Ladereihenfolge zwischen ihnen ist nicht festgelegt.** Solange
+sie keine gemeinsamen Blueprint-IDs anfassen, spielt das keine Rolle. Sobald doch,
+muss `after` gesetzt werden - `requires` genuegt dafuer nicht
+(`02_MODSYSTEM.md` Abschnitt 5).
+
+### Verhaeltnis zum eingefrorenen Bestand
+
+| Neuer Mod | loest ab |
+|---|---|
+| `PlayTest` | `test21000` |
+| `BasegameBugfixes` | - |
+| `T4MassExtractors` | - |
+
+Die uebrigen eingefrorenen Mods (`AcidPools`, `commanders`, `nomads-4-loud`,
+`NOMADS-try_b4_ur_BI`, `UEF_trans_men`) haben noch keinen Nachfolger. Ob sie einen
+bekommen, ist offen - **nichts auf Verdacht nachbauen** (Abschnitt 6).
 
 ---
 

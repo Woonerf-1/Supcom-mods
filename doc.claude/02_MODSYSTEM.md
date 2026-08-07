@@ -29,7 +29,65 @@ für neuen Code trotzdem konsequent kleinschreiben.
 
 ---
 
-## 2. `mod_info.lua` — alle Felder
+## 2. `mod_info.lua` - alle Felder
+
+**Geprueft am 2026-08-06** gegen `LoadModInfo()` in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\mods.lua`
+(Zeile 227-252). Die Datei wird als Lua-Skript in eine vorbelegte Umgebung ausgefuehrt;
+was sie nicht setzt, behaelt den Vorgabewert.
+
+### Vorgabewerte laut Code
+
+| Feld | Vorgabe | Anmerkung |
+|---|---|---|
+| `name` | Dateiname | also der volle Pfad - immer selbst setzen |
+| `description` | `(No description)` | |
+| `author` | leer | |
+| `copyright` | leer | |
+| `exclusive` | `false` | |
+| `icon` | generisches Symbol aus `/textures/ui/common/dialogs/mod-manager/` | |
+| `selectable` | `true` | |
+| `hookdir` | `/hook` | |
+| `shadowdir` | `/shadow` | |
+| `uid` | **Dateiname** | gefaehrlich - siehe unten |
+| `location` | Verzeichnis der `mod_info.lua` | wird von der Engine gesetzt |
+
+**`uid` hat keinen sinnvollen Vorgabewert.** Ohne eigene Angabe ist die uid der volle
+Pfad zur `mod_info.lua`. Das funktioniert zufaellig, weil Pfade eindeutig sind - aber der
+Mod ist dann fuer `requires`, `conflicts`, `before` und `after` praktisch nicht
+referenzierbar, und die uid aendert sich, sobald jemand den Ordner umbenennt.
+**Immer eine eigene GUID setzen.**
+
+### Ohne Vorgabewert
+
+Diese Felder sind schlicht `nil`, wenn sie nicht gesetzt werden - der Code prueft
+jeweils auf Vorhandensein:
+
+`version` - `url` - `ui_only` - `requires` - `requiresNames` - `conflicts` -
+`before` - `after` - `enabled`
+
+### `enabled` - zwei Zustaende, drei Bedeutungen
+
+```lua
+-- mods.lua, Zeile 295
+if mod and (mod.enabled ~= false) then
+    r[mod.uid] = mod
+end
+```
+
+Die Pruefung ist `~= false`, nicht `== true`. Also:
+
+| `enabled` | Ergebnis |
+|---|---|
+| nicht gesetzt (`nil`) | Mod wird geladen |
+| `true` | Mod wird geladen |
+| `false` | Mod ist **unsichtbar** - er erscheint nicht einmal im Mod-Manager |
+
+`enabled = false` ist damit der harte Aus-Schalter beim Entwickeln. `selectable = false`
+ist etwas anderes: der Mod existiert, ist aber nicht von Hand waehlbar (fuer Mods, die
+ueber `requires` oder eine Karte automatisch aktiviert werden).
+
+### Vorlage
 
 ```lua
 name        = "Mein Mod"          -- Anzeigename
@@ -40,40 +98,50 @@ copyright   = "..."               -- optional
 url         = "..."               -- optional
 
 uid = "A0BC6CD8-2F26-4D3D-96EA-EB6A8B34A8F1"
-    -- PFLICHT in der Praxis. Muss global eindeutig sein (GUID).
-    -- Default wäre der Dateiname → unsicher.
-    -- Regel: jede neue Version eines Mods bekommt eine neue uid,
-    --        damit abhängige Mods gezielt auswählen können.
+    -- PFLICHT. Ohne Angabe wird der Dateipfad verwendet.
+    -- Global eindeutige GUID, siehe 07_KONVENTIONEN.md Abschnitt 2.
 
 icon = "/mods/meinmod/icons/meinmod.bmp"
-    -- Default: mod_icon.dds neben mod_info.lua
 
-selectable = true      -- im Mod-Manager sichtbar/wählbar
-enabled    = true      -- false = wird NIE geladen (praktisch zum Deaktivieren beim Entwickeln)
-exclusive  = false     -- true = nur ein exklusiver Mod gleichzeitig; schließt requires/conflicts aus
-ui_only    = false     -- true = reiner UI-Mod, nur lokal nötig
+selectable = true      -- im Mod-Manager sichtbar
+enabled    = true      -- false = wird NIE geladen
+exclusive  = false     -- true = nur ein exklusiver Mod gleichzeitig
+ui_only    = false     -- true = reiner UI-Mod, nur lokal noetig
 
-hookdir   = '/hook'    -- überschreibbar
-shadowdir = '/shadow'  -- überschreibbar
+hookdir   = '/hook'    -- ueberschreibbar
+shadowdir = '/shadow'  -- ueberschreibbar
 
 requires = {
-    "fec58b30-0036-4b9e-9995-fe2d6fe4c6e9",   -- uid des benötigten Mods
+    "fec58b30-0036-4b9e-9995-fe2d6fe4c6e9",   -- Name des benoetigten Mods
 }
 requiresNames = {
-    ["fec58b30-0036-4b9e-9995-fe2d6fe4c6e9"] = "Name für die Fehlermeldung",
+    ["fec58b30-0036-4b9e-9995-fe2d6fe4c6e9"] = "Name fuer die Fehlermeldung",
 }
 conflicts = { "..." }   -- Spiel verweigert gleichzeitige Aktivierung
 before    = { "..." }   -- dieser Mod wird VOR den genannten angewandt
-after     = { "..." }   -- ... NACH den genannten (Default: = requires)
+after     = { "..." }   -- ... NACH den genannten
 ```
 
-Zur Laufzeit ergänzt die Engine `id` (voller Pfad zur `mod_info.lua`) und `location` (Ordner).
+**`requires` regelt keine Reihenfolge** - dafuer `after` setzen. Einzelheiten in
+Abschnitt 5.
+
+Zur Laufzeit ergaenzt die Engine `id` (voller Pfad zur `mod_info.lua`) und `location`
+(Ordner).
+
+### Felder, die NICHT gelesen werden
+
+`mountpoints` und `hooks` kommen in zwei vorhandenen Mods vor, werden aber weder von
+`mods.lua` noch von `bin\CommonDataPath.lua` ausgewertet. Sie stammen aus einem anderen
+Mod-Loader und sind hier wirkungslos - `11_DATAPATH.md` Abschnitt 2.
 
 ### `config.lua` (optional)
 
-Erlaubt Einstellungen pro Mod, abfragbar im Sim über `GetModConfig(uid)`.
+Erlaubt Einstellungen pro Mod, abfragbar im Sim ueber `GetModConfig(uid)`.
 Struktur: `config = { { key=..., default=..., values={ {key=...}, ... } }, ... }`.
-Ist die Datei leer oder fehlerhaft, schreibt die Engine eine Warnung ins Log.
+
+Die Werte werden **im Spielerprofil** gespeichert (`Prefs`, Schluessel `modConfig`),
+nicht im Mod. Ist die Datei leer oder fehlerhaft, schreibt die Engine
+`Mod <name> has an empty or malformed config file` ins Log.
 
 ---
 
@@ -147,16 +215,113 @@ Details und Beispiele: `03_BLUEPRINTS.md`.
 
 ---
 
-## 5. Ladereihenfolge zwischen Mods
+## 5. Abhaengigkeiten und Ladereihenfolge
 
-1. Standard: **alphabetisch nach uid**.
-2. `before = {...}` / `after = {...}` verschieben gezielt.
-3. Widersprüchliche Angaben → die Engine wählt willkürlich und schreibt eine Warnung ins Log;
-   beide Mods bleiben aktiv.
-4. **Wer zuletzt läuft, gewinnt** bei konkurrierenden Änderungen.
+**Quelle:** `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\mods.lua`
+Geprueft am 2026-08-06 gegen den tatsaechlichen Code, nicht nur gegen den Kopfkommentar.
 
-Für unsere Mods gilt: wenn ein Mod auf Änderungen eines anderen aufbaut, `after` setzen und in
-`mods\<modname>.md` dokumentieren.
+### Vier Felder, zwei verschiedene Zwecke
+
+| Feld | Zweck | Wirkt auf |
+|---|---|---|
+| `requires` | dieser Mod braucht einen anderen | **Verfuegbarkeit** |
+| `conflicts` | dieser Mod vertraegt sich nicht mit einem anderen | **Verfuegbarkeit** |
+| `before` | dieser Mod wird **vor** dem genannten angewandt | **Reihenfolge** |
+| `after` | dieser Mod wird **nach** dem genannten angewandt | **Reihenfolge** |
+
+Alle vier enthalten Listen von **uids**, nicht von Modnamen.
+
+**Das ist der entscheidende Punkt: `requires` regelt keine Reihenfolge.** Wer will, dass
+sein Mod nach einem anderen greift, muss `after` setzen - `requires` allein genuegt nicht.
+
+### Die Sortierung
+
+```lua
+-- mods.lua, Zeile 326-345
+local function ModComp(first, second)
+    if _mod_cache[first].before then
+        for i,uid in _mod_cache[first].before do
+            if _mod_cache[second].uid == uid then return true end
+        end
+    end
+    if _mod_cache[first].after then
+        for i,uid in _mod_cache[first].after do
+            if _mod_cache[second].uid == uid then return false end
+        end
+    end
+    return first < second
+end
+```
+
+`_mod_cache` ist nach `uid` indiziert (Zeile 296: `r[mod.uid] = mod`). Der Rueckfall
+`first < second` vergleicht also **uids alphabetisch**.
+
+**Die uid-Sortierung erzwingt nichts** - sie ist nur das, was uebrig bleibt, wenn weder
+`before` noch `after` greifen.
+
+### Drei Fallstricke im Code
+
+**1. Der Kopfkommentar stimmt nicht.** Er behauptet:
+
+> *"If you do not supply an 'after' list, the 'requires' list will be used in its place."*
+
+**Das ist in dieser Fassung nicht implementiert.** `ModComp` liest ausschliesslich
+`.before` und `.after`; nirgends wird `requires` als Reihenfolge herangezogen.
+Wer sich darauf verlaesst, bekommt die alphabetische uid-Reihenfolge.
+
+**2. `ModComp` ist ein Paarvergleich, keine topologische Sortierung.** `before`/`after`
+wirken nur, wenn genau diese beiden Mods waehrend des Sortierens miteinander verglichen
+werden. Daraus folgt: **die Beziehung ist nicht transitiv.** Wenn A vor B und B vor C
+steht, ist A **nicht** garantiert vor C - es sei denn, A nennt C ausdruecklich.
+
+Bei drei und mehr Mods also **jede** Beziehung einzeln deklarieren, nicht auf eine Kette
+vertrauen.
+
+**3. Widersprueche werden nicht gemeldet.** Der Kopfkommentar sagt dazu (Zeile 177):
+
+> *"If two mods specify an inconsistent ordering (e.g. they both ask to be before the
+> other) then the game will pick one arbitrarily."*
+
+Ein Vergleichsoperator, der fuer `(A,B)` und `(B,A)` beide Male `true` liefert, ist
+inkonsistent - das Sortierergebnis ist dann nicht definiert. **Es gibt keine Warnung im
+Log.** Widersprueche fallen nur durch merkwuerdiges Spielverhalten auf.
+
+### `requires` und `conflicts` im Detail
+
+`GetDependencies(uid)` (Zeile 396) loest sie auf und liefert drei Listen:
+
+| Rueckgabe | Bedeutung |
+|---|---|
+| `requires` | benoetigte Mods, die **vorhanden** sind |
+| `missing` | benoetigte Mods, die **fehlen** |
+| `conflicts` | Mods, die sich mit diesem beissen |
+
+Zwei Eigenschaften, die man kennen sollte:
+
+- **`requires` wird rekursiv aufgeloest.** Braucht A den Mod B und B den Mod C, findet
+  die Funktion auch C.
+- **`conflicts` wirkt in beide Richtungen.** Es genuegt, wenn *einer* der beiden Mods den
+  anderen nennt - die Funktion durchsucht alle Mods danach, ob sie *diesen* als Konflikt
+  fuehren.
+
+`requiresNames` ist rein kosmetisch: eine Zuordnung uid -> Klartextname fuer die
+Fehlermeldung, wenn ein benoetigter Mod fehlt.
+
+### Praktische Regeln fuer eigene Mods
+
+1. **Reihenfolge braucht `before` oder `after`.** `requires` reicht nicht.
+2. **Jede Beziehung einzeln deklarieren** - Ketten sind nicht transitiv.
+3. **Widersprueche vermeiden**, sie werden nicht gemeldet.
+4. **uids in den Listen, keine Namen.** Kommentar dahinter setzen, damit die Liste
+   lesbar bleibt.
+5. **`requiresNames` ausfuellen**, wenn `requires` gesetzt ist - sonst sieht der Nutzer
+   nur eine uid.
+6. **Nicht auf die uid-Sortierung bauen.** Sie ist ein Rueckfall, kein Mechanismus.
+
+### Was noch offen ist
+
+Ob die Reihenfolge im Spiel tatsaechlich so wirkt, ist **nicht praktisch geprueft** -
+nur aus dem Code gelesen. Steht in `TODO.md`.
 
 ---
 
