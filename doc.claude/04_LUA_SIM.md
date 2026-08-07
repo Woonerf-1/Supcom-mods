@@ -86,6 +86,54 @@ Die FA-Engine nutzt eine modifizierte Lua 5.0.x-Variante:
 
 **Beim Schreiben von Hook-Code den Stil der Originaldatei übernehmen**, nicht modernes Lua.
 
+### Strikte Globals — häufigste Absturzursache
+
+**Der Zugriff auf eine nicht gesetzte globale Variable ist ein FEHLER, nicht `nil`.**
+
+Belegt in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\system\config.lua`,
+Zeilen 94-96:
+
+```lua
+local globalsmeta = {
+    __index = function(table, key)
+        error("access to nonexistent global variable "..repr(key),2)
+    end
+}
+setmetatable(_G, globalsmeta)
+```
+
+Das ist Absicht — ein stiller `nil`-Rückgabewert bei Tippfehlern wäre schlimmer. Aber es
+heißt: **jede Prüfung auf einen eigenen Merker muss `rawget` benutzen.**
+
+```lua
+-- FALSCH — stürzt ab, solange der Merker nicht gesetzt ist
+if not _G.MEIN_MERKER then ... end
+if not MEIN_MERKER then ... end
+
+-- RICHTIG
+if not rawget(_G, 'MEIN_MERKER') then ... end
+```
+
+`rawget` umgeht die Metatabelle und liefert sauber `nil`.
+
+**Warum das teuer ist:** Der Fehler tritt beim *Laden* auf, nicht zur Laufzeit. Passiert
+er in einer Datei, die per `import` geladen wird — etwa `aibrain.lua` —, scheitert der
+gesamte Sim-Start:
+
+```
+warning: access to nonexistent global variable "CUSTOMAI_TEMPLATE_LOADED"
+warning: Error importing /lua/aibrain.lua
+info:    Sim::Create() crashed: state->m_rootState == m_state
+```
+
+**Das Spiel hängt dann im Ladeschirm** — ohne Fehlerdialog, ohne Absturz. Genau so
+passiert am 2026-08-06 im ersten Testlauf des `CustomAI`-Mods
+(`mods\CustomAI.md` Abschnitt 7).
+
+Dieselbe Datei erzeugt über `metacleanup()` auch die verwandten Meldungen
+`Attempt to set attribute '<x>' on nil` und `Attempt to get attribute '<x>' on <typ>`.
+
 ---
 
 ## 3. Die wichtigsten Hook-Punkte in `Unit.lua`

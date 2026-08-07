@@ -4,6 +4,55 @@ Arbeitsliste. Wird zu Sessionbeginn gelesen und zu Sessionende gepflegt.
 
 ---
 
+### Aus der KI-Erweiterung (`mods\CustomAI.md`)
+
+- [x] **Wie wirkt der Lobby-Key auf das Verhalten?** Geklaert 2026-08-06: **gar nicht.**
+      `FirstBaseFunction` in `Loud_Main_Standard.lua` (Z. 159-220) entscheidet allein
+      nach Kartengroesse, Wasseranteil, Einheitenlimit und Startposition und gibt in
+      allen acht Rueckgabepfaden festverdrahtet `'loud'` zurueck.
+- [x] **Kann ein Mod eigene AIBaseTemplates laden?** Geklaert 2026-08-06: nicht
+      automatisch (`simInit.lua` hat keinen Mod-Zweig), aber ueber expliziten Import mit
+      vollem `/mods/...`-Pfad aus einem Hook. Weg A (`shadow` + `DiskFindFiles`) ist
+      **nicht belegt**; Nomads nutzt ihn nicht, sondern importiert explizit.
+- [ ] **Greift ein Hook auf `simInit.lua`?** Abgeleitet, nicht getestet. Falls nicht:
+      Hook auf eine spaeter ladende Datei, etwa `/lua/aibrain.lua`.
+- [ ] **Enthaelt `ScenarioInfo.ArmySetup[<Armee>].AIPersonality` innerhalb von
+      `FirstBaseFunction` noch den Lobby-Key?** `GetBestBasePlan` laeuft vor dem
+      Ueberschreiben in `SetupMainBase` Zeile 47 - aus der Aufrufreihenfolge abgeleitet,
+      nicht getestet. **Davon haengt ab, ob eine eigene KI ueberhaupt gezielt greifen
+      kann.**
+- [ ] **Registrierung testen:** `key` in `lua\AI\CustomAIs_v2\` eintragen und pruefen,
+      ob die KI in der Lobby erscheint. Erwartete Logzeile:
+      `*AI DEBUG Processing AI Mod <pfad>`.
+
+---
+
+### Aus der KI-Erweiterung (`mods\CustomAI.md`)
+
+**Testlauf 1 (2026-08-06):** Sim-Absturz durch `_G.FOO`-Zugriff - behoben, Regel in
+`04_LUA_SIM.md` Abschnitt 2 dokumentiert.
+**Testlauf 2 (2026-08-07):** Sim startet. Registrierung, Hook-Weg und Template-Import
+belegt. Uebergabemechanismus gefunden.
+
+- [x] **Registrierung ueber den Mod-Zweig** funktioniert - `Processing AI Mod
+      "/mods/customai"`, Key in der Lobby waehlbar.
+- [x] **Hook auf `simInit.lua` greift** - und laeuft vor dem Hook auf `aibrain.lua`.
+- [x] **Eigenes BaseBuilderTemplate laesst sich per Import registrieren.**
+- [x] **Wie uebergibt LOUD an eine eigene KI?** Ueber den **Nickname**, nicht den Key.
+      `aibrain.lua` `OnCreateAI` (~Z. 950): sobald ein aktiver Mod einen
+      `CustomAIs_v2`-Ordner hat, startet LOUD `ExecutePlan` nur noch fuer KIs, deren
+      Nickname `AI: LOUD` enthaelt. Sonst tritt LOUD zurueck.
+- [ ] **Naechster Testlauf:** Sonde heisst jetzt `AI: LOUD Sonde (Test)`. Erwartet:
+      LOUDs Plan laeuft, `CUSTOMAI: FirstBaseFunction ...` erscheint im Log.
+      Damit klaert sich, welcher Wert in `AIPersonality` steht.
+- [ ] **Eigener Einstiegspunkt fuer eine echte KI.** Wenn LOUD zuruecktritt, muss der
+      Mod selbst einen Plan forken - Hook auf `OnCreateAI`. Sonst laufen LOUD-Threads
+      auf uninitialisierten Daten weiter:
+      `loudutilities.lua(5291): attempt to loop over field 'HiPri' (a nil value)`.
+- [ ] **Ziel festlegen:** Was soll die eigene KI anders machen?
+
+---
+
 ## Ungeprueftes - Pflichtliste
 
 **Regel (`CLAUDE.md` Abschnitt 6):** Jede Vermutung in der Doku steht hier als Aufgabe.
