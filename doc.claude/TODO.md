@@ -5,7 +5,6 @@ Arbeitsliste. Wird zu Sessionbeginn gelesen und zu Sessionende gepflegt.
 ---
 
 ### Aus der KI-Erweiterung (`mods\CustomAI.md`)
-
 - [x] **Wie wirkt der Lobby-Key auf das Verhalten?** Geklaert 2026-08-06: **gar nicht.**
       `FirstBaseFunction` in `Loud_Main_Standard.lua` (Z. 159-220) entscheidet allein
       nach Kartengroesse, Wasseranteil, Einheitenlimit und Startposition und gibt in
@@ -50,6 +49,19 @@ belegt. Uebergabemechanismus gefunden.
       auf uninitialisierten Daten weiter:
       `loudutilities.lua(5291): attempt to loop over field 'HiPri' (a nil value)`.
 - [ ] **Ziel festlegen:** Was soll die eigene KI anders machen?
+
+### Noch nicht gelesen (`mods\CustomAI_Stellschrauben.md`)
+
+- [ ] **Die Manager im Inneren** - wie `aiBrain.BuilderManagers` Builder auswaehlen und
+      ausfuehren. Meistgenutzte Struktur der KI (79 Vorkommen), Arbeitsweise unbekannt.
+- [ ] **Zielauswahl der Angriffsplanung** - `AttackPlan.Goal` wird in
+      `loudutilities.lua` ab Z. 1368 verwendet, aber woher kommt das Ziel?
+- [ ] `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\AI\SkirmishStrategyList.lua`
+- [ ] `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\AI\aibehaviors.lua`
+- [ ] **Wirkung von `BuilderType` und `InstanceCount`** - bislang nur aus dem Namen
+      erschlossen.
+- [ ] **Debug-Schalter ausprobieren** - `ReportRatios` und `AttackPlanDialog` sind die
+      beiden aussagekraeftigsten. Einmal einschalten und sehen, was im Log landet.
 
 ---
 

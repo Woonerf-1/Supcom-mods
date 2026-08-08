@@ -7,8 +7,43 @@
 | **uid** | `72568B0A-993B-49D4-B2AB-55E68B5C3BE5` |
 | **Version** | 1.0 |
 | **Typ** | Sim-Mod (`ui_only = false`) |
-| **Status** | **Grundgeruest steht - Testlauf 4 ausstehend** |
+| **Status** | **Grundgeruest steht und ist im Spiel bestaetigt** |
 | **Angelegt** | 2026-08-06 |
+
+---
+
+## 0. Einstieg fuer eine neue Sitzung
+
+**Diese drei Dateien reichen, um sofort an einer neuen KI zu arbeiten:**
+
+| Reihenfolge | Datei | Wofuer |
+|---|---|---|
+| 1 | `..\CLAUDE.md` | Arbeitsregeln, Schreibzone, Pfadkonventionen |
+| 2 | diese Datei | Aufbau des Mods, Abschnitte 3, 4 und 4b |
+| 3 | `CustomAI_Stellschrauben.md` | was sich aendern laesst und wo es steht |
+
+Dazu bei Bedarf `..\04_LUA_SIM.md` Abschnitt 2 (strikte Globals - haeufigste
+Absturzursache) und `..\15_LOG.md` (Logauswertung).
+
+### Der Stand in einem Absatz
+
+Der Mod registriert KIs ueber `lua\AI\CustomAIs_v2\CustomAI.lua` in der Lobby und erzeugt
+fuer jede einen eigenen Basisplan, der von einem LOUD-Template erbt. Zwei Hooks bringen
+das in den Sim: `simInit.lua` laedt die Definitionen, `aibrain.lua` schreibt zusaetzlich
+`Personality` auf `'loud'`, damit das Cheat-System vollstaendig greift. Alles davon ist
+im Spiel bestaetigt (Testlauf 4, siehe Abschnitt 7).
+
+### Was eine neue KI kostet
+
+Ein Eintrag in `lua\AI\AIDefinitions.lua`, optional eine Datei nach dem Muster von
+`lua\AI\AIs\_VORLAGE.lua`. **Die Mechanik ist erledigt** - ab hier ist es Inhaltsarbeit.
+
+### Die vier Regeln, an denen es scheitert
+
+1. `Name` muss `AI: LOUD` enthalten, sonst tritt LOUD zurueck und die KI bleibt untaetig
+2. `Key` muss eindeutig sein - die Duplikatspruefung der Engine greift nicht
+3. In `CustomAIs_v2\` darf nur liegen, was eine globale `AI`-Tabelle definiert
+4. In `Apply()` niemals `BaseTemplateName` oder `FirstBaseFunction` anfassen
 
 ---
 
@@ -663,9 +698,22 @@ Moegliche Ursachen, in dieser Reihenfolge pruefen:
 3. `GetAIList()` bricht ab, weil eine andere Datei in einem `CustomAIs_v2`-Ordner keine
    globale `AI`-Tabelle hat
 
-### Testlauf 4 - Grundgeruest (ausstehend)
+### Testlauf 4 - Grundgeruest und Cheat-Frage
 
-Zu pruefen nach dem Umbau auf die Fabrik:
+**Ein Lauf beantwortet beides.** Wichtig: **mit Cheat-Multiplikator starten**, sonst
+laesst sich Frage B nicht beantworten.
+
+#### Durchfuehrung
+
+1. Mod-Manager: **Custom AI** aktivieren
+2. Skirmish, kleine Karte, **ein KI-Gegner**
+3. In der Lobby **AI: LOUD Standard (Custom)** waehlen
+4. **Cheat-Multiplikator auf einen Wert ueber 1 stellen** (z. B. 1.5), damit das
+   Cheat-System ueberhaupt etwas tut
+5. Partie starten, ein paar Minuten laufen lassen, beenden
+6. `LOUD\bin\LOUD.log` sichern
+
+#### Frage A - greift das Grundgeruest?
 
 | # | Erwartete Logzeile | Bedeutung |
 |---|---|---|
@@ -673,13 +721,52 @@ Zu pruefen nach dem Umbau auf die Fabrik:
 | 2 | `CUSTOMAI: registriert CustomAI_customai_standard (Key customai_standard, Quelle Loud_Main_Standard, Wert 200)` | Vererbung und Registrierung |
 | 3 | `CUSTOMAI: 1 von 1 KIs registriert` | Schleife vollstaendig |
 | 4 | `AI: LOUD Standard (Custom)` in der Lobby-Liste | Registrierung UI |
-| 5 | `CUSTOMAI: <name> verwendet Template CustomAI_customai_standard` | **eigenes Template gewinnt die Basiswahl** |
-| 6 | `*AI DEBUG <name> Selected "CustomAI_customai_standard"` | Bestaetigung durch die Engine |
-| 7 | **kein** `Invalid BuilderGroup named` | geerbte Builder-Liste ist gueltig |
-| 8 | **kein** `Duplicate BaseBuilderTemplate detected` | steht neben LOUD, ueberschreibt nicht |
+| 5 | `CUSTOMAI: <name> bewirbt sich mit CustomAI_customai_standard (Wert 200, Key aus ..., Personality = ...)` | eigenes Template meldet sich |
+| 6 | `*AI DEBUG <name> Selected "CustomAI_customai_standard"` | **eigenes Template gewinnt** |
+| 7 | **kein** `Invalid BuilderGroup named` | geerbte Builder-Liste gueltig |
+| 8 | **kein** `Duplicate BaseBuilderTemplate detected` | steht neben LOUD |
 
-Dazu die Spielprobe: Die KI soll sich **wie LOUD verhalten** - Basis aufbauen, expandieren,
-angreifen. Auffaelliges Abweichen waere ein Fehler in der Vererbung.
+Dazu die Spielprobe: Die KI soll sich **wie LOUD verhalten** - Basis aufbauen,
+expandieren, angreifen.
+
+#### Frage B - bekommt die KI die vollen Cheats?
+
+| Beobachtung | Bedeutung |
+|---|---|
+| `CUSTOMAI: <name> - Personality von 'customai_standard' auf 'loud' gesetzt (CustomAIKey = ..., CheatValue = ...)` | **der Hook hat gegriffen** |
+| `Standard Cheat is <wert>` | LOUDs eigene Ausgabe aus `SetupAICheat` |
+| `Resource mult is <wert>` | Stufe 1 - kommt immer |
+| **`BuildRate mult is <wert>`** | **Warnzeichen** - diese Zeile erscheint **nur im fremden Zweig**. Sieht man sie, ist `Personality != 'loud'` gewesen und Stufe 2 fehlt. |
+
+**Die entscheidende Reihenfolge im Log:** Steht
+`CUSTOMAI: ... Personality ... auf 'loud' gesetzt` **vor** `Standard Cheat is`, hat der
+Hook rechtzeitig gegriffen.
+
+#### Zusatzfrage C - welche Quelle liefert den Key?
+
+In Zeile 5 steht `Key aus CustomAIKey` oder `Key aus ScenarioInfo`:
+
+| Wert | Bedeutung |
+|---|---|
+| `CustomAIKey` | der aibrain-Hook lief vor der Basiswahl - beide Wege funktionieren |
+| `ScenarioInfo` | der Hook lief spaeter, der Rueckfall hat gegriffen |
+
+Beides ist in Ordnung; interessant ist nur, **welcher** Weg traegt.
+
+#### Auswertung
+
+```bash
+grep -E 'CUSTOMAI:|Cheat|Processing AI Mod|BaseBuilderTemplate|Invalid BuilderGroup|Selected' LOUD.log
+```
+
+#### Wenn etwas schiefgeht
+
+| Symptom | Vermutliche Ursache |
+|---|---|
+| Ladeschirm haengt | Lua-Fehler im Hook - nach `access to nonexistent global` und `Error importing` suchen |
+| KI fehlt in der Lobby | Datei in `CustomAIs_v2\` ohne globale `AI`-Tabelle |
+| KI tut nichts | Name enthaelt nicht `AI: LOUD` |
+| `Selected "Loud_Main_Standard"` statt unseres Templates | `FirstBaseFunction` hat 0 zurueckgegeben - Key stimmt nicht ueberein |
 
 ### Ergebnisse
 
@@ -695,6 +782,71 @@ angreifen. Auffaelliges Abweichen waere ein Fehler in der Vererbung.
 
 **Die Sondierung ist abgeschlossen.** Alle sieben Fragen beantwortet.
 
+### Testlauf 4 - Ergebnis: alles bestanden
+
+**2026-08-07**, Cheat-Multiplikator 1.5.
+
+| # | Test | Ergebnis |
+|---|---|---|
+| 8 | **Eigenes Template gewinnt die Basiswahl** | **ja**, Z. 960 |
+| 9 | **Volle Cheats (Stufe 2)** | **ja**, Z. 801 |
+| 10 | Keine `Invalid BuilderGroup` | bestaetigt |
+| 11 | Keine `Duplicate BaseBuilderTemplate` | bestaetigt |
+| 12 | Key aus `CustomAIKey` statt Rueckfall | bestaetigt |
+
+#### Die belegenden Zeilen
+
+```
+684  CUSTOMAI: Hook auf simInit.lua greift
+685  CUSTOMAI: registriert CustomAI_customai_standard
+     (Key customai_standard, Quelle Loud_Main_Standard, Wert 200)
+686  CUSTOMAI: 1 von 1 KIs registriert
+735  CUSTOMAI: KIs waren schon geladen - simInit-Hook hat gegriffen
+736  CUSTOMAI: Zan-Iavow (AI: LOUD Standard (Custo) - Personality von
+     'customai_standard' auf 'loud' gesetzt
+     (CustomAIKey = 'customai_standard', CheatValue = 1.5)
+798       Zan-Iavow ... Standard Cheat is 1.5
+799       Zan-Iavow ...  Resource mult is 1.5
+800       Zan-Iavow ... BuildRate mult is 1.5
+801       Zan-Iavow ... Minor Cheat 1.1699999570847  Major Cheat is 1.3250000476837
+806       Zan-Iavow ... Unit cap set to 7500 from 5000 based on cheat (1.5) & OutnumberedRatio
+957  CUSTOMAI: Zan-Iavow ... bewirbt sich mit CustomAI_customai_standard
+     (Wert 200, Key aus CustomAIKey, Personality = loud)
+960  *AI DEBUG Zan-Iavow ... Selected "CustomAI_customai_standard"
+```
+
+#### Was daraus folgt
+
+**Der Personality-Hook war noetig und wirkt.** Zeile 801 (`Minor Cheat` / `Major Cheat`)
+stammt aus dem `loud`-Zweig von `SetupAICheat` - ohne den Hook waere sie nicht
+erschienen. Auch die Anhebung des Einheitenlimits von 5000 auf 7500 in Z. 806 haengt
+daran.
+
+**Die Reihenfolge stimmt:** Z. 736 (Hook) liegt vor Z. 798 (Cheat-Setup).
+
+**`CustomAIKey` traegt.** Der aibrain-Hook laeuft vor der Basiswahl - der
+ScenarioInfo-Rueckfall wurde nicht gebraucht, bleibt aber als Absicherung.
+
+**Das Grundgeruest steht.** Ab hier lassen sich Verhaltensaenderungen einbauen, ohne die
+Mechanik erneut zu pruefen.
+
+#### Korrektur einer frueheren Annahme
+
+In der Vorbereitung stand, `BuildRate mult is` erscheine **nur** im fremden Zweig und sei
+damit ein Warnzeichen. **Falsch** - die Zeile steht zweimal im Quelltext:
+`aiutilities.lua` Z. 844 (fremder Zweig) und Z. 884 (`loud`-Zweig). Sie taugt nicht zur
+Unterscheidung.
+
+**Der richtige Beleg fuer Stufe 2 ist `Minor Cheat ... Major Cheat is ...`** (Z. 885) -
+diese Zeile gibt es nur einmal, im `loud`-Zweig.
+
+#### Nebenbefund: Nickname wird gekuerzt
+
+Im Log erscheint **`AI: LOUD Standard (Custo`** statt `AI: LOUD Standard (Custom)`.
+Der Nickname wird offenbar auf eine feste Laenge beschnitten. Fuer die Namenspruefung auf
+`AI: LOUD` ohne Belang, weil der Praefix erhalten bleibt - bei laengeren Namen aber zu
+bedenken. **Ungeprueft**, wo die Begrenzung sitzt.
+
 ### Verlauf der drei Testlaeufe
 
 | Lauf | Datum | Ergebnis |
@@ -702,6 +854,7 @@ angreifen. Auffaelliges Abweichen waere ein Fehler in der Vererbung.
 | 1 | 2026-08-06 | Sim-Absturz, Ladeschirm haengt. Ursache: `_G.FOO`-Zugriff auf nicht gesetzte Globale. Behoben mit `rawget`, Regel in `..\04_LUA_SIM.md` Abschnitt 2. |
 | 2 | 2026-08-07 | Sim startet. Registrierung und Hooks belegt. KI steht im Spiel, tut aber nichts - Uebergabemechanismus ueber den **Nickname** gefunden. |
 | 3 | 2026-08-07 | Nach Umbenennung in `AI: LOUD Sonde (Test)`: LOUDs Plan laeuft, `FirstBaseFunction` meldet den Lobby-Key. |
+| 4 | 2026-08-07 | Fabrik statt Sonde, Personality-Hook eingebaut, Cheat 1.5. **Eigenes Template gewinnt, volle Cheats.** Grundgeruest bestaetigt. |
 
 Log-Praefix fuer eigene Ausgaben: `CUSTOMAI:`
 

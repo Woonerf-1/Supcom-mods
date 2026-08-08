@@ -93,26 +93,42 @@ function RegisterAI(def)
 
     -- Gewinnt genau dann, wenn dieser Spieler unsere KI ausgewaehlt hat.
     --
-    -- Der Lobby-Key steht zu diesem Zeitpunkt noch in AIPersonality:
-    -- GetBestBasePlan ruft FirstBaseFunction VOR dem Ueberschreiben in
-    -- SetupMainBase Zeile 47. Belegt durch Testlauf 3 (2026-08-07).
+    -- ZWEI QUELLEN FUER DEN KEY, in dieser Reihenfolge:
     --
-    -- Rueckgabe 'loud' als baseType, nicht der eigene Key: alle LOUD-Templates
-    -- geben 'loud' zurueck, und der Wert landet anschliessend in
-    -- AIPersonality. Ob nachgelagerte LOUD-Logik darauf prueft, ist ungeprueft -
-    -- 'loud' ist die sichere Wahl. Siehe doc.claude\TODO.md.
+    --   1. aiBrain.CustomAIKey
+    --      gesetzt vom Hook auf OnCreateAI (hook\lua\aibrain.lua). Dort wird
+    --      der Lobby-Key gerettet, bevor Personality auf 'loud' umgeschrieben
+    --      wird - noetig fuer das Cheat-System.
+    --
+    --   2. ScenarioInfo.ArmySetup[<Armee>].AIPersonality
+    --      traegt zu diesem Zeitpunkt noch den Lobby-Key, weil GetBestBasePlan
+    --      VOR dem Ueberschreiben in SetupMainBase Z. 47 laeuft.
+    --      Belegt durch Testlauf 3, 2026-08-07.
+    --      Rueckfall, falls der aibrain-Hook nicht greift.
+    --
+    -- Rueckgabe 'loud' als baseType: alle LOUD-Templates geben 'loud' zurueck.
+    -- Fuer das Cheat-System ist dieser Wert ohne Bedeutung - das prueft
+    -- aiBrain.Personality, siehe hook\lua\aibrain.lua.
     template.FirstBaseFunction = function(aiBrain)
 
-        local personality = nil
+        local personality = aiBrain.CustomAIKey
+        local quelle      = 'CustomAIKey'
 
-        if ScenarioInfo and ScenarioInfo.ArmySetup and ScenarioInfo.ArmySetup[aiBrain.Name] then
-            personality = ScenarioInfo.ArmySetup[aiBrain.Name].AIPersonality
+        if not personality then
+
+            quelle = 'ScenarioInfo'
+
+            if ScenarioInfo and ScenarioInfo.ArmySetup and ScenarioInfo.ArmySetup[aiBrain.Name] then
+                personality = ScenarioInfo.ArmySetup[aiBrain.Name].AIPersonality
+            end
         end
 
         if personality == key then
 
-            LOG("CUSTOMAI: "..tostring(aiBrain.Nickname).." verwendet Template "
-                ..template.BaseTemplateName)
+            LOG("CUSTOMAI: "..tostring(aiBrain.Nickname).." bewirbt sich mit "
+                ..template.BaseTemplateName.." (Wert "..value
+                ..", Key aus "..quelle
+                ..", Personality = "..tostring(aiBrain.Personality)..")")
 
             return value, 'loud'
         end
