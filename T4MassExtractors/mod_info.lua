@@ -11,7 +11,7 @@
 name        = "T4 Mass Extractors"
 version     = 1.0
 description = "Fuegt Massextraktoren der Experimental-Stufe hinzu."
-author      = "Paul"
+author      = "Colin"
 copyright   = "none"
 
 -- PFLICHT. Ohne diese Angabe waere die uid der volle Dateipfad
