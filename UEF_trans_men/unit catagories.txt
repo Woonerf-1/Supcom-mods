@@ -1,0 +1,113 @@
+Rebalence
+base game units
+UEL0205  - Sky Boxer: Flak Tank
+XSA0402  - Ahwassa: Experimental Heavy Bomber
+XAB3301  - Eye of Rhianne: Quantum Optics Facility
+UEA0204  - Torpedo Bomber
+UAA0204  - Torpedo Bomber
+URA0204  - Torpedo Bomber
+XSA0204  - Torpedo Bomber
+UEA0305  - Heavy Gunship (t3)
+XAA0305  - AA Gunship (t3)
+XRA0305  - Advanced Gunship (t3)
+XAA0306  - Advanced Torpedo Bomber
+UAS0203  - Sylph: Attack Submarine
+UES0203  - Tigershark: Attack Submarine
+URS0203  - Sliver: Attack Submarine
+XSS0203  - Sou-istle: Attack Submarine
+XSS0305  - Yathsou: Submarine Hunter
+UAS0304  - Silencer: Strategic Missile Submarine
+URS0304  - Ace: Strategic Missile Submarine
+UES0304  - Plan B:Strategic Missile Submarine
+XAS0306  - Leviathan: Missile Cruiser
+XSS0304  - Yathsou: Submarine Hunter
+UES0401  - Atlantis: Experimental Air Craft Carrier
+
+UEF transport
+MKT0409  - Acclamator: Low Altitude Assault Transport/carrier
+UEL0401  - Fatboy: Experimental Heavy Mobile Artillery Platform (Support)
+
+AA
+UAA0303  - Corona: Air-Superiority Fighter
+UEA0303  - Wasp: Air-Superiority Fighter
+XSA0303  - Iazyne: Air-Superiority Fighter
+URA0303  - Gemini: Air Superiority Fighter
+SRL0320  - Slink: Anti-Air Defense
+SEL0324  - NG3 Longbow: Tech 3 Mobile SAM Launcher
+UAL0310  - Vindicator: Tech 3 Mobile Defense Unit
+BSLK004  - Uyanah: Lightning AA Tank
+SRA0201  - Blade Raven: Recon Plane
+SRA4212  - Orlok: Ambush Fighter
+SAA0313  - Helios: Penetration Fighter
+SEA0310  - Nark: Tech 3 Decoy Plane
+SEA0313  - Tomcat: Penetration Fighter
+SRA0313  - Twilight Patron: Penetration Fighter
+SSA0313  - Ialosaare: Penetration Fighter
+SSA0314  - Sinnaino: Penetrator Bomber
+VEB2302  - Flayer II: T4 SAM Launcher
+BSA0310  - Missile gunship
+
+Extractors
+UEB1302  - Advanced Mass Extractor UEF
+UAB1302  - Advanced Mass Extractor Aeon
+URB1302  - Advanced Mass Extractor Cybran
+UEB3106  - Mass Storage
+SRB4313  - Nightshade: Cloakable Stealth Field Generator
+SEB1312  - Mass Pump 3E: Engineering Mass Extractor
+SRB1312  - Tech 3 Cloakable Mass Extractor
+SAB1312  - Tech 3 Shielded Mass Extractor
+XSB1312  - Hyalatoh: Armored Mass Extractor
+
+dynamic gameplay
+--SSL0324  - Yenesel: Tech 3 Mobile Sensor Array
+SEB3404  - Panopticon: Experimental Sensor Array
+SRB4402  - Darkness: Experimental Omni Disrupting Facility
+BSL0005  - Hala Othuum: Tech 3 Elite Siege Tank
+BSB2402  - Haasioz-Iya: Seraphim Quantum Rift Archway
+
+Economy
+BEB1202  - HCPP  - X2000: Tech 2 Improved Hydrocarbon Plant
+BEB1302  - HCPP  - X3000: Tech 3 Improved Hydrocarbon Plant
+BAB1202  - Tech 2 Improved Hydrocarbon Plant
+BAB1302  - Tech 3 Improved Hydrocarbon Plant
+BRB1202  - Tech 2 Improved Hydrocarbon Plant
+BRB1302  - Tech 3 Improved Hydrocarbon Plant
+BSB1202  - Uya-atoh: Tech 2 Improved Hydrocarbon Plant
+BSB1302  - Uya-atoh: Tech 3 Improved Hydrocarbon Plant
+--UEB8765  - Resource Storage Facility
+--UAB8765  - Resource Storage Facility
+--URB8765  - Resource Storage Facility
+--XSB8765  - Hala-Vishual: Resource Storage Facility
+UEBSSG01 - SSD Hope: Experimental Squareshield
+UABSSG01 - Luminesc: Experimental Squareshield
+URBSSG01 - ED-X: Experimental Squareshield
+XSBSSG01 - Thanatos: Experimental Squareshield
+--WSB0104  - Dehgarwof: Tech 3 Engineering Station
+--WAB0201  - Saviour: Tech 3 Engineering Station
+
+experimental overhaul
+--WRL0404  - Megaroach: Experimental Heavy Battle Roachbot (Brawler)
+UAL0402  - Overlord: Experimental Medium Assault Bot (Kleiner Collossi)
+UEL0402  - Rampage: Experimental Light Assault Mech
+WEL0401  - Littleman: Experimental Assault Artillery Platform (Artillery)
+WSL0404  - Yath-Yen: Experimental Light Mobile Artillery#SSA0001  - Reconstruction Drone
+SSL0403  - Iyadesu: Experimental Reconstruction Engineer
+--SSA0306  - Solaris: Tech 3 Heavy Air Transport
+
+more shit
+BSB4205  - Au-iya: Restoration field generator
+BAB2308  - Purifier: Advanced Tactical Missile Launcher
+BAB4307  - Purger: Advanced Tactical Missile Defense
+BAL0310  - Wraith: Tech 3 Heavy Hover Tank
+UES0206  - Barnacle: UEF Naval Mine
+WEB4301  - Protector: Beam-based Tac Missile Defense
+WEB0404  - Turtle: Naval Defense Firestation
+SRB5383  - The Lost: Tech 3 Factory Stealth Toggle Node
+SRB2221  - Whisper: Proximity Mine
+SRL0319  - House: Field Engineer
+SSL0321  - Ythhu: Mobile Strategic Missile Defense
+SES0319  - Patch Class: Field Engineering Ship
+UAB2108  - Serpentine: Tactical Missile Launcher
+UAB4201  - Volcano: Tactical Missile Defense
+UEB4201  - Buzzkill: Tactical Missile Defense
+URB4203  - Twilight: Stealth Field Generator
