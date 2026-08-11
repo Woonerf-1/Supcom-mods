@@ -1,0 +1,146 @@
+UnitBlueprint {
+
+    Adjacency = 'HydrocarbonAdjacencyBuffs',
+	
+    Audio = {
+        Destroyed   = Sound { Bank = 'UELDestroy', Cue = 'UEB_Destroy_Huge', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection = Sound { Bank = 'Interface', Cue = 'UEF_Select_Resource', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+	
+    BuildIconSortPriority = 80,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER2ENGINEER',
+        'BUILTBYTIER3ENGINEER',
+        'BUILTBYTIER2COMMANDER',
+		'BUILTBYTIER3COMMANDER',
+        'UEF',
+        'STRUCTURE',
+        'ECONOMIC',
+        'TECH2',
+        'ENERGYPRODUCTION',
+        'HYDROCARBON',
+        'SIZE12',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+		'SHOWQUEUE',
+        'SORTECONOMY',
+    },
+	
+    CollisionOffsetY = 0,
+	
+    Defense = {
+        ArmorType = 'Structure',
+        EconomyThreatLevel = 113,
+        Health = 3800,
+        MaxHealth = 3800,
+        RegenRate = 1,
+    },
+	
+    Description = '<LOC beb1202_desc>Improved Hydrocarbon Plant',
+	
+    Display = {
+	
+		Abilities = {
+            '<LOC ability_upgradable>Upgradeable',
+			'<LOC ability_deathaoe>Volatile',
+        },
+		
+        AnimationOpen = '/units/UEB1102/ueb1102_Aopen.sca',
+
+        Mesh = { IconFadeInZoom = 130, LODs = { { LODCutoff = 300, ShaderName = 'Unit' } } },
+
+        UniformScale = 0.5,
+    },
+	
+    Economy = {
+		
+        BuildCostEnergy = 21000,
+        BuildCostMass = 1750,
+        BuildTime = 2000,
+		
+        BuildRate = 15,
+		
+		BuildableCategory = {'beb1302'},
+		
+        ProductionPerSecondEnergy = 875,
+		
+		StorageEnergy = 200,
+    },
+	
+    Footprint = {
+        SizeX = 3,
+        SizeZ = 3,
+    },
+	
+    General = {
+        CapCost = 6,
+        CommandCaps = {
+			RULEUCC_Pause = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'UEF',
+        Icon = 'land',
+        SelectionPriority = 5,
+        UnitName = '<LOC beb1202_name>HCPP - X2000',
+
+		UpgradesFrom = 'ueb1102',
+		UpgradesFromBase = 'ueb1102',		
+        UpgradesTo = 'beb1302',
+    },
+	
+    Interface = {
+        HelpText = 'Improved Hydrocarbon Power Plant',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 1.2,
+    LifeBarSize = 3,
+	
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+            LAYER_Seabed = true,
+        },
+        BuildRestriction = 'RULEUBR_OnHydrocarbonDeposit',
+        DragCoefficient = 0.2,
+        FlattenSkirt = true,
+        MaxSteerForce = 0,
+        MeshExtentsX = 3.25,
+        MeshExtentsY = 1.5,
+        MeshExtentsZ = 3.25,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_None',
+        SkirtOffsetX = -1.5,
+        SkirtOffsetZ = -1.5,
+        SkirtSizeX = 6,
+        SkirtSizeZ = 6,
+        TurnRate = 0,
+    },
+	
+    SelectionSizeX = 1.9,
+    SelectionSizeZ = 1.9,
+    SelectionThickness = 0.36,
+	
+    SizeX = 2.5,
+    SizeY = 1.3,
+    SizeZ = 2.5,
+	
+    StrategicIconName = 'icon_structure2_energy',
+    StrategicIconSortPriority = 250,
+	
+	Weapon = {
+        {
+            Damage = 1500,
+            DamageFriendly = true,
+            DamageRadius = 5,
+            DamageType = 'Normal',
+            DisplayName = 'Death Weapon',
+            DummyWeapon = true,
+            Label = 'DeathWeapon',
+            WeaponCategory = 'Death',
+        },
+    },
+}
