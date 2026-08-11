@@ -1,0 +1,168 @@
+UnitBlueprint {
+
+    Abilities = {
+        TargetLocation = { Active = true, bitmapId = 'skry-target', helpText = 'scry_target', preferredSlot = 12, script = 'TargetLocation' },
+    },
+    
+    Audio = {
+        DeathExplosion  = Sound { Bank = 'UALDestroy', Cue = 'UAB_Destroy_Lrg_PreDestroy', LodCutoff = 'UnitMove_LodCutoff' },
+        Destroyed       = Sound { Bank = 'UALDestroy', Cue = 'UAB_Destroy_Huge', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection     = Sound { Bank = 'Interface', Cue = 'Aeon_Select_Radar', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+    
+    BuildIconSortPriority = 200,
+    
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3ENGINEER',
+        'BUILTBYTIER3COMMANDER',
+        'AEON',
+        'INTELLIGENCE',
+        'STRUCTURE',
+        'TECH3',
+        'SIZE12',
+        'OPTICS',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'ABILITYBUTTON',
+        'SORTINTEL',
+    },
+    
+    CollisionOffsetY = -0.25,
+    
+    Defense = {
+        ArmorType = 'Structure',
+
+        Health = 1200,
+        MaxHealth = 1200,
+        RegenRate = 2,
+
+        EconomyThreatLevel = 400,        
+    },
+    
+    Description = '<LOC xab3301_desc>Quantum Optics Facility',
+    
+    Display = {
+        DamageEffects = {
+            { Bone = 0, OffsetX = 0, OffsetY = 2.75, OffsetZ = 0 },
+            { Bone = 0, OffsetX = 0.5, OffsetY = 0.25, OffsetZ = 0 },
+            { Bone = 0, OffsetX = -0.5, OffsetY = 0.25, OffsetZ = 0 },
+            { Bone = 0, OffsetX = 0, OffsetY = 0.25, OffsetZ = 0.5 },
+            { Bone = 0, OffsetX = 0, OffsetY = 0.25, OffsetZ = -0.5 },
+        },
+        
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                { LODCutoff = 100, ShaderName = 'Aeon' },
+                { AlbedoName = 'xab3301_lod1_albedo.dds', LODCutoff = 215, ShaderName = 'Aeon', SpecularName = 'xab3301_lod1_specteam.dds' },
+            },
+        },
+        
+        Tarmacs = {
+            {
+                Albedo = 'Tarmacs/Tar8x_aeon_01_albedo',
+                DeathLifetime = 300,
+                FadeOut = 150,
+                Length = 12,
+                Normal = 'Tarmacs/Tar8x_aeon_01_normals',
+                Orientations = {0},
+                RemoveWhenDead = true,
+                Width = 12,
+            },
+        },
+        
+        UniformScale = 0.07,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 51000,
+        BuildCostMass = 3000,
+        BuildTime = 3000,
+
+        MaintenanceConsumptionPerSecondEnergy = 4000,
+        PassiveEnergyDrain = 1000,
+
+        RebuildBonusIds = {'xab3301'},
+        
+    },
+	
+    Footprint = {
+        SizeX = 3,
+        SizeZ = 3,
+    },
+	
+    General = {
+
+        FactionName = 'Aeon',
+        Icon = 'land',
+
+        --OrderOverrides = { RULEUTC_IntelToggle = { bitmapId = 'skry-toggle', helpText = 'toggle_scrying' } },
+
+        SelectionPriority = 5,
+
+        ToggleCaps = { RULEUTC_IntelToggle = true },
+
+        UnitName = '<LOC xab3301_name>Eye of Rhianne',
+    },
+    
+    Intel = {
+
+                Viewtime = -1,      -- disable the auto shutdown
+                ReactivateTime = 0, -- no cooldown
+
+        RemoteViewingEnergyDrain    = 10000,    -- the per-use cost of this feature (rate is this divided by the Reactivate time)
+        RemoteViewingRadius         = 12,		-- the start size of the remote viewing radius
+		RemoteViewingRadiusFinal    = 40,	    -- the final radius of the scry (controls the grow/shrink rate) 
+
+        VisionRadius = 12,  -- this is just the vision range of the tower itself, not much
+    },
+    
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.9,
+    LifeBarSize = 1.25,
+    
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+        },
+        DragCoefficient = 0.2,
+        FlattenSkirt = true,
+        MaxSteerForce = 0,
+        MeshExtentsX = 1.5,
+        MeshExtentsY = 3.1,
+        MeshExtentsZ = 1.5,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_None',
+        SkirtOffsetX = -1.5,
+        SkirtOffsetZ = -1.5,
+        SkirtSizeX = 6,
+        SkirtSizeZ = 6,
+        TurnRate = 0,
+    },
+    
+    SelectionCenterOffsetX = 0.05,
+    SelectionCenterOffsetZ = 0,
+    SelectionSizeX = 1.5,
+    SelectionSizeZ = 1.5,
+    SelectionThickness = 0.45,
+    
+    SizeX = 2,
+    SizeY = 5,
+    SizeZ = 2,
+    
+    StrategicIconName = 'icon_structure3_intel',
+    StrategicIconSortPriority = 225,
+    
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.3,
+        HealthMult = 0.3,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+        },
+    },
+}

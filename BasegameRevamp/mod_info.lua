@@ -1,17 +1,17 @@
 -- ============================================================================
 -- Basegame Bugfixes
 --
--- Ordner:   C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\BasegameBugfixes\
--- VFS-Pfad: /mods/basegamebugfixes/
--- Doku:     doc.claude\mods\BasegameBugfixes.md
+-- Ordner:   C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\BasegameRevamp\
+-- VFS-Pfad: /mods/BasegameRevamp/
+-- Doku:     doc.claude\mods\BasegameRevamp.md
 --
 -- Vorlage - noch ohne Inhalt.
 -- ============================================================================
 
-name        = "Basegame Bugfixes"
+name        = "Basegame Revamp"
 version     = 1.0
 description = "Behebt Fehler in den Basiseinheiten des Spiels."
-author      = "Paul"
+author      = "Colin"
 copyright   = "none"
 
 -- PFLICHT. Ohne diese Angabe waere die uid der volle Dateipfad

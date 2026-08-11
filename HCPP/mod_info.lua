@@ -1,9 +1,9 @@
 -- ============================================================================
--- PlayTest
+-- HCPP
 --
--- Ordner:   C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\PlayTest\
--- VFS-Pfad: /mods/playtest/
--- Doku:     doc.claude\mods\PlayTest.md
+-- Ordner:   C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\HCPP\
+-- VFS-Pfad: /mods/HCPP/
+-- Doku:     doc.claude\mods\HCPP.md
 --
 -- Vorlage - noch ohne Inhalt.
 -- ============================================================================
