@@ -1,0 +1,195 @@
+UnitBlueprint {
+
+    Audio = {
+        DeathExplosion  = Sound { Bank = 'XSL_Destroy', Cue = 'XSB_Destroy_Lrg_PreDestroy', LodCutoff = 'UnitMove_LodCutoff' },
+        Destroyed       = Sound { Bank = 'XSL_Destroy', Cue = 'XSB_Destroy_Huge', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection     = Sound { Bank = 'SeraphimSelect', Cue = 'Seraphim_Select_Structure', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER4COMMANDER',
+        'SERAPHIM',
+        'STRUCTURE',
+        'CONSTRUCTION',
+        'FACTORY',
+        'RALLYPOINT',
+        'EXPERIMENTAL',
+		'ECONOMIC',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'SHOWQUEUE',
+        'SORTCONSTRUCTION',
+        'NONSUPREMACY',
+    },
+	
+    Defense = {
+        ArmorType = 'Normal',
+        EconomyThreatLevel = 900,
+        Health = 32500,
+        MaxHealth = 32500,
+        RegenRate = 30,
+    },
+	
+    Description = '<LOC bsb2402_desc>Seraphim Quantum Rift Archway',
+	
+    Display = {
+	
+        AnimationDeath = {
+            {
+                Animation = '/mods/dynamic_gameplay/units/BSB2402/BSB2402_adeath.sca',
+                AnimationRateMax = 1,
+                AnimationRateMin = 1,
+                Weight = 100,
+            },
+        },
+		
+        BuildAttachBone = 'Attachpoint',
+		
+        DamageEffects = {
+            { Bone = 0,OffsetX = 1,OffsetY = 2.5,OffsetZ = 0.25},
+            { Bone = 0,OffsetX = -1,OffsetY = 2.5,OffsetZ = 0.25},
+        },
+		
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 300,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    Scrolling = true,
+                    ShaderName = 'Seraphim',
+                },
+            },
+        },
+
+        UniformScale = 0.015,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 4387500,
+        BuildCostMass = 224775,
+        BuildTime = 111750,
+		
+        BuildRate = 80,
+		
+        BuildableCategory = { 'BUILTBYRIFTGATE SERAPHIM' },
+		
+		InitialRallyZ = -10,
+		
+        RebuildBonusIds = { 'bsb2402' },
+    },
+	
+    Footprint = {
+        SizeX = 9,
+        SizeZ = 9,
+    },
+	
+    General = {
+		CapCost = 15,
+        
+    	BuildBones = {
+            BuildAttachBone = 'Attachpoint',
+            BuildEffectBones = {
+                'FX_01',
+                'FX_02',
+                'FX_03',
+                'FX_04',
+                'FX_05',
+                'FX_06',
+                'FX_07',
+                'FX_08',
+                'FX_09',
+                'FX_10',
+                'FX_11',
+                'FX_12',
+                'FX_13',
+                'FX_14',
+            },
+        },
+        
+        CommandCaps = {
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_Pause = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        ConstructionBar = true,
+        FactionName = 'Seraphim',
+        Icon = 'land',
+        SelectionPriority = 5,        
+        UnitName = '<LOC bsb2402_name>Haasioz-Iya',
+    },
+	
+    Intel = {
+        VisionRadius = 12,
+    },
+	
+    Interface = {
+        HelpText = 'Seraphim Quantum Rift Archway',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 1.3,
+    LifeBarSize = 8,
+	
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+        },
+        DragCoefficient = 0.2,
+        FlattenSkirt = true,
+        MaxSteerForce = 0,
+        MeshExtentsX = 8,
+        MeshExtentsY = 3.2,
+        MeshExtentsZ = 5.2,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_None',
+		
+        OccupyRects = {
+
+            -- offsetX offsetZ  sizeX sizeZ
+            -3.5,
+            -0.5,
+            1,
+            2.5,
+
+            3.5,
+            -0.5,
+            1,
+            2.5,
+        },
+		
+        SkirtOffsetX = -0.5,
+        SkirtOffsetZ = -0.5,
+        SkirtSizeX = 10,
+        SkirtSizeZ = 10,
+        TurnRate = 0,
+    },
+	
+    SelectionSizeX = 6,
+    SelectionSizeZ = 5,
+    SelectionThickness = 0.1,
+	
+    SizeX = 8.0,
+    SizeY = 5.6,
+    SizeZ = 3.0,
+	
+    StrategicIconName = 'icon_factory4_land',
+    StrategicIconSortPriority = 207,
+	
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.1,
+        HealthMult = 0.9,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Water = true,
+        },
+    },
+}

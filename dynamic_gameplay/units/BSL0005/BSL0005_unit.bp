@@ -1,0 +1,426 @@
+UnitBlueprint {
+    AI = {
+		GuardReturnRadius = 35,
+        GuardScanRadius = 32,
+		TargetBones = {'Turret'},
+    },
+	
+    Audio = {
+        Destroyed   = Sound { Bank = 'XSL_Destroy', Cue = 'XSL_Destroy_Land_Lrg', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMove   = Sound { Bank = 'XSL', Cue = 'XSL0303_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection = Sound { Bank = 'SeraphimSelect', Cue = 'Seraphim_Select_Tank', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+	
+    Buffs = {
+        Regen = {
+            Level1 = 3,
+            Level2 = 6,
+            Level3 = 9,
+            Level4 = 12,
+            Level5 = 15,
+        },
+    },
+	
+    BuildIconSortPriority = 20,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYRIFTGATE',
+        'SERAPHIM',
+        'MOBILE',
+        'LAND',
+        'TECH3',
+		'AMPHIBIOUS',
+		'SUBMERSIBLE',
+        'DIRECTFIRE',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+    },
+	
+    Defense = {
+        ArmorType = 'Normal',
+        Health = 4000,
+        MaxHealth = 4000,
+        RegenRate = 3,
+        
+		SubThreatLevel = 10.5,
+        SurfaceThreatLevel = 40,
+    },
+	
+    Description = '<LOC bsl0005_desc>Elite Siege Tank',
+	
+    Display = {
+        Abilities = {
+			'Quantum Powered - dies if run out of power',
+            '<LOC ability_amphibious>Amphibious',
+            "<LOC ability_torpedo>Torpedoes",
+        },
+		
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 215,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    Scrolling = true,
+                    ShaderName = 'Seraphim',
+                },
+            },
+        },
+
+        UniformScale = 0.06,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 12000,
+        BuildCostMass = 5,
+        BuildTime = 1200,
+		
+        MaintenanceConsumptionPerSecondEnergy = 50,
+    },
+	
+    General = {
+		CapCost = 1,
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Seraphim',
+        Icon = 'amph',
+        UnitName = '<LOC bsl0005_name>Hala Othuum',
+    },
+	
+    Intel = {
+        VisionRadius = 32,
+        WaterVisionRadius = 24,
+    },
+	
+    Interface = {
+        HelpText = 'Elite Siege Tank',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.95,
+    LifeBarSize = 1.2,
+	
+    Physics = {
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+        },
+        DragCoefficient = 0.2,
+        MaxAcceleration = 1.25,
+        MaxBrake = 2.5,
+        MaxSpeed = 2.5,
+        MaxSpeedReverse = 2.5,
+        MaxSteerForce = 10,
+        MeshExtentsX = 1,
+        MeshExtentsY = 1.25,
+        MeshExtentsZ = 1,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_Amphibious',
+
+        StandUpright = false,
+        TurnRadius = 0.5,
+        TurnRate = 75,
+		WaterSpeedMultiplier = 1.2,		
+    },
+	
+    SelectionSizeX = 0.7,
+    SelectionSizeZ = 1.4,
+	
+    SelectionThickness = 0.3,
+	
+    SizeX = 1.0,
+    SizeY = 0.4,
+    SizeZ = 1.9,
+	
+    StrategicIconName = 'icon_seabed3_directfire',
+    StrategicIconSortPriority = 115,
+	
+    Transport = {
+        CanFireFromTransport = false,
+        TransportClass = 3,
+    },
+	
+    Veteran = {
+        Level1 = 0.1,
+        Level2 = 0.2,
+        Level3 = 0.3,
+        Level4 = 0.4,
+        Level5 = 1,
+    },
+	
+    Weapon = {
+        {
+            AboveWaterFireOnly = true,
+            AboveWaterTargetsOnly = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'XSL_Weapon', Cue = 'XSL0303_Bolter', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+			
+            Damage = 200,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Thau Cannon',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Land|Water|Seabed',
+                Seabed = 'Land|Water|Seabed',
+            },
+			
+            FiringTolerance = 1,
+			
+            Label = 'MainTurret',
+			
+            MaxRadius = 32,
+
+            MuzzleVelocity = 38,
+			
+            ProjectileId = '/projectiles/SDFTauCannon01/SDFTauCannon01_proj.bp',
+            ProjectileLifetime = 1,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Turret_Barrel_Recoil_Muzzle'},
+                    RackBone = 'Turret_Barrel_Recoil',
+                },
+            },
+
+            RackRecoilDistance = -1,
+
+            RangeCategory = 'UWRC_DirectFire',
+			
+            RateOfFire = 0.5,
+			
+            SlavedToBody = true,
+            SlavedToBodyArcRange = 125,
+			
+            TargetCheckInterval = 2.0,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'STRUCTURE DEFENSE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Turret_Barrel_Recoil_Muzzle',
+            TurretBonePitch = 'Turret',
+            TurretBoneYaw = 'Turret',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 15,
+            TurretPitchSpeed = 30,
+			
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 45,
+			
+            Turreted = true,
+        },
+        {
+            AboveWaterTargetsOnly = true,
+            AboveWaterTargetsOnly = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'XSL_Weapon', Cue = 'XSL0303_Cannon_Thau', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+			
+            Damage = 75,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Aire-au Bolter',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Land|Water|Seabed',
+                Seabed = 'Land|Water|Seabed',
+            },
+			
+            FiringTolerance = 0.5,
+			
+            HeadingArcCenter = 100,
+            HeadingArcRange = 145,
+			
+            Label = 'RightTurret',
+			
+            MaxRadius = 28,
+			
+            MuzzleSalvoDelay = 0.2,
+            MuzzleSalvoSize = 2,
+
+            MuzzleVelocity = 32,
+			
+            ProjectileId = '/projectiles/SDFAireauBolter02/SDFAireauBolter02_proj.bp',
+            ProjectileLifetime = 1.5,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Right_Turret_Barrel_Muzzle01'},
+                    RackBone = 'Right_Turret_Barrel',
+                },
+            },
+
+            RateOfFire = 1,
+			
+            TargetCheckInterval = 0.5,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'STRUCTURE DEFENSE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Right_Turret_Barrel_Muzzle01',
+            TurretBonePitch = 'Right_Turret',
+            TurretBoneYaw = 'Right_Turret',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 90,
+			
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 40,
+			
+            Turreted = true,
+        },
+        {
+            AboveWaterFireOnly = true,
+            AboveWaterTargetsOnly = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'XSL_Weapon', Cue = 'XSL0303_Cannon_Thau', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+			
+            Damage = 75,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Aire-au Bolter',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Land|Water|Seabed',
+                Seabed = 'Land|Water|Seabed',
+            },
+            FiringTolerance = 0.5,
+			
+            HeadingArcCenter = -100,
+            HeadingArcRange = 140,
+			
+            Label = 'LeftTurret',
+			
+            MaxRadius = 28,
+			
+            MuzzleSalvoDelay = 0.2,
+            MuzzleSalvoSize = 2,
+
+            MuzzleVelocity = 32,
+			
+            ProjectileId = '/projectiles/SDFAireauBolter02/SDFAireauBolter02_proj.bp',
+            ProjectileLifetime = 1,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Left_Turret_Barrel_Muzzle01'},
+                    RackBone = 'Left_Turret_Barrel',
+                },
+            },
+
+            RangeCategory = 'UWRC_DirectFire',
+			
+            RateOfFire = 1,		-- another 150 DPS
+			
+            TargetCheckInterval = 0.5,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'DEFENSE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Left_Turret_Barrel_Muzzle01',
+            TurretBonePitch = 'Left_Turret',
+            TurretBoneYaw = 'Left_Turret',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 90,
+			
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 40,
+			
+            Turreted = true,
+        },		
+		
+        {
+            Audio = {
+                Fire = Sound { Bank = 'XSL_Weapon', Cue = 'XSL0303_Torpedo_Launcher', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            
+            BallisticArc = 'RULEUBA_None',
+            CollideFriendly = false,
+			
+            Damage = 200,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Uall Cavitation Torpedo Launcher',
+			
+            FireTargetLayerCapsTable = {
+                Seabed = 'Seabed|Sub|Water',
+            },
+			
+            FiringTolerance = 2,
+			
+            Label = 'Torpedo01',
+			
+            MaxRadius = 44,
+
+            MuzzleVelocity = 2,
+			
+            ProjectileId = '/projectiles/SANUallCavitationTorpedo01/SANUallCavitationTorpedo01_proj.bp',
+            ProjectileLifetime = 7,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Torpedo_Muzzle'},
+                    RackBone = 'Torpedo_Muzzle',
+                },
+            },
+            
+            RackSalvoReloadTime = 4,    -- 4 second cycle = 75 DPS
+
+            RangeCategory = 'UWRC_AntiNavy',
+			
+            RateOfFire = 1,
+            TargetCheckInterval = 2,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'SUBMARINE',
+                'STRUCTURE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE, HOVER',
+        },
+    },
+}

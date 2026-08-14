@@ -1,0 +1,11 @@
+Description['mkt0409'] = "Unsatisfied with the performance of the original Citadel, max wanted this unit, because it *looked cooler*"
+Description['ual0402'] = "A small and annoying form of the Galactic Colossus a group of them was once reffered to as *die kleinen scheißer* by Mr. Mertens"
+Description['seb3404-sre'] = "<LOC Unit_Description_BrewLAN_T4B008_sre>Increases radar radius."
+Description['seb3404-sresre'] = "<LOC Unit_Description_BrewLAN_T4B008_sresre>Increases radar and omni radius."
+Description['seb3404-xbndl'] = "<LOC Unit_Description_BrewLAN_T4B008_xbndl>Reveals radar blips."
+Description['sel0324-sre'] = "Extends radar and omni range. Requires energy."
+Description['ual0310-ptsg'] = "Creates a protective Dome Shield around the Vindicator."
+
+Description['urs0304'] = "Wenn die Antibabypille nicht reicht..."
+Description['ual0402-cd'] = "Creates a Quantum Stasis Field around the Overlord. Immoblizes enemy units within its radius. High Energy Consumption.(~440m)"
+Description['srl0319-exlce3'] = "When applied the Field Engineer Dr. House will be able to build megalith eggs; at much slower speeds"
