@@ -147,7 +147,7 @@ UnitBlueprint {
         ProductionPerSecondMass = 2,
 		
         SacrificeEnergyMult = 10,
-        SacrificeMassMult = 2,
+        SacrificeMassMult = 2.89,
 		
         StorageEnergy = 3000,
         StorageMass = 200,
