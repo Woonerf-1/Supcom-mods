@@ -5,7 +5,7 @@ SRL0319  - House: Field Engineer
 URB4203  - Twilight: Stealth Field Generator
 BSB4205  - Au-iya: Restoration field generator
 	
-Torpedo rebalence
+Torpedo rebalence - nessisary?
 UEA0204  - Torpedo Bomber
 UAA0204  - Torpedo Bomber
 URA0204  - Torpedo Bomber
@@ -53,11 +53,11 @@ XRA0305  - Advanced Gunship (t3)
 
 
 dynamic gameplay
---SSL0324  - Yenesel: Tech 3 Mobile Sensor Array
-SEB3404  - Panopticon: Experimental Sensor Array
-SRB4402  - Darkness: Experimental Omni Disrupting Facility
-BSL0005  - Hala Othuum: Tech 3 Elite Siege Tank
-BSB2402  - Haasioz-Iya: Seraphim Quantum Rift Archway
+	--SSL0324  - Yenesel: Tech 3 Mobile Sensor Array
+	SEB3404  - Panopticon: Experimental Sensor Array
+	SRB4402  - Darkness: Experimental Omni Disrupting Facility
+	BSL0005  - Hala Othuum: Tech 3 Elite Siege Tank
+	BSB2402  - Haasioz-Iya: Seraphim Quantum Rift Archway
 
 
 more shit
@@ -102,7 +102,7 @@ experimental overhaul
 	MKT0409  - Acclamator: Low Altitude Assault Transport/carrier
 	UEL0401  - Fatboy: Experimental Heavy Mobile Artillery Platform (Support)
 	--SSA0306  - Solaris: Tech 3 Heavy Air Transport
-VEB2302  - Flayer II: T4 SAM Launcher
+	VEB2302  - Flayer II: T4 SAM Launcher
 
 Economy
 	BEB1202  - HCPP  - X2000: Tech 2 Improved Hydrocarbon Plant
