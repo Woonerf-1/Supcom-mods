@@ -3,7 +3,7 @@ UnitBlueprint {
         TargetBones = {'Blade03','Extension01','Extension04'},
     },
 	
-    Adjacency = 'T3PowerGeneratorAdjacencyBuffs',
+    Adjacency = 'HydrocarbonAdjacencyBuffs',
 	
     Audio = {
         Destroyed   = Sound { Bank = 'UALDestroy', Cue = 'UAB_Destroy_Land', LodCutoff = 'UnitMove_LodCutoff' },

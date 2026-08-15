@@ -4,7 +4,7 @@ UnitBlueprint {
         TargetBones = {'Blade03','Extension01','Extension04'},
     },
 	
-    Adjacency = 'T2PowerGeneratorAdjacencyBuffs',
+    Adjacency = 'HydrocarbonAdjacencyBuffs',
 	
     Audio = {
         Destroyed   = Sound { Bank = 'UALDestroy', Cue = 'UAB_Destroy_Land', LodCutoff = 'UnitMove_LodCutoff' },
@@ -39,7 +39,6 @@ UnitBlueprint {
         EconomyThreatLevel = 113,
         Health = 3800,
         MaxHealth = 3800,
-        RegenRate = 10,
     },
 	
     Description = '<LOC bab1202_desc>Improved Hydrocarbon Plant',
