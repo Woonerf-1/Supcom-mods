@@ -15,6 +15,12 @@ description = "Bee there Orr Bee A Rectangular Thyng - CMOT Dibbler"
 author      = "Colin"
 copyright   = "none"
 
+-- Mod-Bild im Mod-Manager. Der Wert wird unveraendert an Bitmap:SetTexture()
+-- gereicht (modmanager.lua Z. 1131 und 1365), ist also ein reiner VFS-Pfad -
+-- keine Datei im Mod noetig. Verwendet wird das Bausymbol der UEF-Fassung.
+-- Darstellung: 36x36 in der Liste, 70x70 in der Detailansicht.
+icon = "/textures/ui/common/icons/units/UEBSSG01_icon.dds"
+
 -- PFLICHT. Ohne diese Angabe waere die uid der volle Dateipfad
 -- (mods.lua, LoadModInfo, Zeile 239) - dann aendert sie sich beim Umbenennen
 -- des Ordners und der Mod ist nicht referenzierbar.

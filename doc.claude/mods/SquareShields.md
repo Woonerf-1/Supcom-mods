@@ -141,6 +141,12 @@ Rueckfallmechanismus und der Punkt ist erledigt. Zeigt er sie nicht, ist der Pfa
 |---|---|---|
 | `uid` | `SquareShieldThyngVersion01` | `D5F66739-FD09-4166-8D73-A5D496772B7C` |
 | `conflicts` | nicht gesetzt | `{ "fffffffe-6e98-4864-9599-4133236eea7a" }` |
+| `icon` | nicht gesetzt | `/textures/ui/common/icons/units/UEBSSG01_icon.dds` |
+
+Das Mod-Bild ist das Bausymbol der UEF-Fassung. Der Wert geht unveraendert an
+`Bitmap:SetTexture()` (`gamedata.entpackt\lua\lua\ui\dialogs\modmanager.lua` Z. 1131 und
+1365), ist also ein reiner VFS-Pfad - **es liegt keine Bilddatei im Mod**. Dargestellt mit
+36x36 in der Liste, 70x70 in der Detailansicht.
 
 **`requiresNames` wurde bewusst nicht gesetzt.** Die Tabelle ordnet ausschliesslich uids
 aus `requires` einen Klartextnamen zu, damit die Meldung ueber einen **fehlenden** Mod
@@ -306,6 +312,9 @@ Log-Praefix dieses Mods: noch keiner vergeben (bisher kein eigener Lua-Code).
 - [ ] **Bricht das Entfernen von `UpgradesTo` etwas?** `ToggleCaps` und `OrderOverrides`
       bleiben unveraendert; ein leeres `BuildableCategory = { }` ist **nicht belegt** als
       gueltiger Wert - falls es Warnungen gibt, das Feld ganz streichen.
+- [ ] **Wird das Mod-Bild angezeigt?** `icon` zeigt auf ein `.dds` aus `textures.scd`
+      statt auf eine Datei im Mod. Aus `modmanager.lua` abgeleitet, **nicht im Spiel
+      gesehen**.
 - [ ] **Tarmac- und Wrackpfade** liegen in gepackten Vanilla-Archiven und sind hier nicht
       einsehbar. Unveraendert uebernommen, im Spiel zu bestaetigen.
 
