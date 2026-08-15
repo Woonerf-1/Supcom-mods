@@ -118,9 +118,9 @@ UnitBlueprint {
 		
         BuildRate = 30,
 		
-        BuildableCategory = {'urbssg02'},
+        BuildableCategory = { },
 		
-        RebuildBonusIds = {'urbssg01','urbssg02'},
+        RebuildBonusIds = {'urbssg01'},
     },
 	
     Footprint = {
@@ -146,8 +146,6 @@ UnitBlueprint {
         ToggleCaps = { RULEUTC_ShieldToggle = true },
 
         UnitName = '<LOC urbssg01_name>ED-X',
-
-        UpgradesTo = 'urbssg02',
     },
 
     Interface = {

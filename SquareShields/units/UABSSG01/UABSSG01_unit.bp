@@ -127,9 +127,9 @@ UnitBlueprint {
 		
         BuildRate = 30,
 		
-        BuildableCategory = { 'uabssg02' },
+        BuildableCategory = { },
 		
-        RebuildBonusIds = {'uabssg01','uabssg02'},
+        RebuildBonusIds = {'uabssg01'},
     },
 	
     Footprint = {
@@ -154,8 +154,6 @@ UnitBlueprint {
         ToggleCaps = { RULEUTC_ShieldToggle = true },
 
         UnitName = '<LOC uabssg01_name>Luminesc',
-
-        UpgradesTo = 'uabssg02',
     },
 
     Interface = {

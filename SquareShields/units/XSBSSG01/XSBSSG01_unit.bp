@@ -122,9 +122,9 @@ UnitBlueprint {
 		
         BuildRate = 30,
 		
-        BuildableCategory = {'xsbssg02'},
+        BuildableCategory = { },
 		
-        RebuildBonusIds = {'xsbssg01','xsbssg02'},
+        RebuildBonusIds = {'xsbssg01'},
     },
 	
     Footprint = {
@@ -149,8 +149,6 @@ UnitBlueprint {
         ToggleCaps = {RULEUTC_ShieldToggle = true},
 
         UnitName = '<LOC xsbssg01_name>Thanatos',
-
-        UpgradesTo = 'xsbssg02',
     },
 
     Interface = {
