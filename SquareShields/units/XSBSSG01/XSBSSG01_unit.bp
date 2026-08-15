@@ -58,7 +58,7 @@ UnitBlueprint {
         },
         AnimationDeath = {
             {
-                Animation = '/units/XSBSSG01/XSBSSG01_ADeath1.sca',
+                Animation = '/mods/squareshields/units/XSBSSG01/XSBSSG01_ADeath1.sca',
                 AnimationRateMax = 1.5,
                 AnimationRateMin = 0.5,
                 Weight = 100,
