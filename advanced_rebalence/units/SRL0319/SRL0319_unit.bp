@@ -1,0 +1,361 @@
+UnitBlueprint {
+
+    AI = {
+        GuardScanRadius = 22,
+        TargetBones = {'Turret01_Barrel'},
+    },
+
+    Audio = {
+        StartMove = Sound { Bank = 'URL', Cue = 'URL0208_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection = Sound { Bank = 'Interface', Cue = 'Cybran_Select_Vehicle', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+	
+    Buffs = {
+        Regen = {
+            Level1 = 3,
+            Level2 = 6,
+            Level3 = 9,
+            Level4 = 12,
+            Level5 = 15,
+        },
+    },
+	
+    BuildIconSortPriority = 11,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYLANDTIER3FACTORY',
+        'CYBRAN',
+        'MOBILE',
+        'LAND',
+        'TECH3',
+        'CONSTRUCTION',
+        'ENGINEER',
+        'REPAIR',
+        'RECLAIM',
+        'FIELDENGINEER',
+        'CAPTURE',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'PATROLHELPER',
+        'SHOWQUEUE',
+        'OVERLAYOMNI',
+        'OVERLAYRADAR',
+        'OVERLAYCOUNTERINTEL',
+        'OVERLAYDIRECTFIRE',
+        'OVERLAYMISC',
+    },
+	
+    CollisionOffsetY = -0.0,
+	
+    Defense = {
+        ArmorType = 'Normal',
+
+        Health = 1380,
+        MaxHealth = 1380,
+        RegenRate = 3,
+
+        EconomyThreatLevel = 93,
+        SurfaceThreatLevel = 5,
+    },
+	
+    Description = '<LOC uel0209_desc>Field Engineer',
+	
+    Display = {
+        Abilities = {
+            '<LOC ability_amphibious>Amphibious',
+            '<LOC ability_engineeringsuite>Engineering Suite',
+            '<LOC ability_personalstealth>Personal Stealth',
+            '<LOC ability_radar>Radar',
+            '<LOC ability_cloak>Cloaking',
+        },
+		
+        AnimationWater = '/units/URL0208/URL0208_Awheels.sca',
+		
+        IdleEffects = {
+            Water = { Effects = { { Bones = {'BRL0209'}, Scale = 0.7, Type = 'SeaIdle02' } } },
+        },
+		
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 120,
+                    Scrolling = true,
+                    ShaderName = 'Insect',
+                    AlbedoName = '/mods/BrewLAN_LOUD/units/SRL0209/SRL0209_albedo.dds',
+                    NormalsName = '/mods/BrewLAN_LOUD/units/SRL0209/SRL0209_normalsTS.dds',
+                    SpecularName = '/mods/BrewLAN_LOUD/units/SRL0209/SRL0209_specteam.dds',
+                },
+                {
+                    LODCutoff = 215,
+                    Scrolling = true,
+                    ShaderName = 'Insect',
+                    MeshName = '/units/URL0203/URL0203_lod1.scm',
+                    AlbedoName = '/units/URL0203/URL0203_lod1_albedo.dds',
+                    NormalsName = '/units/URL0203/URL0203_lod1_normalsTS.dds',
+                    SpecularName = '/units/URL0203/URL0203_lod1_specteam.dds',
+                },
+            },
+        },
+		
+        MovementEffects = {
+            Land = { Effects = { { Bones = {'Exhaust_Left','Exhaust_Right'}, Type = 'GroundKickup01' } } },
+            Water = { Effects = { { Bones = {'BRL0209'}, Scale = 0.5, Type = 'BackWake' } } },
+        },
+
+        UniformScale = 0.1175*1.15,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 6600,
+        BuildCostMass = 1200,
+        BuildRate = 17,
+        BuildTime = 4500,
+		
+        BuildableCategory = {
+            'BUILTBYTIER3ENGINEER DEFENSE CYBRAN',
+            'BUILTBYTIER3ENGINEER INDIRECTFIRE CYBRAN',
+            'BUILTBYTIER3ENGINEER NUKE SILO CYBRAN',
+            'BUILTBYTIER3FIELD CYBRAN',
+            'xrl0002',
+            'xrl0003',
+            'xrl0004',
+            'xrl0005',
+        },
+		
+        MaintenanceConsumptionPerSecondEnergy = 15,
+		MaxBuildDistance = 5.5,
+		
+        StorageEnergy = 300,
+        StorageMass = 20,
+    },
+	Enhancements = {
+
+                Slots = {
+            LCH = {
+                name = '<LOC _LCH>',
+                x = 50,
+                y = -10,
+            },
+
+        },
+        AdvancedEngineering = {
+		
+            BuildCostEnergy = 30000,
+            BuildCostMass = 750,
+            BuildTime = 1500,
+			
+            BuildableCategoryAdds = 'INSIGNIFICANTUNIT TECH3',
+			
+            Icon = 'exlce3',
+			
+            Name = '<LOC enhancements_0000>Tech 2 Engineering Suite',
+
+            ShowBones = { 'Left_Upgrade' },
+			
+            Slot = 'LCH',
+			
+            UpgradeUnitAmbientBones = { 'SRL0319' },
+			
+            UpgradeEffectBones = { 'Left_Turret', 'Left_Upgrade' },
+        },
+
+        AdvancedEngineeringRemove = {
+		
+            BuildCostEnergy = 1,
+            BuildCostMass = 1,
+            BuildTime = 0.1,
+			
+            HideBones = { 'Left_Upgrade' },
+			
+            Icon = 'exlce3',
+			
+            Name = '<LOC enhancements_0001>Remove Advanced Engineering Suite',
+			
+            Prerequisite = 'AdvancedEngineering',
+			
+            RemoveEnhancements = {
+                'AdvancedEngineering',
+                'AdvancedEngineeringRemove',
+            },
+			
+            Slot = 'LCH',
+        },
+    },
+    General = {
+        BuildBones = { BuildEffectBones = {'Buildpoint_Left','Buildpoint_Right','Buildpoint_Middle'}, PitchBone = 'Buildpoint_Left', YawBone = 'Buildpoint_Left' },
+
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Capture = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_Pause = true,
+            RULEUCC_Reclaim = true,
+            RULEUCC_Repair = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+
+        ConstructionBar = true,
+        FactionName = 'Cybran',
+        Icon = 'amph',
+
+        OrderOverrides = {
+            RULEUTC_StealthToggle = { bitmapId = 'stealth-personal', helpText = 'toggle_stealth_personal' },
+        },
+
+        SelectionPriority = 3,
+
+        ToggleCaps = { 
+        RULEUTC_StealthToggle = true,
+        RULEUTC_CloakToggle = true, },
+
+        UnitName = '<LOC srl0319_name>Dr. Greg House',
+    },
+	
+    Intel = {
+		FreeIntel = true,
+        Cloak = true,
+        RadarStealth = true,
+        SonarStealth = true,
+
+		OmniRadius = 8,
+        RadarRadius = 48,
+        VisionRadius = 24,
+		WaterVisionRadius = 24,
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.5,
+    LifeBarSize = 0.75,
+	
+    Physics = {
+        BackUpDistance = 4,
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+            LAYER_Water = true,
+        },
+        DragCoefficient = 0.2,
+        MaxAcceleration = 3,
+        MaxBrake = 3,
+        MaxSpeed = 3,
+        MaxSpeedReverse = 16,
+        MaxSteerForce = 15,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_AmphibiousFloating',
+        TurnRadius = 0,
+        TurnRate = 120,
+    },
+
+    SelectionSizeX = 0.65,
+    SelectionSizeZ = 0.65,
+    SelectionThickness = 0.4,
+	
+    SizeX = 0.75,
+    SizeY = 0.4,
+    SizeZ = 0.65,
+	
+    StrategicIconName = 'icon_surface3_engineer',
+    StrategicIconSortPriority = 95,
+	
+    Transport = {
+        TransportClass = 3,
+    },
+	
+    Veteran = {
+        Level1 = 5,
+        Level2 = 10,
+        Level3 = 15,
+        Level4 = 20,
+        Level5 = 25,
+    },
+	
+    Weapon = {
+        {
+            AboveWaterTargetsOnly = true,
+            Audio = {
+                Fire = Sound { Bank = 'URLWeapon', Cue = 'URL0203_Bolter', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+			
+            Damage = 50,
+			DamageRadius = 1,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Electron Bolter',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Land|Water|Seabed',
+                Water = 'Land|Water|Seabed',
+            },
+            FiringTolerance = 2,
+			
+            Label = 'Bolter',
+            LeadTarget = true,
+			
+            MaxRadius = 22,
+			
+            MuzzleSalvoDelay = 0.3,
+            MuzzleSalvoSize = 2,
+            MuzzleVelocity = 38,
+			
+            ProjectileId = '/projectiles/CDFBolter02/CDFBolter02_proj.bp',
+            ProjectileLifetime = 0.7,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Turret01_Muzzle','Turret02_Muzzle'},
+                    RackBone = 'Turret01_Barrel',
+                },
+            },
+			
+            RangeCategory = 'UWRC_DirectFire',
+			
+            RateOfFire = 0.5,	-- 50 DPS
+			
+            TargetCheckInterval = 1,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'DEFENSE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,WALL',
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Turret01_Muzzle',
+            TurretBonePitch = 'Turret01_Barrel',
+            TurretBoneYaw = 'Turret01_Barrel',
+            TurretDualManipulators = false,
+			
+            TurretPitch = 5,
+            TurretPitchRange = 40,
+            TurretPitchSpeed = 30,
+			
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 90,
+			
+            Turreted = true,
+        },
+    },
+	
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.3,
+        HealthMult = 0.9,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+        },
+    },
+}
