@@ -123,7 +123,34 @@ ergeben eine expansive KI, grosse eine, die erst ihre Wirtschaft ausbaut.
 
 ---
 
-## Ebene 3: die 64 BuilderGroups des Standardplans
+## Ebene 3: die BuilderGroups des Standardplans
+
+### KORREKTUR 2026-08-08: es sind sieben Listen, nicht eine
+
+Die thematische Liste unten fasst alle BuilderGroups zusammen, die im Standardplan
+vorkommen. **Sie stehen aber nicht alle in `template.Builders`.** Ein Basistemplate hat
+sieben getrennte Listen - belegt in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\AI\AIBaseTemplates\Loud_Main_Standard.lua`
+Z. 71-110 und ausgewertet in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\AI\aiaddbuildertable.lua`:
+
+| Feld | wird geladen wenn |
+|---|---|
+| `Builders` | immer |
+| `WaterMapBuilders` | die Karte hat einen Marker `Naval Area` oder `Naval Defensive Point` |
+| `LandOnlyBuilders` | sonst - in allen `Loud_Main_*` **leer** |
+| `StandardCommanderUpgrades` | nur an `MAIN` und nur ohne BlackOps-ACU |
+| `BOACUCommanderUpgrades` | nur an `MAIN` und nur mit `ScenarioInfo.BOACU_Installed` |
+| `LOUD_IS_Installed_Builders` | `ScenarioInfo.LOUD_IS_Installed` |
+| `LOUD_IS_Not_Installed_Builders` | sonst |
+
+**Folge fuer `Apply()`:** Naval Base, Torpedobomber, Amphibisch, alle Schild-Builder,
+die Storage-Builder und die ACU-Ausbaugruppen sind ueber `template.Builders`
+**nicht erreichbar**. Wer sie aendern will, muss die passende der sieben Listen anfassen.
+
+**Zweite Folge:** `GlobalBaseTemplate.lua` prueft beim Registrieren nur `Builders` auf
+gueltige Gruppennamen (Z. 33-37). Ein Tippfehler in `WaterMapBuilders` wird **nicht**
+gemeldet - die Gruppe fehlt dann still.
 
 Vollstaendige Liste aus `Loud_Main_Standard.lua`, thematisch geordnet.
 
@@ -1475,6 +1502,178 @@ fremden Zweig gelaufen** - dann fehlt Stufe 2. Steht in `..\TODO.md`.
 | 4 | beides |
 
 Zivilisten sind grundsaetzlich ausgenommen: `self.CheatingAI = false`.
+
+---
+
+## Ebene 5: Zeitsteuerung - Builder pro KI ein- und ausschalten
+
+**Gelesen 2026-08-08.** Antwort auf die Frage "kann die KI die ersten X Minuten nur
+Wirtschaft bauen?" - ja, aber nicht ueber `template.Builders`.
+
+### Warum das Basistemplate dafuer nicht reicht
+
+Die BuilderGroups werden **einmal** geladen, beim Anlegen der Basis
+(`aiaddbuildertable.lua`, `AddGlobalBaseTemplate`). Danach aendert sich die Liste nie
+wieder. Eine Gruppe aus `template.Builders` zu streichen schaltet sie **dauerhaft** ab,
+nicht auf Zeit.
+
+Dynamisch ist nur die **Prioritaet**. Die Zeitsteuerung muss also im Builder sitzen.
+
+### Die drei globalen Tabellen
+
+Alle drei liegen in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\system\`
+und funktionieren identisch: ein Konstruktor traegt in eine globale Tabelle ein, Schluessel
+ist der Name.
+
+| Konstruktor | Tabelle | Datei |
+|---|---|---|
+| `BaseBuilderTemplate{}` | `BaseBuilderTemplates` | `GlobalBaseTemplate.lua` |
+| `BuilderGroup{}` | `BuilderGroups` | `GlobalBuilderGroup.lua` |
+| `Builder{}` | `Builders` | `GlobalBuilderTemplate.lua` |
+
+**Wichtig:** `Builder{...}` gibt nur den `BuilderName` zurueck. Eine BuilderGroup enthaelt
+deshalb keine Builder-Tabellen, sondern **Namen**:
+
+```lua
+BuilderGroups['Factory Production Land'] = {
+    BuilderGroupName = 'Factory Production Land',
+    BuildersType     = 'FactoryBuilder',
+    [1] = 'Land Scout', [2] = 'T1 Bots', [3] = 'T1 Tanks', ...
+}
+```
+
+`Builders['T1 Tanks']` ist die eigentliche Definition - **global und von allen KIs
+geteilt.** Sie einfach zu aendern trifft auch LOUDs KI.
+
+### Der Hebel: `PriorityFunction` ist brainbewusst
+
+`Builder:Create` in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\sim\Builder.lua`
+Z. 209-224 legt **je Brain und je Manager ein eigenes Builder-Objekt** an und kopiert
+`Priority`, `PriorityFunction`, `BuilderName`; `BuilderConditions` werden tief kopiert.
+
+Die `PriorityFunction` selbst bleibt eine geteilte Funktion - aber sie bekommt den Brain
+als Parameter (`BuilderManager.lua` Z. ~215:
+`Builders[TaskName]:PriorityFunction( aiBrain, unit, self )`).
+
+**Daraus folgt das Muster:** die Funktion einmal global umhuellen und im Inneren nach der
+KI unterscheiden.
+
+```lua
+-- laeuft im simInit-Hook, nach Z. 357 (LOUDs Builder sind geladen)
+-- und vor der ersten Basisanlage
+local orig = Builders[name].PriorityFunction
+
+Builders[name].PriorityFunction = function(self, aiBrain, unit, manager)
+
+    -- nur fuer unsere KI und nur vor dem Zeitpunkt
+    if aiBrain.CustomAIKey == key and aiBrain.CycleTime < 900 then
+        return 10, true          -- vorlaeufig aus, bleibt in der Liste
+    end
+
+    if orig then
+        return orig(self, aiBrain, unit, manager)
+    end
+
+    return (self.OldPriority or self.Priority), true
+end
+```
+
+`aiBrain.CustomAIKey` setzt unser Hook auf `OnCreateAI`
+(`usermods\CustomAI\hook\lua\aibrain.lua`). Fuer jede fremde KI ist das Feld `nil`, die
+Bedingung faellt durch, LOUDs Original laeuft unveraendert.
+
+### `10, true` statt `0, false`
+
+`GetHighestBuilder` fuehrt nur Aufgaben mit `Priority > 100` aus. Beide Werte schalten
+also ab - aber:
+
+| Rueckgabe | Folge |
+|---|---|
+| `0, false` | **permanent**: `SetPriority` loescht `OldPriority` (`Builder.lua` Z. 253-256). Der Builder kommt nie zurueck. |
+| `10, true` | temporaer: `OldPriority` bleibt gespeichert, `ResetPriority` kann ihn wiederherstellen |
+
+Fuer ein Zeitfenster, nach dem der Builder wieder anlaufen soll, ist **nur `10, true`
+richtig.**
+
+LOUD nutzt beide Formen selbst, nachzulesen in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\AI\AIBuilders\Loud_AI_Factory_Land_Builders.lua`
+Z. 23-58: `AboveUnitCap85` gibt `10, true` (soll zurueckkommen), `First30Minutes` gibt
+`0, false` (soll nicht).
+
+### Zeitquelle
+
+`aiBrain.CycleTime` = Spielzeit in Sekunden (`BrainConditionsMonitor.lua` Z. 111).
+15 Minuten = `900`. LOUD selbst vergleicht gegen `1800` und `2700`.
+
+Alternative als `BuilderCondition`: `{ MIBC, 'GreaterThanGameTime', { 900 }}` - im
+Original verwendet bei `Land Scout` mit `180`. Das laeuft ueber den
+ConditionsMonitor und wird nur periodisch neu berechnet; die `PriorityFunction` ist
+bei jedem Auswahldurchlauf frisch.
+
+### Was gedrosselt werden sollte - und was nicht
+
+Die Truppenproduktion sitzt in den `Factory Production ...`-Gruppen. **Nicht** drosseln:
+
+| Gruppe | Grund |
+|---|---|
+| `Factory Production - Engineers` | ohne Ingenieure kein Wirtschaftsaufbau |
+| `Factory Production Air - Scouts` | ohne Aufklaerung keine Bedrohungsdaten, die halbe KI haengt daran |
+| `Land Formations - *`, `Air Formations - *` | das sind PlatoonFormBuilder - sie bilden Verbaende aus **vorhandenen** Einheiten. Drosseln laesst nur Einheiten im Pool liegen. |
+
+**Der Techtree braucht keinen Eingriff.** Fabrik- und Gebaeudeaufstieg laufen ueber
+`FactorySelfEnhanceThread` und `SelfUpgradeThread` in `aibehaviors.lua`, nicht ueber das
+Basistemplate. Faellt die Truppenproduktion weg, staut sich Masse und der Aufstieg
+beschleunigt sich von selbst.
+
+**Nebenwirkung beachten:** `MassToFactoryValues` steuert, ab welchem Masse-Einkommen die
+KI neue Fabriken und Basen anfaengt. Ohne Truppenproduktion wird diese Schwelle sehr
+frueh gerissen - die KI baut dann Fabriken, die nichts produzieren. Wer Wirtschaft
+will, sollte die Werte gleichzeitig anheben.
+
+---
+
+## OFFEN: die globalen Tabellen werden nach der ersten Basis geleert
+
+`aiaddbuildertable.lua`, letzte Zeilen von `AddGlobalBaseTemplate`:
+
+```lua
+-- get rid of the data sets that we build this from - they get reloaded if needed
+BaseBuilderTemplates = nil
+BuilderGroups = nil
+```
+
+`Builders` bleibt bestehen (wird zur Laufzeit von `Builder:GetBuilderData` gebraucht) -
+aber die beiden anderen sind danach `nil`.
+
+Das ist unvereinbar mit zwei Stellen, die sie **spaeter** lesen:
+
+- `aiarchetype-managerloader.lua` `GetBestBasePlan` Z. ~88 - laeuft fuer **jede** KI
+- `aibuildstructures.lua` Z. 456 `AINewExpansionBase` - laeuft bei **jedem** Aussenposten
+
+Und `_G` hat ein `__index`, das bei nicht vorhandenen Globalen einen Fehler wirft
+(`lua\system\config.lua` Z. ~150). Ein Lesezugriff nach dem Loeschen muesste also
+`access to nonexistent global variable` erzeugen.
+
+**Wo der angekuendigte Reload stattfindet, ist nicht gefunden.** Durchsucht wurden
+`loudutilities.lua`, `aibrain.lua`, `simInit.lua`, `aibuildstructures.lua` - keine
+Stelle setzt die Tabellen neu. Moeglich sind: eine neuere Fassung in `gamedata\`, die
+von `gamedata.entpackt\` abweicht; oder ein echter LOUD-Fehler, der nur bei mehreren
+KIs bzw. bei Expansionen auffaellt.
+
+**Der bisherige Testlauf beweist nichts:** `LOUD.log` von Testlauf 4 endet bei Zeile 965,
+unmittelbar nach `Selected` - es gab weder eine zweite KI noch einen Aussenposten.
+
+**Fuer unseren Mod folgt daraus zweierlei:**
+
+1. Alles, was in `BuilderGroups` oder `BaseBuilderTemplates` eingetragen werden soll,
+   muss im **simInit-Hook** passieren - vor der ersten Basisanlage. Das tut die Fabrik
+   bereits.
+2. Der naechste Testlauf sollte **zwei KIs auf einer Karte mit Expansionsmoeglichkeit**
+   fahren und den Log auf `nonexistent global variable` pruefen.
+
+Steht in `..\TODO.md`.
 
 ---
 

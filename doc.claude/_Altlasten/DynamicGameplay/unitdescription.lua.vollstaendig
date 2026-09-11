@@ -1,5 +1,18 @@
+-- Ausrangiert aus usermods\DynamicGameplay\hook\lua\ui\help\unitdescription.lua
+-- am 2026-08-15. Dies ist die vollstaendige Fassung, wie sie aus UEF_trans_men
+-- uebernommen wurde.
+--
+-- Nur die drei seb3404-Eintraege gehoeren zu DynamicGameplay; sie sind dort
+-- verblieben. Die uebrigen sieben betreffen Einheiten aus t4add
+-- (mkt0409, ual0402, ual0310, srl0319, urs0304, sel0324) und gehoeren beim
+-- Durchgang dieses Mods dorthin.
+--
+-- ACHTUNG bei der Uebernahme nach t4add: die Texte zu ual0402 und urs0304
+-- sind interne Scherze und erscheinen im Spiel in der Einheitenbeschreibung.
+-- Vor der Uebernahme entscheiden, ob sie so bleiben sollen.
+
 Description['mkt0409'] = "Unsatisfied with the performance of the original Citadel, max wanted this unit, because it *looked cooler*"
-Description['ual0402'] = "A small and annoying form of the Galactic Colossus a group of them was once reffered to as *die kleinen scheißer* by Mr. Mertens"
+Description['ual0402'] = "A small and annoying form of the Galactic Colossus a group of them was once reffered to as *die kleinen scheisser* by Mr. Mertens"
 Description['seb3404-sre'] = "<LOC Unit_Description_BrewLAN_T4B008_sre>Increases radar radius."
 Description['seb3404-sresre'] = "<LOC Unit_Description_BrewLAN_T4B008_sresre>Increases radar and omni radius."
 Description['seb3404-xbndl'] = "<LOC Unit_Description_BrewLAN_T4B008_xbndl>Reveals radar blips."

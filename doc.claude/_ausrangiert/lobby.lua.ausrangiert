@@ -1,0 +1,125 @@
+-- ============================================================================
+-- hook\lua\ui\lobby\lobby.lua
+--
+-- Datei: C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\CustomAI\hook\lua\ui\lobby\lobby.lua
+--
+-- ZWECK
+-- Fraktion und Farbe vorbelegen, wenn eine unserer KIs in einen Slot gesetzt
+-- wird. VORBELEGEN, nicht erzwingen: der Slot laesst sich danach von Hand
+-- umstellen wie jeder andere auch.
+--
+-- Anlass: im Spielkreis sind alle KIs weiss, weil ein Mitspieler farbenblind
+-- ist. Doppelte Farben sind dabei ausdruecklich gewollt.
+--
+-- ERSTER EINGRIFF IN DIE UI-SCHICHT. Bisher wurden nur simInit, aibrain und
+-- defaultunits gehookt. Die Lobby ist Netzwerkcode - der Host verteilt, alle
+-- Clients uebernehmen.
+--
+-- Doku: doc.claude\mods\CustomAI.md Abschnitt 4bb
+-- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- WARUM NICHT UEBER DIE PARAMETER
+--
+-- HostTryAddPlayer nimmt zwar requestedFaction und requestedColor entgegen,
+-- setzt die Fraktion aber unbedingt auf Zufall:
+--
+--   lobby.lua Z. 2329
+--   gameInfo.PlayerOptions[newSlot].Faction = table.getn(FactionData.Factions) + 1
+--
+-- Der Parameter wird also ignoriert. Es bleibt nur, hinterher nachzufassen.
+--
+-- WARUM NICHT DIREKT IN gameInfo
+--
+-- gameInfo ist eine DATEILOKALE Variable (lobby.lua Z. 34) und aus diesem Hook
+-- nicht erreichbar - Hookdateien teilen sich die Globalen, nicht die Locals.
+-- SetPlayerOption dagegen ist global (Z. 5241), schreibt in gameInfo, verteilt
+-- die Aenderung an alle Clients und ruft UpdateGame auf. Mit override = true
+-- entfaellt die Besitzpruefung.
+-- ----------------------------------------------------------------------------
+
+-- ----------------------------------------------------------------------------
+-- WELCHE KI WAS BEKOMMT
+--
+-- Fraktionsnummern sind die Reihenfolge in
+-- C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\factions.lua
+--   1 UEF   2 Aeon   3 Cybran   4 Seraphim
+--
+-- Farbe ist { r, g, b }. Das Farbrad arbeitet mit 3 bis 252
+-- (lobby.lua RandomColor Z. 915), deshalb 252 statt 255.
+--
+-- Die Werte stehen in AIDefinitions.lua - die Datei wird ohnehin von der Lobby
+-- gelesen und enthaelt nur Daten.
+-- ----------------------------------------------------------------------------
+local Vorbelegung = false
+
+local function VorbelegungHolen(key)
+
+    if not Vorbelegung then
+
+        Vorbelegung = {}
+
+        local ok, modul = pcall(import, '/mods/customai/lua/AI/AIDefinitions.lua')
+
+        if ok and modul and modul.Definitions then
+
+            for i, d in modul.Definitions do
+
+                if d.Key and (d.LobbyFraktion or d.LobbyFarbe) then
+
+                    Vorbelegung[d.Key] = {
+                        Fraktion = d.LobbyFraktion,
+                        Farbe    = d.LobbyFarbe,
+                    }
+
+                    LOG("CUSTOMAI Lobby: "..d.Key.." wird vorbelegt - Fraktion "
+                        ..tostring(d.LobbyFraktion))
+                end
+            end
+        else
+            WARN("CUSTOMAI Lobby: AIDefinitions.lua nicht ladbar - keine Vorbelegung")
+        end
+    end
+
+    return Vorbelegung[key]
+end
+
+local altHostTryAddPlayer = HostTryAddPlayer
+
+function HostTryAddPlayer( senderID, slot, requestedPlayerName, human, aiPersonality,
+                           requestedColor, requestedFaction, requestedTeam )
+
+    altHostTryAddPlayer( senderID, slot, requestedPlayerName, human, aiPersonality,
+                         requestedColor, requestedFaction, requestedTeam )
+
+    if human or not aiPersonality then
+        return
+    end
+
+    -- Bei slot = -1 sucht das Original selbst einen freien Platz und teilt ihn
+    -- nicht mit. gameInfo ist von hier aus nicht lesbar, also laesst sich der
+    -- Slot nicht ermitteln - dieser Fall bleibt unbehandelt. Aus der
+    -- Slot-Auswahl (lobby.lua Z. 454) kommt immer eine echte Nummer.
+    if not slot or slot < 1 then
+        return
+    end
+
+    local v = VorbelegungHolen(aiPersonality)
+
+    if not v then
+        return
+    end
+
+    if v.Fraktion then
+        SetPlayerOption( slot, 'Faction', v.Fraktion, true )
+    end
+
+    -- Bewusst OHNE IsColorFree-Pruefung: mehrere KIs sollen dieselbe Farbe
+    -- tragen duerfen.
+    if v.Farbe then
+        SetPlayerOption( slot, 'WheelColor', v.Farbe, true )
+    end
+
+    LOG("CUSTOMAI Lobby: Slot "..slot.." mit "..aiPersonality
+        .." vorbelegt - Fraktion "..tostring(v.Fraktion))
+end

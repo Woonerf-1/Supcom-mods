@@ -599,6 +599,320 @@ Tippfehler in `Builders` meldet die Engine beim Registrieren:
 
 ---
 
+## 4bb. Registrierte KIs (Stand 2026-08-08)
+
+| Key | Lobbyname | Source | Customize |
+|---|---|---|---|
+| `customai_aeon_air` | `AI: LOUD Aeon Airforce` | `Loud_Main_Standard` | `AIs\NoRush.lua` |
+
+**Stand 2026-08-08: nur noch eine KI.** Die drei Testeintraege `customai_standard`,
+`customai_small` und `customai_smaller` sind entfallen - sie hatten ihren Zweck erfuellt
+(Beleg, dass `Source` umschaltbar ist und mehrere KIs gleichzeitig laufen, Testlauf 5).
+
+Der Phasenplan, der Kraftwerksplan, die Builder-Kopien und die SCU-Ausrichtung bleiben
+als **Grundlage** fuer alle weiteren KIs erhalten - `Phasenplan()` ist eine Funktion in
+`AIDefinitions.lua` und kann von jeder weiteren Definition aufgerufen werden.
+
+### Die NoRush-Grundlage
+
+**Eine KI fuer alle vier Lobbyeinstellungen.**
+Vier Phasen, gesteuert ueber Zeitsperren auf einzelnen Buildern - **nicht** ueber
+`template.Builders`. Wie das funktioniert, steht in
+`CustomAI_Stellschrauben.md` Ebene 5.
+
+| Phase | ab | Inhalt |
+|---|---|---|
+| 1 | 0 % | Wirtschaft: Extraktoren, Kraftwerke, Ingenieure, Techaufstieg. **Nur die eine Startfabrik des ACU.** |
+| 2 | 35 % | stationaere Flugabwehr (alle `* AA *`-Builder) |
+| 3 | 55 % | minimale Bodenabwehr **und erst ab hier neue Fabriken** |
+| 4 | 75 % | mobile Truppen, **Aufklaerung**, Artillerie, Nukes, Optik, Experimentaleinheiten, T3/T4-PD |
+
+Prozent der **No-Rush-Dauer aus der Lobby**, nicht feste Sekunden:
+
+| `NoRushOption` | Phase 2 | Phase 3 | Phase 4 |
+|---|---|---|---|
+| `Off` | - | - | - (keine Sperre, spielt wie LOUD) |
+| `5` | 1:45 | 2:45 | 3:45 |
+| `10` | 3:30 | 5:30 | 7:30 |
+| `20` | 7:00 | 11:00 | 15:00 |
+
+### Fabriken: gesperrt bis Phase 3, danach dauerhaft hinter der Wirtschaft
+
+Acht Bauer sind betroffen - vier an `MAIN`, drei an Aussenposten, einer fuer Marine
+(`Loud_AI_Engineer_Factory_Builders.lua` ab Z. 106). Sie bekommen nicht nur eine
+Zeitsperre, sondern zusaetzlich einen **dauerhaften Prioritaetsdeckel von 745**.
+
+Das wirkt, weil `GetHighestBuilder` nur das **oberste Prioritaetsband** prueft
+(`CustomAI_Stellschrauben.md` Ebene 4c). Wer niedriger steht, kommt erst dran, wenn oben
+nichts uebrig ist. Die Werte an `MAIN`:
+
+| Prioritaet | Bauer |
+|---:|---|
+| 900 | T2 Power Template |
+| 851 | T3 Power Template |
+| 850 | Mass Extractor T1 - 250, Mass Fab T3 |
+| 846 / 845 | Mass Extractor T1 - 750 (BuildClose / Loop) |
+| 840 | Mass Extractor T2 - 750, T3 Power - Perimeter |
+| 800 | Mass Fab T2 |
+| 762 | Mass Energy Adjacency |
+| 761 | T1 Power Template |
+| 760 / 755 | Mass Extractor T1 - 1500 - Loop (+ Extra) |
+| 750 | Hydrocarbon, Mass Storage 600 |
+| **745** | **Fabriken (unser Deckel)** |
+| 740 | Mass Storage 1024 |
+| 700 | Energy Storage - HydroCarbon |
+
+Im Original stehen die Fabrikbauer bei **800/801** - also ueber T1-Kraftwerken, ueber den
+entfernteren Massextraktoren und ueber Hydrokarbon. Mit 745 rutschen sie unter alles
+davon; oberhalb bleiben nur die beiden Speicherbauten.
+
+**Der Deckel wirkt nur nach unten.** Gibt LOUDs Originalfunktion 0 (dauerhaft aus) oder
+10 (vorlaeufig aus) zurueck, bleibt das unberuehrt.
+
+#### Was ausgenommen bleibt
+
+| | Grund |
+|---|---|
+| `ACU Tasks - Start Game` | baut die **erste** Fabrik (`Loud_AI_ACU_Builders.lua` ab Z. 126). Ohne sie keine Ingenieure und kein Techaufstieg. |
+| `Quantum Gate` | produziert SCUs, also Ingenieure. Zaehlt hier als Wirtschaft. |
+| `Land/Air Factory Rebuild` | siehe Warnung unten - **die Ausnahme ist fragwuerdig** |
+
+#### ⚠️ KORREKTUR 2026-08-08: "Rebuild" heisst nicht "nur ersetzen"
+
+Die urspruengliche Begruendung fuer die Ausnahme lautete: Originalprioritaet 10, sie
+ersetzen nur zerstoerte Fabriken, der Deckel greift dort ohnehin nicht. **Das war falsch.**
+
+`Land Factory Rebuild` und `Air Factory Rebuild` haben zwar `Priority = 10`, aber auch
+`PriorityFunction = HaveZeroLandFactories` bzw. `HaveZeroAirFactories`
+(`Loud_AI_Engineer_Factory_Builders.lua` Z. 54-82):
+
+```lua
+local HaveZeroLandFactories = function( self, aiBrain )
+    if aiBrain.CycleTime > 60 then
+        if LOUDGETN( GetListOfUnits( aiBrain, FACTORY * LAND, false, true )) < 1 then
+            return 990, true
+        end
+    end
+    return 10, true
+end
+```
+
+**Sie sind kein Ersatzbauer, sondern eine Garantie: mindestens je eine Land- und eine
+Luftfabrik.** Nach 60 Sekunden feuern sie mit Prioritaet 990 und schlagen damit alles.
+
+#### Folge: die KI hat immer zwei Fabriken, nicht eine
+
+Auf einer Karte ueber 1024 greift `CDR Initial Large Map` (`MapGreaterThan 1024`) und der
+ACU baut eine **Luftfabrik**. Danach hat die KI null Landfabriken - und `Land Factory
+Rebuild` baut ab Sekunde 60 eine dazu. Auf kleineren Karten umgekehrt.
+
+Beobachtet in Testlauf 6 (Karte 2048): die NoRush-KI baute trotz aller Sperren eine
+zweite Fabrik.
+
+**Ob das ein Problem ist, haengt am Ziel.** Zwei Fabriken heissen: beide Linien steigen
+ab Minute 1 auf, die KI hat zu Phase 4 T3-Land **und** T3-Luft. Werden auch die
+Rebuild-Bauer gesperrt, startet die zweite Linie erst in Phase 3 bei T1.
+
+**Der Ingenieurnachschub haengt nicht daran.** Geprueft in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\units\units\UEB0102\UEB0102_unit.bp`
+Z. 94-99: die Luftfabrik hat `BUILTBYTIER1FACTORY UEF MOBILE LAND CONSTRUCTION` in ihrer
+`BuildableCategory`, kann also Ingenieure bauen. Eine KI mit nur einer Luftfabrik ist
+nicht handlungsunfaehig.
+
+Entscheidung offen, steht in `..\TODO.md`.
+
+### Quantentor und SCU
+
+| Bauer | Original | neu | wo |
+|---|---:|---:|---|
+| `Quantum Gate` (+ `- Small Base`, `- Expansion`) | 850 | **855** | Prioritaetsboden |
+| `Sub Commander - Extra` | 650 | **905** | Prioritaetsboden |
+| `Sub Commander` | 900 | 900 | unveraendert |
+| `BaseSettings.EngineerCount.SCU` | 12 | **20** | Templateaenderung |
+
+**Die Prioritaet war beim SCU nicht der Engpass.** `Sub Commander` liegt schon bei 900,
+wird aber von `BelowEngineerCapCheck('SCU')` begrenzt. Die Rechnung steht in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\editor\UnitCountBuildConditions.lua`
+Z. 699-743:
+
+```
+Grundwert    BaseSettings.EngineerCount.SCU
+mal Cheat    max( Grundwert, floor(Grundwert * CheatValue^2) )
+ab Limit 1000  + min( 1 + floor((Limit - 1000) / 300), 10 )
+```
+
+LOUDs 12 ergeben bei Einheitenlimit 5000 und Cheat 1 also **22** SCUs. Mit 20 werden
+daraus **30**. Oberhalb der Grenze baut nur noch `Sub Commander - Extra`, und der verlangt
+`GreaterThanEconTrendEfficiencyOverTime { 2, 60, 1.02, 1.04 }` - eine sehr gute
+Wirtschaft.
+
+Beide SCU-Bauer haben `BuilderType = {'Gate'}`, brauchen also das Quantentor. Deshalb der
+Boden auf dem Tor.
+
+### Das Ressourcen-Upgrade der SCU braucht keinen Eingriff
+
+`SCUSelfEnhanceThread` in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\AI\aibehaviors.lua`
+Z. 8162 laeuft je SCU und arbeitet eine Liste ab. `EngineerManager.lua` Z. 225 startet
+ihn, sobald eine SCU dem Manager zugeht.
+
+| Fraktionsindex | Reihenfolge |
+|---|---|
+| 1 UEF | **ResourceAllocation**, AdvancedCoolingUpgrade, Shield, ShieldGeneratorField |
+| 2 Aeon | **ResourceAllocation**, EngineeringFocusingModule, Shield, ShieldHeavy |
+| 3 Cybran | **ResourceAllocation**, Switchback, StealthGenerator |
+| 4 Seraphim | EngineeringThroughput, Shield, Teleporter |
+
+`ResourceAllocation` steht bei drei von vier Fraktionen an **erster** Stelle. Der Thread
+verlangt dafuer `MassTrend`/`EnergyTrend` ueber dem Bedarf sowie 450 Masse und 4500
+Energie im Lager.
+
+**Seraphim ist die Ausnahme - und das ist kein Fehler von LOUD.** Geprueft in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\units\units\XSL0301\XSL0301_unit.bp`:
+die Seraphim-SCU hat ueberhaupt kein `ResourceAllocation`. Verfuegbar sind nur
+`DamageStabilization`, `EngineeringThroughput`, `EnhancedSensors`, `Missile`,
+`Overcharge`, `Shield`, `Teleporter`.
+
+### Wie die Default-KI unberuehrt bleibt
+
+**Anforderung des Nutzers (2026-08-08): keine Aenderungen an der Default-KI.**
+Drei Stellen greifen global, alle drei sind ueber `aiBrain.CustomAIKey` abgesichert:
+
+| Stelle | Absicherung |
+|---|---|
+| `Builders[<n>].PriorityFunction` (umhuellt) | Weiche im Inneren; ohne Key laeuft LOUDs Original |
+| `hook\lua\defaultunits.lua` (`FactoryUnit`) | dito |
+| `template.BaseSettings` | betrifft nur unser tief kopiertes Template |
+
+#### Der Sonderfall, der beinahe durchgerutscht waere
+
+Builder **ohne** eigene `PriorityFunction`: ohne Umhuellung ueberspringt
+`BuilderManager.lua` Z. 316 den ganzen Zweig. Mit Umhuellung wird plotzlich eine Funktion
+aufgerufen, wo vorher keine war.
+
+Z. 327 lautet `if newPri and newPri != Priority` - **ein Rueckgabewert `false` laesst die
+Zuweisung aus.** Genau das liefert die Umhuellung jetzt fuer fremde KIs, wenn kein
+Original vorhanden ist. Damit ist sie ein echter Leerlauf.
+
+**`self.Priority` waere hier falsch gewesen.** Der Aufruf lautet
+`Builders[TaskName]:PriorityFunction( aiBrain, unit, self )` - `self` ist also die
+**globale** Tabelle `Builders[name]`, nicht das Builder-Objekt des Managers. `self.Priority`
+ist der urspruengliche, statische Wert. Haette der Manager die Aufgabe gerade
+voruebergehend auf 10 gesetzt (Z. 170), haetten wir sie ungefragt wiederhergestellt.
+
+Nebenbefund: aus demselben Grund ist `self.OldPriority` in einer `PriorityFunction`
+**immer nil** - `SetPriority` schreibt es auf das Objekt des Managers. LOUDs verbreitetes
+`return (self.OldPriority or self.Priority), true` ist damit effektiv nur
+`return self.Priority, true`.
+
+### Woher die Einstellung kommt
+
+Die Option ist definiert in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\ui\lobby\lobbyOptions.lua`
+Z. 91-118: `key = 'NoRushOption'`, Werte `'Off'`, `'5'`, `'10'`, `'20'` - Zeichenketten,
+Einheit Minuten. LOUDs eigene Lobbyerweiterung
+`gamedata.entpackt\lua\lua\LEMLobbyOptions.lua` fasst sie nicht an.
+
+Optionen dieser Tabelle landen unter ihrem `key` in `ScenarioInfo.Options`. **Belegt an
+zwei Nachbarn derselben Tabelle:**
+
+| Fundstelle | liest |
+|---|---|
+| `gamedata.entpackt\lua\lua\simInit.lua` Z. 208 | `ScenarioInfo.Options.TeamLock == 'locked'` |
+| `gamedata.entpackt\lua\lua\loudutilities.lua` Z. 5996 | `ScenarioInfo.Options.TeamSpawn == 'fixed'` |
+
+`TeamSpawn` und `TeamLock` stehen in `lobbyOptions.lua` unmittelbar **vor**
+`NoRushOption`, im selben Tabellenliteral.
+
+**Ungeprueft:** ob der Schluessel auch dann gesetzt ist, wenn die Option in der Lobby nie
+angefasst wurde. `NoRush.lua` faengt das ab - `tonumber(nil)` ergibt `nil`, daraus
+0 Sekunden, daraus keine Sperre. Der Fehlschlag geht also in die harmlose Richtung: die
+KI spielt wie LOUD, statt sich selbst lahmzulegen.
+
+**Die Auswertung passiert zur Laufzeit**, beim ersten Aufruf einer umhuellten
+`PriorityFunction` - nicht beim Laden. Damit stellt sich die Frage nach der
+Verfuegbarkeit von `ScenarioInfo.Options` im simInit-Hook gar nicht erst.
+
+Feste Sekunden bleiben moeglich: statt `Anteil` in einer Phase `Zeit` setzen. Damit
+liesse sich eine KI bauen, die die Lobbyoption ignoriert.
+
+**Phase 1 braucht keinen Eintrag fuer "Tech".** Fabrikaufstieg laeuft ueber
+`LaunchUpgradeThread` und `FactorySelfEnhanceThread`, gestartet von
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\sim\FactoryBuilderManager.lua`
+Z. 630-645, sobald die Bauschlange einer Fabrik leer ist. Genau das erzeugt Phase 1 -
+der Aufstieg beschleunigt sich also von selbst. **Mit der Fabriksperre ab 2026-08-08 ist
+das der einzige Weg, wie die KI in Phase 1 an Tech kommt**: die eine Startfabrik des ACU
+steigt auf, statt dass daneben neue T1-Fabriken entstehen.
+
+**Aufklaerung faellt in Phase 4** (Entscheidung 2026-08-08). Waehrend des
+No-Rush-Zeitraums gibt es nichts aufzuklaeren, und die Wirtschaft haengt nicht daran:
+die `BuilderConditions` in `Loud_AI_Engineer_Mass_Builders.lua` und
+`Loud_AI_Engineer_Energy_Builders.lua` sind ausschliesslich `EBC`-Lagerverhaeltnisse
+(`LessThanEconMassStorageRatio`, `LessThanEconEnergyStorageRatio`) - **keine**
+`LandRatio` oder `AirRatio`.
+
+**Der Preis:** die KI startet Phase 4 ohne jedes Feindwissen. Bedrohungskarte,
+Gegnerwahl (`loudutilities.lua` ab Z. 6270) und Angriffsplan bauen sich erst danach auf.
+Deshalb liegt Phase 4 bei 75 Prozent und nicht bei 100 - bei 20 Minuten No-Rush also
+fuenf Minuten vor der Freigabe. Ob das reicht, ist **ungeprueft**.
+
+Die Verbandsbildung (`Land Formations - Scouts`, `Air Formations - Scouts`) bleibt in
+allen Phasen frei - ohne gebaute Aufklaerer bildet sie ohnehin nichts.
+
+**Nebenwirkung, ungeprueft:** ohne Truppenproduktion staut sich Masse. `MassToFactoryValues`
+steuert, ab wann die KI neue Fabriken und Basen anfaengt - die Schwelle wird in Phase 1
+vermutlich sehr frueh gerissen. Ob daraus "viele Basen" oder "viele leere Fabriken" wird,
+zeigt erst der Testlauf.
+
+**Nur diese drei LOUD-Templates kommen als `Source` in Frage.** Die uebrigen elf in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\AI\AIBaseTemplates\`
+sind Aussenposten-, Marine- und Verteidigungsplaene. Beleg gegen `Loud_Naval_Large.lua`
+Z. 7: `Builders = {}` - der gesamte Inhalt steht in `WaterMapBuilders`, und es gibt keine
+`ACU Tasks - Start Game`-Gruppe. Als Startbasis gewaehlt haette die KI auf einer
+Landkarte eine leere Aufgabenliste.
+
+### Was die drei unterscheiden
+
+| | Standard | Small | Smaller |
+|---|---|---|---|
+| `FactoryCount` LAND / AIR | 7 / 8 | 5 / 6 | 5 / 6 |
+| `EngineerCount` T1 / T2 / T3 | 7 / 9 / 8 | 6 / 8 / 6 | 6 / 8 / 6 |
+| `RallyPointRadius` | 42 | 42 | 40 |
+| `Engineer Base Defense Construction - Picket Line` | ja | - | - |
+| `Engineer Base Defense Construction - Perimeter` | ja | ja | - |
+| Paragon (`Engineer T4 Economy Construction`) | volle Fassung | `- Small Base` | - |
+| `Engineer Misc Construction` | volle Fassung | `- Small` | `- Small` |
+| `Engineer Perimeter Shield Augmentation` | ja | - | - |
+
+`MassToFactoryValues` ist in allen dreien gleich (7.5 / 14 / 20).
+
+**Der eigentliche Effekt entsteht durch unsere Fabrik.** Weil sie `FirstBaseFunction`
+ersetzt, spielt `customai_small` sein kompaktes Layout auf **jeder** Kartengroesse -
+auch auf 40k, wo LOUD selbst nie darauf kaeme. Die Fehlpaarung ist Absicht: sie erzeugt
+eine andere Wirtschaftsform und prueft zugleich, ob `Source` ueberhaupt umschaltbar ist.
+
+### Wichtig: die Grenzwerte gelten je Basis, nicht je Armee
+
+`FactoryCapCheck` und `BelowEngineerCapCheck` in
+`C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\editor\UnitCountBuildConditions.lua`
+Z. 656 und 699 lesen `aiBrain.BuilderManagers[locationType].BaseSettings` - also die
+Einstellungen **der jeweiligen Basis**. Die 5 Land- und 6 Luftfabriken betreffen nur
+`MAIN`; Aussenposten bringen ihre eigenen Werte aus den `Loud_Expansion_*`-Templates mit.
+
+**Folge:** Small und Smaller sparen keine Einheiten, sie **verlagern** sie. Die
+Ueberschussmasse fliesst in Aussenposten statt in eine groessere Hauptbasis -
+`MassToFactoryRatioBaseCheck` (`EconomyBuildConditions.lua` Z. 393) vergleicht das
+Masseeinkommen gegen Fabrikzahl mal `MassToFactoryValues`, und bei weniger Fabriken faellt
+die Pruefung frueher positiv aus.
+
+**Ob dabei unterm Strich weniger Einheiten entstehen, ist ungeprueft** - gegenlaeufig
+wirken die Bedingung `ExistingBasesHaveGreaterThanFactory` (alle gezaehlten Landbasen
+brauchen 3 T3-Fabriken, bevor eine neue entsteht) und `AboveUnitCap65`, das den
+Expansionsbauer ab 65 Prozent Einheitenlimit drosselt. Steht in `..\TODO.md`.
+
+**Smaller hat einen Ueberschusskanal weniger:** kein Paragon-Bauer. Im langen Spiel
+bleibt diese KI auf echte Masseextraktion angewiesen.
+
 ## 4c. Abhaengigkeiten und Konflikte
 
 - **`requires`:** keine
@@ -847,7 +1161,94 @@ Der Nickname wird offenbar auf eine feste Laenge beschnitten. Fuer die Namenspru
 `AI: LOUD` ohne Belang, weil der Praefix erhalten bleibt - bei laengeren Namen aber zu
 bedenken. **Ungeprueft**, wo die Begrenzung sitzt.
 
-### Verlauf der drei Testlaeufe
+### Testlauf 5 - 2026-08-08, vier eigene KIs gleichzeitig
+
+Karte 2048 (20k), Wasseranteil 0, Einheitenlimit 5000, **Cheat 1**, Sandbox.
+Vier KI-Gegner, je eine unserer vier Definitionen. Laufzeit kurz (Gesamtsitzung 6:45
+einschliesslich Lobby und Ladezeit).
+
+#### Ergebnis: alles Mechanische bestaetigt
+
+| # | Test | Ergebnis | Beleg |
+|---|---|---|---|
+| 13 | Alle vier KIs registriert | **ja** | `CUSTOMAI: 4 von 4 KIs registriert` |
+| 14 | Jede erbt von ihrer eigenen Quelle | **ja** | drei `registriert CustomAI_... (Quelle Loud_Main_Standard/Small/Smaller)` |
+| 15 | Jede gewinnt **ihre eigene** Basiswahl | **ja** | vier `Selected "CustomAI_customai_<key>"`, kein Fehlgriff |
+| 16 | `NoRushOption` kommt im Sim an | **ja** | `CUSTOMAI NoRush: Lobbyoption NoRushOption = 20 -> 1200 Sekunden` |
+| 17 | `aiBrain.CustomAIKey` ist in der `PriorityFunction` gesetzt | **ja** | siehe unten |
+| 18 | Sperren gesetzt | **ja** | `95 Sperren gesetzt` (8 + 7 + 80) |
+| 19 | Keine `Invalid BuilderGroup` | bestaetigt | kein Treffer |
+| 20 | Keine `Duplicate BaseBuilderTemplate` | bestaetigt | kein Treffer |
+| 21 | Kein `access to nonexistent global variable` | bestaetigt | kein Treffer - **bei vier KIs** |
+| 22 | `HiPri`-Fehler aus Lauf 2 und 3 | **nicht aufgetreten** | kein Treffer |
+
+#### Wie Test 17 belegt ist
+
+`NoRushDauer()` in `AIs\NoRush.lua` wird **nur innerhalb des Sperrzweigs** aufgerufen -
+erst wenn `aiBrain.CustomAIKey` gesetzt **und** ein Sperreintrag fuer diesen Key gefunden
+ist. Die Zeile `Lobbyoption NoRushOption = 20` kann also gar nicht erscheinen, wenn der
+Key fehlt. Damit ist der letzte offene Punkt der Mechanik geschlossen.
+
+#### Test 21 relativiert den offenen Befund
+
+`AddGlobalBaseTemplate` setzt am Ende `BaseBuilderTemplates = nil` und
+`BuilderGroups = nil`. **Vier KIs liefen nacheinander durch `GetBestBasePlan`, alle vier
+erfolgreich** - der erwartete Fehler blieb aus. Entweder weicht die installierte Fassung
+von `gamedata.entpackt\lua\lua\AI\aiaddbuildertable.lua` ab, oder es gibt doch einen
+Reload. **Offen bleibt der Fall Aussenposten** - in diesem kurzen Lauf entstand keiner
+(kein `Creating new base` im Log).
+
+#### Was der Lauf NICHT beantwortet
+
+**Die KIs sahen im Spiel gleich aus.** Das ist bei dieser Laufzeit zu erwarten:
+
+- LOUDs Eroeffnung ist fuer alle identisch - ACU baut Landfabrik, dann Ingenieure,
+  Massextraktoren, Kraftwerke. Kampfeinheiten kaemen ohnehin spaeter.
+- Die NoRush-Sperren betreffen Truppen, Aufklaerung und Verteidigung. In den ersten
+  Minuten haette LOUD davon nichts gebaut - **die Sperre kann sich noch gar nicht
+  zeigen**. Bei `NoRushOption = 20` liegt die erste Phasengrenze bei 7:00.
+- Small und Smaller unterscheiden sich erst bei 5 statt 7 Landfabriken - eine Grenze,
+  die so frueh nicht erreicht wird.
+
+**Der Log zeigt keine Bautaetigkeit.** Ohne die Debug-Schalter `DisplayFactoryBuilds`
+und `EngineerDialog` (`aibrain.lua` ab Z. 7) steht nicht im Log, was gebaut wurde.
+Fuer die naechste Runde einschalten.
+
+#### Die zweite Fabrik ist Absicht, kein Fehler
+
+`Engineer Factory Construction` steht **nicht** in den NoRush-Sperren. Der Grund steht in
+Abschnitt 4bb: der Techaufstieg laeuft in LOUD ueber Fabrikaufstiege, also braucht die KI
+Fabriken. Die Gruppe enthaelt an `MAIN` vier Bauer fuer **neue** Fabriken
+(`Loud_AI_Engineer_Factory_Builders.lua` ab Z. 106):
+
+```
+Land Factory Balance                       Z. 175
+Air Factory Balance                        Z. 219
+Land Factory - High Air Production Ratio   Z. 268
+Air Factory - Land Ratio High              Z. 317
+```
+
+dazu `Land Factory Rebuild` und `Air Factory Rebuild` fuer zerstoerte Fabriken.
+
+**Wer den Fabrikbau in Phase 1 unterbinden will**, sperrt die vier oberen und laesst die
+beiden Rebuild-Bauer frei. Preis: weniger Fabriken heisst weniger Ingenieurproduktion und
+damit langsamerer Wirtschaftsaufbau. Steht als Entscheidung in `..\TODO.md`.
+
+#### Nebenbefund: 22 Tooltip-Warnungen
+
+```
+warning: No tooltip in table for key: aitype_customai_standard   (7x)
+warning: No tooltip in table for key: aitype_customai_small      (6x)
+warning: No tooltip in table for key: aitype_customai_smaller    (5x)
+warning: No tooltip in table for key: aitype_customai_norush     (4x)
+```
+
+Harmlos, aber vermeidbar: `enhancedlobby.lua` Z. 289 liest
+`<mod>\lua\AI\CustomAITooltips\*.lua` mit einer `Tooltips`-Tabelle. Damit bekaemen die
+vier Eintraege in der Lobby auch eine Beschreibung - die `Description`-Felder aus
+`AIDefinitions.lua` liegen bereits vor. Steht in `..\TODO.md`.
+
+### Verlauf der Testlaeufe
 
 | Lauf | Datum | Ergebnis |
 |---|---|---|
@@ -855,6 +1256,7 @@ bedenken. **Ungeprueft**, wo die Begrenzung sitzt.
 | 2 | 2026-08-07 | Sim startet. Registrierung und Hooks belegt. KI steht im Spiel, tut aber nichts - Uebergabemechanismus ueber den **Nickname** gefunden. |
 | 3 | 2026-08-07 | Nach Umbenennung in `AI: LOUD Sonde (Test)`: LOUDs Plan laeuft, `FirstBaseFunction` meldet den Lobby-Key. |
 | 4 | 2026-08-07 | Fabrik statt Sonde, Personality-Hook eingebaut, Cheat 1.5. **Eigenes Template gewinnt, volle Cheats.** Grundgeruest bestaetigt. |
+| 5 | 2026-08-08 | Vier eigene KIs gleichzeitig. Alle registriert, jede gewinnt ihre eigene Basiswahl. `NoRushOption` kommt im Sim an, `CustomAIKey` ist in der `PriorityFunction` gesetzt. Keine Warnung. **Verhaltensunterschiede noch nicht sichtbar** - Laufzeit zu kurz. |
 
 Log-Praefix fuer eigene Ausgaben: `CUSTOMAI:`
 

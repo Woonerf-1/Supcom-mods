@@ -189,6 +189,7 @@ er aus der übergeordneten und wird nur noch verlinkt.
 | `15_LOG.md` | **`LOUD.log`** — Auswertungsverfahren + **Befundregister** (Warnungen/Fehler mit Code-Rückverfolgung) | nach jedem Testlauf |
 | `16_UNITS.md` | Einheitenliste — optionaler Generator | ergänzend |
 | `17_UNITLISTE.md` | **Einheiten-Index** — Bestand, ID-Systematik, Verweise nach `units\` | Einstieg bei Unit-Fragen |
+| `18_ABLEITUNG.md` | **Ableitung aus `UEF_trans_men`** — vier neue Mods, Befunde, nachgeprüfte Modsystem-Mechanik (mount/hook/shadow/merge) | bei Arbeit an `t4add`, `SquareShields`, `HCPP`, `dynamic_gameplay` |
 | `units\` | **Einheitendaten** — `units.md`, `pakete.md`, `usermods.md`, `ueberschreibungen.md` | Details |
 | `referenz\` | Verbatim-Kopien der beiden DataPath-Dateien | zum Vergleich bei Verdacht auf Überschreibung |
 | `CHANGELOG.md` | Was wurde wann geändert | nach jeder Änderung |

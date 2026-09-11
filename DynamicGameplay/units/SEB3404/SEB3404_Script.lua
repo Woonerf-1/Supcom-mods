@@ -7,8 +7,6 @@ local VizMarker = import('/lua/sim/VizMarker.lua').VizMarker
 local AIUtils = import('/lua/ai/aiutilities.lua')
 local AnimationThread = import('/lua/effectutilities.lua').IntelDishAnimationThread
 
---local BrewLANPath = import( '/lua/game.lua' ).BrewLANPath()
---local Buff = import(BrewLANPath .. '/lua/legacy/VersionCheck.lua').Buff
 local Buff = import('/lua/sim/Buff.lua')
 
 SEB3404 = Class(TStructureUnit) {
@@ -26,8 +24,7 @@ SEB3404 = Class(TStructureUnit) {
         for i, v in {Panopticon = 'Domes', Large_Dish = 'Dish_Scaffolds'} do
             local entity = import('/lua/sim/Entity.lua').Entity({Owner = self})
             entity:AttachBoneTo( -1, self, i )
-            --entity:SetMesh(BrewLANPath .. '/units/SEB3404/SEB3404_' .. v .. '_mesh')
-            entity:SetMesh('/mods/dynamic_gameplay/units/SEB3404/SEB3404_' .. v .. '_mesh')
+            entity:SetMesh('/mods/dynamicgameplay/units/SEB3404/SEB3404_' .. v .. '_mesh')
             entity:SetDrawScale(bpD.UniformScale)
             entity:SetVizToFocusPlayer('Always')
             entity:SetVizToAllies('Intel')

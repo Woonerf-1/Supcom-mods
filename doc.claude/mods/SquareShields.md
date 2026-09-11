@@ -101,39 +101,30 @@ identisch mit `usermods\UEF_trans_men\units\<ID>\`.
 `Economy.BuildRate = 30` bleibt stehen - schadet nicht und waere bei einem spaeteren
 Aufstieg wieder noetig.
 
-### 4.2 Nicht geaendert: der Animationspfad in XSBSSG01 - UNGEPRUEFT
+### 4.2 Korrigiert: der Animationspfad in XSBSSG01 - BELEGT
 
 `XSBSSG01_unit.bp` Z. 61, `Display.AnimationDeath`:
 
-```lua
-Animation = '/units/XSBSSG01/XSBSSG01_ADeath1.sca',
-```
+| | |
+|---|---|
+| Original (`LOUD Unit Additions`) | `/units/XSBSSG01/XSBSSG01_ADeath1.sca` |
+| jetzt | `/mods/squareshields/units/XSBSSG01/XSBSSG01_ADeath1.sca` |
 
-**Belegt:** diesen Pfad gibt es im VFS nicht. `gamedata.entpackt\units\units\XSBSSG01`
-existiert nicht, und eine vollstaendige Suche nach `XSBSSG01*` ueber `gamedata.entpackt`
-findet die `.sca` ausschliesslich unter
-`loud_units\mods\LOUD Unit Additions\units\XSBSSG01\`. `/units/` speist sich nur aus
-`units.scd` und `civ_units.scd` - das sind die einzigen beiden Archive mit einem
-`units\`-Ordner im Wurzelverzeichnis.
+**Der Originalpfad ist nachweislich kaputt.** `/units/XSBSSG01/` existiert im VFS nicht -
+`/units/` speist sich nur aus `units.scd` und `civ_units.scd`, die `.sca` liegt unter
+`loud_units\mods\LOUD Unit Additions\units\XSBSSG01\`.
 
-**Nicht belegt:** ob daraus folgt, dass die Animation fehlt. **Wie** die Engine einen
-`.sca`-Pfad aufloest, steht nicht im Lua-Code - das passiert engineseitig. Ein Hinweis auf
-einen relativen Rueckfall steht im selben Blueprint: die LOD1-Texturen sind als blosse
-Dateinamen angegeben (`AlbedoName = 'XSBSSG01_lod1_albedo.dds'`) und werden neben der
-`.bp` gefunden. Ob derselbe Mechanismus fuer `.sca` greift oder ob ein fehlgeschlagener
-absoluter Pfad auf das Blueprint-Verzeichnis zurueckfaellt, ist offen. Das `LOUD.log`
-hilft nicht weiter - es meldet fehlende Ressourcen ueberhaupt nicht.
+Dass daraus wirklich eine fehlende Animation folgt, war lange offen und ist seit dem
+2026-08-15 **belegt**: drei Testlaeufe mit `PlayTest` haben gezeigt, dass `.sca`-Pfade
+strikt und absolut aufgeloest werden - kein Rueckfall auf das Blueprint-Verzeichnis,
+keine Dateinamensuche, keine Suche innerhalb von `/units/`. Einzelheiten in
+`07_KONVENTIONEN.md` Abschnitt 4.
 
-**Deshalb unveraendert gelassen.** Eine Aenderung waere eine Anpassung ohne belegten
-Anlass und wuerde den Mod zusaetzlich an seinen Ordnernamen binden.
+Thanatos hat in `LOUD Unit Additions` also seit jeher keine Todesanimation, und
+`XSBSSG02` erbt denselben Fehler (es verweist auf dieselbe Datei).
 
-Der Pfad steht so auch in `LOUD Unit Additions` - und ebenso in `XSBSSG02`, das auf
-dieselbe Datei verweist. Wenn er dort funktioniert, funktioniert er hier genauso.
-
-**Testauftrag:** Thanatos bauen und sprengen. Zeigt er die Todesanimation, gibt es einen
-Rueckfallmechanismus und der Punkt ist erledigt. Zeigt er sie nicht, ist der Pfad in
-`LOUD Unit Additions` seit jeher falsch und wir korrigieren ihn hier auf
-`/mods/squareshields/units/XSBSSG01/XSBSSG01_ADeath1.sca`.
+**Preis der Korrektur:** der Mod ist damit an seinen Ordnernamen gebunden. Wird
+`SquareShields\` umbenannt, muss diese Zeile mitgezogen werden.
 
 ### 4.3 `mod_info.lua`
 
@@ -305,10 +296,10 @@ Log-Praefix dieses Mods: noch keiner vergeben (bisher kein eigener Lua-Code).
 - [ ] **Greift `conflicts` wie gelesen?** Im Mod-Manager pruefen, ob `LOUD Unit Additions`
       und `SquareShields` wirklich nicht gleichzeitig aktivierbar sind. Bisher nur aus
       `mods.lua` abgeleitet, im Spiel **ungeprueft**.
-- [ ] **Zeigt Thanatos eine Todesanimation?** `XSBSSG01_unit.bp` Z. 61 verweist auf
-      `/units/XSBSSG01/XSBSSG01_ADeath1.sca` - diesen Pfad gibt es im VFS nicht. Ob die
-      Engine trotzdem aufloest (relativer Rueckfall), ist **unbelegt**, siehe 4.2.
-      Wenn nein: Pfad auf `/mods/squareshields/units/XSBSSG01/...` aendern.
+- [x] **Zeigt Thanatos eine Todesanimation?** Geklaert 2026-08-15 ueber drei Testlaeufe
+      mit `PlayTest`: `.sca`-Pfade werden strikt absolut aufgeloest, der Originalpfad
+      `/units/XSBSSG01/...` ist kaputt. Korrigiert auf `/mods/squareshields/...`,
+      siehe Abschnitt 4.2. Im Spiel noch nicht gegengeprueft.
 - [ ] **Bricht das Entfernen von `UpgradesTo` etwas?** `ToggleCaps` und `OrderOverrides`
       bleiben unveraendert; ein leeres `BuildableCategory = { }` ist **nicht belegt** als
       gueltiger Wert - falls es Warnungen gibt, das Feld ganz streichen.

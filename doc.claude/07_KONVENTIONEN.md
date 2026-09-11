@@ -25,7 +25,60 @@
   da `U`, `X`, `D`, `B`, `Z` bereits durch Vanilla und die LOUD-Pakete belegt sind.
 - **Vor Vergabe prüfen:** `search_files` über `gamedata.entpackt` *und* `usermods` nach der ID.
 
-## 4. Lua-Codestil
+## 4. Pfadangaben in Blueprints
+
+**Belegt durch drei Testlaeufe am 2026-08-15** (`PlayTest`, Auswertung im CHANGELOG).
+
+### 4.1 `.sca`-Animationen: immer vollstaendiger VFS-Pfad
+
+Animationspfade in `Display.AnimationWalk`, `Display.AnimationDeath`,
+`TransportAnimation` und Verwandten werden **strikt und absolut** aufgeloest.
+Getestet wurde am Seraphim-SCU (`XSL0301`) und an der Selen (`XSL0101`), jeweils mit
+blossem Auge an der Laufanimation beurteilt:
+
+| Form | Beispiel | Ergebnis |
+|---|---|---|
+| erfundenes Verzeichnis | `/units/gibtesnicht/XSL0301_AWalk01.sca` | kaputt |
+| richtige Wurzel, ohne Unterordner | `/units/XSL0101_awalk01.sca` | kaputt |
+| reiner Dateiname | `XSL0301_AWalk01.sca` | kaputt |
+
+Es gibt **keinen** Rueckfall auf das Verzeichnis des Blueprints, **keine** Suche nach dem
+blossen Dateinamen und **keine** Suche innerhalb von `/units/`.
+
+**Das unterscheidet `.sca` von Mesh-Texturen.** Dort loest ein blosser Dateiname wie
+`AlbedoName = 'UEBSSG01_lod1_albedo.dds'` sehr wohl neben der `.bp` auf
+(`gamedata.entpackt\lua\lua\system\Blueprints.lua`, `ExtractMeshBlueprint`, Z. 177-183).
+Die Analogie traegt nicht - wer sie annimmt, baut still kaputte Pfade.
+
+### 4.2 Fehlschlaege bleiben stumm
+
+Ein ungueltiger Animationspfad erzeugt **keine** Meldung im `LOUD.log` - weder `error:`
+noch `warning:`. In allen drei Testlaeufen blieb das Log unauffaellig. Der Fehler faellt
+nur beim Hinsehen auf: die Einheit gleitet starr ueber den Boden, statt zu laufen.
+
+**Konsequenz fuer die Fehlersuche:** "nichts im Log" ist bei Animationen kein Beleg fuer
+"alles in Ordnung".
+
+### 4.3 Folge: Mods sind an ihren Ordnernamen gebunden
+
+Jeder absolute `/mods/<n>/...`-Pfad bindet den Mod an seinen Ordnernamen.
+
+**Beim Umbenennen eines Mod-Ordners deshalb zwingend alle Verweise mitziehen.**
+Suchmuster: `/mods/<alter_name>/` ueber `.bp` **und** `.lua` des Mods. Beim Umbenennen von
+`dynamic_gameplay` nach `DynamicGameplay` waren es zwei Fundstellen - eine in einem
+Blueprint, eine in einem Unit-Script.
+
+Gegenprobe vor dem Umbenennen: findet die Suche nichts, ist der Mod frei
+(so bei `HCPP` -> `ImprovedHydrocarbonPowerPlants`).
+
+### 4.4 Bekannte kaputte Pfade im Fremdmaterial
+
+| Datei | Pfad | Befund |
+|---|---|---|
+| `LOUD Unit Additions`, `XSBSSG01` und `XSBSSG02` | `/units/XSBSSG01/XSBSSG01_ADeath1.sca` | `/units/XSBSSG01/` existiert nicht - Thanatos hat dort keine Todesanimation. In `usermods\SquareShields\` korrigiert. |
+| `usermods\t4add\units\SSL0403` | `/mods/brewlan/mods/BrewLAN_LOUD/units/ssl0403/...` (3x) | `/mods/brewlan/` existiert nicht; richtig waere `/mods/BrewLAN_LOUD/...`. Vom Kollegen eingebaut, im Original korrekt. **Noch nicht korrigiert.** |
+
+## 5. Lua-Codestil
 
 - **Stil der Originaldatei übernehmen.** Der Engine-Lua-Dialekt ist alt (siehe `04_LUA_SIM.md` §2);
   modernes Lua 5.1+ funktioniert hier teilweise nicht.

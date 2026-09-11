@@ -1,0 +1,23 @@
+-- ============================================================================
+-- PlayTest - STILLGELEGT
+--
+-- Datei: usermods\PlayTest\hook\lua\sim\Unit.lua
+--
+-- Diese Datei enthielt eine Umhuellung von Unit.PlayAnimationThread, um die
+-- Aufloesung von .sca-Pfaden zu messen. Der Hook wurde laut LOUD.log geladen
+-- ("Hooked /lua/sim/unit.lua with /mods/playtest/hook/lua/sim/unit.lua") und
+-- lief fehlerfrei durch - aber die Umhuellung wurde NIE aufgerufen, obwohl im
+-- Testlauf vom 2026-08-15 zwei Gebaeude mit AnimationDeath gesprengt wurden.
+--
+-- Vermutung (UNBELEGT): Class() kopiert die Methoden der Elternklasse beim
+-- Anlegen der Unterklasse, statt sie ueber eine Metatabelle nachzuschlagen.
+-- Dann traegt StructureUnit aus /lua/defaultunits.lua weiterhin die
+-- Originalfassung, und eine Umhuellung an Unit greift nur bei Einheiten, die
+-- direkt von Unit erben - praktisch bei keiner.
+--
+-- Der Ersatztest laeuft ueber hook\lua\system\Blueprints.lua und braucht
+-- ueberhaupt keine Instrumentierung. Diese Datei bleibt leer stehen, damit die
+-- offene Frage zur Klassenbildung dokumentiert ist.
+--
+-- Siehe doc.claude\mods\PlayTest.md und TODO.md.
+-- ============================================================================

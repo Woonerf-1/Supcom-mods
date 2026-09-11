@@ -14,9 +14,48 @@ Ausführliche Doku: [`..\14_TOOLS.md`](../14_TOOLS.md)
 | Datei | Zweck | Rechte |
 |---|---|---|
 | `Get-Units.ps1` | erzeugt die vollständige Einheitenliste nach `..\units\` | keine, **nur lesend** |
+| `Expand-Gamedata.ps1` | entpackt `.scd`-Archive nach `gamedata.entpackt\` | Schreibrechte im Zielordner |
 | `scd_als_ordner_an.reg` | `.scd` im Explorer als gepackten Ordner anzeigen | nur aktueller Benutzer, **keine Adminrechte** |
 | `scd_als_ordner_aus.reg` | dasselbe rückgängig machen | nur aktueller Benutzer |
 | `scd_als_ordner_an_systemweit.reg` | Variante für alle Benutzer | **Adminrechte nötig** |
+
+---
+
+## Gamedata entpacken
+
+```powershell
+cd "C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\doc.claude\tools"
+.\Expand-Gamedata.ps1              # Basisspiel
+.\Expand-Gamedata.ps1 -Ziel LOUD   # LOUD neu erzeugen
+```
+
+Weitere Parameter: `-Quelle`, `-OutDir`, `-Ueberschreiben` (ohne den Schalter werden
+vorhandene Ordner übersprungen, ein zweiter Lauf ist also gefahrlos).
+
+`.scd` ist ein ZIP; `ZipFile::ExtractToDirectory` verlangt aber die Endung `.zip`. Das
+Skript kopiert deshalb je Archiv eine Kopie ins `%TEMP%`, entpackt sie und löscht sie
+wieder. **Die Originale in `gamedata\` bleiben unangetastet.**
+
+**Zwei Spiegel, nicht einer** — das ist der Punkt:
+
+| Spiegel | Inhalt |
+|---|---|
+| `LOUD\gamedata.entpackt\` | 17 LOUD-Archive: `lua`, `units`, `brewlan`, `blackops`, `loud_misc`, … |
+| `…\Supreme Commander Forged Alliance\gamedata.entpackt\` | Basisspiel: `effects`, `props`, `env`, `textures`, `meshes`, `projectiles`, `lua`, `units`, … |
+
+LOUD mountet vom Basisspiel **nur** `textures.scd`, `effects.scd`, `env.scd`,
+`projectiles.scd`, `props.scd` und `meshes.scd` (`LoudDataPath.lua`). Alles andere dort —
+insbesondere `units\` und `lua\` — wird von LOUD vollständig ersetzt und ist im Spiel
+nicht erreichbar. Beim Nachschlagen darauf achten, aus welchem der beiden Spiegel ein
+Fund stammt.
+
+Ohne den zweiten Spiegel ließen sich Verweise wie
+`/effects/emitters/seraphim_rift_arch_base_01_emit.bp`,
+`/props/DefaultWreckage/DefaultWreckage_prop.bp` oder `Tarmacs/Tar12x_01_albedo`
+**nicht nachprüfen** — sie liegen sämtlich im gepackten Basisspiel.
+
+⚠️ **Nicht selbstaktualisierend.** Nach einem Spiel- oder LOUD-Update erneut mit
+`-Ueberschreiben` laufen lassen.
 
 ---
 

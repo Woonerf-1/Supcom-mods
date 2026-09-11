@@ -37,7 +37,7 @@ UnitBlueprint {
 	
         AnimationDeath = {
             {
-                Animation = '/mods/dynamic_gameplay/units/BSB2402/BSB2402_adeath.sca',
+                Animation = '/mods/dynamicgameplay/units/BSB2402/BSB2402_adeath.sca',
                 AnimationRateMax = 1,
                 AnimationRateMin = 1,
                 Weight = 100,

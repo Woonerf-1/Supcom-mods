@@ -39,6 +39,7 @@ LOUD\usermods\                     ← Git-Repository (Woonerf-1/Supcom-mods)
     ├── 15_LOG.md                 LOUD.log — Auswertung + Befundregister (R-01…)
     ├── 16_UNITS.md               Einheitenliste — optionaler Generator
     ├── 17_UNITLISTE.md           Einheiten-INDEX — verweist nach units\
+    ├── 18_ABLEITUNG.md           Ableitung aus UEF_trans_men — 4 neue Mods + Modsystem-Mechanik
     │
     ├── units\                    Einheitendaten
     │   ├── README.md               Ordner-Index
