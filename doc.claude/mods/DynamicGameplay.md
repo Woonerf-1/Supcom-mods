@@ -355,12 +355,16 @@ Sim-Mod, also von allen Spielern benoetigt.
       **Nicht behoben**, Behelf: genug Energiespeicher.
 - [x] **Beschriftung des Umschalters** - ergaenzt, siehe Abschnitt 5.4.
 - [ ] **ENTSCHEIDUNG vertagt: Panopticon-Suchradius und Zielauswahl** - siehe Abschnitt 5.1.
-- [ ] **Greift `conflicts`?** Im Mod-Manager pruefen, ob BrewLAN bzw. BlackOps und dieser
-      Mod wirklich nicht gleichzeitig aktivierbar sind. Bisher nur aus `mods.lua`
-      abgeleitet.
-- [ ] **Wird das Mod-Bild angezeigt?** Aus `modmanager.lua` abgeleitet, **nicht gesehen**.
-- [ ] **`BSL0005` und `BSB2402` im Spiel ausprobieren** - bisher nur die Rift Gate
-      gesprengt, der Elite-Belagerungspanzer gar nicht getestet.
+- [x] **Greift `conflicts`?** Bestaetigt 2026-08-16 im Mod-Manager: beim Aktivieren von
+      BrewLAN erscheint *"The requested mod requires the following mods be disabled:
+      Dynamic Gameplay"*.
+- [x] **Wird das Mod-Bild angezeigt?** Bestaetigt 2026-08-16.
+- [x] **`BSL0005` und `BSB2402`** - **kein eigener Test noetig.** Beide sind gegen LOUD
+      byte-identisch (Blueprint und Script je 0 geaenderte Zeilen), einzige Ausnahme ist
+      der Animationspfad in `BSB2402_unit.bp` Z. 40 - und genau der ist durch die
+      A/B-Gegenprobe vom 2026-08-15 belegt (mit verbogenem Pfad fehlte die
+      Todesanimation, mit korrigiertem laeuft sie). Wer sie im Spiel baut, spielt LOUDs
+      Fassung.
 - [ ] **MM-Debugausgabe im Darkness entfernen**, sobald der Puls einmal im Log
       bestaetigt ist. Der Effekt ist im Spiel gesehen, die Logzeile noch nicht.
 - [ ] **Sieben Beschreibungstexte nach `t4add` uebernehmen** - liegen in

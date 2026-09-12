@@ -161,3 +161,27 @@ verketten sich, das ist unkritisch.
       rein kosmetischen Gewinn.
 - [ ] **Enhancement-Produktionswerte** der SCUs mit hochsetzen? Siehe 3.2.
 - [ ] **`hook\lua\sim\Unit.lua`** loeschen, sobald die `Class()`-Frage geklaert ist.
+
+## 7. Beim Messen beachten
+
+**Der Testaufbau praegt die Zahlen.** Mit `PlayTest` steht in jeder Armee ein ACU und vier
+SCUs - diese fuenf Einheiten tauchen in **jeder** Umkreissuche auf, die ueber `ArmyBrains`
+oder ueber eigene Einheiten laeuft.
+
+Beim Darkness-Test am 2026-08-16 ergab das 16 uebersprungene Einheiten je Puls, konstant
+ueber alle Messungen - ausschliesslich Kommandanten. Das sah zunaechst nach einem Problem
+in der Zielauswahl aus und war schlicht der eigene Aufbau.
+
+**Regel: eine ueberraschende Zahl zuerst gegen den eigenen Testaufbau pruefen, bevor man
+dem fremden Code ein Problem unterstellt.**
+
+Zwei weitere Verzerrungen aus derselben Quelle:
+
+| Einstellung | Wirkung auf Messungen |
+|---|---|
+| `BuildRate 60000` | Ausbaustufen sind in Sekundenbruchteilen fertig - verzerrt alles, was am Bauzyklus haengt, und hat den UI-Fehler B-01 ueberhaupt erst sichtbar gemacht |
+| Produktion x1000 | Energieknappheit tritt praktisch nie auf - ein energiebedingtes Verhalten laesst sich so **nicht** nachstellen |
+
+Umgekehrt gilt: eine **leere Sandkastenkarte** hat keine Feinde. Alles, was ueber
+`'Enemy'` filtert - etwa `IntelSearch` des Panopticon - meldet dort konstant null Treffer.
+Das ist kein Befund, sondern die Kartenlage.

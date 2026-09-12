@@ -111,16 +111,47 @@ Die Rotatoren sitzen auf `' B01'`, `' B02'`, `' B03'` - **mit fuehrendem Leerzei
 
 ## Debug
 
-`ScenarioInfo.MMDialog` (gesetzt in `PlayTest\hook\lua\aibrain.lua`) schaltet eine
-Logzeile je Puls frei:
+**Entfernt am 2026-08-16**, nachdem alle Fragen beantwortet waren. Die Messung ergab:
+
+| Reichweite | gebufft | uebersprungen |
+|---:|---:|---:|
+| 18 | 2 | 16 |
+| 20 | 4 | 16 |
+| 24 | 8 | 16 |
+| 29 | 13 | 16 |
+| 33 | 17 | 16 |
+
+`gebufft + uebersprungen = Reichweite` geht in jeder Zeile auf.
+
+**Die 16 uebersprungenen waren durchgaengig Kommandanten:**
 
 ```
-MM: Darkness Puls - N Einheiten in Reichweite, N gebufft (DarknessEffect),
-    Emitter: Blitz + 3 Ringe + 4 Flimmern
+uel0001 uel0301 ual0301 url0301 xsl0301   ual0001 uel0301 ual0301 url0301 xsl0301
+ual0001 uel0001 uel0301 ual0301 url0301 xsl0301
 ```
 
-**Noch nicht im Spiel gesehen** - der Darkness wurde in keinem Testlauf gebaut. Sobald die
-Knochen-Korrektur bestaetigt ist, kann die Ausgabe entfallen.
+Also je Armee ein ACU und vier SCUs - das ist der **PlayTest-Aufbau**, nicht der Mod.
+Wer mit `PlayTest` misst, hat diese Einheiten immer im Bild; beim Deuten von
+Einheitenzahlen daran denken.
+
+Damit belegt:
+
+- die Emitter werden erzeugt, die Funktion laeuft bis zum Ende durch
+- `DarknessEffect` wird angewandt, auf **jede** Einheit ausser Kommandanten,
+  Galactic Colossus und Mauern
+- die Knochen-Korrektur wirkt, der Puls ist im Spiel sichtbar
+
+**Die Zielauswahl erfasst alle Armeen, nicht nur Feinde.** Der Darkness trifft also auch
+eigene Einheiten - im Unterschied zum Panopticon, das ueber `'Enemy'` filtert. Im Log
+belegt durch die eigenen ACUs in der Uebersprungenenliste:
+
+```lua
+for index, brain in ArmyBrains do
+    for i, unit in AIUtils.GetOwnUnitsAroundPoint(brain, categories.ALLUNITS - categories.WALL, Mypos, Range) do
+```
+
+**Fuer den Spielbetrieb heisst das:** den Darkness nicht in die eigene Verbandsmitte
+stellen.
 
 ## Referenzen
 

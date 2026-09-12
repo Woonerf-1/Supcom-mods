@@ -86,6 +86,175 @@ Neueste Einträge oben. Format je Eintrag:
 
 ---
 
+## 2026-08-16 (4) - Darkness-Debug ausgewertet und entfernt, AcidPools auf Ereignishaken
+
+- **Was:** Zielauswahl des Darkness vermessen und belegt, Debugcode entfernt;
+  `AcidPools` von Dauerabfrage auf `OnLayerChange` umgebaut, Flugzeuge ausgenommen
+- **Getestet:** **ja**, beides im Spiel bestaetigt
+
+### Darkness: Zielauswahl vermessen
+
+| Reichweite | gebufft | uebersprungen |
+|---:|---:|---:|
+| 18 | 2 | 16 |
+| 20 | 4 | 16 |
+| 24 | 8 | 16 |
+| 29 | 13 | 16 |
+| 33 | 17 | 16 |
+
+`gebufft + uebersprungen = Reichweite` geht in jeder Zeile auf. Die 16 uebersprungenen
+waren durchgaengig **Kommandanten** (`uel0001`, `ual0001`, `uel0301`, `ual0301`,
+`url0301`, `xsl0301`) - also je Armee ein ACU und vier SCUs, und das ist der
+**PlayTest-Aufbau**, nicht der Mod.
+
+Damit belegt: Emitter werden erzeugt, die Funktion laeuft bis zum Ende durch,
+`DarknessEffect` wird auf jede Einheit ausser Kommandanten, Galactic Colossus und Mauern
+angewandt.
+
+**Nebenbefund:** die Zielauswahl laeuft ueber `ArmyBrains`, erfasst also **alle Armeen** -
+der Darkness trifft auch eigene Einheiten. Im Unterschied zum Panopticon, das ueber
+`'Enemy'` filtert. Belegt durch die eigenen ACUs in der Uebersprungenenliste.
+
+**Methodischer Hinweis, jetzt in `mods\PlayTest.md`:** wer mit `PlayTest` misst, hat je
+Armee einen ACU und vier SCUs im Bild. Beim Deuten von Einheitenzahlen daran denken - eine
+ueberraschende Zahl zuerst gegen den eigenen Testaufbau pruefen, bevor man dem fremden
+Code ein Problem unterstellt.
+
+Debugcode vollstaendig entfernt. **`DynamicGameplay` enthaelt jetzt keinen Debugcode
+mehr.**
+
+### AcidPools: Ereignishaken statt Dauerabfrage
+
+`usermods\AcidPools\hook\lua\sim\Unit.lua` neu geschrieben. Doku daneben in `Unit.md`.
+
+| | vorher | jetzt |
+|---|---|---|
+| Ausloeser | Thread je Einheit ab `OnStopBeingBuilt`, **Dauerlauf** | `OnLayerChange`, Thread nur im Wasser |
+| Leerlauf an Land | alle 2 Sekunden ein `GetCurrentLayer()` je Einheit | **keiner** |
+| Schleifenende | `while self do` - lief endlos, auch nach dem Tod | `while not self.Dead and WASSER[...] do` |
+| Kategorienpruefung | bei jedem Threadstart | einmal je Einheit, gemerkt in `self.AcidGeprueft` |
+| Flugzeuge | nicht ausgenommen | **`categories.AIR` und `RULEUMT_Air` ausgenommen** |
+
+`OnLayerChange` ist LOUD-eigen (`gamedata\lua\lua\sim\Unit.lua` Z. 461) und wird in
+`defaultunits.lua` Z. 1796 und 4194 weitergereicht - ein etablierter Ereignishaken, kein
+Eigenbau. `OnStopBeingBuilt` deckt weiterhin den Fall ab, dass eine Einheit direkt im
+Wasser entsteht. `self.AcidLaeuft` verhindert doppelte Threads bei schnellem
+Ebenenwechsel.
+
+**Im Spiel bestaetigt:** eine Landeinheit hat zwei Inselueberfahrten ueberstanden und ist
+auf der dritten gestorben. Das belegt beides - der Zaehler wird beim Verlassen des Wassers
+zurueckgesetzt (sonst waere die zweite Insel nicht erreicht worden), und `OnLayerChange`
+feuert beim Wiedereintritt (sonst haette es gar keinen Schaden gegeben).
+
+**Damit ist auch die `Class()`-Frage ein Stueck weiter:** ein **Klassenersatz**
+(`Unit = Class(UnitOld) { ... }`) auf `/lua/sim/Unit.lua` greift nachweislich fuer
+Einheiten, die ueber `defaultunits.lua` erben. Offen bleibt, warum der
+**Methodenaustausch** im PlayTest-Versuch nie aufgerufen wurde.
+
+Die Schadensformel bleibt unveraendert - der Schaden waechst quadratisch mit der
+Verweildauer, weil er jeden Tick in Hoehe der bisherigen Verweildauer zugefuegt wird.
+Nach dem Test **als spielbar bestaetigt**, kein Deckel noetig.
+
+### Vorschlag Commit-Nachricht
+
+```
+Darkness-Zielauswahl belegt; AcidPools auf OnLayerChange
+
+- SRB4402: Debugcode entfernt, Messung in SRB4402_script.md festgehalten
+  (Zielauswahl ueber ArmyBrains, trifft auch eigene Einheiten)
+- AcidPools: Dauerabfrage durch OnLayerChange ersetzt, kein Leerlauf an Land
+- AcidPools: Flugzeuge ausgenommen, Kategorienpruefung nur noch einmal je Einheit
+- AcidPools/hook/lua/sim/Unit.md neu
+- PlayTest.md: Hinweis, dass der Testaufbau Einheitenzahlen praegt
+
+Beides im Spiel bestaetigt.
+```
+
+---
+
+## 2026-08-16 (3) - Mod-Bilder, AcidPools bereinigt, test21000 ausgemustert
+
+- **Was:** eigene Mod-Bilder fuer `CustomAI`, `PlayTest` und `AcidPools`; zwei Fehler in
+  `AcidPools` behoben; `test21000` nach `_Altlasten`; `BuildableCategory` dokumentiert;
+  `14_TOOLS.md` fertiggestellt
+- **Getestet:** Mod-Bilder im Mod-Manager bestaetigt, `conflicts` bestaetigt
+
+### Mod-Bilder
+
+| Mod | Datei | Herkunft |
+|---|---|---|
+| `CustomAI` | `customai.png` | gezeichnet, HAL-Anmutung |
+| `PlayTest` | `playtest.png` | gezeichnet, Laborkolben |
+| `AcidPools` | `acidpools.png` | **Originalpiktogramm GHS05**, zugeschnitten und freigestellt |
+
+Alle 256x256 mit Alphakanal. **Der Mod-Manager stellt Transparenz korrekt dar** - im Spiel
+bestaetigt.
+
+Versuche, das HAL-Bild aus der Vorlage zu rekonstruieren (Radialprofil, Reflex-Ersetzung,
+Spiegelung der unteren Haelfte), sind alle gescheitert: die Reflexe liegen direkt ueber der
+hellsten Stelle, und keine Ersatzquelle trifft die Helligkeitsverteilung genau genug. Beim
+GHS-Piktogramm ging es, weil dort nur zugeschnitten und freigestellt wurde.
+
+### `conflicts` bestaetigt
+
+Der Mod-Manager meldet beim Aktivieren von BrewLAN korrekt:
+*"The requested mod requires the following mods be disabled: Dynamic Gameplay"*.
+Damit ist der Mechanismus im Spiel belegt, nicht mehr nur aus `mods.lua` abgeleitet.
+
+### AcidPools bereinigt
+
+Fremdmaterial von Balthazar, ein herausgeloestes Teilstueck von `BrewLAN_Gameplay`.
+Zwei Fehler:
+
+| | vorher | jetzt |
+|---|---|---|
+| `icon` | `/mods/BrewLAN_Gameplay/AcidPools/Corrosive.dds` - der Pfad existiert nicht, der Mod wird als `/mods/acidpools/` gemountet | `/mods/acidpools/acidpools.png` |
+| Schleife in `hook\lua\sim\Unit.lua` | `while self do` - `self` ist immer wahr, **jede jemals gebaute Landeinheit hinterliess einen Thread**, der bis Spielende weiterlief | `while not self.Dead do` |
+
+**Nicht angefasst:** die Schadensformel (Schaden waechst mit der Verweildauer im Wasser,
+nach 60 Sekunden 60 Schaden pro Tick, unbegrenzt steigend) und der Klassenersatz
+`Unit = Class(UnitOld) { ... }`.
+
+**Der Klassenersatz ist ein Pruefkandidat fuer die offene `Class()`-Frage:** wenn
+Landeinheiten im Wasser tatsaechlich Schaden nehmen, greifen Klassenersetzungen auf `Unit`
+sehr wohl - im Unterschied zu meinem gescheiterten PlayTest-Hook, der nur eine *Methode*
+ueberschrieben hat. Steht in `TODO.md`.
+
+### test21000 ausgemustert
+
+Colins Cheat-Mod fuer den UEF-ACU, nach `_Altlasten\test21000\` verschoben. Vollstaendig
+durch `PlayTest` ersetzt, und zwar sauberer: `test21000` **ersetzte den Blueprint
+`UEL0001` vollstaendig** und kollidierte damit mit jedem anderen Mod an derselben Einheit,
+etwa `usermods\commanders\`.
+
+Der Mehrwert, der bleibt, steht jetzt in `03_BLUEPRINTS.md` Abschnitt 2a:
+**`Economy.BuildableCategory`** - Leerzeichen innerhalb eines Eintrags = UND, mehrere
+Eintraege = ODER. Colin hat schlicht die `BUILTBY*`-Bedingung weggelassen, damit faellt
+die gesamte Staffelung weg. Das stuetzt nebenbei unsere Lesart von
+`BuildableCategory = { }` in `SquareShields` (nichts baubar) - **bewiesen ist sie damit
+nicht.**
+
+### 14_TOOLS.md fertiggestellt
+
+Alle drei Skripte, die `.reg`-Dateien, die Repos als Suchwerkzeug und eine
+"wann was"-Tabelle. Die beiden wichtigsten Fallstricke stehen drin: **zwei Spiegel** und
+was LOUD davon ueberhaupt mountet, sowie die **gross-/kleinschreibungsempfindliche**
+Dateisuche.
+
+### Vorschlag Commit-Nachricht
+
+```
+Mod-Bilder; AcidPools bereinigt; test21000 ausgemustert; 14_TOOLS fertig
+
+- CustomAI, PlayTest, AcidPools: eigene Mod-Bilder mit Alphakanal
+- AcidPools: icon-Pfad korrigiert, Endlosschleife im Unit-Hook behoben
+- test21000 nach _Altlasten, BuildableCategory in 03_BLUEPRINTS dokumentiert
+- 14_TOOLS.md: Expand-Gamedata, Test-Maps, Repos als Suchwerkzeug
+- conflicts im Mod-Manager bestaetigt
+```
+
+---
+
 ## 2026-08-16 (2) - Panopticon-Abschalten geklaert, DynamicGameplay abgeschlossen
 
 - **Was:** Ursache des Panopticon-Abschaltens gefunden, Tooltip ergaenzt,

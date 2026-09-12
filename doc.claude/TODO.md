@@ -453,6 +453,12 @@ Zielkategorien ins Register in `NoRush.lua`.
       Blueprint-Verzeichnis, keine Dateinamensuche, keine Suche innerhalb von `/units/`.
       Fehlschlaege bleiben stumm, kein Logeintrag. Regel in `07_KONVENTIONEN.md`
       Abschnitt 4, Auswertung im CHANGELOG (7).
+- [x] **Multiplayer: wird die `config.lua`-Einstellung uebertragen?** Geklaert 2026-08-16 -
+      `ImprovedHydrocarbonPowerPlants` lief im Mehrspielerspiel ohne Auffaelligkeiten.
+      Kein Desync.
+      **Einschraenkung:** belegt ist damit, dass der Mod im MP laeuft. Ob die Uebertragung
+      auch bei **abweichender** Einstellung je Spieler traegt, ist nur dann mitgeprueft,
+      wenn nicht alle auf der Vorgabe standen.
 - [ ] **Greifen Hooks auf `/lua/sim/Unit.lua` ueberhaupt?** Beim ersten Testanlauf wurde
       eine Umhuellung von `Unit.PlayAnimationThread` laut Log geladen und lief fehlerfrei,
       **wurde aber nie aufgerufen** - obwohl im selben Lauf zwei Gebaeude mit
@@ -467,6 +473,31 @@ Zielkategorien ins Register in `NoRush.lua`.
       `/lua/defaultunits.lua`, der `StructureUnit.OnKilled` umhuellt - dass Hooks dort
       greifen, ist belegt (`Hooked /lua/defaultunits.lua with /mods/customai/...`).
       Stillgelegte Testdatei: `usermods\PlayTest\hook\lua\sim\Unit.lua`.
+      **Pruefkandidat gefunden (2026-08-16):** `usermods\AcidPools\hook\lua\sim\Unit.lua`
+      ersetzt die Klasse komplett (`Unit = Class(UnitOld) { ... }`) statt nur eine Methode
+      zu ueberschreiben. Nehmen Landeinheiten im Wasser Schaden, greift der
+      Klassenersatz - dann liegt der Unterschied genau in Ersatz gegen Methodenaustausch.
+      Der Mod stammt von Balthazar und hat vermutlich funktioniert.
+      **TEILANTWORT 2026-08-16:** `AcidPools` funktioniert im Spiel. Damit ist belegt,
+      dass ein **Klassenersatz** (`Unit = Class(UnitOld) { ... }`) auf `/lua/sim/Unit.lua`
+      sehr wohl greift - auch fuer Einheiten, die ueber `defaultunits.lua` erben.
+      Offen bleibt, warum der **Methodenaustausch** (`Unit.PlayAnimationThread = ...`) im
+      PlayTest-Versuch nie aufgerufen wurde. Praktische Regel bis zur Klaerung:
+      **auf `Unit.lua` die Klasse ersetzen, nicht einzelne Methoden ueberschreiben.**
+
+### Aus dem Durchgang AcidPools und test21000 (2026-08-16)
+
+- [x] **`AcidPools`: `icon` zeigte ins Leere** (`/mods/BrewLAN_Gameplay/AcidPools/...`) -
+      korrigiert auf `/mods/acidpools/acidpools.png`.
+- [x] **`AcidPools`: Endlosschleife** `while self do` - jede jemals gebaute Landeinheit
+      hinterliess einen Thread. Korrigiert auf `while not self.Dead do`.
+- [ ] **`AcidPools`: Schadensformel ohne Deckel.** Der Schaden waechst mit der
+      Verweildauer im Wasser - nach 60 Sekunden 60 Schaden **pro Tick**, also 600 pro
+      Sekunde, unbegrenzt steigend. Sieht nach Absicht aus, aber ohne Obergrenze.
+      Entscheiden, ob ein Deckel hinein soll.
+- [x] **`test21000` ausgemustert** nach `_Altlasten\test21000\`. Vollstaendig durch
+      `PlayTest` ersetzt. `BuildableCategory`-Semantik gesichert in `03_BLUEPRINTS.md`
+      Abschnitt 2a.
 - [ ] **`t4add\units\SSL0403`: drei kaputte Pfade korrigieren.**
       `/mods/brewlan/mods/BrewLAN_LOUD/units/ssl0403/...` in Z. 82, 88 und 620 - richtig
       waere `/mods/BrewLAN_LOUD/...`. Seit 2026-08-15 **belegt** kaputt (siehe oben),
