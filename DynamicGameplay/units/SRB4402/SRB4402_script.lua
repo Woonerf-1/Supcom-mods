@@ -1,3 +1,6 @@
+-- Darkness (SRB4402). Herkunft BrewLAN -> LOUD -> Colin -> hier.
+-- Abweichungen und Hintergrund: siehe SRB4402_script.md
+
 local CRadarJammerUnit = import('/lua/defaultunits.lua').RadarJammerUnit
 
 local BareBonesWeapon = import('/lua/sim/defaultweapons.lua').BareBonesWeapon
@@ -56,9 +59,9 @@ SRB4402 = Class(CRadarJammerUnit) {
 				
                 local epathR = '/effects/emitters/destruction_explosion_concussion_ring_03_emit.bp'
 				
-                CreateAttachedEmitter(self.unit, 'XRC2201', army, epathR):OffsetEmitter( 0, 4, 0 )
-                CreateAttachedEmitter(self.unit, 'XRC2201', army, epathR):ScaleEmitter( 3 ):OffsetEmitter( 0, 4, 0 )
-                CreateAttachedEmitter(self.unit, 'XRC2201', army, epathR):ScaleEmitter( 6 ):OffsetEmitter( 0, 4, 0 )
+                CreateAttachedEmitter(self.unit, 0, army, epathR):OffsetEmitter( 0, 4, 0 )
+                CreateAttachedEmitter(self.unit, 0, army, epathR):ScaleEmitter( 3 ):OffsetEmitter( 0, 4, 0 )
+                CreateAttachedEmitter(self.unit, 0, army, epathR):ScaleEmitter( 6 ):OffsetEmitter( 0, 4, 0 )
 				
                 local epathQ = '/effects/emitters/cybran_qai_shutdown_ambient_'
 				
@@ -66,13 +69,17 @@ SRB4402 = Class(CRadarJammerUnit) {
                 CreateAttachedEmitter(self.unit, 0, army, epathQ .. '02_emit.bp')
                 CreateAttachedEmitter(self.unit, 0, army, epathQ .. '03_emit.bp')
                 CreateAttachedEmitter(self.unit, 0, army, epathQ .. '04_emit.bp')
-				
+
+                -- MM-Debug, siehe SRB4402_script.md
+                local mmGetroffen = 0
+
                 for k, v in LocalUnits do
 				
 					-- apply the effect to all units execept ACU, SACU, GC or sab2306(Aeon), and Walls
                     if not EntityCategoryContains(categories.COMMAND + categories.SUBCOMMANDER + categories.ual0401 + categories.WALL, v) then
 					
                         Buff.ApplyBuff(v, 'DarknessEffect')
+                        mmGetroffen = mmGetroffen + 1
 						
                     end
 					
@@ -97,6 +104,12 @@ SRB4402 = Class(CRadarJammerUnit) {
                             v.PanopticonMarker = {}
                         end
                     end
+                end
+
+                if ScenarioInfo.MMDialog then
+                    LOG('MM: Darkness Puls - '..table.getn(LocalUnits)
+                        ..' Einheiten in Reichweite, '..mmGetroffen..' gebufft'
+                        ..' (DarknessEffect), Emitter: Blitz + 3 Ringe + 4 Flimmern')
                 end
             end,
         },

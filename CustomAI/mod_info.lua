@@ -19,6 +19,11 @@ description = "Zusaetzliche KI-Gegner zur Auswahl in der Lobby."
 author      = "Paul"
 copyright   = "none"
 
+-- Mod-Bild im Mod-Manager. Der Wert geht unveraendert an Bitmap:SetTexture()
+-- (modmanager.lua Z. 1131 und 1365). Darstellung 36x36 in der Liste,
+-- 70x70 in der Detailansicht - deshalb quadratisch zuschneiden.
+icon = "/mods/customai/customai.png"
+
 -- PFLICHT. Ohne diese Angabe waere die uid der volle Dateipfad
 -- (mods.lua, LoadModInfo, Zeile 239) - dann aendert sie sich beim Umbenennen
 -- des Ordners und der Mod ist nicht referenzierbar.

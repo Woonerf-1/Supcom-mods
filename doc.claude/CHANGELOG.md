@@ -86,6 +86,201 @@ Neueste Einträge oben. Format je Eintrag:
 
 ---
 
+## 2026-08-16 (2) - Panopticon-Abschalten geklaert, DynamicGameplay abgeschlossen
+
+- **Was:** Ursache des Panopticon-Abschaltens gefunden, Tooltip ergaenzt,
+  Debug-Instrumentierung wieder entfernt, Skript-Dokumentation nach der neuen
+  Kommentarregel angelegt
+- **Getestet:** ja - vier Testlaeufe mit `PlayTest`
+
+### Der Befund: B-03
+
+Das Panopticon schaltet sich ab einer bestimmten Ausbaustufe ab und **kommt nicht von
+selbst zurueck**. Ursache ist LOUDs `IntelWatchThread` (`gamedata\lua\lua\sim\Unit.lua`):
+
+```lua
+if GetEconomyStored( aiBrain, 'ENERGY' ) < bpVal then
+```
+
+Verglichen wird der **Vorrat** gegen den **Sekundenverbrauch** - das Einkommen kommt in der
+Formel nicht vor. Gemessen bei vollem Konto: `erhalten 1` (100 Prozent der Anforderung
+erfuellt), Einkommen ueber eine Million pro Sekunde, und trotzdem AUS, weil 19 895
+gespeichert < 65 999 Verbrauch/s.
+
+Die innere Warteschleife prueft dieselbe Bedingung und wird nie falsch - im Test ging das
+Geraet erst wieder an, nachdem Paul den Schalter von Hand betaetigt hatte.
+
+Vollstaendig als **B-03** in `mods\BasegameBugfixes.md`, mit Pauls Vorschlag fuer die
+richtige Bedingung (Bilanz negativ **und** Puffer zu klein) und dem Hinweis auf die
+Einheitenfalle Tick gegen Sekunde.
+
+**Bewusst nicht behoben.** Es waere ein Hook auf `/lua/sim/Unit.lua` - die Datei mit der
+offenen `Class()`-Frage - und ein Eingriff in LOUDs Wirtschaftslogik fuer alle Einheiten.
+Behelf: genug Energiespeicher, Faustregel **Speicher >= Sekundenverbrauch**.
+
+### Drei widerlegte Erklaerungen unterwegs
+
+| These | widerlegt durch |
+|---|---|
+| Mauern und Minen treiben den Verbrauch | leere Karte, 0 markierte Objekte |
+| Buff-Anwendung schaltet um | Umschaltungen liegen **vor** den Buffs |
+| Baubedarf der SCUs | geht auch ohne Bau aus |
+
+Eine daraufhin gebaute Anpassung an `IntelSearch` (Verbrauch nur bei Aenderung neu setzen)
+wurde getestet und **wieder zurueckgenommen** - der Beleg steht im Log: die Bedingung
+griff, und es toggelte weiter.
+
+### Neu: Beschriftung des Umschalters
+
+`DynamicGameplay\hook\lua\ui\help\tooltips.lua`. Das Blueprint verweist korrekt auf
+`helpText = 'toggle_economy_watch'`, den Text liefert aber **BrewLAN** - LOUD hat ihn nicht
+uebernommen, Colin auch nicht. LOUDs Standardtext `toggle_weapon` waere zudem falsch
+("Toggle between air and ground weaponry").
+
+Der Schalter heisst **Toggle Economy Watch** und schaltet nichts ab - er verkleinert bei
+Bedarf die Reichweite auf ein bezahlbares Mass. Logik invertiert: Bit gesetzt =
+**keine** Beschraenkung.
+
+### Sichtweiten und Verbrauch dokumentiert
+
+Alle neun Ausbaustufen mit Radar, Omni, Sicht und Energieverbrauch in
+`DynamicGameplay\units\SEB3404\SEB3404_Script.md`. Voll ausgebaut: Radar 1115, Omni 394,
+Sicht unveraendert 16, **66 000 Energie/s** (x10,25 gegenueber Grundausbau). Kein Sonar.
+
+Dazu die Erklaerung, warum die Anzeige `-29999` statt `-30000` zeigt: LOUDs
+Multiplikatoren sind rueckwaerts gerechnet, das Ergebnis verfehlt die glatte Zahl um
+Tausendstel, und die Anzeige schneidet ab.
+
+### Skript-Dokumentation nach der neuen Kommentarregel
+
+Keine erklaerenden Kommentare mehr im Code - stattdessen eine `.md` daneben mit Verweis im
+Kurzkommentar:
+
+| Code | Doku |
+|---|---|
+| `DynamicGameplay\units\SEB3404\SEB3404_Script.lua` | `SEB3404_Script.md` |
+| `DynamicGameplay\units\SRB4402\SRB4402_script.lua` | `SRB4402_script.md` |
+| `DynamicGameplay\hook\lua\ui\help\tooltips.lua` | `tooltips.md` |
+| die vier `PlayTest`-Hooks | `PlayTest\hook\lua\hooks.md` |
+
+### Aufgeraeumt
+
+Alle `MM:`-Ausgaben aus `SEB3404_Script.lua` entfernt, `BuffDialog` wieder
+auskommentiert. Die Datei ist gegenueber LOUD jetzt **nur noch in Colins einer Zeile**
+veraendert. Im Darkness bleibt die Ausgabe, bis dessen Knochen-Korrektur im Log bestaetigt
+ist - der Effekt ist im Spiel bereits gesehen.
+
+### Vorschlag Commit-Nachricht
+
+```
+Panopticon-Abschalten geklaert (B-03); Tooltip; Skript-Doku
+
+- BasegameBugfixes B-03: IntelWatchThread vergleicht Vorrat gegen
+  Sekundenverbrauch, ignoriert das Einkommen, kein Rueckweg
+- DynamicGameplay: tooltips.lua aus BrewLAN ergaenzt (Toggle Economy Watch)
+- SEB3404_Script.lua: Debug entfernt, versuchte Anpassung zurueckgenommen
+- Doku neben den Code: SEB3404_Script.md, SRB4402_script.md, tooltips.md,
+  PlayTest/hook/lua/hooks.md
+- PlayTest: BuffDialog wieder aus
+
+DynamicGameplay damit abgeschlossen bis auf die vertagte Panopticon-Entscheidung.
+```
+
+---
+
+## 2026-08-16 - DynamicGameplay fertig, PlayTest ausgebaut, Fundstellenregister
+
+- **Was:** Durchgang `DynamicGameplay` abgeschlossen, Darkness-Effekt korrigiert,
+  `PlayTest` zur Testumgebung ausgebaut, zwei LOUD-Fehler dokumentiert, neues
+  Kartenpruefskript
+- **Getestet:** teilweise - `PlayTest` im Spiel bestaetigt, Darkness-Korrektur noch nicht
+
+### DynamicGameplay
+
+- umbenannt von `dynamic_gameplay`, GUID `8837F2BC-7C07-4CCF-8F80-34F545858442`,
+  `conflicts` gegen **BrewLAN** und **BlackOps**, Mod-Bild gesetzt
+- Ballast nach `_Altlasten\DynamicGameplay\`: `VersionCheck.lua`, `AdjacencyBuffs.lua`,
+  `Buff.lua`, eine Sicherungskopie, dazu toter `BrewLANPath`-Code in zwei Scripts
+- `unitdescription.lua` von zehn auf drei Eintraege gekuerzt; die uebrigen sieben
+  betreffen `t4add` und liegen in `_Altlasten`
+- Dreifachvergleich **LOUD -> Colin -> unser** fuer alle acht Dateien: der Extrakt
+  aendert **kein** Spielverhalten, nur Pfade und Importe
+
+**Darkness-Effekt korrigiert** (`SRB4402_script.lua`): die drei Schockwellenring-Emitter
+hingen am Knochen `'XRC2201'`. Die Knochentabelle beider Modelle wurde aus dem SCM-Format
+gelesen - jedes hat genau einen Knochen, benannt je Detailstufe unterschiedlich
+(`XRC2201` im LOD0, `lod1_XRC2201` im LOD1). Aus groesserer Kameraentfernung existierte
+der Knochen also nicht. **Die Zeilen stehen vor dem Buff und vor dem Entfernen der
+Panopticon-Markierungen** - ein Abbruch dort haette den Darkness vollstaendig wirkungslos
+gemacht. Korrektur auf Knochen `0`, LOD-unabhaengig. Der Fehler stammt aus **BrewLAN** und
+wurde von **LOUD** und **Colin** unveraendert uebernommen.
+
+**Panopticon bleibt wie von Colin gestaltet**, Entscheidung vertagt. Die Wirkung ist
+dokumentiert: Suchradius 560 -> 212 (voll ausgebaut 1115 -> 394), dazu Mauern und Minen
+nicht mehr ausgenommen.
+
+### Zwei Fehlbefunde richtiggestellt
+
+- **`DarknessEffect` ist LOUD-eigen**, `gamedata\lua\lua\sim\buffdefinitions.lua` Z. 217
+  (Sicht x0,9, Radar x0,85, Omni x0,75, 20,1 s, stapelnd). Frueher als "nirgends
+  definiert" notiert - es war nur nach BrewLANs Namen `DarknessOmniNerf` gesucht worden.
+- **Die neun Panopticon-Buffs** sind in derselben Datei definiert, mit gegenueber BrewLAN
+  entschaerften Werten. Ursache des Fehlbefunds: `Filesystem:search_files` ist
+  **gross-/kleinschreibungsempfindlich**, `buffdefinitions.lua` fiel durch das Muster
+  `**/*Buff*`.
+
+Beides steht als Richtigstellung in `mods\DynamicGameplay.md` und
+`_Altlasten\README.md` - nicht stillschweigend geloescht.
+
+### PlayTest
+
+Neu: `hook\lua\simInit.lua` (vier SCUs je ACU, alle Fraktionen),
+`hook\lua\system\Blueprints.lua` (Produktion x1000, Massespeicher x100),
+`hook\lua\aibrain.lua` (Debug-Schalter). Dokumentiert in `mods\PlayTest.md`.
+
+**Eigener Schalter `ScenarioInfo.MMDialog`** mit Praefix `MM:` - unsere Feature-Mods
+belegen damit ihr Verhalten. Ausgewertet im Panopticon und im Darkness. Die
+Panopticon-Ausgaben sollen klaeren, warum es sich immer wieder abschaltet.
+
+`ScenarioInfo.norushradius` wird ergaenzt, falls die Lobby sie nicht liefert - die
+CustomAI-Warnung entfaellt damit.
+
+**Nebenbefund:** die Meldung `Paul is trying to cheat!` stammt von **unserem** PlayTest -
+`CreateUnitHPR` laesst die Engine die Einheiten in `Sync.Cheaters` vermerken.
+
+### Neue Fundstellen in BasegameBugfixes
+
+- **B-01** `construction.lua` Z. 1427/1431 reicht `sortedOptions.selection[1]` ungeprueft
+  weiter - stuerzt bei schnellen Upgrades ab. LOUD macht es Z. 659 derselben Datei richtig.
+- **B-02** `maputil.lua` Z. 92/98: `local mapName = 'Unknown' or scenario.name` - der
+  `or`-Zweig greift nie, jede Kartenwarnung nennt "Unknown".
+
+**Beide sollten an das LOUD-Projekt gemeldet werden.** Steht so im Register.
+
+### Neues Werkzeug
+
+`tools\Test-Maps.ps1` - prueft `maps\` und `usermaps\` auf Szenarien mit fehlender
+`save`-, `script`- oder `map`-Datei und auf fehlende `armies`-Tabelle. Loest VFS-Pfade in
+beiden Wurzeln auf, weil beide Ordner nach `/maps/` gemountet werden. Behelf gegen B-02.
+
+### Vorschlag Commit-Nachricht
+
+```
+DynamicGameplay fertig; PlayTest als Testumgebung; Fundstellenregister
+
+- SRB4402: Schockwellen-Emitter auf Knochen 0 (LOD-unabhaengig)
+- DynamicGameplay: Ballast nach _Altlasten, unitdescription gekuerzt
+- PlayTest: SCU-Spawn, Produktion x1000, Massespeicher x100, MMDialog
+- DynamicGameplay: MM-Debugausgaben in Panopticon und Darkness
+- BasegameBugfixes: B-01 construction.lua, B-02 maputil.lua dokumentiert
+- tools/Test-Maps.ps1 neu
+- Richtigstellung: DarknessEffect und Panopticon-Buffs sind LOUD-eigen
+
+Darkness-Korrektur ungetestet.
+```
+
+---
+
 ## 2026-08-15 (7) - Testlaeufe: wie loest die Engine .sca-Pfade auf?
 
 - **Was:** Drei Testlaeufe zur Aufloesung von Animationspfaden; Regel in

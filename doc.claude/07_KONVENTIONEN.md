@@ -25,11 +25,76 @@
   da `U`, `X`, `D`, `B`, `Z` bereits durch Vanilla und die LOUD-Pakete belegt sind.
 - **Vor Vergabe prüfen:** `search_files` über `gamedata.entpackt` *und* `usermods` nach der ID.
 
-## 4. Pfadangaben in Blueprints
+## 4. Quellen benennen
+
+**Regel: nie "das Original" schreiben.** Bei jeder Aussage ueber fremden Code gehoert dazu,
+**welche** Fassung gemeint ist. An unseren Einheiten haengen bis zu fuenf, und sie
+unterscheiden sich inhaltlich - nicht nur in Pfaden.
+
+### 4.1 Die fuenf Quellen
+
+| Kuerzel | Was | Wo nachschlagen |
+|---|---|---|
+| **FAF** | FAForever - Weiterentwicklung des Basisspiels | `github.com/FAForever/fa` |
+| **BrewLAN** | Balthazars Originalmod | `github.com/The-Balthazar/BrewLAN` |
+| **BlackOps** | Lt_hawkeyes Originalmod | (Repo bisher nicht ermittelt) |
+| **LOUD** | LOUDs angepasste Fassung der Fremdmods **und** eigener Spielcode | `github.com/LOUD-Project/Git-LOUD`, gespiegelt in `LOUD\gamedata.entpackt\` |
+| **Colin** | `usermods\UEF_trans_men\` - der Sammelmod, aus dem wir ableiten | lokal |
+| **unser** | `SquareShields`, `ImprovedHydrocarbonPowerPlants`, `DynamicGameplay`, `t4add` | lokal |
+
+**LOUD und der jeweilige Fremdmod sind nicht dasselbe.** LOUD uebernimmt nicht identisch -
+beim Panopticon (`SEB3404`) hat LOUD saemtliche Buff-Multiplikatoren neu gesetzt, beim
+Darkness (`SRB4402`) den Buffnamen geaendert und die Definition nicht mitgenommen.
+
+### 4.2 Schreibweise
+
+Statt "gegen das Original gediffed" also:
+
+> gegen **LOUD** gediffed (`gamedata.entpackt\brewlan\mods\BrewLAN_LOUD\units\SEB3404\`)
+
+Bei Ketten die Richtung angeben:
+
+> BrewLAN -> LOUD -> Colin -> unser
+
+Wo ein Wert aus einer anderen Quelle stammt als der umgebende Code, gehoert das **in die
+Datei selbst**, nicht nur in die Dokumentation. Genau daran ist Colins Darkness
+gescheitert: er hat LOUDs Unit-Script mit BrewLANs `Buff.lua` kombiniert, ohne es zu
+vermerken - und die beiden sprechen ueber unterschiedliche Buffnamen.
+
+### 4.3 Repos holen
+
+Die Repos lassen sich klonen; das ist der einzige Weg zu einer **Volltextsuche**.
+`Filesystem:search_files` findet nur Dateinamen - und ist zudem **gross-/kleinschreibungs-
+empfindlich**, der VFS im Spiel dagegen nicht. Das hat schon zu einem Fehlbefund gefuehrt:
+`buffdefinitions.lua` wurde mit dem Muster `**/*Buff*` nicht gefunden, obwohl die Datei
+existiert.
+
+```bash
+git clone --depth 1 --filter=blob:none --sparse https://github.com/LOUD-Project/Git-LOUD.git
+git clone --depth 1 --filter=blob:none --sparse https://github.com/The-Balthazar/BrewLAN.git
+git clone --depth 1 --filter=blob:none --sparse https://github.com/FAForever/fa.git
+```
+
+Danach `git sparse-checkout set <pfad>` fuer den benoetigten Teil, dann `grep -rn`.
+
+### 4.4 Beispiel: der Darkness-Buff durch alle Quellen
+
+| Quelle | Aufruf im Unit-Script | Definition des Buffs | `OmniRadius` in `Buff.lua` |
+|---|---|---|---|
+| **FAF** | kennt `SRB4402` nicht | - | vorhanden, `Buff.lua` Z. 437 |
+| **BrewLAN** | `DarknessOmniNerf` | `hook/lua/sim/buffdefinitions.lua` Z. 27: `Mult = 0.6`, `Duration = 20.1` | per eigenem Hook nachgeruestet, nur fuer Nicht-FAF |
+| **LOUD** | `DarknessEffect` | **fehlt** | vorhanden, `Buff.lua` Z. 546 |
+| **Colin** | `DarknessEffect` | **fehlt** | BrewLANs Hook mitgeschleppt - behandelt `DarknessOmniNerf`, liegt unter `lua\` statt `hook\lua\` |
+| **unser** | `DarknessEffect` | **fehlt** | erbt LOUDs |
+
+Beide Negativbefunde sind per Volltextsuche ueber das gesamte jeweilige Repo belegt, nicht
+nur stichprobenartig.
+
+## 5. Pfadangaben in Blueprints
 
 **Belegt durch drei Testlaeufe am 2026-08-15** (`PlayTest`, Auswertung im CHANGELOG).
 
-### 4.1 `.sca`-Animationen: immer vollstaendiger VFS-Pfad
+### 5.1 `.sca`-Animationen: immer vollstaendiger VFS-Pfad
 
 Animationspfade in `Display.AnimationWalk`, `Display.AnimationDeath`,
 `TransportAnimation` und Verwandten werden **strikt und absolut** aufgeloest.
@@ -50,7 +115,7 @@ blossen Dateinamen und **keine** Suche innerhalb von `/units/`.
 (`gamedata.entpackt\lua\lua\system\Blueprints.lua`, `ExtractMeshBlueprint`, Z. 177-183).
 Die Analogie traegt nicht - wer sie annimmt, baut still kaputte Pfade.
 
-### 4.2 Fehlschlaege bleiben stumm
+### 5.2 Fehlschlaege bleiben stumm
 
 Ein ungueltiger Animationspfad erzeugt **keine** Meldung im `LOUD.log` - weder `error:`
 noch `warning:`. In allen drei Testlaeufen blieb das Log unauffaellig. Der Fehler faellt
@@ -59,7 +124,7 @@ nur beim Hinsehen auf: die Einheit gleitet starr ueber den Boden, statt zu laufe
 **Konsequenz fuer die Fehlersuche:** "nichts im Log" ist bei Animationen kein Beleg fuer
 "alles in Ordnung".
 
-### 4.3 Folge: Mods sind an ihren Ordnernamen gebunden
+### 5.3 Folge: Mods sind an ihren Ordnernamen gebunden
 
 Jeder absolute `/mods/<n>/...`-Pfad bindet den Mod an seinen Ordnernamen.
 
@@ -71,14 +136,14 @@ Blueprint, eine in einem Unit-Script.
 Gegenprobe vor dem Umbenennen: findet die Suche nichts, ist der Mod frei
 (so bei `HCPP` -> `ImprovedHydrocarbonPowerPlants`).
 
-### 4.4 Bekannte kaputte Pfade im Fremdmaterial
+### 5.4 Bekannte kaputte Pfade im Fremdmaterial
 
 | Datei | Pfad | Befund |
 |---|---|---|
-| `LOUD Unit Additions`, `XSBSSG01` und `XSBSSG02` | `/units/XSBSSG01/XSBSSG01_ADeath1.sca` | `/units/XSBSSG01/` existiert nicht - Thanatos hat dort keine Todesanimation. In `usermods\SquareShields\` korrigiert. |
-| `usermods\t4add\units\SSL0403` | `/mods/brewlan/mods/BrewLAN_LOUD/units/ssl0403/...` (3x) | `/mods/brewlan/` existiert nicht; richtig waere `/mods/BrewLAN_LOUD/...`. Vom Kollegen eingebaut, im Original korrekt. **Noch nicht korrigiert.** |
+| **LOUD**, `LOUD Unit Additions`, `XSBSSG01` und `XSBSSG02` | `/units/XSBSSG01/XSBSSG01_ADeath1.sca` | `/units/XSBSSG01/` existiert nicht - Thanatos hat dort keine Todesanimation. In **unserem** `SquareShields` korrigiert. |
+| **unser** `t4add\units\SSL0403` (von **Colin**) | `/mods/brewlan/mods/BrewLAN_LOUD/units/ssl0403/...` (3x) | `/mods/brewlan/` existiert nicht; richtig waere `/mods/BrewLAN_LOUD/...`. Bei **LOUD** korrekt. **Noch nicht korrigiert.** |
 
-## 5. Lua-Codestil
+## 6. Lua-Codestil
 
 - **Stil der Originaldatei übernehmen.** Der Engine-Lua-Dialekt ist alt (siehe `04_LUA_SIM.md` §2);
   modernes Lua 5.1+ funktioniert hier teilweise nicht.

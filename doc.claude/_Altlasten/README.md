@@ -20,10 +20,63 @@ Verwandter Ordner: `_ausrangiert\` - dort liegt aelteres Material aus der KI-Arb
 
 ---
 
-## DynamicGameplay (2026-08-15)
+## test21000 (2026-08-16)
 
-Entfernt beim vollstaendigen Durchgang des Mods. Dreifachvergleich Original ->
-`UEF_trans_men` -> Extrakt in `doc.claude\mods\DynamicGameplay.md`.
+Colins Cheat-Mod fuer den UEF-Kommandanten. **Vollstaendig durch `PlayTest` ersetzt**,
+deshalb aus `usermods\` entfernt.
+
+| | |
+|---|---|
+| Autor | Colin |
+| uid | `12345678901234567890test21000` (keine GUID) |
+| Beschreibung im Mod | "DID YOU SAY YOU WANTED RESCOURESSSS?????!!!!!" |
+| Inhalt | ein einziger Blueprint: `units\UEL0001\` (UEF-ACU), Vollersatz |
+
+Die `.sca`-, `.scm`- und `.dds`-Dateien lagen unveraendert mit im Ordner und liegen hier
+unter `restliche_dateien\`.
+
+### Was er geaendert hat
+
+19 Zeilen gegenueber **LOUD** (`gamedata\units\units\UEL0001\UEL0001_unit.bp`):
+
+| Feld | LOUD | test21000 |
+|---|---:|---:|
+| `BuildRate` | 10 | 1 000 |
+| `MaxBuildDistance` | 10 | 100 |
+| `ProductionPerSecondEnergy` | 20 | 1 000 000 |
+| `ProductionPerSecondMass` | 2 | 10 000 |
+| `StorageEnergy` | 5 000 | 4 000 |
+| `BuildableCategory` | vier `BUILTBY*`-Eintraege | `'UEF'`, `'AEON'`, `'SERAPHIM'`, `'CYBRAN'`, `'NOMADS'` |
+
+Der `NOMADS`-Eintrag zeigt, dass er das mit aktivem Nomads-Mod benutzt hat.
+
+### Warum ersetzt
+
+| | test21000 | PlayTest |
+|---|---|---|
+| Ansatz | ACU-Blueprint **vollstaendig ersetzen** | vier SCUs spawnen, Werte per `ModBlueprints` |
+| Baumenue | alles in einem Menue, bei aktiven Zusatzmods mehrere hundert Eintraege | je SCU das gewohnte Fraktionsmenue mit Tech-Stufen |
+| Kollisionen | jeder andere Mod an `UEL0001` - z. B. `usermods\commanders\` | keiner, kein Basis-Blueprint angefasst |
+| Dokumentiert | nein | ja |
+
+### Der Mehrwert, der bleibt
+
+Die Semantik von `BuildableCategory` - festgehalten in `03_BLUEPRINTS.md`.
+Kurz: Leerzeichen innerhalb eines Eintrags = **UND**, mehrere Eintraege = **ODER**.
+Colin hat schlicht die `BUILTBY*`-Bedingung weggelassen, damit faellt die gesamte
+Staffelung weg.
+
+Umsichtig war nur, dass er die fuenf Fraktionen einzeln aufzaehlt statt `'ALLUNITS'` zu
+schreiben - das haelt Zivilgebaeude und Sonderobjekte ohne Fraktionskategorie aus dem
+Baumenue heraus.
+
+Das stuetzt nebenbei unsere Lesart in `SquareShields`, wo `BuildableCategory = { }` gesetzt
+wurde, um die Aufstiegsstufe zu entfernen: eine leere Liste heisst "kein Ausdruck trifft
+zu", also nichts baubar. **Bewiesen ist das damit nicht**, die Lesart ist aber konsistent.
+
+---
+
+## DynamicGameplay (2026-08-15)
 
 | Datei | kam aus | Grund |
 |---|---|---|
@@ -33,35 +86,35 @@ Entfernt beim vollstaendigen Durchgang des Mods. Dreifachvergleich Original ->
 | `BSB2402_Script.lua.original` | `units\BSB2402\` | Sicherungskopie des Kollegen. Wird nicht geladen (`.lua.original` ist keine `.lua`), gehoert aber nicht in einen Mod. |
 | `unitdescription.lua.vollstaendig` | `hook\lua\ui\help\` | vollstaendige Fassung mit zehn Eintraegen. Im Mod verblieben sind nur die drei zu `seb3404`; die uebrigen sieben betreffen `t4add`. |
 
-### Offener Punkt: DarknessEffect
+### Offener Punkt: DarknessEffect - ERLEDIGT, frueherer Befund war falsch
 
-`SRB4402_script.lua` Z. 76 ruft `Buff.ApplyBuff(v, 'DarknessEffect')` auf. Dieser Buff ist
-**nirgends definiert** - nicht in LOUDs `AdjacencyBuffs.lua`, nicht in `Buff.lua`, nicht in
-der hier abgelegten `AdjacencyBuffs.lua`, und auch nicht im vollstaendigen BrewLAN.
+**Richtigstellung 2026-08-16.** `DarknessEffect` ist sehr wohl definiert - **LOUD-eigen**,
+in `gamedata\lua\lua\sim\buffdefinitions.lua` Z. 217:
 
-Durchsucht am 2026-08-15:
+```lua
+BuffBlueprint { Name = 'DarknessEffect',
+    BuffType = 'COUNTERINTEL', Stacks = 'ALWAYS', Duration = 20.1,
+    Affects = {
+        VisionRadius = { Add = 0, Mult = 0.9  },
+        RadarRadius  = { BuffCheckFunction = AdjBuffFuncs.RadarRadiusBuffCheck, Add = 0, Mult = 0.85 },
+        OmniRadius   = { BuffCheckFunction = AdjBuffFuncs.OmniRadiusBuffCheck,  Add = 0, Mult = 0.75 },
+    },
+    Effects = { '/effects/emitters/jammer_ambient_01_emit.bp',
+                '/effects/emitters/jammer_ambient_02_emit.bp' },
+}
+```
 
-| Datei | Treffer |
-|---|---|
-| `BrewLAN_Units\BrewResearch\hook\lua\sim\buffdefinitions.lua` | nein - nur `ResearchItemBuff1-5`, `ResearchAIBuff`, `ResearchAIxBuff` |
-| `BrewLAN_Units\BrewResearch\hook\lua\sim\AdjacencyBuffs.lua` | nein |
-| `BrewLAN_LOUD\hook\lua\sim\Unit.lua` | nein |
-| `BrewLAN_LOUD\hook\lua\system\Blueprints.lua` | nur `ual0401 = {'DARKNESSIMMUNE'}` Z. 239 - eine **Kategorie**, kein Buff |
-| `BrewLAN_LOUD\lua\defaultunits.lua` | nein, kein einziges `BuffBlueprint` |
-| LOUD `/lua/sim/AdjacencyBuffs.lua`, `/lua/sim/Buff.lua` | nein |
+LOUD hat BrewLANs reinen Omni-Nerf also **nicht weggelassen, sondern ersetzt und
+ausgebaut** - er wirkt jetzt auf Sicht, Radar und Omni, mit Buff-Check-Funktionen und
+eigenen Effekten am betroffenen Gegner.
 
-**Der Aufruf laeuft also schon im BrewLAN-Original ins Leere.** Dazu passt, dass die hier
-abgelegte `Buff.lua` einen **anderen** Namen behandelt (`DarknessOmniNerf`) - das sieht
-nach einer Umbenennung aus, bei der eine Stelle nicht mitgezogen wurde. Der eigentliche
-Effekt des Darkness laeuft ueber `SetIntelRadius('Omni', ...)`, nicht ueber einen
-Adjacency-Buff.
+**Warum der Fehlbefund entstand:** es wurde ueber das LOUD-Repo nach BrewLANs Namen
+`DarknessOmniNerf` gesucht (null Treffer, korrekt) - und daraus geschlossen, es gebe keine
+Definition. Nach `DarknessEffect` wurde nie gesucht. Ein Suchbegriff zu wenig.
 
-**Bewusst nicht geaendert** (Entscheidung 2026-08-15). Der Aufruf steht wortgleich im
-Original; solange nicht belegt ist, dass er schadet, ist Nichtstun die kleinere Aenderung.
+Damit war das Verschieben der `Buff.lua` hierher trotzdem richtig, nur aus anderem Grund:
+nicht "Patch am toten Ort fuer einen fehlenden Buff", sondern **BrewLAN-Altlast, die LOUD
+laengst durch Eigenes ersetzt hat**.
 
-**Einschraenkung:** es wurden die plausiblen Kandidaten gelesen, nicht alle rund 30
-Lua-Dateien in BrewLAN. `search_files` findet nur Dateinamen, keine Inhalte - ein
-vollstaendiger Negativbeweis braucht ein Skript in `doc.claude\tools\`
-(`CLAUDE.md` Abschnitt 4). Das Ergebnis ist **wahrscheinlich, nicht bewiesen**.
-
-Steht in `TODO.md`.
+Der Darkness funktioniert in LOUD. Was tatsaechlich fehlte, war der optische Effekt - und
+dessen Ursache liegt woanders, siehe `mods\DynamicGameplay.md` Abschnitt 5.2.

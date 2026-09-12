@@ -15,9 +15,42 @@ Ausführliche Doku: [`..\14_TOOLS.md`](../14_TOOLS.md)
 |---|---|---|
 | `Get-Units.ps1` | erzeugt die vollständige Einheitenliste nach `..\units\` | keine, **nur lesend** |
 | `Expand-Gamedata.ps1` | entpackt `.scd`-Archive nach `gamedata.entpackt\` | Schreibrechte im Zielordner |
+| `Test-Maps.ps1` | prüft `maps\` und `usermaps\` auf unvollständige Szenarien | keine, **nur lesend** |
 | `scd_als_ordner_an.reg` | `.scd` im Explorer als gepackten Ordner anzeigen | nur aktueller Benutzer, **keine Adminrechte** |
 | `scd_als_ordner_aus.reg` | dasselbe rückgängig machen | nur aktueller Benutzer |
 | `scd_als_ordner_an_systemweit.reg` | Variante für alle Benutzer | **Adminrechte nötig** |
+
+---
+
+## Karten prüfen
+
+```powershell
+cd "C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\doc.claude\tools"
+.\Test-Maps.ps1              # beide Ordner
+.\Test-Maps.ps1 -NurFehler   # nur die auffälligen Karten
+.\Test-Maps.ps1 -Ordner usermaps
+```
+
+Liest jede `*_scenario.lua` in `maps\` **und** `usermaps\`, zieht die Felder `map`, `save`
+und `script` heraus und prüft, ob die Dateien existieren. Zusätzlich, ob eine
+`armies`-Tabelle vorhanden ist — beides fragt LOUD in `IsScenarioPlayable()` ab
+(`gamedata\lua\lua\ui\maputil.lua`). Fällt eine Karte durch, erscheint sie **nicht** in
+der Kartenauswahl.
+
+**Warum es das Skript braucht:** LOUDs Warnung nennt die Karte nie beim Namen.
+
+```lua
+local mapName = 'Unknown' or scenario.name      -- Z. 92 und 98
+```
+
+`'Unknown'` ist immer wahr, der `or`-Zweig greift nie — im Log steht deshalb nur
+`Map Unknown is missing a save file!`. Dokumentiert als Fundstelle **B-02** in
+`..\mods\BasegameBugfixes.md`.
+
+**Beide Ordner werden ins VFS nach `/maps/` gemountet.** Ein Szenario in `usermaps\` kann
+deshalb auf eine Datei in `maps\` verweisen und umgekehrt. Das Skript sucht in beiden
+Wurzeln auf; ein naiver Vergleich nur innerhalb des Kartenordners meldet Fehler, die
+keine sind.
 
 ---
 

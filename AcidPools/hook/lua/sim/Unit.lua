@@ -19,7 +19,7 @@ Unit = Class(UnitOld) {
         end
 
         local damage = 0
-        while self do
+        while not self.Dead do
             local layer = self:GetCurrentLayer()
             if layer == 'Water' or layer == 'Seabed' or layer == 'Sub' then
                 if damage == 0 then

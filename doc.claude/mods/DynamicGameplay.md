@@ -35,13 +35,15 @@ beweglicher machen sollen - ohne die uebrigen rund 200 Einheiten der beiden Quel
 usermods\DynamicGameplay\
   mod_info.lua
   hook\lua\ui\help\unitdescription.lua      3 Zeilen
-  units\BSB2402\    7 Dateien
-  units\BSL0005\    6 Dateien
-  units\SEB3404\   16 Dateien
-  units\SRB4402\    3 Dateien
+  hook\lua\ui\help\tooltips.lua             2 Eintraege, Beschriftung des Umschalters
+  units\BSB2402\   7 Dateien
+  units\BSL0005\   6 Dateien
+  units\SEB3404\  16 Dateien
+  units\SRB4402\   3 Dateien
 ```
 
 Kein `lua\`, kein `shadow\`, kein `config.lua`, kein `icons\`, kein `sounds\`.
+Dazu je eine `.md` neben den angefassten Lua-Dateien, siehe Abschnitt 11.
 
 Das Mod-Bild ist das Bausymbol des Panopticon:
 `icon = "/textures/ui/common/icons/units/SEB3404_icon.dds"` - ein reiner VFS-Pfad, es
@@ -88,21 +90,94 @@ inhaltlichen Abweichungen stammen aus `UEF_trans_men`.
 
 ## 5. Aenderungen
 
-### 5.1 Bewusst uebernommene Verhaltensabweichungen
+### 5.1 Bewusst uebernommene Verhaltensabweichungen Colins
 
-Aus `UEF_trans_men`, **als gewuenscht bestaetigt am 2026-08-15**:
+Aus **Colin**, **als gewuenscht bestaetigt** am 2026-08-15 und 2026-08-16:
 
-| Datei | Zeile | Original | jetzt |
+| Datei | Zeile | LOUD | jetzt |
 |---|---|---|---|
 | `SEB3404_Script.lua` | 72 | `SELECTABLE - COMMAND - SUBCOMMANDER - WALL - HEAVYWALL - MEDIUMWALL - MINE` | `SELECTABLE - COMMAND - SUBCOMMANDER` |
 | `SEB3404_Script.lua` | 72 | `self:GetIntelRadius('radar')` | `self:GetIntelRadius('omni')` |
 | `SRB4402_script.lua` | 74 | `... + categories.ual0401 + categories.sab2306 + categories.WALL` | ohne `sab2306` |
 
-Wirkung: das **Panopticon** markiert zusaetzlich Mauern und Minen und arbeitet mit dem
-Omni- statt dem Radar-Radius. Der **Darkness** trifft Aeons Aria (`sab2306`,
-BrewLANs T3-Punktverteidigung) mit; LOUD nimmt sie im Original aus.
+**Panopticon (`SEB3404`):** bleibt wie von Colin gestaltet. Die Wirkung ist erheblich und
+sollte bekannt sein, bevor darueber entschieden wird:
 
-### 5.2 Entfernter Ballast
+| | LOUD | Colin / jetzt |
+|---|---:|---:|
+| Suchradius ohne Ausbau | 560 (Radar) | **212** (Omni) |
+| Suchradius voll ausgebaut | 1115 | **394** |
+| markierte Objekte | ohne Mauern und Minen | **mit** Mauern und Minen |
+
+Der Suchradius sinkt also auf gut ein Drittel, gleichzeitig werden mehr Objekte markiert -
+und jedes markierte Objekt kostet Unterhalt (`IntelSearch` rechnet die Kosten je Einheit).
+Die beiden Teilaenderungen wirken gegeneinander; nach den Anhaltspunkten in
+`18_ABLEITUNG.md` Abschnitt 0 spricht das eher fuer Versehen als fuer Absicht.
+
+**Entscheidung vertagt** - Colins Fassung bleibt bis dahin unveraendert.
+
+**Darkness (`SRB4402`):** Aeons Aria (`sab2306`) wird vom Darkness mitgetroffen. LOUD nimmt
+sie aus, Colin nicht.
+
+### 5.2 Korrigiert: der Schockwellen-Effekt des Darkness
+
+Einzelheiten in `usermods\DynamicGameplay\units\SRB4402\SRB4402_script.md`.
+
+Kurz: die drei Schockwellenring-Emitter hingen am Knochen `'XRC2201'`. Beide Modelle haben
+genau einen Knochen, und er heisst je Detailstufe anders (`XRC2201` im LOD0,
+`lod1_XRC2201` im LOD1) - aus groesserer Kameraentfernung existierte er also nicht. Die
+Zeilen stehen vor dem Buff und vor dem Entfernen der Panopticon-Markierungen; ein Abbruch
+dort haette den Darkness vollstaendig wirkungslos gemacht. Jetzt Knochen `0`,
+LOD-unabhaengig. Der Fehler stammt aus **BrewLAN**.
+
+### 5.3 Das Panopticon schaltet sich ab - Ursache geklaert, nicht behoben
+
+Mehrere Testlaeufe am 2026-08-16. Das Geraet schaltet sich ab einer bestimmten Ausbaustufe
+ab und kommt **nicht von selbst zurueck** - im Test erst, nachdem Paul den Schalter von
+Hand betaetigt hat.
+
+**Es liegt nicht an unserem Extrakt und nicht an Colin.** Ursache ist LOUDs
+`IntelWatchThread` (`gamedata\lua\lua\sim\Unit.lua`), der den gespeicherten
+Energievorrat gegen den **Sekundenverbrauch** vergleicht - das Einkommen kommt in der
+Formel nicht vor. Vollstaendige Analyse als Fundstelle **B-03** in
+`mods\BasegameBugfixes.md`.
+
+Gemessen bei vollem Konto:
+
+```
+MM: Panopticon - Intel AUS | erhalten 1 | Verbrauch 0 | Einkommen 103502
+                           | angefordert 6600 | gespeichert 19895 | Upkeep 6440
+```
+
+`erhalten 1` heisst 100 Prozent der Anforderung erfuellt, bei ueber einer Million
+Einkommen pro Sekunde. Abgeschaltet wird trotzdem, weil 19 895 gespeichert < 65 999
+Verbrauch/s.
+
+**Faustregel im Spiel: Energiespeicher >= Sekundenverbrauch.**
+
+| Ausbaustufe | Verbrauch/s | T1-Speicher (3 000) |
+|---|---:|---:|
+| Grundausbau | 6 440 | 3 |
+| Med_Dish_002 | 18 150 | 7 |
+| Small_Dish_003 | 30 000 | 10 |
+| Med_Dish_004 | 66 000 | **22** |
+
+Sichtweiten und Verbrauch aller neun Stufen stehen in
+`usermods\DynamicGameplay\units\SEB3404\SEB3404_Script.md`.
+
+**Entscheidung 2026-08-16: nicht anfassen.** Eine Anpassung an `IntelSearch` wurde gebaut,
+getestet und wieder zurueckgenommen - sie loeste das Problem nicht.
+
+### 5.4 Neu: Beschriftung des Panopticon-Schalters
+
+`hook\lua\ui\help\tooltips.lua`, zwei Eintraege aus BrewLAN. Ohne sie bleibt der
+Umschalter unbeschriftet, und LOUDs Standardtext waere zudem falsch. Einzelheiten in
+`usermods\DynamicGameplay\hook\lua\ui\help\tooltips.md`.
+
+Der Schalter heisst **Toggle Economy Watch** und schaltet nichts ab - er verkleinert bei
+Bedarf die Reichweite auf ein bezahlbares Mass.
+
+### 5.5 Entfernter Ballast
 
 | Was | wo | Grund |
 |---|---|---|
@@ -122,7 +197,7 @@ Nach `doc.claude\_Altlasten\DynamicGameplay\` verschoben:
 | `units\BSB2402\BSB2402_Script.lua.original` | Sicherungskopie |
 | `unitdescription.lua` (sieben von zehn Eintraegen) | betreffen `t4add`, nicht diesen Mod |
 
-### 5.3 Pfadumschreibungen
+### 5.6 Pfadumschreibungen
 
 Notwendig geworden durch die Umbenennung des Ordners - `.sca`- und Mesh-Pfade werden
 strikt absolut aufgeloest (`07_KONVENTIONEN.md` Abschnitt 4):
@@ -136,7 +211,7 @@ strikt absolut aufgeloest (`07_KONVENTIONEN.md` Abschnitt 4):
 und fehlte mit einem absichtlich verbogenen - das war die A/B-Gegenprobe zum
 Pfadtest vom 2026-08-15.
 
-### 5.4 `mod_info.lua`
+### 5.7 `mod_info.lua`
 
 | Feld | Alt | Neu |
 |---|---|---|
@@ -259,27 +334,51 @@ Sim-Mod, also von allen Spielern benoetigt.
 | 2026-08-15 | Mod gemountet und aktiv | `Mounting mod 'dynamicgameplay'` im Log |
 | 2026-08-15 | `unitdescription.lua`-Hook greift | `Hooked /lua/ui/help/unitdescription.lua with /mods/dynamicgameplay/...` |
 | 2026-08-15 | Rift Gate gebaut und gesprengt, Todesanimation | **laeuft** - mit verbogenem Pfad fehlte sie, A/B-Gegenprobe |
+| 2026-08-16 | Panopticon gebaut, voll ausgebaut, beobachtet | Abschalten geklaert, Ursache in LOUD (B-03) |
+| 2026-08-16 | Darkness: Puls im Spiel gesehen | **Effekt laeuft** |
 
 ## 10. Offene Punkte
 
-- [ ] **`SEB3404_Script.lua` Z. 29** enthaelt noch einen Verweis auf
-      `/units/SEB3404/SEB3404_` - noch nicht geklaert, ob das eine zweite, uebersehene
-      Stelle ist oder Teil des bereits umgeschriebenen `SetMesh`-Aufrufs.
-- [ ] **`DarknessEffect` existiert nicht.** `SRB4402_script.lua` Z. 76 ruft
-      `Buff.ApplyBuff(v, 'DarknessEffect')` auf; der Buff ist in BrewLAN nirgends
-      definiert, der Aufruf laeuft schon im Original ins Leere. **Entscheidung
-      2026-08-15: nicht geaendert.** Einzelheiten in `_Altlasten\README.md`.
+- [x] **`SEB3404_Script.lua` Z. 29** - geklaert: der vermeintliche zweite Verweis auf
+      `/units/SEB3404/SEB3404_` stammte aus der auskommentierten `BrewLANPath`-Zeile und
+      ist mit dem Aufraeumen entfallen.
+- [x] **`DarknessEffect`** - geklaert: der Buff ist **LOUD-eigen**,
+      `gamedata\lua\lua\sim\buffdefinitions.lua` Z. 217. **Frueherer Befund "nirgends
+      definiert" war falsch** - es wurde nur nach BrewLANs Namen `DarknessOmniNerf`
+      gesucht.
+- [x] **Panopticon-Ausbaustufen** - geklaert: die neun `*_Buff` sind in derselben
+      LOUD-Datei definiert, mit gegenueber BrewLAN entschaerften Werten.
+      **Frueherer Befund "nirgends definiert" war falsch** - `Filesystem:search_files` ist
+      gross-/kleinschreibungsempfindlich.
+- [x] **Warum schaltet sich das Panopticon ab?** - geklaert 2026-08-16, Ursache in LOUDs
+      `IntelWatchThread`, siehe Abschnitt 5.3 und `mods\BasegameBugfixes.md` B-03.
+      **Nicht behoben**, Behelf: genug Energiespeicher.
+- [x] **Beschriftung des Umschalters** - ergaenzt, siehe Abschnitt 5.4.
+- [ ] **ENTSCHEIDUNG vertagt: Panopticon-Suchradius und Zielauswahl** - siehe Abschnitt 5.1.
 - [ ] **Greift `conflicts`?** Im Mod-Manager pruefen, ob BrewLAN bzw. BlackOps und dieser
       Mod wirklich nicht gleichzeitig aktivierbar sind. Bisher nur aus `mods.lua`
       abgeleitet.
 - [ ] **Wird das Mod-Bild angezeigt?** Aus `modmanager.lua` abgeleitet, **nicht gesehen**.
-- [ ] **Die vier Einheiten im Spiel bauen und ausprobieren** - insbesondere ob das
-      Panopticon mit Omni-Radius spuerbar mehr markiert und ob der Darkness wirkt.
+- [ ] **`BSL0005` und `BSB2402` im Spiel ausprobieren** - bisher nur die Rift Gate
+      gesprengt, der Elite-Belagerungspanzer gar nicht getestet.
+- [ ] **MM-Debugausgabe im Darkness entfernen**, sobald der Puls einmal im Log
+      bestaetigt ist. Der Effekt ist im Spiel gesehen, die Logzeile noch nicht.
 - [ ] **Sieben Beschreibungstexte nach `t4add` uebernehmen** - liegen in
       `_Altlasten\DynamicGameplay\unitdescription.lua.vollstaendig`. **Achtung:** die
       Texte zu `ual0402` und `urs0304` sind interne Scherze und erscheinen so im Spiel.
 
-## 11. Referenzen
+## 11. Dokumentation neben dem Code
+
+Nach `07_KONVENTIONEN.md`: keine erklaerenden Kommentare im Code, sondern eine eigene
+Markdown-Datei daneben mit Verweis im Kurzkommentar.
+
+| Code | Doku |
+|---|---|
+| `units\SEB3404\SEB3404_Script.lua` | `units\SEB3404\SEB3404_Script.md` |
+| `units\SRB4402\SRB4402_script.lua` | `units\SRB4402\SRB4402_script.md` |
+| `hook\lua\ui\help\tooltips.lua` | `hook\lua\ui\help\tooltips.md` |
+
+## 12. Referenzen
 
 - `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\brewlan\mods\BrewLAN_LOUD\units\` (`SEB3404`, `SRB4402`)
 - `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\blackops\mods\BlackOpsUnleashed\units\` (`BSL0005`, `BSB2402`)

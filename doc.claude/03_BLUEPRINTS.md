@@ -26,6 +26,64 @@ Dateiname bestimmt also, welche Einheit ersetzt/erweitert wird.
 
 ---
 
+## 2a. `Economy.BuildableCategory` — wer darf was bauen
+
+Eine Liste von Kategorieausdrücken. Sie steuert, **was diese Einheit bauen kann**.
+
+```lua
+BuildableCategory = {
+    'BUILTBYCOMMANDER UEF',
+    'BUILTBYTIER2COMMANDER UEF',
+    'BUILTBYTIER3COMMANDER UEF',
+    'BUILTBYTIER4COMMANDER UEF',
+},
+```
+
+### Semantik
+
+| Ebene | Verknüpfung |
+|---|---|
+| **Leerzeichen innerhalb eines Eintrags** | **UND** |
+| **mehrere Einträge** | **ODER** |
+
+`'BUILTBYTIER2COMMANDER UEF'` heißt also: die Zieleinheit muss die Kategorie
+`BUILTBYTIER2COMMANDER` **und** `UEF` tragen.
+
+Die Gegenseite steht in der `Categories`-Liste der jeweiligen Zieleinheit — dort stehen die
+`BUILTBY*`-Marken, etwa `'BUILTBYTIER3ENGINEER'` oder `'BUILTBYTIER4COMMANDER'`.
+
+### Wie man die Staffelung aushebelt
+
+Lässt man die `BUILTBY*`-Bedingung weg, entfällt die gesamte Abstufung — Tech-Stufen,
+Ausbaustufen, Fabrikbindung:
+
+```lua
+BuildableCategory = { 'UEF', 'AEON', 'SERAPHIM', 'CYBRAN' },   -- baut alles
+```
+
+**Nicht `'ALLUNITS'` schreiben.** Das zöge Zivilgebäude und Sonderobjekte ohne
+Fraktionskategorie ins Baumenü — `XRC2201` und Ähnliches. Die vier (bei aktivem
+Nomads-Mod fünf) Fraktionen einzeln aufzuzählen hält die sauber draußen.
+
+Belegt an Colins `test21000` (jetzt in `_Altlasten\test21000\`), der genau das mit dem
+UEF-ACU gemacht hat. **Praktisch ist das Ergebnis unhandlich**: alles landet in einem
+einzigen Baumenü, bei aktiven Zusatzmods mehrere hundert Einträge. Für Testzwecke ist der
+Weg über mehrere Einheiten je Fraktion besser — so macht es `PlayTest` mit vier SCUs.
+
+### Leere Liste
+
+```lua
+BuildableCategory = { },
+```
+
+Kein Ausdruck trifft zu, also **nichts baubar**. So verwendet in
+`usermods\SquareShields\`, um die Aufstiegsstufe der Schilde zu entfernen.
+
+⚠️ **Aus der Semantik abgeleitet, nicht im Spiel gemessen.** Colins Gegenbeispiel stützt
+die Lesart, beweist sie aber nicht.
+
+---
+
 ## 2. Unit-ID-Systematik
 
 `[Fraktion][Domäne][Techstufe][Nummer]`, z. B. `UEL0001`:

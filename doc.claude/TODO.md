@@ -497,6 +497,15 @@ Zielkategorien ins Register in `NoRush.lua`.
       Testlauf mit gebautem Darkness am Log ablesbar. (2) Ein vollstaendiger
       Negativbeweis braucht ein Suchskript in `doc.claude\tools\` - bisher wurden nur
       die plausiblen Kandidaten gelesen (`CLAUDE.md` Abschnitt 4).
+- [x] **`DarknessEffect` existiert nicht** - **RICHTIGSTELLUNG 2026-08-16:** der Buff ist
+      sehr wohl definiert, und zwar **LOUD-eigen** in
+      `gamedata\lua\lua\sim\buffdefinitions.lua` Z. 217. Der frühere Befund war falsch -
+      es wurde nur nach BrewLANs Namen `DarknessOmniNerf` gesucht, nie nach
+      `DarknessEffect`. Der Darkness funktioniert.
+- [x] **Warum schaltet sich das Panopticon ab?** Geklaert 2026-08-16 durch vier
+      Testlaeufe: LOUDs `IntelWatchThread` vergleicht den gespeicherten Energievorrat
+      gegen den Sekundenverbrauch und ignoriert das Einkommen. Siehe
+      `mods\BasegameBugfixes.md` **B-03**. Nicht behoben, Behelf: genug Energiespeicher.
 - [ ] **Vier Verhaltensabweichungen aus `UEF_trans_men` - Entscheidung offen:**
       `SEB3404` Radar- statt Omni-Radius und Mauern/Minen nicht mehr ausgenommen
       (`SEB3404_Script.lua` Z. 72); `SRB4402` ohne `sab2306` in der Ausnahmeliste, also

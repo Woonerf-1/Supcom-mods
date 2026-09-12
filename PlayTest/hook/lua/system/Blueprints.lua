@@ -1,45 +1,75 @@
--- ============================================================================
--- PlayTest - ABGESCHLOSSEN, STILLGELEGT
---
--- Datei: usermods\PlayTest\hook\lua\system\Blueprints.lua
---
--- Diese Datei enthielt zwei Testlaeufe zur Frage, wie die Engine .sca-Pfade in
--- Blueprints aufloest. Beide sind durchgefuehrt, das Ergebnis steht fest.
--- Der Code ist entfernt, weil ein aktiver Hook sonst dem SCU und der Selen in
--- jedem Spiel die Laufanimation nehmen wuerde.
---
--- ---------------------------------------------------------------------------
--- ERGEBNIS (2026-08-15, drei Formen, jeweils Laufanimation beobachtet)
--- ---------------------------------------------------------------------------
---
---   '/units/gibtesnicht/XSL0301_AWalk01.sca'   erfundenes Verzeichnis   KAPUTT
---   '/units/XSL0101_awalk01.sca'               richtige Wurzel, ohne
---                                              Unterordner              KAPUTT
---   'XSL0301_AWalk01.sca'                      reiner Dateiname         KAPUTT
---
--- Ausgangswerte waren in allen Faellen die erwarteten Originalpfade - keine
--- WARN-Zeile, kein anderer Mod hatte die Felder angefasst.
---
--- ---------------------------------------------------------------------------
--- SCHLUSSFOLGERUNG
--- ---------------------------------------------------------------------------
--- .sca-Pfade werden STRIKT und ABSOLUT aufgeloest. Es gibt
---   - keinen Rueckfall auf das Verzeichnis des Blueprints,
---   - keine Suche nach dem blossen Dateinamen,
---   - keine Suche innerhalb von /units/.
---
--- Das unterscheidet sie von Mesh-Texturen: dort loest ein blosser Dateiname
--- wie 'UEBSSG01_lod1_albedo.dds' sehr wohl neben der .bp auf.
---
--- Die Engine meldet einen ungueltigen Animationspfad NIRGENDS - kein error,
--- keine warning im LOUD.log. Der Fehler faellt nur beim Hinsehen auf.
---
--- Folgen:
---   - Ein Mod ist ueber jeden absoluten .sca-Pfad an seinen Ordnernamen
---     gebunden. Beim Umbenennen muessen alle Verweise mitgezogen werden.
---   - '/units/XSBSSG01/XSBSSG01_ADeath1.sca' in XSBSSG01/XSBSSG02 ist damit
---     belegt kaputt - auch im Original von LOUD Unit Additions.
---   - Dasselbe gilt fuer die drei Pfade in t4add\units\SSL0403.
---
--- Dokumentiert in doc.claude\07_KONVENTIONEN.md und CHANGELOG.md.
--- ============================================================================
+-- PlayTest - SCU-Werte hochsetzen. NUR FUER TESTPARTIEN.
+-- Erlaeuterung: siehe ..\hooks.md
+
+local FAKTOR = 1000
+
+local FAKTOR_SPEICHER = 100
+
+local SCUS = { 'uel0301', 'ual0301', 'url0301', 'xsl0301' }
+
+local FELDER = {
+    'BuildRate',
+    'ProductionPerSecondEnergy',
+    'ProductionPerSecondMass',
+}
+
+local SPEICHERFELDER = {
+    'StorageMass',
+}
+
+
+do
+    local OldModBlueprints = ModBlueprints
+
+    function ModBlueprints(all_blueprints)
+
+        OldModBlueprints(all_blueprints)
+
+        local gesetzt = 0
+
+        for _, id in SCUS do
+
+            local bp = all_blueprints.Unit[id]
+
+            if not bp then
+                WARN('PLAYTEST: Blueprint "'..id..'" nicht gefunden')
+            elseif not bp.Economy then
+                WARN('PLAYTEST: "'..id..'" hat keinen Economy-Abschnitt')
+            else
+                for _, feld in FELDER do
+
+                    local alt = bp.Economy[feld]
+
+                    if alt then
+                        bp.Economy[feld] = alt * FAKTOR
+                    else
+                        -- ProductionPerSecondMass fehlt bei manchen Fassungen
+                        bp.Economy[feld] = FAKTOR
+                    end
+                end
+
+                for _, feld in SPEICHERFELDER do
+
+                    local alt = bp.Economy[feld]
+
+                    if alt then
+                        bp.Economy[feld] = alt * FAKTOR_SPEICHER
+                    else
+                        -- SCUs haben im Original keinen eigenen Speicher
+                        bp.Economy[feld] = FAKTOR_SPEICHER
+                    end
+                end
+
+                gesetzt = gesetzt + 1
+
+                LOG('PLAYTEST: '..id..' - BuildRate '..tostring(bp.Economy.BuildRate)
+                    ..', Energie '..tostring(bp.Economy.ProductionPerSecondEnergy)
+                    ..', Masse '..tostring(bp.Economy.ProductionPerSecondMass)
+                    ..', Massespeicher '..tostring(bp.Economy.StorageMass))
+            end
+        end
+
+        LOG('PLAYTEST: '..gesetzt..' von 4 SCUs versehen - Produktion x'..FAKTOR
+            ..', Massespeicher x'..FAKTOR_SPEICHER)
+    end
+end

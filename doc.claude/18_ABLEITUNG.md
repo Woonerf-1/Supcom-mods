@@ -1,10 +1,63 @@
 # 18 - Ableitung aus `UEF_trans_men`
 
-**Stand: 2026-08-15. Reine Analyse - es wurde noch kein Mod-Code geaendert.**
+## 0. Das Ziel
 
-Aus dem Sammelmod `usermods\UEF_trans_men\` (97 Einheiten) sollen **vier eigenstaendige,
-voneinander unabhaengige Mods** entstehen. Die vier Ordner hat der Kollege - derselbe
-Autor wie `UEF_trans_men` - bereits angelegt und befuellt.
+**Wir spielen LOUD.** LOUD ist die Codebasis und der Massstab - nicht das Basisspiel,
+nicht FAF, nicht BrewLAN oder BlackOps in ihrer Originalfassung.
+
+Aus Colins Sammelmod `usermods\UEF_trans_men\` (97 Einheiten) sollen **vier eigenstaendige,
+aufgeraeumte, voneinander unabhaengige Mods** entstehen - auf aktueller LOUD-Basis, ohne
+Altlasten, ohne toten Code, ohne Abhaengigkeiten zu den Quellpaketen.
+
+### Was das im Einzelnen heisst
+
+| | |
+|---|---|
+| **Bezugsgroesse** | **LOUD.** Jeder Diff geht gegen LOUDs Fassung. Wo wir abweichen, weichen wir von LOUD ab. |
+| **FAF, BrewLAN, BlackOps** | **Referenz, nicht Massstab.** Nuetzlich, um zu verstehen, wie etwas gemeint war, woher ein Wert stammt oder warum etwas kaputt ist. Kein Grund, LOUDs Entscheidungen zurueckzudrehen. |
+| **Colins Fassung** | Der Ausgangspunkt, aus dem wir ableiten - aber nicht das Vorbild. Sie ist ueber Jahre gewachsen und in Teilen erkennbar unsauber. |
+| **Unsere Mods** | Das Ergebnis: sauber getrennt, einzeln aktivierbar, dokumentiert. |
+
+### Die Leitfrage bei jeder Abweichung Colins
+
+> **War das Absicht oder Versehen?**
+
+Das ist die eigentliche Arbeit an diesem Projekt. Colin hat sowohl bewusste
+Balance-Entscheidungen getroffen als auch Dinge kaputtgemacht, ohne es zu merken. Beides
+sieht im Diff gleich aus.
+
+Anhaltspunkte, die sich bisher bewaehrt haben:
+
+- **Wirkungslose Aenderungen** deuten auf Versehen. Wer bewusst umstellt, prueft, ob es
+  wirkt. Beispiel: `BAB1202` von `HydrocarbonAdjacencyBuffs` auf
+  `T2PowerGeneratorAdjacencyBuffs` - die beiden Tabellen sind Eintrag fuer Eintrag
+  identisch.
+- **Gegenlaeufige Teilaenderungen** deuten auf Versehen. Beispiel: beim Panopticon
+  gleichzeitig den Suchradius drastisch verkleinern (`radar` -> `omni`, 560 -> 212) und
+  mehr Ziele zulassen (Mauern und Minen nicht mehr ausgenommen).
+- **Teile aus zwei Quellen zusammengesetzt, die nicht zueinander passen**, deutet auf
+  Versehen. Beispiel: LOUDs `SRB4402_script.lua` (ruft `DarknessEffect`) mit BrewLANs
+  `Buff.lua` (behandelt `DarknessOmniNerf`).
+- **Eine Luecke im Fremdmaterial gefuellt** deutet auf Absicht. Beispiel: `RegenRate` bei
+  `BAB1202`, dem einzigen der acht Hydrocarbon-Kraftwerke ohne Eintrag - nur die
+  Groessenordnung (10 gegen 1-2 bei den anderen) war daneben.
+- **Durchgaengig und ueber mehrere Einheiten dasselbe Muster** deutet auf Absicht.
+
+Wo die Einschaetzung nicht eindeutig ist, wird sie **als Einschaetzung gekennzeichnet**
+und die Entscheidung Paul vorgelegt - nicht stillschweigend getroffen.
+
+### Quellen
+
+Die Schreibkonvention fuer alle fuenf Quellen steht in `07_KONVENTIONEN.md` Abschnitt 4.
+Kurz: nie "das Original" schreiben, immer die Fassung benennen.
+
+---
+
+**Stand: 2026-08-15.**
+
+Aus dem Sammelmod `usermods\UEF_trans_men\` (97 Einheiten) sollen vier eigenstaendige Mods
+entstehen. Die vier Ordner hat **Colin** - derselbe Autor wie `UEF_trans_men` - bereits
+angelegt und befuellt.
 
 Dieses Dokument haelt fest, **was dort steht** und **was daran nachweislich stimmt oder
 nicht stimmt**. Je Mod gibt es ein eigenes Dokument unter `mods\`.
@@ -18,7 +71,7 @@ nicht stimmt**. Je Mod gibt es ein eigenes Dokument unter `mods\`.
 | Experimental Additions | `usermods\t4add\` | `expt4modsV01` | 8 | **9** |
 | Squareshields | `usermods\SquareShields\` | `D5F66739-FD09-4166-8D73-A5D496772B7C` | 4 | 4 |
 | Improved Hydrocarbons | `usermods\ImprovedHydrocarbonPowerPlants\` | `AD88F006-304B-42E6-8612-E63918A7BE22` | 8 | 8 |
-| Dynamic Gameplay | `usermods\dynamic_gameplay\` | `Dynamic_gameplay_Version01` | 4 | 4 |
+| Dynamic Gameplay | `usermods\DynamicGameplay\` | `8837F2BC-7C07-4CCF-8F80-34F545858442` | 4 | 4 |
 
 Abweichung: **`VEB2302` liegt zusaetzlich in `t4add`** und steht nicht auf der Sollliste.
 
@@ -30,11 +83,13 @@ Dieser Zuschnitt ist **nicht identisch** mit dem aus `12_NEUSCHNITT.md` Abschnit
 - [mods/SquareShields.md](mods/SquareShields.md) - geprueft und angepasst 2026-08-15
 - `mods/t4add.md` - noch nicht angelegt
 - [mods/ImprovedHydrocarbonPowerPlants.md](mods/ImprovedHydrocarbonPowerPlants.md) - geprueft und angepasst 2026-08-15
-- `mods/dynamic_gameplay.md` - noch nicht angelegt
+- [mods/DynamicGameplay.md](mods/DynamicGameplay.md) - geprueft und angepasst 2026-08-15
 
 **Umbenennungen:** `usermods\HCPP\` heisst seit 2026-08-15
-`usermods\ImprovedHydrocarbonPowerPlants\`, der Anzeigename lautet jetzt
-"Improved Hydrocarbon PowerPlants" statt "MoreHydro". Die `uid` blieb unveraendert.
+`usermods\ImprovedHydrocarbonPowerPlants\`, Anzeigename jetzt
+"Improved Hydrocarbon PowerPlants" statt "MoreHydro".
+`usermods\dynamic_gameplay\` heisst seit 2026-08-15 `usermods\DynamicGameplay\`.
+Beide haben frische GUIDs bekommen.
 
 ---
 
