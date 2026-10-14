@@ -1,0 +1,24 @@
+-- Merge auf LOUDs UEA0305, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\AirForceRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "uea0305",
+
+    Defense = {
+        Health = 5300,
+        MaxHealth = 5300,
+        RegenRate = 8,
+    },
+    Economy = {
+        BuildCostMass = 1500,
+        BuildTime = 5000,
+    },
+    Weapon = {
+        {
+            Damage = 105,
+        },
+        {
+            Damage = 30,
+        },
+    },
+}

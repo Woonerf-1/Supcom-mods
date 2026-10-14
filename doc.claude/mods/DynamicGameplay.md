@@ -114,7 +114,8 @@ und jedes markierte Objekt kostet Unterhalt (`IntelSearch` rechnet die Kosten je
 Die beiden Teilaenderungen wirken gegeneinander; nach den Anhaltspunkten in
 `18_ABLEITUNG.md` Abschnitt 0 spricht das eher fuer Versehen als fuer Absicht.
 
-**Entscheidung vertagt** - Colins Fassung bleibt bis dahin unveraendert.
+**Entschieden 2026-10-14 (Paul): Colins Fassung bleibt** - Panopticon und Darkness wie
+in der Tabelle oben.
 
 **Darkness (`SRB4402`):** Aeons Aria (`sab2306`) wird vom Darkness mitgetroffen. LOUD nimmt
 sie aus, Colin nicht.
@@ -354,7 +355,8 @@ Sim-Mod, also von allen Spielern benoetigt.
       `IntelWatchThread`, siehe Abschnitt 5.3 und `mods\BasegameBugfixes.md` B-03.
       **Nicht behoben**, Behelf: genug Energiespeicher.
 - [x] **Beschriftung des Umschalters** - ergaenzt, siehe Abschnitt 5.4.
-- [ ] **ENTSCHEIDUNG vertagt: Panopticon-Suchradius und Zielauswahl** - siehe Abschnitt 5.1.
+- [x] **Panopticon-Suchradius und Zielauswahl** - entschieden 2026-10-14 (Paul): bleibt
+      wie von Colin, siehe Abschnitt 5.1.
 - [x] **Greift `conflicts`?** Bestaetigt 2026-08-16 im Mod-Manager: beim Aktivieren von
       BrewLAN erscheint *"The requested mod requires the following mods be disabled:
       Dynamic Gameplay"*.
@@ -365,8 +367,9 @@ Sim-Mod, also von allen Spielern benoetigt.
       A/B-Gegenprobe vom 2026-08-15 belegt (mit verbogenem Pfad fehlte die
       Todesanimation, mit korrigiertem laeuft sie). Wer sie im Spiel baut, spielt LOUDs
       Fassung.
-- [ ] **MM-Debugausgabe im Darkness entfernen**, sobald der Puls einmal im Log
-      bestaetigt ist. Der Effekt ist im Spiel gesehen, die Logzeile noch nicht.
+- [x] **MM-Debugausgabe im Darkness entfernen** - war bereits erledigt (CHANGELOG
+      2026-08-16 (4)); nachgeprueft 2026-10-14: in `usermods\DynamicGameplay\` ist keine
+      `LOG`-Zeile aktiv, nur zwei auskommentierte aus BrewLAN.
 - [ ] **Sieben Beschreibungstexte nach `t4add` uebernehmen** - liegen in
       `_Altlasten\DynamicGameplay\unitdescription.lua.vollstaendig`. **Achtung:** die
       Texte zu `ual0402` und `urs0304` sind interne Scherze und erscheinen so im Spiel.

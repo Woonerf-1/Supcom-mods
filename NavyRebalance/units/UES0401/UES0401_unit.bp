@@ -1,0 +1,14 @@
+-- Merge auf LOUDs UES0401, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\NavyRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "ues0401",
+
+    Weapon = {
+        {
+            Damage = 450,
+            MaxRadius = 75,
+            RateOfFire = 2,
+        },
+    },
+}

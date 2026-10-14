@@ -1,3 +1,257 @@
+## 2026-10-14 (12) - Team-PDF Original | Colin | Aktuell
+
+- **Was:** Menschenlesbares PDF fuer das Team (Paul): je Mod und Einheit drei Spalten,
+  Klartext-Feldnamen, Texte zu Script-/Regel-Aenderungen je Mod, offene Transmen-Einheiten.
+  32 Seiten, 8 Mods, 79 Einheiten, dazu Basegame Bugfixes.
+- **Wie:** `tools\teamdiff\` - Datenskript (Feldvergleich wie `bpmerge.ps1`, Merges
+  angewendet, IHPP-Hookwerte nachgetragen), HTML-Vorlage, Druck per Edge headless.
+- **Befund dabei:** Cooper (XES0102) - Colins gestrichenes `STRUCTURE` in den
+  Zielprioritaeten fehlt in unserem Merge. **Entschieden (Paul): bleibt wie LOUD**, kein
+  Eingriff; im PDF als bewusste Abweichung vermerkt.
+- **Wo:** neu `doc.claude\team\LOUD-Mods_Aenderungen.pdf`, `doc.claude\tools\teamdiff\`
+  (README, build.ps1, teamdiff_data.ps1, teamdiff.html); `TODO.md`, `mods\NavyRebalance.md`
+
+---
+
+## 2026-10-14 (11) - Neuer Mod TacticalMissileUpgrades
+
+- **Was:** Siebter Extrakt aus `UEF_trans_men` (Paul): Colins Ausbauketten Serpentine ->
+  Purifier, Volcano -> Purger (Aeon), Buzzkill -> Protector (UEF). 6 Einheiten. Icon: Purifier.
+- **Wie:** 3 Basisspiel-Basen als **Merge** (nur `BuildRate`, `BuildableCategory`,
+  `UpgradesTo`), 3 Ausbaustufen als Kopie; `conflicts` gegen BlackOps und BattlePack; Auszug
+  `MIRVChild01Projectile` + 9 Effekte aus BlackOps; KI-Eintraege Purger/Protector; 3 Beschreibungen.
+- **Korrekturen an Colins Fassung:** Volcano `Buildrate` -> `BuildRate` (sonst kein Ausbau);
+  Purger-Bauzeit 120 -> 1800 wie LOUD (Paul); Basen nicht mehr in der eigenen
+  `BuildableCategory`; Pfade auf den eigenen Mod.
+- **Nebenbei:** Rest-Liste `UEF_trans_men` neu abgeglichen (Paul): Massenextraktoren liegen
+  in `T4MassExtractors`, 5 Einheiten in `advanced_rebalence`, Gewittersturm und Dehgarwof
+  unveraendert. Offen jetzt 4 Einheiten. Team-Diff als PDF am Ende (Paul).
+- **Wo:** neu `usermods\TacticalMissileUpgrades\` (48 Dateien), `doc.claude\mods\TacticalMissileUpgrades.md`;
+  `TODO.md`, `18_ABLEITUNG.md`, `UEBERGABE_CLAUDE_CODE.md`
+- **Getestet:** statisch (alle Pfade loesen auf, ASCII); im Spiel nein
+
+---
+
+## 2026-10-14 (10) - Neuer Mod NavyRebalance
+
+- **Was:** Sechster Extrakt aus `UEF_trans_men` (Paul): Colins Marine-Rebalancing - 4 T1-U-Boote,
+  3 Raketen-U-Boote, Yathsou, Iavish, Atlantis, Cooper, Turtle, dazu Patch Class und Barnacle.
+  14 Einheiten, Colins Werte. Icon: Atlantis (UES0401). Torrent (XAS0306) nicht aufgenommen -
+  bei Colin unveraendert.
+- **Wie:** 11 Basisspiel-Einheiten als **Merge** (maschinell aus dem Feldvergleich), 3 als
+  Kopie; `conflicts` gegen BattlePack, BrewLAN, 4DC; 5 Beschreibungen.
+- **Abweichungen von Colin:** Flak-Treibstoff-Buff `FUELRATIO` bei Iavish, Yathsou, Atlantis
+  bleibt (Paul - Colin hatte ihn nur dort entfernt); entfernte `SonarStealth` als
+  `SonarStealth = false` (Merge kann nicht loeschen).
+- **Korrekturen:** Patch Class importierte ein in LOUD nicht vorhandenes
+  `/lua/fieldengineers.lua` - jetzt eigener Auszug `lua\FieldEngineers.lua`; Turtle-
+  Texturpfade auf den eigenen Mod, `desktop.ini` und leere `.txt` nicht uebernommen.
+- **Wo:** neu `usermods\NavyRebalance\` (36 Dateien), `doc.claude\mods\NavyRebalance.md`;
+  `TODO.md` (Rest `UEF_trans_men` jetzt 10 geaenderte Einheiten, abgeglichen gegen alle Mods inkl.
+  `T4MassExtractors` und `advanced_rebalence`; Team-Diff als Dreispalten-Tabelle),
+  `18_ABLEITUNG.md`, `UEBERGABE_CLAUDE_CODE.md`
+- **Getestet:** statisch (41 Pfade loesen auf, ASCII, Kopien gegen Colin); im Spiel nein
+
+---
+
+## 2026-10-14 (9) - Neuer Mod AirForceRebalance
+
+- **Was:** Fuenfter Extrakt aus `UEF_trans_men` (Paul): Colins Luftwaffen-Rebalancing -
+  4 Jaeger, 6 Torpedobomber, 4 Gunships, 4 Penetration Fighter, Blade Raven, Wild Weasel,
+  Bayblade, Orlok - plus reine Flugabwehr (Sky Boxer, Longbow, Slink, Vindicator) und auf
+  Pauls Wunsch die Uyanah. 27 Einheiten, Colins Werte. Icon: Tomcat (SEA0313).
+  **Nachtrag:** Sky Boxer wieder herausgenommen (Paul) - Colin gab nur dem UEF-Flakpanzer
+  "feuert aus dem Transport", ein reiner UEF-Vorteil. Jetzt 26 Einheiten, 11 Merges; Frage
+  offen in `TODO.md`, Merge-Datei in `_Altlasten\AirForceRebalance\`.
+  **Nachtrag 2:** `BuildRate = 15` bestaetigt (Paul). Orlok-Bausymbol nachgetragen - es lag
+  in `UEF_trans_men\textures\ui\common\icons\units\`, in der ersten Fassung uebersehen.
+  Ialosaare `TightTurnMultiplier` geklaert (Paul: dreht nur das Modell), bleibt.
+  T2-Flak aus dem Transport: entschieden nein (Paul) - Sky Boxer bleibt LOUD.
+- **Wie:** 12 Basisspiel-Einheiten als **Merge** (nur geaenderte Felder, maschinell aus dem
+  Feldvergleich erzeugt), 15 als Kopie; `conflicts` gegen BrewLAN, BlackOps, 4DC; eigene
+  Auszuege aus 4DC (`4D_weapons`, `4D_projectiles`), KI-Registrierung, 15 Beschreibungen.
+- **Korrekturen an Colins Fassung:** Longbow-Script (nicht existierende Methode, fehlender
+  `Buff`-Import, tote Animation - Entscheidung Paul: reparieren); Bayblade
+  `RemoveEnhancements`-Name, tote Stealth-Zweige; Uyanah zurueck auf BlackOps-Waffenklassen,
+  Todesanimation wiederhergestellt; `BuildRate = 15` fuer drei Einheiten mit Ausbau; alle
+  Fremdpfade auf den eigenen Mod.
+- **Wo:** neu `usermods\AirForceRebalance\` (149 Dateien), `doc.claude\mods\AirForceRebalance.md`;
+  `TODO.md`, `18_ABLEITUNG.md`, `UEBERGABE_CLAUDE_CODE.md`
+- **Getestet:** statisch (121 Pfade loesen auf, ASCII, Kopien gegen Colin); im Spiel nein
+
+---
+
+## 2026-10-14 (8) - Neuer Mod BasegameBugfixes, B-04 zieht um
+
+- **Was:** B-04-Fix im Spiel bestaetigt (Paul). Er ist ein LOUD-Fehler und kein Teil der
+  T4-Erweiterung, deshalb in einen eigenen Mod `BasegameBugfixes` verschoben - Name,
+  Reparatur-Icon des Basisspiels, neue GUID `4046F209-C6D2-4881-BACF-E434940CDACA`.
+  Pauls urspruenglicher Wunsch war, `BasegameRevamp` umzubenennen; die Analyse zeigte,
+  dass dort Colins Forschungssystem, die Einheit `SRB5383` und Balance-Kopien liegen -
+  kein Bugfix-Material. Entscheidung Paul: neuer Mod, `BasegameRevamp` bleibt eingefroren.
+  Die in der Doku vorgesehene uid `EFD7502E-...` traegt `BasegameRevamp`.
+- **Wo:** neu `usermods\BasegameBugfixes\` (`mod_info.lua`, `hook\lua\terranunits.lua`);
+  entfernt aus `usermods\T4UnitAdditions\hook\lua\`. Doku: `mods\BasegameBugfixes.md`,
+  `mods\T4UnitAdditions.md`, `12_NEUSCHNITT.md`, `UEBERGABE_CLAUDE_CODE.md`, `TODO.md`
+- **Wie:** Hook (Klassenersatz), unveraendert
+- **Getestet:** Fix ja (noch in T4UnitAdditions); im neuen Mod noch nicht
+
+---
+
+## 2026-10-14 (7) - Aufraeumen: TODO, _ausrangiert, R-05, AcidPools
+
+- **Was:**
+  - `TODO.md` neu gegliedert: offene Punkte nach Thema (Mods, Modsystem, Log,
+    Einheitenliste, Git, Neuschnitt, Update-Checkliste), Erledigtes gesammelt am Ende.
+    Wortlaut unveraendert, maschinell gegen das Original geprueft. Doppelte Abschnitte
+    zusammengefuehrt, 11 laengst erledigte oder doppelte Punkte als erledigt markiert (mit
+    Vermerk "Aufgeraeumt 2026-10-14").
+  - `_ausrangiert\` aufgeloest, Inhalt nach `_Altlasten\CustomAI\` (Paul: `_Altlasten`
+    fuehrt).
+  - R-05 "trying to cheat": sehr wahrscheinlich LOUDs eigene `ConExecute('path_...')`
+    in `gamemain.lua` Z. 161-163, nicht PlayTest (`15_LOG.md`).
+  - AcidPools-Schadensformel: bleibt ohne Deckel (Paul).
+  - Darkness-Debug: war bereits am 2026-08-16 entfernt; offener Punkt in
+    `mods\DynamicGameplay.md` abgehakt.
+  - PlayTest: leerer `hook\lua\sim\Unit.lua` nach `_Altlasten\PlayTest\` (Paul).
+    Richtigstellung in `mods\PlayTest.md`: die Cheat-Meldung kommt nicht vom Spawn.
+  - Entschieden (Paul): DynamicGameplay bleibt wie von Colin (Panopticon, Darkness/Aria);
+    Overlord-Energie 55000 bleibt.
+- **Wo:** `doc.claude\TODO.md`, `15_LOG.md`, `_Altlasten\README.md`,
+  `mods\DynamicGameplay.md`
+- **Wie:** Doku
+- **Getestet:** entfaellt
+
+---
+
+## 2026-10-14 (6) - T4UnitAdditions: alle T4-Landeinheiten transportierbar
+
+- **Was:** Regel statt Einzelanpassung (Paul): jede anwaehlbare experimentelle
+  Landeinheit mit Transportklasse fehlend/10 wird Klasse 4, alle mit Klasse 4 bekommen
+  den Transportruf und `CanFireFromTransport = false`. Klasse 5 (Iyadesu u. a.) bleibt.
+- **Wo:** neu `usermods\T4UnitAdditions\hook\lua\system\Blueprints.lua`;
+  `units\UEL0401\UEL0401_unit.bp` (Merge) nach `_Altlasten\T4UnitAdditions\` - der Fatboy
+  ist im Mod wieder reines LOUD.
+- **Wie:** Hook auf `ModBlueprints`
+- **Getestet:** nein. Details `mods\T4UnitAdditions.md` 11.6
+
+---
+
+## 2026-10-14 (5) - T4UnitAdditions: unsichtbare Fatboys (B-04)
+
+- **Was:** Fatboys blieben nach dem Bau dauerhaft unsichtbar (voll funktionsfaehig, nur
+  Schild und Lebensbalken sichtbar). Ursache per vorlaeufiger `T4DEBUG`-Diagnose belegt:
+  LOUDs `TMobileFactoryUnit` blendet den Fatboy nur ueber den Baukubus-Thread ein; ist
+  der Bau in unter ~6 Ticks fertig, wird der Thread vorher abgeraeumt, und ein Rueckfall
+  fehlt. Die vermutete Verbindung zur Acclamator war Zufall (Lager voll waehrend ihres
+  Baus). Partikel-Ueberlauf als Ursache widerlegt.
+- **Wo:** neu `usermods\T4UnitAdditions\hook\lua\terranunits.lua`; Diagnosezeilen in
+  `MKT0409_script.lua` wieder entfernt (Script = UTM bis auf drei Pfade).
+  Doku: `mods\BasegameBugfixes.md` B-04, `mods\PlayTest.md` Abschnitt 7.
+- **Wie:** Hook, Klassenersatz mit Rueckfall nach `defaultunits.lua` Z. 936-938
+- **Getestet:** Diagnose ja; Fix im Spiel noch nicht
+
+---
+
+## 2026-10-14 (4) - T4UnitAdditions: Acclamator-Faehre
+
+- **Was:** `AI.BeaconName = 'UEB5102'` ergaenzt. Im Spiel liess sich kein Faehrpunkt setzen
+  (Paul), obwohl `RULEUCC_Ferry` gesetzt war - die Engine braucht die Bake. Wert wie bei
+  allen UEF-Transportern in LOUD (`UEA0104_unit.bp` Z. 3).
+- **Wo:** `usermods\T4UnitAdditions\units\MKT0409\MKT0409_unit.bp` Z. 3
+- **Wie:** Vollkopie, ein Feld
+- **Getestet:** nein - erneut pruefen
+
+---
+
+## 2026-10-14 (3) - t4add heisst jetzt T4UnitAdditions
+
+- **Was:** Ordner `usermods\t4add\` -> `usermods\T4UnitAdditions\`, Anzeigename
+  "T4 Unit Additions" (Paul). uid unveraendert.
+- **Wo:** 36 VFS-Pfade `/mods/t4add/` -> `/mods/t4unitadditions/` in 16 Dateien;
+  `lua\CustomUnits\t4add.lua` -> `T4UnitAdditions.lua`; Kopfkommentare.
+  Doku: `mods\t4add.md` -> `mods\T4UnitAdditions.md`, `_Altlasten\t4add\` ->
+  `_Altlasten\T4UnitAdditions\`, Verweise in `CLAUDE.md`, `18_ABLEITUNG.md`,
+  `07_KONVENTIONEN.md`, `TODO.md`, `UEBERGABE_CLAUDE_CODE.md`. Aeltere CHANGELOG-Eintraege
+  und die Analyseabschnitte behalten den alten Namen.
+- **Wie:** Umbenennung, kein Mechanismus geaendert
+- **Getestet:** statisch - alle 168 Pfadliterale loesen auf. Im Spiel: ausstehend
+  (`Mounting mod 't4unitadditions'` im Log erwartet).
+
+---
+
+## 2026-10-14 (2) - t4add: umgesetzt
+
+- **Was:** Alle acht Entscheidungen aus `mods\t4add.md` Abschnitt 10 nach Vorschlag:
+  - Ballast entfernt: 414 Dateien nach `doc.claude\_Altlasten\t4add\` (397 Emitter,
+    2 Bibliotheken, 2 Texturen, 1 Entity, `UEL0401`-Vollkopie, `Thumbs.db`);
+    499 -> 87 Dateien
+  - Bibliotheken auf die sechs genutzten Klassen gekuerzt (`lua\README.md`)
+  - zwei Emitter auf LOUDs byte-identische Texturen umgestellt
+  - `SSL0403`: drei kaputte Animationspfade korrigiert, toter `BrewLANLOUDPath`-Aufruf raus
+  - `UEL0401`: Merge mit zwei Feldern statt Vollkopie
+  - neu: `hook\lua\ui\help\unitdescription.lua` (8 Texte), `lua\CustomUnits\t4add.lua`
+  - `mod_info.lua`: GUID `A0B5C51C-A8F7-47E0-BAEF-DE1FFCC63805`, Name korrigiert,
+    `conflicts` gegen BrewLAN, 4DC, BattlePack, LOUD Unit Additions, `icon`
+  - Colins Werte unveraendert
+  - Nachtrag: `mkt0409` aus der KI-Registrierung wieder entfernt (Paul) - die KI baut die
+    Acclamator nicht
+  - Nachtrag: Rampage `UEL0402` repariert im Spiel nicht (kostet nur Energie) -> `BuildRate
+    = 60`, `MaxBuildDistance = 15` ergaenzt (Paul). Ungeprueft
+- **Wo:** `usermods\t4add\`, `doc.claude\mods\t4add.md`, `_Altlasten\README.md`,
+  `18_ABLEITUNG.md`, `TODO.md`
+- **Wie:** Merge (`UEL0401`), Hook (`unitdescription.lua`), sonst Vollkopie wie bisher
+- **Warum:** Extrakt ohne Altlasten und ohne Abhaengigkeit von den Quellpaketen
+  (`18_ABLEITUNG.md` Abschnitt 0)
+- **Getestet:** **nein** - nur statisch (Pfadaufloesung, ASCII, Restverweise). Testlauf
+  steht aus, Pruefliste `mods\t4add.md` Abschnitt 12.
+- **Werkzeughinweis:** Das Edit-Werkzeug von Claude Code hat beim Schreiben ein
+  Latin-1-Zeichen (Copyright-Zeichen) in ein UTF-8-Ersatzzeichen verwandelt. Bei Dateien mit
+  Nicht-ASCII-Bytes vorher pruefen.
+
+---
+
+## 2026-10-14 - t4add: Analyse (nichts umgesetzt)
+
+- **Was:** Dreifachvergleich LOUD-Quelle -> `UEF_trans_men` -> `t4add` fuer alle neun
+  Einheiten und sieben Bibliotheken, Abhaengigkeiten verfolgt, 346 Pfadverweise gegen das
+  VFS geprueft. Kernbefunde:
+  - t4add aendert gegenueber UTM nur Pfade (plus ein Nil-Schutz in `SSL0403`); alle
+    Wertaenderungen sind Colins aus UTM
+  - von 406 Emittern werden 9 gebraucht, von 119 Bibliotheksklassen 6; beide eigenen
+    Texturen sind byte-identisch mit LOUDs
+  - `UEL0401` ist Basisspiel -> Merge moeglich
+  - ohne Quellmods fehlen Beschreibungstexte und KI-Registrierung
+  - acht Entscheidungen offen
+- **Wo:** `doc.claude\mods\t4add.md` (neu), `18_ABLEITUNG.md` (Verweis, Abschnitt 6),
+  `TODO.md`
+- **Wie:** Doku
+- **Getestet:** entfaellt - Analyse ohne Codeaenderung
+- **Nebenbei:** `$FA\gamedata.entpackt` ist der Basisspiel-Spiegel (`14_TOOLS.md` §2) -
+  in `CLAUDE.md` §2 und `UEBERGABE_CLAUDE_CODE.md` richtiggestellt; der Eintrag vom
+  2026-10-13 hatte ihn als unverifiziert gefuehrt.
+
+---
+
+## 2026-10-13 - Regeln fuer Claude Code (Shell statt Filesystem-MCP)
+
+- **Was:** Die drei offenen Abstimmungspunkte aus `UEBERGABE_CLAUDE_CODE.md` Abschnitt 7
+  entschieden und in die Regeln uebernommen:
+  1. lesendes Git (`status`, `diff`, `log`, `show`) erlaubt, alles Veraendernde weiter
+     nur durch Paul
+  2. Pfade relativ zu `$FA`; neuer Wurzelpfad `$REPOS` (`Repos\LOUD`, `Repos\FAF`)
+  3. `BasegameRevamp` und `advanced_rebalence` eingefroren (Regel 5)
+  Nebenbei: Negativbefund nur nach vollstaendiger case-insensitiver Suche (`rg -i`);
+  Skripte, die nur in `$MODS` schreiben, darf Claude nach Freigabe ausfuehren.
+- **Wo:** `doc.claude\CLAUDE.md` (Abschnitte 2, 3, 4, 5, 6), `13_GIT.md`, `README.md`,
+  `07_KONVENTIONEN.md`, `UEBERGABE_CLAUDE_CODE.md`, `TODO.md`
+- **Wie:** Doku
+- **Warum:** Claude Code hat eine Shell; die bisherigen Regeln waren fuer Sitzungen ohne
+  Shell geschrieben.
+- **Getestet:** entfaellt
+
+---
+
 ## EINFRIERPUNKT 2026-08-08 - `customai_aeon_air`
 
 Die KI `AI: LOUD Aeon Airforce` gilt ab hier als **eingefroren**. Ihre Regeln sind in

@@ -1,0 +1,10 @@
+-- Merge auf LOUDs UAS0304, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\NavyRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "uas0304",
+
+    Intel = {
+        SonarStealth = false,
+    },
+}

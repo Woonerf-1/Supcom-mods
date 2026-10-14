@@ -1,0 +1,17 @@
+-- Merge auf LOUDs URS0203, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\NavyRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "urs0203",
+
+    Economy = {
+        BuildCostEnergy = 4800,
+        BuildCostMass = 365,
+        BuildTime = 1800,
+    },
+    Weapon = {
+        {
+            Damage = 110,
+        },
+    },
+}

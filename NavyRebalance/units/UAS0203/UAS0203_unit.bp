@@ -1,0 +1,12 @@
+-- Merge auf LOUDs UAS0203, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\NavyRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "uas0203",
+
+    Weapon = {
+        {
+            Damage = 150,
+        },
+    },
+}

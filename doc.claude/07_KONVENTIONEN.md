@@ -40,7 +40,7 @@ unterscheiden sich inhaltlich - nicht nur in Pfaden.
 | **BlackOps** | Lt_hawkeyes Originalmod | (Repo bisher nicht ermittelt) |
 | **LOUD** | LOUDs angepasste Fassung der Fremdmods **und** eigener Spielcode | `github.com/LOUD-Project/Git-LOUD`, gespiegelt in `LOUD\gamedata.entpackt\` |
 | **Colin** | `usermods\UEF_trans_men\` - der Sammelmod, aus dem wir ableiten | lokal |
-| **unser** | `SquareShields`, `ImprovedHydrocarbonPowerPlants`, `DynamicGameplay`, `t4add` | lokal |
+| **unser** | `SquareShields`, `ImprovedHydrocarbonPowerPlants`, `DynamicGameplay`, `T4UnitAdditions` | lokal |
 
 **LOUD und der jeweilige Fremdmod sind nicht dasselbe.** LOUD uebernimmt nicht identisch -
 beim Panopticon (`SEB3404`) hat LOUD saemtliche Buff-Multiplikatoren neu gesetzt, beim
@@ -250,7 +250,7 @@ LOUD\doc\                       Original-Readmes der Distribution
 LOUD\maps\  LOUD\sounds\  LOUD\usermaps\
 alles unterhalb von $FA außerhalb von LOUD\
 
-usermods\.git\                  Git-Verwaltung — Claude führt kein Git aus
+usermods\.git\                  Git-Verwaltung — Claude fuehrt nur lesendes Git aus
 usermods\<eingefrorener Mod>\   Bestand, siehe 08_BESTANDSAUFNAHME.md
 ```
 

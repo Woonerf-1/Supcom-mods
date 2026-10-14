@@ -7,7 +7,7 @@ Dateien in `usermods\PlayTest\hook\lua\`:
 | `aibrain.lua` | `/lua/aibrain.lua` | Debug-Schalter, `norushradius` |
 | `simInit.lua` | `/lua/simInit.lua` | spawnt vier SCUs je ACU |
 | `system\Blueprints.lua` | `/lua/system/Blueprints.lua` | SCU-Werte hochsetzen |
-| `sim\Unit.lua` | `/lua/sim/Unit.lua` | **stillgelegt**, siehe unten |
+| ~~`sim\Unit.lua`~~ | `/lua/sim/Unit.lua` | **entfernt 2026-10-14**, liegt in `doc.claude\_Altlasten\PlayTest\` - siehe unten |
 
 **NUR FUER TESTPARTIEN.** Dieser Mod gehoert nie in ein echtes Spiel.
 
@@ -119,7 +119,11 @@ fertig. Das verzerrt alles, was am Bauzyklus haengt - und hat den UI-Fehler B-01
 
 ---
 
-## sim\Unit.lua - stillgelegt
+## sim\Unit.lua - entfernt (2026-10-14)
+
+Nur noch Kommentar, wurde aber bei jeder Partie mitgeladen. Nach
+`doc.claude\_Altlasten\PlayTest\hook\lua\sim\Unit.lua` verschoben (Paul). Der Befund
+bleibt hier und in `doc.claude\mods\PlayTest.md` Abschnitt 4 festgehalten:
 
 Enthielt eine Umhuellung von `Unit.PlayAnimationThread`, um die Aufloesung von
 `.sca`-Pfaden zu messen. Der Hook wurde laut Log geladen
@@ -138,4 +142,6 @@ Einheiten wirkungslos - das betrifft auch fremde Mods. Steht in `TODO.md`.
 Der Ersatztest lief ueber `ModBlueprints` und kam ohne Instrumentierung aus. Ergebnis in
 `doc.claude\07_KONVENTIONEN.md` Abschnitt 5.
 
-Die Datei bleibt als Kommentar stehen, bis die `Class()`-Frage geklaert ist.
+Stand 2026-10-14: ein **Klassenersatz** greift nachweislich (`AcidPools` auf `Unit.lua`,
+`T4UnitAdditions` auf `terranunits.lua`); offen ist nur, warum der reine
+Methodenaustausch nicht griff.

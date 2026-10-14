@@ -2,13 +2,21 @@
 
 | | |
 |---|---|
-| **Ordner** | `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\BasegameBugfixes\` |
+| **Ordner** | `LOUD\usermods\BasegameBugfixes\` |
 | **VFS-Pfad** | `/mods/basegamebugfixes/` |
-| **uid** | `EFD7502E-1682-4DC2-BBA7-CC4243E74B71` |
+| **uid** | `4046F209-C6D2-4881-BACF-E434940CDACA` |
 | **Version** | 1.0 |
 | **Typ** | Sim-Mod (`ui_only = false`) |
-| **Status** | **Vorlage - ohne Inhalt** |
-| **Angelegt** | 2026-08-06 |
+| **Status** | **aktiv seit 2026-10-14** - enthaelt B-04 |
+| **Icon** | `/textures/ui/common/game/orders/repair_btn_up.dds` (Reparatur-Befehl, Basisspiel `textures.scd`) |
+| **Angelegt** | Doku 2026-08-06, Mod-Ordner 2026-10-14 |
+
+**Zur uid:** Die Doku nannte hier urspruenglich `EFD7502E-1682-4DC2-BBA7-CC4243E74B71`.
+Diese uid traegt heute `usermods\BasegameRevamp\` - der Ordner war die damalige
+Bugfix-Vorlage, die Colin zu seinem "Basegame Revamp" umgebaut hat (Forschungssystem,
+neue Einheit `SRB5383`, Balance an `UAL0301`/`XAB3301`/`XSA0402`). `BasegameRevamp` ist
+**kein** Bugfix-Mod und bleibt eingefroren (Regel 5). Der neue Ordner hat deshalb eine
+eigene GUID (Entscheidung Paul, 2026-10-14).
 
 ---
 
@@ -177,17 +185,66 @@ Richtig waere `local mapName = scenario.name or 'Unknown'`.
 Folge fuer uns: die zwei Warnungen im Log liessen sich nicht zuordnen. Behelf ist
 `tools\Test-Maps.ps1`.
 
+### B-04 Fatboy bleibt unsichtbar, wenn er sehr schnell gebaut wird
+
+| | |
+|---|---|
+| **Dateien** | `LOUD\gamedata.entpackt\lua\lua\terranunits.lua` Z. 365-377 (`TMobileFactoryUnit`), `EffectUtilities.lua` Z. 463-526 (`CreateBuildCubeThread`), `sim\Unit.lua` Z. 3303-3342 (`StopBeingBuiltEffects`) |
+| **Quelle** | **LOUD** |
+| **Gefunden** | 2026-10-14, Fatboy im Testlauf `T4UnitAdditions` (Paul) |
+| **Betrifft** | nur `UEL0401` - einzige Einheit mit `TMobileFactoryUnit` (`WEL0401` importiert unter diesem Namen `MobileUnit`) |
+| **Status** | **behoben 2026-10-14**, jetzt in `LOUD\usermods\BasegameBugfixes\hook\lua\terranunits.lua` (Klassenersatz, Rueckfall wie bei Gebaeuden; zuerst in `T4UnitAdditions`, am selben Tag hierher verschoben). Mechanismus und Ausloeser belegt, **Fix im Spiel bestaetigt** (Paul, 2026-10-14) |
+
+**Ablauf:**
+
+1. `TMobileFactoryUnit.StartBeingBuiltEffects` versteckt den Fatboy (`HideBone(0)`, Z. 373)
+   und startet `CreateBuildCubeThread` - **im `OnBeingBuiltEffectsBag`** (Z. 374).
+2. Der Thread macht ihn erst nach rund 7 Ticks wieder sichtbar (`ShowBone(0)`,
+   `EffectUtilities.lua` Z. 523, nach `WaitTicks(1)` und `WaitTicks(6)`).
+3. Ist der Bau vorher fertig, zerstoert `Unit.StopBeingBuiltEffects` den Beutel
+   (`Unit.lua` Z. 3338-3342) - und damit den Thread, bevor er `ShowBone` erreicht.
+4. Ein Rueckfall fehlt: `StructureUnit.StopBeingBuiltEffects` prueft
+   `BeingBuiltShowBoneTriggered` und zeigt die Einheit notfalls selbst
+   (`defaultunits.lua` Z. 936-938). `TMobileFactoryUnit` hat keine eigene
+   `StopBeingBuiltEffects` und erbt den Rueckfall nicht.
+
+**Ausloeser - belegt durch Diagnose-Log 2026-10-14 01:38 (`T4DEBUG`):**
+
+| Fatboy | Acclamatoren | Bauzeit | `BeingBuiltShowBoneTriggered` |
+|---|---:|---|---|
+| #5 | 0 | 7 Ticks (92-99) | `true` ab Tick 98 - sichtbar |
+| #7 | 1 | 5 Ticks (175-180) | bleibt `nil` - unsichtbar |
+| #8 | 0 (nach Sprengung) | 5 Ticks (347-352) | bleibt `nil` |
+
+Entscheidend ist die Bauzeit, nicht die Acclamator: #8 hatte keine und verhielt sich wie
+#7. Von Paul im Spiel nachvollzogen und bestaetigt (2026-10-14). Unter etwa 6 Ticks erreicht der Baukubus `ShowBone` nicht mehr. Mit `PlayTest`
+(SCU-`BuildRate 60000`) passiert das, sobald das Lager voll ist; der erste Fatboy kam noch
+knapp durch, weil sein Fortschritt im ersten Tick bei 0 lag. Die beobachtete Abfolge
+"sichtbar - Acclamator - unsichtbar" entstand, weil sich das Lager waehrend des
+Acclamator-Baus fuellte.
+
+**Behebung:** Klassenersatz von `TMobileFactoryUnit` per Hook auf `/lua/terranunits.lua`
+mit `StopBeingBuiltEffects` nach dem Muster von `defaultunits.lua` Z. 936-938: hat der
+Baukubus nicht eingeblendet, blendet das Bauende ein. Lag zuerst in `T4UnitAdditions`;
+nach Bestaetigung im Spiel hierher verschoben, weil es ein LOUD-Fehler ist und kein Teil
+der T4-Erweiterung (Paul, 2026-10-14). Dass ein Hook auf `/lua/terranunits.lua` greift, ist
+durch die Diagnose belegt (Log 2026-10-14 01:38); im neuen Mod erwartete Logzeile:
+`Hooked /lua/terranunits.lua with /mods/basegamebugfixes/hook/lua/terranunits.lua`.
+
 ---
 
 ## 2. Umsetzung
 
-Noch nichts umgesetzt. Erwarteter Aufbau:
+Stand 2026-10-14:
 
 ```
 BasegameBugfixes\
 ├── mod_info.lua
-└── units\<ID>\<ID>_unit.bp     Merge-Blueprints, siehe 03_BLUEPRINTS.md
+└── hook\lua\terranunits.lua     B-04, Klassenersatz TMobileFactoryUnit
 ```
+
+Kuenftig dazu, wo noetig: `units\<ID>\<ID>_unit.bp` als Merge-Blueprints (siehe
+`03_BLUEPRINTS.md`) und weitere Hooks je Fundstelle B-xx.
 
 **Merge, nicht Vollersatz.** Fuer Fehlerbehebungen an Basiseinheiten ist
 `Merge = true` der richtige Weg: nur die betroffenen Felder werden geaendert, der Rest
@@ -227,14 +284,16 @@ den Aufwand pro Aufruf vermerken.
 
 | Datum | Was getestet | Ergebnis |
 |---|---|---|
-| | Mod erscheint im Mod-Manager | offen |
+| 2026-10-14 | B-04-Fix (damals in `T4UnitAdditions`): Fatboys bei schnellem Bau sichtbar | **bestaetigt** (Paul) |
+| | Mod erscheint im Mod-Manager mit Reparatur-Icon; Logzeile `Hooked /lua/terranunits.lua with /mods/basegamebugfixes/...` | offen |
 
 Log-Praefix fuer eigene Ausgaben: `BUGFIX:`
 
 ## 7. Offene Punkte
 
-- [ ] Kein Icon hinterlegt - es gilt das generische Standardsymbol. Falls gewuenscht:
-      `icons\basegamebugfixes.bmp` anlegen und `icon` in `mod_info.lua` setzen.
+- [x] Icon: Reparatur-Befehlssymbol des Basisspiels (2026-10-14).
+- [ ] B-01 (UI) und B-02 (UI) gehoeren in einen `ui_only`-Mod oder hierher? Offen.
+- [ ] B-03 bewusst nicht behoben (siehe dort).
 - [ ] Fehlerliste zusammenstellen: was soll behoben werden?
 - [ ] Abgrenzung zu Balance-Aenderungen festlegen
 

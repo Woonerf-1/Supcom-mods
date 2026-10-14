@@ -1,0 +1,14 @@
+-- Merge auf LOUDs URA0303, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\AirForceRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "ura0303",
+
+    Air = {
+        KTurn = 1.6,
+        KTurnDamping = 1.4,
+    },
+    Economy = {
+        BuildTime = 5000,
+    },
+}

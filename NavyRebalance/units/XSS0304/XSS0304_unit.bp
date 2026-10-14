@@ -1,0 +1,14 @@
+-- Merge auf LOUDs XSS0304, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\NavyRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "xss0304",
+
+    Economy = {
+        BuildCostMass = 2150,
+        BuildTime = 5000,
+    },
+    Intel = {
+        SonarStealth = false,
+    },
+}

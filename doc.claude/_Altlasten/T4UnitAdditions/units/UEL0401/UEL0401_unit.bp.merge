@@ -1,0 +1,16 @@
+-- Merge auf LOUDs Fatboy, siehe doc.claude\mods\T4UnitAdditions.md Abschnitt 9.1
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "uel0401",
+
+    General = {
+        CommandCaps = {
+            RULEUCC_CallTransport = true,
+        },
+    },
+
+    Transport = {
+        TransportClass = 4,
+    },
+}

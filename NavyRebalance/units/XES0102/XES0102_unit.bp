@@ -1,0 +1,12 @@
+-- Merge auf LOUDs XES0102, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\NavyRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "xes0102",
+
+    Weapon = {
+        {
+            Damage = 540,
+        },
+    },
+}

@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>LOUD-Mods - Aenderungen</title>
+<!-- Vorlage fuer das Team-PDF, siehe README.md. Daten werden von build.ps1 eingesetzt. -->
+<style>
+  @page { size: A4; margin: 16mm 14mm 16mm 14mm; }
+  :root {
+    --ink: #1d2433; --muted: #5b6475; --line: #d9dee7; --soft: #f4f6f9;
+    --accent: #2f5d8a; --colin: #fff3d6; --colin-ink: #7a5300;
+    --ours: #dff1ea; --ours-ink: #0f5e43; --gone: #9aa3b2;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--ink); background: #fff;
+         font: 9.2pt/1.42 "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+  h1, h2, h3 { font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+  .cover { height: 255mm; display: flex; flex-direction: column; justify-content: space-between;
+           page-break-after: always; }
+  .cover .kicker { color: var(--accent); font-size: 10pt; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; }
+  .cover h1 { font-size: 30pt; line-height: 1.12; margin-top: 10mm; }
+  .cover .sub { font-size: 12pt; color: var(--muted); margin-top: 5mm; max-width: 150mm; }
+  .cover .meta { font-size: 9.5pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 4mm; }
+  .cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin-top: 12mm; }
+  .colcard { border: 1px solid var(--line); border-radius: 3mm; padding: 4mm; }
+  .colcard b { display: block; font-size: 11pt; margin-bottom: 1.5mm; }
+  .colcard.c { background: var(--colin); border-color: #f0dcae; }
+  .colcard.n { background: var(--ours); border-color: #b9e0d1; }
+  section.page { page-break-before: always; }
+  h2 { font-size: 17pt; color: var(--accent); margin-bottom: 1mm; }
+  .h2sub { color: var(--muted); font-size: 9.5pt; margin-bottom: 4mm; }
+  .intro { font-size: 10pt; margin: 0 0 3mm 0; max-width: 175mm; }
+  .notes { background: var(--soft); border-radius: 2.5mm; padding: 3mm 4.5mm; margin: 0 0 5mm 0; }
+  .notes h4 { margin: 0 0 1.5mm 0; font-size: 9.5pt; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .notes ul { margin: 0; padding-left: 4.5mm; }
+  .notes li { margin: .8mm 0; }
+  .unit { break-inside: avoid; page-break-inside: avoid; margin: 0 0 5mm 0; }
+  .unit.long { break-inside: auto; page-break-inside: auto; }
+  .uhead { display: flex; align-items: baseline; gap: 3mm; border-bottom: 1.5px solid var(--ink); padding-bottom: 1mm; margin-bottom: 1.2mm; }
+  .uhead h3 { font-size: 11.5pt; }
+  .uhead .desc { color: var(--muted); }
+  .uhead .id { margin-left: auto; font-family: Consolas, monospace; font-size: 8.5pt; color: var(--muted); }
+  .tags { font-size: 8.3pt; color: var(--muted); margin-bottom: 1.5mm; }
+  .tag { display: inline-block; border: 1px solid var(--line); border-radius: 1.2mm; padding: 0 1.6mm; margin-right: 1.2mm; }
+  .tag.merge { border-color: #b9cfe4; color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th { text-align: left; font-weight: 600; font-size: 8.3pt; color: var(--muted); border-bottom: 1px solid var(--line); padding: 1mm 1.5mm; }
+  td { padding: .9mm 1.5mm; border-bottom: 1px solid #eef1f5; vertical-align: top; word-wrap: break-word; }
+  col.f { width: 34%; } col.v { width: 22%; }
+  td.field { color: var(--ink); }
+  td.field .grp { color: var(--muted); }
+  td.chg { background: var(--colin); color: var(--colin-ink); }
+  td.ours { background: var(--ours); color: var(--ours-ink); font-weight: 600; }
+  td.none { color: var(--gone); }
+  tr.star td.field::before { content: "\2605  "; color: var(--ours-ink); }
+  .same { color: var(--muted); font-style: italic; font-size: 8.8pt; padding: 1mm 0; }
+  .hidden { color: var(--gone); font-size: 8pt; margin-top: .8mm; }
+  .legend { display: flex; gap: 4mm; font-size: 8.5pt; color: var(--muted); margin: 0 0 4mm 0; }
+  .sw { display: inline-block; width: 3.2mm; height: 3.2mm; border-radius: .8mm; vertical-align: -.5mm; margin-right: 1mm; }
+  table.over td, table.over th { padding: 1.4mm 2mm; }
+  table.over td:first-child { font-weight: 600; }
+  .toc { margin-top: 4mm; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const DATA = /*DATA*/null;
+const STAND = "/*STAND*/";
+
+const MODS = {
+  T4UnitAdditions: { title: "T4 Unit Additions", status: "im Spiel teilweise getestet",
+    zweck: "Experimentelle Landeinheiten, die sich transportieren lassen, dazu der Lufttr&auml;ger Acclamator.",
+    notes: [
+      "<b>Regel f&uuml;r alle T4-Landeinheiten</b>, auch die aus LOUD (Fatboy, Scathis, Monkeylord, Megalith, Ythotha, Galactic Colossus): Transportklasse 4, Befehl &bdquo;Transport rufen&ldquo;, feuern nicht aus dem Transport. Die Iyadesu bleibt Klasse 5. <i>Unsere Erweiterung (Paul) &ndash; Colin hatte das nur einzeln an seinen Einheiten.</i>",
+      "Rampage: Baurate 60 und Baureichweite 15 erg&auml;nzt &ndash; ohne Baurate wirkten Colins Befehle Reparieren und Erobern nicht.",
+      "Acclamator: F&auml;hrbake UEB5102 erg&auml;nzt &ndash; vorher entstand kein F&auml;hrpunkt. Die KI baut den Acclamator bewusst nicht.",
+      "Fatboy unsichtbar bei sehr schnellem Bau: ein LOUD-Fehler, behoben im Mod <i>Basegame Bugfixes</i>."
+    ] },
+  AirForceRebalance: { title: "Air Force Rebalance", status: "im Spiel noch nicht getestet",
+    zweck: "Colins Luftwaffen-Rebalancing: je Flugzeugtyp dasselbe Muster &uuml;ber alle vier Fraktionen. Dazu reine Flugabwehr und die Uyanah.",
+    notes: [
+      "NG3 Longbow: Script repariert, Colins Fassung h&auml;tte Lua-Fehler ausgel&ouml;st. Seine Idee &ndash; billige Flak, Radar per Ausbau &ndash; bleibt.",
+      "Bayblade, Longbow, Vindicator: Baurate 15 f&uuml;r ihre Ausbauten (ohne Baurate kein Baufortschritt).",
+      "Bayblade: falschen Ausbau-Namen korrigiert, tote Script-Zweige entfernt.",
+      "Uyanah: zur&uuml;ck auf die BlackOps-Waffenklassen (Colin nutzte eine Basisklasse, die selbst nicht feuern kann), Todesanimation wiederhergestellt.",
+      "Sky Boxer (UEF-Flakpanzer) nicht aufgenommen: Colins &bdquo;feuert aus dem Transport&ldquo; w&auml;re ein reiner UEF-Vorteil (Paul)."
+    ] },
+  NavyRebalance: { title: "Navy Rebalance", status: "im Spiel noch nicht getestet",
+    zweck: "Colins Marine-Rebalancing: U-Boote, Raketen-U-Boote, Tr&auml;ger, Torpedoboot und Seefestung, dazu Reparaturschiff und Seemine.",
+    notes: [
+      "Treibstoff-Entzug der Flak (FUELRATIO) bei Iavish, Yathsou und Atlantis bleibt wie in LOUD (Paul) &ndash; Colin hatte ihn nur bei diesen dreien entfernt, 30 andere LOUD-Einheiten haben ihn.",
+      "Sonar-Tarnung der Raketen-U-Boote: von Colin entfernt, bei uns auf &bdquo;nein&ldquo; gesetzt &ndash; gleiche Wirkung.",
+      "Cooper: die Wasserbombe greift weiter Geb&auml;ude an wie in LOUD (Paul) &ndash; Colin hatte Geb&auml;ude aus den Zielpriorit&auml;ten gestrichen.",
+      "Patch Class: Script-Import repariert (zeigte auf eine Datei, die es in LOUD nicht gibt).",
+      "Torrent Class nicht aufgenommen &ndash; bei Colin unver&auml;ndert."
+    ] },
+  TacticalMissileUpgrades: { title: "Tactical Missile Upgrades", status: "im Spiel noch nicht getestet",
+    zweck: "Drei T2-Geb&auml;ude lassen sich wie Massenextraktoren an Ort und Stelle ausbauen: Serpentine &rarr; Purifier und Volcano &rarr; Purger (Aeon), Buzzkill &rarr; Protector (UEF).",
+    notes: [
+      "Volcano: Baurate korrigiert &ndash; Colin schrieb &bdquo;Buildrate&ldquo;, das Spiel liest das nicht, der Ausbau w&auml;re nie fertig geworden.",
+      "Purger: Bauzeit zur&uuml;ck auf 1800 wie LOUD (Paul). Mit Colins 120 st&uuml;nde er beim Direktbau fast sofort.",
+      "Die T2-Geb&auml;ude listen nur die Ausbaustufe als baubar, nicht sich selbst &ndash; wie LOUDs eigene Ausbauketten."
+    ] },
+  DynamicGameplay: { title: "Dynamic Gameplay", status: "&uuml;berarbeitet 08/2026",
+    zweck: "Vier Experimentaleinheiten aus BrewLAN und BlackOps: Panopticon, Darkness, Hala Othuum, Haasioz-Iya.",
+    notes: [
+      "Die Werte sind unver&auml;ndert &ndash; Colins &Auml;nderungen stecken in den Scripts.",
+      "Panopticon: sucht per Omni statt Radar (Suchradius 560 &rarr; 212, voll ausgebaut 1115 &rarr; 394) und markiert auch Mauern und Minen. Bleibt so (Paul).",
+      "Darkness: trifft auch Aeons Aria, LOUD nimmt sie aus. Bleibt so (Paul).",
+      "Darkness: Schockwellen-Effekt repariert &ndash; ein BrewLAN-Fehler, der den Darkness aus gr&ouml;&szlig;erer Kameraentfernung wirkungslos machen konnte.",
+      "Panopticon: Beschriftung f&uuml;r den Schalter &bdquo;Toggle Economy Watch&ldquo; erg&auml;nzt.",
+      "Bekannt, nicht behoben: das Panopticon schaltet sich ab, wenn der Energiespeicher kleiner ist als der Verbrauch pro Sekunde (LOUD-Fehler)."
+    ] },
+  SquareShields: { title: "Squareshields", status: "&uuml;berarbeitet 08/2026",
+    zweck: "Die vier experimentellen W&uuml;rfelschilde aus LOUD Unit Additions, ohne die &uuml;brigen Einheiten des Pakets.",
+    notes: [
+      "Colin hatte an diesen vier nichts ge&auml;ndert.",
+      "Ausbaustufe &bdquo;Squareshield &amp; Storage&ldquo; entfernt &ndash; wer sie will, aktiviert LOUD Unit Additions.",
+      "Thanatos: falschen Animationspfad korrigiert."
+    ] },
+  ImprovedHydrocarbonPowerPlants: { title: "Improved Hydrocarbon PowerPlants", status: "&uuml;berarbeitet 08/2026",
+    zweck: "Acht verbesserte Hydrocarbon-Kraftwerke (Stufe 2 und 3, alle Fraktionen) aus BlackOps.",
+    notes: [
+      "Die Blueprints sind wie bei BlackOps; vereinheitlicht wird zentral per Hook. Solche Werte sind in den Tabellen mit &bdquo;(Hook)&ldquo; markiert.",
+      "Nachbarschaftsbonus wie bei normalen Kraftwerken T2/T3 &ndash; Colin hatte das nur bei Aeon.",
+      "Selbstreparatur T2 = 2, T3 = 4 f&uuml;r alle, im Mod-Manager einstellbar (Colin: nur Aeon T2 = 10).",
+      "Energiespeicher T2 = 200 f&uuml;r alle &ndash; den Seraphim fehlte er."
+    ] },
+  T4MassExtractors: { title: "T4 Mass Extractors", status: "Colins Fassung, noch nicht &uuml;berarbeitet",
+    zweck: "Massenextraktoren der Experimental-Stufe. Der Inhalt ist Colins Fassung, Datei f&uuml;r Datei identisch mit UEF_trans_men.",
+    notes: [
+      "Die T3-Extraktoren lassen sich zur neuen Stufe ausbauen.",
+      "Die vier neuen Extraktoren gibt es in LOUD nicht &ndash; dort bleibt die Spalte Original leer."
+    ] }
+};
+const ORDER = ["T4UnitAdditions","AirForceRebalance","NavyRebalance","TacticalMissileUpgrades","DynamicGameplay","SquareShields","ImprovedHydrocarbonPowerPlants","T4MassExtractors"];
+
+const OPEN = [
+  ["Pearl","SAB0104","Aeon","Ingenieurstation","Herkunft unklar &ndash; in LOUD nicht vorhanden. Masse 1400, Baurate 25."],
+  ["Yenesel","SSL0324","Seraphim","mobile Sensoreinheit (BrewLAN)","Radar 196 &rarr; 400, Omni 52 &rarr; 100, Energie/s 400 &rarr; 2500, Masse 1650 &rarr; 1200. Einseitig: Gegenst&uuml;cke Metatron (Aeon) und Adramelech (Cybran) unver&auml;ndert."],
+  ["Wraith","BAL0310","Aeon","schwerer Schwebepanzer (BlackOps)","Masse 1375 &rarr; 1600, Tempo 3 &rarr; 2,5, Kanone 800 &rarr; 600 bei Reichweite 50 &rarr; 64, Wasserbombe entfernt."],
+  ["Megaroach","WRL0404","Cybran","experimenteller Kampfroboter","Masse 95650 &rarr; 63000, Leben 105500 &rarr; 85500, schneller, alle Waffen schw&auml;cher."]
+];
+
+// ---------- Feldnamen ----------
+const SEG = {
+  Economy:"Wirtschaft", Defense:"Verteidigung", Physics:"Bewegung", Air:"Flug", Intel:"Aufkl&auml;rung",
+  General:"Allgemein", Transport:"Transport", Enhancements:"Ausbau", Wreckage:"Wrack", AI:"KI",
+  Footprint:"Grundfl&auml;che", Shield:"Schild", CommandCaps:"Befehl", ToggleCaps:"Schalter", Veteran:"Veteranenstufen",
+  OrderOverrides:"Schalter-Beschriftung"
+};
+const LEAF = {
+  BuildCostMass:"Masse-Kosten", BuildCostEnergy:"Energie-Kosten", BuildTime:"Bauzeit", BuildRate:"Baurate",
+  MaxBuildDistance:"Baureichweite", BuildableCategory:"kann bauen", RebuildBonusIds:"Wiederaufbau-Bonus f&uuml;r",
+  ProductionPerSecondMass:"Masse pro Sekunde", ProductionPerSecondEnergy:"Energie pro Sekunde",
+  MaintenanceConsumptionPerSecondEnergy:"Energie-Unterhalt pro Sekunde", StorageEnergy:"Energiespeicher", StorageMass:"Massespeicher",
+  TeleportEnergyMod:"Teleport-Energiefaktor", TeleportMassMod:"Teleport-Massefaktor", TeleportTimeMod:"Teleport-Zeitfaktor",
+  Health:"Leben (Start)", MaxHealth:"Leben", RegenRate:"Selbstreparatur pro Sekunde", ArmorType:"Panzerungsart",
+  ShieldMaxHealth:"Schild-Leben", ShieldRegenRate:"Schild-Regeneration", ShieldRechargeTime:"Schild-Ladezeit",
+  ShieldSize:"Schild-Gr&ouml;&szlig;e", ShieldRegenStartTime:"Schild-Regeneration ab (s)", ShieldVerticalOffset:"Schild-H&ouml;he",
+  ShieldEnergyDrainRechargeTime:"Schild-Ladezeit nach Energiemangel", RegenAssistMult:"Schild-Hilfsfaktor",
+  EconomyThreatLevel:"KI-Bedrohung Wirtschaft", AirThreatLevel:"KI-Bedrohung Luft", SurfaceThreatLevel:"KI-Bedrohung Boden",
+  SubThreatLevel:"KI-Bedrohung U-Boot", AntiMissileThreatLevel:"KI-Bedrohung Raketenabwehr",
+  MaxSpeed:"H&ouml;chstgeschwindigkeit", MaxSpeedReverse:"R&uuml;ckw&auml;rtsgeschwindigkeit", MaxAcceleration:"Beschleunigung",
+  MaxBrake:"Bremskraft", TurnRate:"Drehrate", TurnRadius:"Wenderadius", TurnFacingRate:"Ausrichtungsrate", MotionType:"Bewegungsart",
+  Elevation:"Flugh&ouml;he", MaxAirspeed:"H&ouml;chstgeschwindigkeit (Luft)", MinAirspeed:"Mindestgeschwindigkeit (Luft)",
+  TurnSpeed:"Kurvengeschwindigkeit", CombatTurnSpeed:"Kurvengeschwindigkeit im Kampf", TightTurnMultiplier:"Drehfaktor enge Kurve",
+  KTurn:"Kurvenfaktor", KTurnDamping:"Kurvend&auml;mpfung", KLift:"Auftrieb", KLiftDamping:"Auftriebsd&auml;mpfung",
+  KRoll:"Rollfaktor", KRollDamping:"Rolld&auml;mpfung", KMove:"Bewegungsfaktor", KMoveDamping:"Bewegungsd&auml;mpfung",
+  BreakOffTrigger:"Abdrehen ab", BreakOffDistance:"Abdrehdistanz", StartTurnDistance:"Kurve ab", BankFactor:"Neigungsfaktor",
+  FuelUseTime:"Treibstoff (s)", FuelRechargeRate:"Treibstoff-Nachladung", WobbleSpeed:"Wackeln", WobbleFactor:"Wackelfaktor",
+  VisionRadius:"Sichtweite", WaterVisionRadius:"Sichtweite unter Wasser", RadarRadius:"Radar", OmniRadius:"Omni", SonarRadius:"Sonar",
+  SonarStealth:"Sonar-Tarnung", RadarStealth:"Radar-Tarnung", RadarStealthFieldRadius:"Radar-Tarnfeld", SonarStealthFieldRadius:"Sonar-Tarnfeld",
+  UpgradesTo:"Ausbau zu", UpgradesFrom:"Ausbau aus", UnitName:"Name", Icon:"Gel&auml;nde-Symbol", FactionName:"Fraktion",
+  TechLevel:"Techstufe", CapCost:"Einheitenlimit-Kosten",
+  TransportClass:"Transportklasse (Gr&ouml;&szlig;e)", CanFireFromTransport:"feuert aus dem Transport",
+  Class1AttachSize:"Pl&auml;tze Klasse 1", Class2AttachSize:"Pl&auml;tze Klasse 2", Class3AttachSize:"Pl&auml;tze Klasse 3",
+  Class4AttachSize:"Pl&auml;tze Klasse 4", TransportHookDistance:"Haken-Abstand",
+  Damage:"Schaden", DamageRadius:"Fl&auml;chenschaden-Radius", MaxRadius:"Reichweite", MinRadius:"Mindestreichweite",
+  RateOfFire:"Feuerrate", MuzzleVelocity:"M&uuml;ndungsgeschwindigkeit", TurretYawSpeed:"Turm-Drehgeschwindigkeit",
+  TurretYawRange:"Turm-Schwenkbereich", TurretPitchSpeed:"Turm-Hebegeschwindigkeit", TurretPitchRange:"Turm-Hebebereich",
+  ProjectileId:"Geschoss", MuzzleSalvoSize:"Schuss pro Salve", MuzzleSalvoDelay:"Salvenabstand", RackSalvoReloadTime:"Nachladezeit",
+  CannotAttackGround:"kann nicht auf den Boden feuern", FiringTolerance:"Zielgenauigkeit", FiringRandomness:"Streuung",
+  TargetRestrictDisallow:"Ziele ausgeschlossen", TargetRestrictOnlyAllow:"nur diese Ziele", InitialProjectileStorage:"Raketen beim Bau",
+  MaxProjectileStorage:"Raketenlager", ProjectileLifetime:"Geschoss-Lebensdauer", BeamLifetime:"Strahldauer",
+  BeamCollisionDelay:"Strahl-Trefferabstand", EnergyRequired:"Energiebedarf pro Schuss", EnergyDrainPerSecond:"Energieverbrauch pro Sekunde",
+  DisplayName:"Name", NotExclusive:"feuert parallel", RangeCategory:"Reichweitenklasse", DoTPulses:"Schadenspulse",
+  BuffType:"Buff-Art", BuffValue:"Buff-Wert", Radius:"Radius", Duration:"Dauer",
+  Adjacency:"Nachbarschaftsbonus", StrategicIconName:"Kartensymbol", BeaconName:"F&auml;hrbake",
+  SizeX:"Gr&ouml;&szlig;e X", SizeY:"Gr&ouml;&szlig;e Y", SizeZ:"Gr&ouml;&szlig;e Z", SelectionSizeX:"Auswahlgr&ouml;&szlig;e X",
+  SelectionSizeZ:"Auswahlgr&ouml;&szlig;e Z", MeshExtentsX:"Modellma&szlig; X", MeshExtentsY:"Modellma&szlig; Y", MeshExtentsZ:"Modellma&szlig; Z",
+  SkirtOffsetX:"Baufl&auml;chen-Versatz X", SkirtOffsetZ:"Baufl&auml;chen-Versatz Z", SkirtSizeX:"Baufl&auml;che X", SkirtSizeZ:"Baufl&auml;che Z",
+  Sequence:"Reihenfolge", Slot:"Steckplatz", Prerequisite:"Voraussetzung", RemoveEnhancements:"entfernt Ausbauten",
+  BlueprintId:"Blueprint", Description:"Beschreibung", HealthMult:"Leben-Faktor", MassMult:"Masse-Faktor", EnergyMult:"Energie-Faktor",
+  ReclaimTimeMultiplier:"Abbauzeit-Faktor", WreckageLayers:"Wrack auf"
+};
+const CMD = { Repair:"Reparieren", Capture:"Erobern", CallTransport:"Transport rufen", Ferry:"F&auml;hre", Patrol:"Patrouille",
+  Attack:"Angreifen", Guard:"Begleiten", Reclaim:"Abbauen", Move:"Bewegen", Stop:"Stopp", Pause:"Pause", Transport:"Transportieren",
+  Dock:"Andocken", Teleport:"Teleportieren", Nuke:"Atomrakete", Tactical:"Taktische Rakete", SiloBuildTactical:"Raketen bauen",
+  Assist:"Unterst&uuml;tzen", RetaliateToggle:"Feuer erwidern", ShieldToggle:"Schild", IntelToggle:"Aufkl&auml;rung",
+  StealthToggle:"Tarnung", CloakToggle:"Tarnkappe", ProductionToggle:"Produktion" };
+const ABS = (k) => k;
+
+function fieldLabel(row) {
+  const k = row.k.replace(/^ROOT\./, "");
+  if (k === "Categories.#") return "Kategorien";
+  if (k === "Display.Abilities.#") return "F&auml;higkeiten (Infotext)";
+  let m;
+  if ((m = k.match(/^Weapon\.\[(\d+)\]\.#vorhanden$/))) return "Waffe " + m[1] + nm(row.label);
+  if ((m = k.match(/^Weapon\.\[(\d+)\]\.#buff\.(\d+)$/))) return "Waffe " + m[1] + nm(row.label) + ": Buff " + (row.buff || "");
+  if ((m = k.match(/^Weapon\.\[(\d+)\]\.(.+)$/))) return "<span class=grp>Waffe " + m[1] + nm(row.label) + ":</span> " + path(m[2]);
+  if ((m = k.match(/^General\.CommandCaps\.RULEUCC_(\w+)$/))) return "<span class=grp>Befehl:</span> " + (CMD[m[1]] || m[1]);
+  if ((m = k.match(/^General\.ToggleCaps\.RULEUTC_(\w+)$/))) return "<span class=grp>Schalter:</span> " + (CMD[m[1]] || m[1]);
+  if ((m = k.match(/^Enhancements\.(\w+)\.(.+)$/))) return "<span class=grp>Ausbau &bdquo;" + m[1] + "&ldquo;:</span> " + path(m[2]);
+  if (k === "Enhancements.Sequence") return "Ausbauten (Reihenfolge)";
+  const parts = k.split(".");
+  const leaf = parts.pop();
+  const grp = parts.filter(p => p !== "#").map(p => SEG[p] || p.replace(/^\[(\d+)\]$/, "$1")).join(" &rsaquo; ");
+  return (grp ? "<span class=grp>" + grp + ":</span> " : "") + (LEAF[leaf] || leaf);
+}
+function path(s) { return s.split(".").map(p => LEAF[p] || SEG[p] || p.replace(/^\[(\d+)\]$/, "$1")).join(" &rsaquo; "); }
+function nm(l) { return l ? " (" + clean(l) + ")" : ""; }
+function clean(v) { return String(v).replace(/<LOC[^>]*>/g, "").replace(/^['"]|['"]$/g, "").trim(); }
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+function norm(v) {
+  if (v === null || v === undefined) return null;
+  let s = String(v).replace(/['"]/g, "").replace(/\s+/g, " ").replace(/\/mods\/[^\/]+\//gi, "/mods/~/").replace(/ \(Hook[^)]*\)$/, "");
+  if (s.includes("|")) s = s.split("|").sort().join("|");
+  return s.trim().toLowerCase();
+}
+function fmt(v) {
+  if (v === null || v === undefined) return "&mdash;";
+  if (v === "(fehlt)") return "&mdash;";
+  if (v === "(entfernt)") return "entfernt";
+  let s = String(v);
+  let hook = "";
+  const hm = s.match(/ (\(Hook[^)]*\))$/); if (hm) { hook = " <i>" + hm[1] + "</i>"; s = s.slice(0, -hm[0].length); }
+  if (s === "true") return "ja" + hook;
+  if (s === "false") return "nein" + hook;
+  const t = s.match(/^\{(.*)\}$/);
+  if (t) { const inner = t[1].trim(); if (!inner) return "(leer)" + hook; if (!inner.includes("=")) return esc(inner.split(",").map(x => clean(x.trim())).join(", ")) + hook; }
+  s = clean(s);
+  s = s.replace(/^\/mods\/[^\/]+\/projectiles\/([^\/]+)\/.*$/i, "$1").replace(/^\/projectiles\/([^\/]+)\/.*$/i, "$1");
+  if (/^-?\d+\.\d+$/.test(s)) s = s.replace(".", ",");
+  return esc(s) + hook;
+}
+function listCell(v, base) {
+  if (v === null || v === undefined) return "&mdash;";
+  if (v === "(entfernt)") return "entfernt";
+  if (v === "(fehlt)") return "&mdash;";
+  const cur = v.split("|").map(clean);
+  if (base === null || base === undefined || base === "(fehlt)") return esc(cur.join(", "));
+  const b = base.split("|").map(clean);
+  const add = cur.filter(x => !b.includes(x)), rem = b.filter(x => !cur.includes(x));
+  if (!add.length && !rem.length) return "wie Original";
+  return [...add.map(x => "+ " + esc(x)), ...rem.map(x => "&minus; " + esc(x))].join("<br>");
+}
+
+const SECT = ["Economy","Defense","Physics","Air","Intel","Transport","General","AI","Weapon","Enhancements","Categories","Display"];
+function sectIdx(k) { const s = k.replace(/^ROOT\./, "").split(".")[0]; const i = SECT.indexOf(s); return i < 0 ? 50 : i; }
+function wIdx(k) { const m = k.match(/Weapon\.\[(\d+)\]/); return m ? +m[1] : 0; }
+
+function collapseBuffs(rows) {
+  const out = [], groups = {};
+  for (const r of rows) {
+    const m = r.k.match(/^(ROOT\.Weapon\.\[(\d+)\])\.Buffs\.\[(\d+)\]\.(.+)$/);
+    if (!m) { out.push(r); continue; }
+    const g = m[1] + "#" + m[3];
+    if (!groups[g]) { groups[g] = { k: m[1] + ".#buff." + m[3], label: r.label, rows: [] }; out.push(groups[g]); }
+    groups[g].rows.push(r);
+  }
+  return out.map(x => {
+    if (!x.rows) return x;
+    const col = c => { const vs = x.rows.map(r => r[c]); if (vs.every(v => v === null || v === undefined)) return null;
+      if (vs.every(v => v === "(entfernt)")) return "(entfernt)"; if (vs.every(v => v === "(fehlt)")) return "(fehlt)"; return "vorhanden"; };
+    const bt = x.rows.find(r => /BuffType$/.test(r.k));
+    const t = bt ? clean(bt.o && bt.o[0] !== "(" ? bt.o : (bt.c && bt.c[0] !== "(" ? bt.c : bt.n)) : "";
+    return { k: x.k, label: x.label, buff: t === "FUELRATIO" ? "Treibstoff-Entzug (FUELRATIO)" : t, o: col("o"), c: col("c"), n: col("n") };
+  });
+}
+
+function faction(id) {
+  if (id === "MKT0409") return "UEF";
+  const c = id[1]; return { A:"Aeon", E:"UEF", R:"Cybran", S:"Seraphim", L:"Seraphim" }[c] || "&ndash;";
+}
+function srcName(s) {
+  if (!s) return "neu (gibt es in LOUD nicht)";
+  if (/^units\\units/i.test(s)) return "LOUD-Basisspiel";
+  if (/^blackops/i.test(s)) return "BlackOps";
+  if (/^brewlan/i.test(s)) return "BrewLAN";
+  if (/^4D/i.test(s)) return "4th Dimension (4DC)";
+  if (/^WyvernBattlePack/i.test(s)) return "Wyvern BattlePack";
+  if (/^loud_units/i.test(s)) return "LOUD Unit Additions";
+  return esc(s.split("\\")[0]);
+}
+
+function unitHtml(u) {
+  const rows = collapseBuffs(u.rows || []).sort((a, b) => sectIdx(a.k) - sectIdx(b.k) || wIdx(a.k) - wIdx(b.k));
+  const seen = new Set();
+  const noOrig = !u.src;
+  let body = "";
+  for (const r of rows) {
+    if (seen.has(r.k)) continue; seen.add(r.k);
+    const isList = /\.#$/.test(r.k);
+    const no = norm(r.o), nc = norm(r.c), nn = norm(r.n);
+    if (!noOrig && no === nc && nc === nn) continue;
+    const colinChanged = !noOrig && nc !== no;
+    const oursDiff = nn !== nc;
+    const oc = isList ? (noOrig || !r.o || r.o[0] === "(" ? "&mdash;" : r.o.split("|").length + " Eintr&auml;ge") : (noOrig ? "&mdash;" : fmt(r.o));
+    const cc = isList ? listCell(r.c, r.o) : fmt(r.c);
+    const ncell = isList ? listCell(r.n, r.o) : fmt(r.n);
+    body += "<tr" + (oursDiff ? " class=star" : "") + "><td class=field>" + fieldLabel(r) + "</td>"
+      + "<td" + (noOrig || r.o === null || r.o === "(fehlt)" ? " class=none" : "") + ">" + oc + "</td>"
+      + "<td class=\"" + (colinChanged ? "chg" : "") + "\">" + cc + "</td>"
+      + "<td class=\"" + (oursDiff ? "ours" : "") + "\">" + ncell + "</td></tr>";
+  }
+  const nrows = (body.match(/<tr/g) || []).length;
+  const head = "<div class=uhead><h3>" + esc(u.name || u.desc || u.id) + "</h3><span class=desc>" + (u.name ? esc(u.desc || "") : "") + "</span><span class=id>" + u.id + "</span></div>"
+    + "<div class=tags><span class=tag>" + faction(u.id) + "</span><span class=tag>Herkunft: " + srcName(u.src) + "</span><span class=\"tag" + (u.kind === "Merge" ? " merge" : "") + "\">"
+    + (u.kind === "Merge" ? "Merge &ndash; nur ge&auml;nderte Felder" : "Kopie im Mod") + "</span></div>";
+  let tbl = body
+    ? "<table><colgroup><col class=f><col class=v><col class=v><col class=v></colgroup><thead><tr><th>Feld</th><th>Original</th><th>Colin</th><th>Aktuell</th></tr></thead><tbody>" + body + "</tbody></table>"
+    : "<div class=same>Werte unver&auml;ndert gegen&uuml;ber dem Original.</div>";
+  if (u.hidden) tbl += "<div class=hidden>Dazu " + u.hidden + " technische Felder (Grafik, Ton, Modell) &ndash; nicht aufgef&uuml;hrt.</div>";
+  return "<div class=\"unit" + (nrows > 22 ? " long" : "") + "\">" + head + tbl + "</div>";
+}
+
+function render() {
+  const byMod = {}; for (const m of DATA) byMod[m.mod] = m.units;
+  let h = "";
+  h += "<div class=cover><div><div class=kicker>LOUD &middot; Supreme Commander Forged Alliance</div>"
+    + "<h1>Unsere Mods &ndash;<br>was sich ge&auml;ndert hat</h1>"
+    + "<div class=sub>Einheit f&uuml;r Einheit: wie LOUD sie liefert, was Colin in <i>UEF_trans_men</i> daraus gemacht hat und was jetzt mit unseren Mods im Spiel ist.</div>"
+    + "<div class=cols3><div class=colcard><b>Original</b>Die Fassung in LOUD &ndash; Basisspiel oder ein LOUD-Paket wie BlackOps, BrewLAN, 4th Dimension, Wyvern BattlePack.</div>"
+    + "<div class=\"colcard c\"><b>Colin</b>Colins Sammelmod <i>UEF_trans_men</i>. Gelb hinterlegt: Colin hat gegen&uuml;ber LOUD ge&auml;ndert.</div>"
+    + "<div class=\"colcard n\"><b>Aktuell</b>Was mit unserem Mod im Spiel ankommt. Gr&uuml;n und &#9733;: wir weichen bewusst von Colin ab.</div></div></div>"
+    + "<div class=meta>Stand " + STAND + " &middot; erzeugt aus den Blueprints, nicht von Hand &middot; reine Pfadumschreibungen und Grafik-/Tondaten sind ausgeblendet</div></div>";
+
+  h += "<section class=page><h2>&Uuml;berblick</h2><div class=h2sub>" + ORDER.length + " Mods mit Bezug zu Colins Sammelmod, dazu Basegame Bugfixes</div>"
+    + "<table class=over><colgroup><col style=\"width:27%\"><col style=\"width:45%\"><col style=\"width:9%\"><col style=\"width:19%\"></colgroup><thead><tr><th>Mod</th><th>Worum es geht</th><th>Einheiten</th><th>Stand</th></tr></thead><tbody>";
+  for (const k of ORDER) { const m = MODS[k]; h += "<tr><td>" + m.title + "</td><td>" + m.zweck + "</td><td>" + (byMod[k] || []).length + "</td><td>" + m.status + "</td></tr>"; }
+  h += "<tr><td>Basegame Bugfixes</td><td>Behebt Fehler in LOUD selbst, unabh&auml;ngig von Colin.</td><td>&ndash;</td><td>Fix im Spiel best&auml;tigt</td></tr>";
+  h += "</tbody></table>"
+    + "<div class=legend style=\"margin-top:6mm\"><span><span class=sw style=\"background:var(--colin)\"></span>Colin &ne; Original</span><span><span class=sw style=\"background:var(--ours)\"></span>&#9733; Aktuell &ne; Colin (unsere Entscheidung)</span><span>&mdash; = gibt es dort nicht</span></div>"
+    + "<p class=intro>Alle Werte stammen direkt aus den Blueprint-Dateien. Bei Merge-Einheiten ist &bdquo;Aktuell&ldquo; das LOUD-Original mit unseren Feldern dar&uuml;ber &ndash; so, wie das Spiel es zusammensetzt. &Auml;nderungen in Scripts und Regeln stehen jeweils im grauen Kasten am Anfang eines Mods.</p></section>";
+
+  for (const k of ORDER) {
+    const m = MODS[k], units = byMod[k] || [];
+    h += "<section class=page><h2>" + m.title + "</h2><div class=h2sub>" + units.length + " Einheiten &middot; " + m.status + "</div>"
+      + "<p class=intro>" + m.zweck + "</p>"
+      + "<div class=notes><h4>Au&szlig;erhalb der Werte</h4><ul>" + m.notes.map(n => "<li>" + n + "</li>").join("") + "</ul></div>";
+    for (const u of units) h += unitHtml(u);
+    h += "</section>";
+  }
+
+  h += "<section class=page><h2>Basegame Bugfixes</h2><div class=h2sub>keine Einheiten &middot; Fix im Spiel best&auml;tigt</div>"
+    + "<p class=intro>Behebt Fehler in LOUD selbst. Jeder davon sollte auch an das LOUD-Projekt gemeldet werden.</p>"
+    + "<div class=notes><h4>Enthalten</h4><ul><li><b>Fatboy unsichtbar</b> bei sehr schnellem Bau: der Baukubus wurde abgebrochen, bevor er die Einheit einblendet. Jetzt blendet das Bauende sie notfalls ein &ndash; wie es LOUD bei Geb&auml;uden schon tut.</li></ul></div>";
+  h += "<h2 style=\"margin-top:10mm\">Noch offen in UEF_trans_men</h2><div class=h2sub>vier Einheiten mit &Auml;nderungen von Colin, in keinem unserer Mods</div>"
+    + "<table class=over><colgroup><col style=\"width:16%\"><col style=\"width:12%\"><col style=\"width:22%\"><col style=\"width:50%\"></colgroup><thead><tr><th>Einheit</th><th>Fraktion</th><th>Was</th><th>Colins &Auml;nderungen</th></tr></thead><tbody>"
+    + OPEN.map(o => "<tr><td>" + o[0] + " <span style=\"color:var(--muted);font-weight:400\">" + o[1] + "</span></td><td>" + o[2] + "</td><td>" + o[3] + "</td><td>" + o[4] + "</td></tr>").join("")
+    + "</tbody></table>"
+    + "<p class=intro style=\"margin-top:4mm\">Schon anderswo: die Massenextraktoren in <i>T4 Mass Extractors</i>; Dr. Greg House, Au-iya, Nightshade, Twilight und Whisper in Colins <i>advanced_rebalence</i>. Unver&auml;ndert gegen&uuml;ber LOUD und deshalb ohne Mod: Gewittersturm (Ythotha), Dehgarwof, Torrent. Verworfen: Sky Boxer.</p></section>";
+  document.getElementById("root").innerHTML = h;
+}
+render();
+</script>
+</body>
+</html>

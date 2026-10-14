@@ -1,0 +1,20 @@
+-- Merge auf LOUDs XSA0204, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\AirForceRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "xsa0204",
+
+    Defense = {
+        MaxHealth = 1550,
+    },
+    Economy = {
+        BuildCostEnergy = 28000,
+        BuildCostMass = 500,
+        BuildTime = 2500,
+    },
+    Weapon = {
+        {
+            Damage = 372,
+        },
+    },
+}

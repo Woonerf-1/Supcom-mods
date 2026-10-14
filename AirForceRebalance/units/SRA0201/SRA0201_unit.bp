@@ -1,0 +1,194 @@
+UnitBlueprint {
+
+    AI = {
+		TargetBones = {'Line005'},
+    },
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 3.5,
+        BankForward = false,
+        CanFly = true,
+
+        CombatTurnSpeed = 1.4,
+		
+        KLift = 3,
+        KLiftDamping = 2.5,
+		
+        KMove = 1.65,
+        KMoveDamping = 1,
+		
+        KRoll = 1.75,
+        KRollDamping = 1.75,
+		
+        KTurn = 1.8,
+        KTurnDamping = 1.6,
+		
+        LiftFactor = 10,
+		
+        MaxAirspeed = 23,
+        MinAirspeed = 9,
+		
+        StartTurnDistance = 3,
+
+        TightTurnMultiplier = 1.1,
+
+        Winged = true,
+    },
+	
+    Audio = {
+        Destroyed = Sound { Bank = 'URADestroy', Cue = 'URA_Destroy_Air', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMove = Sound { Bank = 'URA', Cue = 'URA0302_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection = Sound { Bank = 'Interface', Cue = 'Cybran_Select_Air', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+	
+    BuildIconSortPriority = 14,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER2FACTORY',
+        'BUILTBYTIER3FACTORY',
+        'CYBRAN',
+        'MOBILE',
+        'AIR',
+        'HIGHALTAIR',
+        'TECH2',
+        'INTELLIGENCE',
+		'SCOUT',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYSONAR',
+        'OVERLAYRADAR',
+    },
+
+    Defense = {
+        AirThreatLevel = 1,
+        ArmorType = 'Light',
+        Health = 595,
+        MaxHealth = 595,
+        RegenRate = 1,
+    },
+	
+    Description = '<LOC sra0201_desc>Recon Plane',
+	
+    Display = {
+        Abilities = {
+            '<LOC ability_radar>Radar',
+            '<LOC ability_sonar>Sonar',
+            '<LOC ability_cloak>Cloaking',
+            '<LOC ability_personalstealth>Personal Stealth',
+        },
+
+        LayerChangeEffects = {
+            AirLand = { Effects = { { Bones = {0}, Type = 'Landing01' } } },
+            LandAir = { Effects = { { Bones = {0}, Type = 'TakeOff01' } } },
+        },
+		
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                { LODCutoff = 130, ShaderName = 'Insect' },
+                { LODCutoff = 260, ShaderName = 'Insect' },
+            },
+        },
+		
+        MovementEffects = {
+            Air = {
+                Contrails = { Bones = {'Contrail_Left','Contrail_Right'}, ZOffset = 0 },
+                Effects = { { Bones = {'Exhaust_Left','Exhaust_Middle','Exhaust_Right'}, Type = 'AirMoveExhaust01' } },
+            },
+        },
+
+        UniformScale = 0.023,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 5500,
+        BuildCostMass = 160,
+        BuildTime = 200,
+    },
+	
+    Footprint = {
+        MaxSlope = 0.25,
+        SizeX = 1,
+        SizeZ = 1,
+    },
+	
+    General = {
+
+        CommandCaps = {
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Cybran',
+        Icon = 'air',
+        
+        OrderOverrides = {
+            RULEUTC_StealthToggle = { bitmapId = 'stealth-field', helpText = 'toggle_stealth_field' },
+        },
+        
+        ToggleCaps = { RULEUTC_StealthToggle = true },
+        
+        UnitName = '<LOC sra0201_name>Blade Raven',
+    },
+	
+    Intel = {
+		FreeIntel = true,
+        
+        RadarRadius = 60,
+
+        Cloak = true,
+        RadarStealth = true,
+        
+        SonarRadius = 48,
+        VisionRadius = 44,
+    },
+	
+    Interface = {
+        HelpText = '<LOC ura0302_help>Spy Plane',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.4,
+    LifeBarSize = 1.4,
+	
+    Physics = {
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+        },
+
+        Elevation = 24,
+
+        FuelRechargeRate = 15,
+        FuelUseTime = 750,
+
+        GroundCollisionOffset = 2.2,
+
+        MaxSpeed = 23,
+
+        MotionType = 'RULEUMT_Air',
+    },
+	
+    SelectionSizeX = 0.9,
+    SelectionSizeZ = 0.4,
+    SelectionThickness = 0.35,
+	
+    SizeSphere = 2.1,
+	
+    SizeX = 2,
+    SizeY = 0.25,
+    SizeZ = 0.6,
+	
+    StrategicIconName = 'icon_fighter2_intel',
+    StrategicIconSortPriority = 55,
+	
+    Transport = {
+        AirClass = true,
+        TransportClass = 2,
+    },
+
+}

@@ -1,0 +1,15 @@
+-- Merge auf LOUDs UEB4201, Ausbaukette von Colin (UEF_trans_men), siehe doc.claude\mods\TacticalMissileUpgrades.md
+-- Buzzkill -> Protector.
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "ueb4201",
+
+    Economy = {
+        BuildRate = 10,
+        BuildableCategory = {'web4301'},
+    },
+    General = {
+        UpgradesTo = 'web4301',
+    },
+}

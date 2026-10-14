@@ -1,0 +1,15 @@
+-- Merge auf LOUDs UAB4201, Ausbaukette von Colin (UEF_trans_men), siehe doc.claude\mods\TacticalMissileUpgrades.md
+-- Volcano -> Purger. Colin schrieb 'Buildrate' (wirkungslos).
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "uab4201",
+
+    Economy = {
+        BuildRate = 20,
+        BuildableCategory = {'bab4307'},
+    },
+    General = {
+        UpgradesTo = 'bab4307',
+    },
+}

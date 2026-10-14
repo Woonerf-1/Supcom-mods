@@ -1,0 +1,469 @@
+UnitBlueprint {
+
+    AI = {
+        GuardReturnRadius = 96,
+        GuardScanRadius = 64,
+        TargetBones = {'Body'},
+    },
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 1.8,
+        BankForward = false,
+        
+        BreakOffDistance = 22,
+        BreakOffTrigger = 30,
+        
+        CanFly = true,
+        
+        CombatTurnSpeed = 1.25,
+        
+        EngageDistance = 55,
+        
+        KLift = 4,
+        KLiftDamping = 3,
+        
+        KMove = 1.7,
+        KMoveDamping = 0.92,
+        
+        KRoll = 1.45,
+        KRollDamping = 1.45,
+        
+        KTurn = 1.6,
+        KTurnDamping = 1.3,
+        
+        LiftFactor = 8,
+        
+        MaxAirspeed = 25,
+        MinAirspeed = 13,
+		
+		RandomMinChangeCombatStateTime = 3,
+		RandomMaxChangeCombatStateTime = 8,
+
+        StartTurnDistance = 4,
+        
+        TightTurnMultiplier = 1.02,
+        TurnSpeed = 0.8,
+        Winged = true,
+    },
+    
+    Audio = {
+        AirUnitWaterImpact = Sound {Bank = 'Explosions', Cue = 'Expl_Water_Lrg_01',      LodCutoff = 'UnitMove_LodCutoff'},
+               AmbientMove = Sound {Bank = 'UEA',        Cue = 'UEA0304_Move_Loop',      LodCutoff = 'UnitMove_LodCutoff'},
+                 Destroyed = Sound {Bank = 'UEADestroy', Cue = 'UEA_Destroy_Med',        LodCutoff = 'UnitMove_LodCutoff'},
+                    Killed = Sound {Bank = 'UEADestroy', Cue = 'UEA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff'},
+                   Landing = Sound {Bank = 'UEA',        Cue = 'UEA0304_Move_Land',      LodCutoff = 'UnitMove_LodCutoff'},
+                 Refueling = Sound {Bank = 'UEA',        Cue = 'UEA_Repair_Refuel',      LodCutoff = 'UnitMove_LodCutoff'},
+                 StartMove = Sound {Bank = 'UEA',        Cue = 'UEA0304_Move_Start',     LodCutoff = 'UnitMove_LodCutoff'},
+                  StopMove = Sound {Bank = 'UEA',        Cue = 'UEA0304_Move_Stop',      LodCutoff = 'UnitMove_LodCutoff'},
+                  Thruster = Sound {Bank = 'UEA',        Cue = 'UEA0304_Move_Thruster',  LodCutoff = 'UnitMove_LodCutoff'},
+               UISelection = Sound {Bank = 'Interface',  Cue = 'UEF_Select_Air',         LodCutoff = 'UnitMove_LodCutoff'},
+    },
+    
+    Buffs = {},
+    
+    BuildIconSortPriority = 32,
+    
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'UEF',
+        'MOBILE',
+        'AIR',
+        'HIGHALTAIR',
+        'SPECIALHIGHPRI',
+        'TECH3',
+        'ANTIAIR',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYANTIAIR',
+        'OVERLAYRADAR',
+        'RESEARCHLOCKED',
+    },
+    
+    Defense = {
+        MissileDetector = {AttachBone = 'MissileDetector'},
+        
+        AirThreatLevel = 95,
+        ArmorType = 'Light',
+        Health = 4200,
+        MaxHealth = 4200,
+        RegenRate = 7,
+    },
+    
+    Description = '<LOC sea0313_desc>Penetration Fighter',
+    
+    Display = {
+        Abilities = {
+            '<LOC ability_aa>Anti-Air',
+            '<LOC ability_missiledef>Missile Defense',
+            '<LOC ability_personalstealth>Personal Stealth',
+        },
+        
+        LayerChangeEffects = {
+            AirLand = { Effects = { {Bones = {0}, Type = 'Landing01'} } },
+            LandAir = { Effects = { {Bones = {0}, Type = 'TakeOff01'} } },
+        },
+        
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {LODCutoff = 130, ShaderName = 'Unit'},
+                {LODCutoff = 260, ShaderName = 'Unit'},
+                {LODCutoff = 520, ShaderName = 'Unit'},
+            },
+        },
+        
+        MovementEffects = {
+            Air = {
+                Contrails = { Bones = {'Contrail_001', 'Contrail_002', 'Contrail_003', 'Contrail_004'} },
+                Effects = { { Bones = {'Engine_001', 'Engine_002'}, Type = 'AirMoveExhaust' } }
+            },
+            
+            BeamExhaust = { Bones = {'Engine_001', 'Engine_002'}, Cruise = true, Idle = false },
+        },
+        
+        UniformScale = 0.009,
+    },
+    
+    Economy = {
+        BuildCostEnergy = 100000,
+        BuildCostMass = 1400,
+        BuildTime = 13000,
+        
+        ResearchMultEnergy = 0.2,
+        MaintenanceConsumptionPerSecondEnergy = 75,
+    },
+    
+    Footprint = {
+        MaxSlope = 0.25,
+        SizeX = 2,
+        SizeZ = 2,
+    },
+    
+    General = {
+        CapCost = 2,
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'UEF',
+        Icon = 'air',
+        
+        OrderOverrides = {
+            RULEUTC_StealthToggle = { bitmapId = 'stealth-personal', helpText = 'toggle_stealth_personal' },
+        },
+        
+        ToggleCaps = { RULEUTC_StealthToggle = true },
+        
+        UnitName = '<LOC sea0313_name>Tomcat',
+    },
+    
+    Intel = {
+        RadarStealth = true,
+        RadarRadius = 56,
+        VisionRadius = 35,
+    },
+    
+    Interface = {
+        HelpText = '<LOC sa0313_desc>Penetration Fighter',
+    },
+    
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.85,
+    LifeBarSize = 1.5,
+    
+    Physics = {
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+        },
+        Elevation = 25,
+        FuelRechargeRate = 10,
+        FuelUseTime = 480,
+        GroundCollisionOffset = 3.1415,
+        MaxSpeed = 0.5,
+        MotionType = 'RULEUMT_Air',
+    },
+
+    SelectionSizeX = 0.8,
+    SelectionSizeZ = 1.1,
+    SelectionThickness = 0.39,
+    
+    SizeSphere = 2.8,
+    
+    SizeX = 1.5,
+    SizeY = 0.4,
+    SizeZ = 2.3,
+    
+    StrategicIconName = 'icon_fighter3_antimissile',
+    StrategicIconSortPriority = 55,
+    
+    Transport = {
+        AirClass = true,
+        TransportClass = 3,
+    },
+    
+    Veteran = {
+        Level1 = 12,
+        Level2 = 24,
+        Level3 = 36,
+        Level4 = 48,
+        Level5 = 60,
+    },
+
+    Weapon = {
+        {
+            Audio = {Fire = Sound {Bank = 'UELWeapon', Cue = 'UEL0101_MachineGun', LodCutoff = 'Weapon_LodCutoff'}},
+
+            AutoInitiateAttackCommand = true,
+
+            BallisticArc = 'RULEUBA_None',
+            
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.4,
+            
+            CannotAttackGround = true,
+            
+            CollideFriendly = false,
+            
+            Damage = 64,
+            DamageFriendly = false,
+
+            DamageType = 'Light',
+            
+            DisplayName = 'Burst Helical Railgun',
+            
+            EnergyDrainPerSecond = 166,
+            EnergyRequired = 100,       -- 6 tick charge
+
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land|water',
+            },
+            
+            FiringTolerance = 1.2,
+            
+            Label = 'ParticleCannon',
+            
+            NotExclusive = true,
+            
+            MaxRadius = 42,
+            
+            RackBones = {
+                {
+                    MuzzleBones = {'Gun_001'},
+                    RackBone = 'Gun_001',
+                },
+            },
+            
+            RangeCategory = 'UWRC_AntiAir',
+            
+            RateOfFire = 1.4,   -- every 7 ticks = 365 DPS
+            
+            ReTargetOnMiss = true,
+			
+            SlavedToBody = true,
+            SlavedToBodyArcRange = 55,
+
+            TargetCheckInterval = 0.3,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+            
+            TrackingRadius = 1.1,
+            
+            TurretBoneMuzzle = 'Gun_001',
+            TurretBonePitch = 'Gun_001',
+            TurretBoneYaw = 'Gun_001',
+            
+            TurretPitch = 0,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 75,
+            
+            TurretYaw = 0,
+            TurretYawRange = 55,
+            TurretYawSpeed = 75,
+            
+            Turreted = true,
+            UseFiringSolutionInsteadOfAimBone = true,
+        },
+        {
+            Audio = {Fire = Sound {Bank = 'UELWeapon', Cue = 'UEL0101_MachineGun', LodCutoff = 'Weapon_LodCutoff'}},
+            BallisticArc = 'RULEUBA_None',
+            
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.4,
+            
+            CannotAttackGround = false,
+            
+            CollideFriendly = false,
+            
+            Damage = 64,
+            DamageFriendly = false,
+
+            DamageType = 'Light',
+            
+            DisplayName = 'Burst Helical Railgun',
+            
+            EnergyDrainPerSecond = 166,
+            EnergyRequired = 100,
+            
+            FireTargetLayerCapsTable = {
+                Air = 'Air|Land|water',
+                Land = 'Air|Land|water',
+                Water = 'Air|Land|water',
+            },
+            
+            FiringTolerance = 1.2,
+            
+            Label = 'ParticleCannon',
+            
+            LeadTarget = false,
+            
+            NotExclusive = true,
+            
+            MaxRadius = 42,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Gun_002'},
+                    RackBone = 'Gun_002',
+                },
+            },
+            
+            RateOfFire = 1.4,   -- another 365 by charge
+            
+            ReTargetOnMiss = true,
+			
+            SlavedToBody = true,
+            SlavedToBodyArcRange = 55,
+    
+            TargetCheckInterval = 0.3,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'STRUCTURE,UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+            
+            TurretBoneMuzzle = 'Gun_002',
+            TurretBonePitch = 'Gun_002',
+            TurretBoneYaw = 'Gun_002',
+            
+            TurretPitch = 0,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 75,
+            
+            TurretYaw = 0,
+            TurretYawRange = 55,
+            TurretYawSpeed = 75,
+            
+            Turreted = true,
+            UseFiringSolutionInsteadOfAimBone = true,
+        },
+        
+        {
+            advancedTracking = true,
+            
+            AlwaysRecheckTarget = true,
+            Audio = {Fire = Sound {Bank = 'UELWeapon', Cue = 'UEB2304_Missile_Flayer', LodCutoff = 'Weapon_LodCutoff'}},
+            
+            BallisticArc = 'RULEUBA_None',
+            CannotAttackGround = true,
+            CollideFriendly = false,
+            
+            Damage = 200,
+            DamageRadius = 0,
+
+            DamageType = 'Light',
+            
+            DisplayName = 'Flayer AAM Launcher',
+            
+            FireTargetLayerCapsTable = {
+                Air = 'Air',
+                Land = 'Air',
+                Water = 'Air',
+            },
+            
+            FiringTolerance = 5,
+            
+            Label = 'Missile',
+            
+            MaxRadius = 54,
+            
+            MuzzleSalvoDelay = 0.2,
+            MuzzleSalvoSize = 2,
+            MuzzleVelocity = 30,
+            
+            ProjectileId = '/projectiles/TAAMissileFlayer01/TAAMissileFlayer01_proj.bp',
+            ProjectileLifetime = 5,
+            
+            RackBones = {
+                {
+                    MuzzleBones = {'Gun_003'},
+                    RackBone = 'Gun_003',
+                },
+            },
+
+            RateOfFire = 0.8,   -- another 200 DPS
+            
+            TargetCheckInterval = 1,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+            TrackingRadius = 1.1,
+            
+            TurretBoneMuzzle = 'Gun_003',
+            TurretBonePitch = 'Gun_003',
+            TurretBoneYaw = 'Gun_003',
+            
+            TurretPitch = 25,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 75,
+            
+            TurretYaw = 0,
+            TurretYawRange = 55,
+            TurretYawSpeed = 75,
+            
+            Turreted = true,
+        },
+        
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 460,
+            DamageFriendly = true,
+            DamageRadius = 2.5,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+            WeaponCategory = 'Death',
+        },
+    },
+
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.1,
+        HealthMult = 0.3,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Water = true,
+        },
+    },
+}

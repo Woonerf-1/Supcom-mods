@@ -28,7 +28,6 @@ usermods\PlayTest\
   hook\lua\aibrain.lua               Debug-Schalter
   hook\lua\simInit.lua               spawnt vier SCUs je ACU
   hook\lua\system\Blueprints.lua     SCU-Werte hochsetzen
-  hook\lua\sim\Unit.lua              STILLGELEGT, nur Kommentar
   units\                             leer
 ```
 
@@ -128,7 +127,11 @@ Beseitigt die Warnung
 Die Angabe kommt sonst aus der Lobby-Option NoRush; steht die auf "Off", setzt LOUD sie
 gar nicht erst. Das Verhalten bleibt identisch, nur die Meldung entfaellt.
 
-## 4. Stillgelegt: `hook\lua\sim\Unit.lua`
+## 4. Entfernt: `hook\lua\sim\Unit.lua`
+
+Am 2026-10-14 nach `doc.claude\_Altlasten\PlayTest\hook\lua\sim\Unit.lua` verschoben
+(Paul) - die Datei enthielt nur noch Kommentar, wurde aber bei jeder Partie geladen.
+Der Befund bleibt:
 
 Enthielt eine Umhuellung von `Unit.PlayAnimationThread`, um die Aufloesung von
 `.sca`-Pfaden zu messen. Der Hook wurde laut Log geladen
@@ -156,11 +159,12 @@ verketten sich, das ist unkritisch.
 
 ## 6. Offene Punkte
 
-- [ ] **Cheat-Meldung unterdruecken?** Liesse sich vermeiden, indem der Spawn ueber den
-      regulaeren Bauweg statt ueber `CreateUnitHPR` laeuft. Deutlich mehr Aufwand fuer
-      rein kosmetischen Gewinn.
+- [x] **Cheat-Meldung unterdruecken?** **Richtigstellung 2026-10-14:** die Meldung kommt
+      sehr wahrscheinlich **nicht** von PlayTest - Sim-Code wie `CreateUnitHPR` unterliegt
+      keiner Cheat-Pruefung. Ursache vermutlich LOUDs `ConExecute('path_...')` in
+      `gamemain.lua` Z. 161-163, siehe `15_LOG.md` R-05. Hier nichts zu tun.
 - [ ] **Enhancement-Produktionswerte** der SCUs mit hochsetzen? Siehe 3.2.
-- [ ] **`hook\lua\sim\Unit.lua`** loeschen, sobald die `Class()`-Frage geklaert ist.
+- [x] **`hook\lua\sim\Unit.lua`** entfernt 2026-10-14 (nach `_Altlasten`), siehe Abschnitt 4.
 
 ## 7. Beim Messen beachten
 
@@ -179,7 +183,7 @@ Zwei weitere Verzerrungen aus derselben Quelle:
 
 | Einstellung | Wirkung auf Messungen |
 |---|---|
-| `BuildRate 60000` | Ausbaustufen sind in Sekundenbruchteilen fertig - verzerrt alles, was am Bauzyklus haengt, und hat den UI-Fehler B-01 ueberhaupt erst sichtbar gemacht |
+| `BuildRate 60000` | Ausbaustufen sind in Sekundenbruchteilen fertig - verzerrt alles, was am Bauzyklus haengt, und hat den UI-Fehler B-01 ueberhaupt erst sichtbar gemacht. Ebenso vermutlich B-04: ein in unter 0,7 s gebauter Fatboy bleibt unsichtbar (`mods\BasegameBugfixes.md`) |
 | Produktion x1000 | Energieknappheit tritt praktisch nie auf - ein energiebedingtes Verhalten laesst sich so **nicht** nachstellen |
 
 Umgekehrt gilt: eine **leere Sandkastenkarte** hat keine Feinde. Alles, was ueber

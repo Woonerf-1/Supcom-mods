@@ -42,9 +42,9 @@ wiederherstellbar, ein versehentliches Überschreiben ist reversibel. Der Grunds
 
 **Zu beachten:**
 
-- **Claude kann kein Git ausführen.** Die Dateiwerkzeuge lesen und schreiben nur; eine Shell
-  auf dem Rechner des Nutzers gibt es nicht. **Commits, Branches, Push und Pull macht der
-  Nutzer** (SourceTree oder Kommandozeile). Claude schreibt Dateien und sagt, was
+- **Claude fuehrt nur lesendes Git aus** (seit 2026-10-13, Claude Code mit Shell):
+  `git status`, `git diff`, `git log`, `git show`. **Commits, Branches, Push und Pull macht
+  der Nutzer** (SourceTree oder Kommandozeile). Claude schreibt Dateien und sagt, was
   committet werden sollte.
 - **`doc.claude\` liegt jetzt im Repository** (`usermods\doc.claude\`). Dokuänderungen sind
   damit Teil der Commits — idealerweise zusammen mit der zugehörigen Modänderung.

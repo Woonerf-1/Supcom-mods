@@ -1,0 +1,383 @@
+UnitBlueprint {
+
+    AI = {
+        GuardReturnRadius = 96,
+        GuardScanRadius = 64,
+        TargetBones = {'Body'},
+    },
+	
+    Air = {
+        AutoLandTime = 1.6,
+        BankFactor = 1.8,
+        BankForward = false,
+        BreakOffDistance = 22,
+        BreakOffTrigger = 30,
+        
+        CanFly = true,
+        
+        CombatTurnSpeed = 1.4,
+        
+        EngageDistance = 56,
+        
+        KLift = 4,
+        KLiftDamping = 3,
+        
+        KMove = 1.7,
+        KMoveDamping = 0.92,
+        
+        KRoll = 1.45,
+        KRollDamping = 1.45,
+        
+        KTurn = 1.8,
+        KTurnDamping = 1.7,
+        
+        LiftFactor = 8,
+        
+        MaxAirspeed = 32,
+        MinAirspeed = 16,
+		
+		RandomMinChangeCombatStateTime = 3,
+		RandomMaxChangeCombatStateTime = 8,
+        
+        StartTurnDistance = 4,
+        
+        TightTurnMultiplier = 10000,
+        TurnSpeed = 1.3,
+        Winged = true,
+    },
+    
+    Audio = {
+        AmbientMove         = Sound { Bank = 'XSA', Cue = 'XSA0303_Move_Loop',     LodCutoff = 'UnitMove_LodCutoff' },
+        Landing             = Sound { Bank = 'XSA', Cue = 'XSA0303_Move_Land',     LodCutoff = 'UnitMove_LodCutoff' },
+        Refueling           = Sound { Bank = 'XSB', Cue = 'XSB5202_Repair_Refuel', LodCutoff = 'UnitMove_LodCutoff' },
+        StartMove           = Sound { Bank = 'XSA', Cue = 'XSA0303_Move_Start',    LodCutoff = 'UnitMove_LodCutoff' },
+        StopMove            = Sound { Bank = 'XSA', Cue = 'XSA0303_Move_Stop',     LodCutoff = 'UnitMove_LodCutoff' },
+        Thruster            = Sound { Bank = 'XSA', Cue = 'XSA0303_Move_Thruster', LodCutoff = 'UnitMove_LodCutoff' },
+        AirUnitWaterImpact  = Sound { Bank = 'Explosions', Cue = 'Expl_Water_Lrg_01', LodCutoff = 'UnitMove_LodCutoff' },
+        Destroyed           = Sound { Bank = 'XSA_Destroy', Cue = 'XSA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        Killed              = Sound { Bank = 'XSA_Destroy', Cue = 'XSA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection         = Sound { Bank = 'SeraphimSelect', Cue = 'Seraphim_Select_Air', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+    
+    Buffs = {},
+    
+    BuildIconSortPriority = 32,
+    
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'SERAPHIM',
+        'MOBILE',
+        'AIR',
+        'HIGHALTAIR',
+        'SPECIALHIGHPRI',
+        'TECH3',
+        'ANTIAIR',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+        'OVERLAYANTIAIR',
+        'RESEARCHLOCKED',
+    },
+    
+    Defense = {
+        MissileDetector = { AttachBone = 'MissileDetector' },
+        
+        AirThreatLevel = 96,
+        ArmorType = 'Light',
+        
+        Health = 3800,
+        MaxHealth = 3800,
+        RegenRate = 10,
+    },
+    
+    Description = '<LOC ssa0313_desc>Penetration Fighter',
+    
+    Display = {
+    
+        Abilities = {
+            '<LOC ability_aa>Anti-Air',
+            '<LOC ability_missiledef>Missile Defense',
+            '<LOC ability_personalstealth>Personal Stealth',
+        },
+        
+        LayerChangeEffects = {
+            AirLand = { Effects = { { Bones = {0}, Scale = 2.05, Type = 'Landing01' } } },
+            LandAir = { Effects = { { Bones = {0}, Scale = 2.05, Type = 'TakeOff01' } } },
+        },
+        
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {LODCutoff = 64, LookupName = '/textures/environment/Falloff_seraphim_lookup.dds', ShaderName = 'Seraphim' },
+                {LODCutoff = 128, LookupName = '/textures/environment/Falloff_seraphim_lookup.dds', ShaderName = 'Seraphim' },
+                {LODCutoff = 256, ShaderName = 'Seraphim'},
+                {LODCutoff = 512, ShaderName = 'Seraphim'},
+            },
+        },
+        
+        MovementEffects = {
+            Air = {
+                Contrails = { Bones = {'Tip_1','Tip_Big'} },
+                Effects = { { Bones = {'Rear'}, Type = 'AirMoveExhaust03' } },
+            },
+        },
+        
+        UniformScale = 0.009,
+    },
+    
+    Economy = {
+        BuildCostEnergy = 100000,
+        BuildCostMass = 1050,
+        BuildTime = 13000,
+        
+        ResearchMultEnergy = 0.2,
+        MaintenanceConsumptionPerSecondEnergy = 75,
+    },
+    
+    Footprint = {
+        MaxSlope = 0.25,
+        SizeX = 2,
+        SizeZ = 2,
+    },
+    
+    General = {
+        CapCost = 2,
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Seraphim',
+        Icon = 'air',
+        
+        OrderOverrides = {
+            RULEUTC_StealthToggle = { bitmapId = 'stealth-personal', helpText = 'toggle_stealth_personal' },
+        },
+        
+        ToggleCaps = { RULEUTC_StealthToggle = true },
+        
+        UnitName = '<LOC ssa0313_name>Ialosaare',
+    },
+    
+    Intel = {
+        RadarRadius = 56,
+        RadarStealth = true,
+        VisionRadius = 40,
+    },
+   
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.95,
+    LifeBarSize = 1.25,
+    
+    Physics = {
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+        },
+        Elevation = 25,
+        
+        FuelRechargeRate = 5,
+        FuelUseTime = 480,
+        GroundCollisionOffset = 2.8,
+        MaxSpeed = 0.5,
+        MotionType = 'RULEUMT_Air',
+    },
+    SelectionSizeX = 0.9,
+    SelectionSizeZ = 1,
+    SelectionThickness = 0.45,
+    
+    SizeSphere = 2.8,
+    
+    SizeX = 1.75,
+    SizeY = 0.3,
+    SizeZ = 2,
+    
+    StrategicIconName = 'icon_fighter3_antimissile',
+    StrategicIconSortPriority = 55,
+    
+    Transport = {
+        AirClass = true,
+        TransportClass = 3,
+    },
+    
+    Veteran = {
+        Level1 = 11,
+        Level2 = 22,
+        Level3 = 33,
+        Level4 = 44,
+        Level5 = 55,
+    },
+    
+    Weapon = {
+        {
+            Audio = {Fire = Sound {Bank = 'XSL_Weapon', Cue = 'XSL0402_Attack_Zap', LodCutoff = 'Weapon_LodCutoff'}},
+
+            AutoInitiateAttackCommand = true,            
+            BallisticArc = 'RULEUBA_None',
+            
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.5,
+
+            CollideFriendly = false,
+            
+            Damage = 100,       -- 500 damage
+            DamageFriendly = false,
+            DamageType = 'Light',
+            
+            DisplayName = 'Phason Laser',
+            
+            EnergyDrainPerSecond = 105, -- every 3 seconds = 166 DPS
+            EnergyRequired = 300,
+            
+            FireTargetLayerCapsTable = {Air = 'Air'},
+            FiringTolerance = 0,
+            
+            Label = 'PhasonBeam',
+            
+            MaxRadius = 43,
+            
+            RackBones = {
+                {
+                    MuzzleBones = {'Big_Ring'},
+                    RackBone = 'Big_Ring',
+                },
+            },
+
+            RackSalvoFiresAfterCharge = true,
+            
+            RateOfFire = 0.33,     -- controlled by charge
+
+            TargetCheckInterval = 0.6,
+
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'HIGHPRIAIR',
+                'ALLUNITS',
+            },
+
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',            
+
+            TrackingRadius = 1.1,
+            
+            TurretBoneMuzzle = 'Big_Ring',
+            TurretBonePitch = 'Big_Ring',
+            TurretBoneYaw = 'Big_Ring',
+            
+            TurretPitch = 0,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 75,
+            
+            TurretYaw = 0,
+            TurretYawRange = 55,
+            TurretYawSpeed = 75,
+            
+            Turreted = true,
+        },
+
+        {
+            AlwaysRecheckTarget = true,
+            Audio = {Fire = Sound {Bank = 'XSA_Weapon', Cue = 'XSA0303_AA_AutoCanLosaare', LodCutoff = 'Weapon_LodCutoff'}},
+            
+            AutoInitiateAttackCommand = false,
+            BallisticArc = 'RULEUBA_None',
+            
+            CannotAttackGround = true,
+            CollideFriendly = false,
+            
+            Damage = 90,
+            DamageFriendly = false,
+            DamageType = 'Light',
+            
+            DisplayName = 'Losaare AA Autocannon',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Air',
+                Land = 'Air',
+                Water = 'Air',
+            },
+
+            FiringTolerance = 1,
+            
+            Label = 'AutoCannon',
+            
+            LeadTarget = true,
+            
+            MaxRadius = 40,
+            
+            MuzzleSalvoDelay = 0.1,
+            MuzzleSalvoSize = 2,
+            MuzzleVelocity = 90,
+            
+            ProjectileId = '/projectiles/SAALosaareAutoCannon01/SAALosaareAutoCannon01_proj.bp',
+            ProjectileLifetime = 0.6,
+
+            RackBones = {
+                {
+                    MuzzleBones = {'Med_Ring'},
+                    RackBone = 'Med_Ring',
+                },
+            },
+
+            RangeCategory = 'UWRC_AntiAir',
+            
+            RateOfFire = 4,   -- 720 DPS (90x2x4)
+            
+            SlavedToBody = true,
+            SlavedToBodyArcRange = 55,
+            
+            TargetCheckInterval = 0.3,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'HIGHPRIAIR',
+                'SPECIALLOWPRI',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,SATELLITE',
+            TargetRestrictOnlyAllow = 'AIR',
+            
+            TurretBoneMuzzle = 'Med_Ring',
+            TurretBonePitch = 'Med_Ring',
+            TurretBoneYaw = 'Med_Ring',
+            
+            TurretPitch = 0,
+            TurretPitchRange = 55,
+            TurretPitchSpeed = 75,
+            
+            TurretYaw = 0,
+            TurretYawRange = 55,
+            TurretYawSpeed = 75,
+            
+            Turreted = true,
+            UseFiringSolutionInsteadOfAimBone = true,
+        },
+
+        {
+            Damage = 460,
+            DamageFriendly = true,
+            DamageRadius = 2.5,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+            WeaponCategory = 'Death',
+        },
+    },
+
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.1,
+        HealthMult = 0.3,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Water = true,
+        },
+    },
+}

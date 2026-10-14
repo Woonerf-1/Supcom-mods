@@ -84,7 +84,7 @@ LOUD\usermods\                     ← Git-Repository (Woonerf-1/Supcom-mods)
 | **Neue** Mods | `LOUD\usermods\` (neue Ordner) | ✅ schreiben |
 | Diese Doku | `LOUD\usermods\doc.claude\` | ✅ schreiben (inkl. `tools\`, Ausführen: Nutzer) |
 | **Bestehende** Mods | `LOUD\usermods\` (6 Mod-Ordner) | ❄️ eingefroren — gehören uns, werden aber abgelöst |
-| Git-Verwaltung | `LOUD\usermods\.git\` | ⛔ tabu — Claude führt kein Git aus |
+| Git-Verwaltung | `LOUD\usermods\.git\` | ⛔ tabu — Claude fuehrt nur lesendes Git aus (`status`, `diff`, `log`, `show`) |
 | Referenzcode | `LOUD\gamedata.entpackt\` | 🔒 nur lesen |
 | Spieldaten | `LOUD\gamedata\`, `LOUD\bin\`, `LOUD\doc\`, alles unter `$FA` | 🔒 nur lesen (LOUD-Team) |
 

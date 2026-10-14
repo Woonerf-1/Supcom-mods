@@ -1,0 +1,22 @@
+-- Merge auf LOUDs XAA0305, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\AirForceRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "xaa0305",
+
+    Economy = {
+        BuildCostMass = 1562,
+        BuildTime = 5000,
+    },
+    Weapon = {
+        {
+            Damage = 195,
+        },
+        {
+            Damage = 200,
+        },
+        {
+            Damage = 200,
+        },
+    },
+}

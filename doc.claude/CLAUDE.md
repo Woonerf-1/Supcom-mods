@@ -12,7 +12,11 @@ Alle Änderungen entstehen ausschließlich als eigenständige User-Mods unter `L
 
 ---
 
-## 2. Wurzelpfade (immer absolut, immer mit Backslashes)
+## 2. Wurzelpfade (relativ zu `$FA`, immer mit Backslashes)
+
+`$FA` ist das Arbeitsverzeichnis von Claude Code. Alle anderen Pfade werden relativ dazu
+angegeben (Vorgabe Paul, 2026-10-13). Pfade enthalten Leerzeichen und `(x86)` - in der
+Shell immer quoten.
 
 | Kürzel | Pfad | Zugriff |
 |---|---|---|
@@ -24,6 +28,12 @@ Alle Änderungen entstehen ausschließlich als eigenständige User-Mods unter `L
 | `$DOC` | `$MODS\doc.claude` | **SCHREIBEN ERLAUBT** (liegt seit 05.08.2026 **innerhalb** von `usermods`, damit im Git-Repo) |
 | `$LOG` | `$LOUD\bin\LOUD.log` | **nur lesen** — Log der zuletzt gespielten Partie, wird bei jedem Start überschrieben. Auswertung: `15_LOG.md` |
 | `$DATAPATH` | `$LOUD\bin\LoudDataPath.lua` + `CommonDataPath.lua` | **nur lesen** — bestimmt das gesamte VFS, siehe `11_DATAPATH.md` |
+| `$REPOS` | `Repos` | **nur lesen** - Klone `Repos\LOUD` (https://github.com/LOUD-Project/Git-LOUD) und `Repos\FAF` (https://github.com/FAForever/fa). Massgeblich fuer "was laeuft im Spiel" bleibt `$SRC`; beide koennen abweichen |
+
+Nicht verwechseln: `gamedata.entpackt` direkt unter `$FA` (nicht unter `LOUD`) ist **nicht**
+`$SRC`, sondern der Basisspiel-Spiegel aus `Expand-Gamedata.ps1` (`14_TOOLS.md` §2). Im
+Spiel erreichbar sind davon nur `textures`, `effects`, `env`, `projectiles`, `props`,
+`meshes`; ein Treffer dort unter `lua\` oder `units\` sagt nichts ueber das laufende Spiel.
 
 ---
 
@@ -49,9 +59,10 @@ neue Mods                                 →  hier entsteht alles Neue. Wird ne
 
 `usermods\` ist ein **Git-Arbeitsverzeichnis** (Remote: `Woonerf-1/Supcom-mods`, SSH,
 Branch `main`). Die Dokumentation liegt seit dem 05.08.2026 mit darin und wird damit
-mitversioniert. Claude kann **kein Git ausführen** — es gibt keine Shell auf dem Rechner
-des Nutzers. Claude schreibt Dateien; Commits, Branches, Push und Pull macht der Nutzer.
-Details: `13_GIT.md`.
+mitversioniert. Claude schreibt Dateien; Commits, Branches, Push und Pull macht der Nutzer
+in Sourcetree. Seit 2026-10-13 (Claude Code mit Shell) darf Claude **lesende** Git-Befehle
+ausfuehren (`git status`, `git diff`, `git log`, `git show`) - nichts, was Index,
+Arbeitsverzeichnis, Refs oder Remote veraendert. Details: `13_GIT.md`.
 
 Das ist keine reine Vorsichtsregel: `gamedata\`, `bin\`, `doc\`, `maps\`, `sounds\` werden
 vom LOUD-Team gepflegt und bei jedem Update überschrieben. Eine Änderung dort wäre
@@ -75,17 +86,20 @@ Daraus folgt auch:
    `$LOUD\maps`, `$LOUD\sounds`, `$FA\...`.
 2. **Keine Batch-, Shell- oder Installationsskripte ausführen**, die außerhalb der
    Schreibzonen wirken — auch nicht die von Mods mitgelieferten. Stattdessen dem Nutzer
-   sagen, was das Skript tut und dass er es selbst ausführen kann.
+   sagen, was das Skript tut und dass er es selbst ausführen kann. Skripte, die
+   ausschliesslich in `$MODS` schreiben (etwa `$DOC\tools\*.ps1`), fuehrt Claude nur nach
+   Freigabe durch den Nutzer aus.
 3. **`$SRC` ist heilig.** Es ist die Referenzbibliothek zum Nachschlagen von Engine- und
    LOUD-Code. Nie verändern. Wenn Originalcode als Grundlage gebraucht wird → **kopieren**
    in den Ziel-Mod unter `$MODS`, dort anpassen.
 4. **Kein Raten bei Engine-APIs.** Jede verwendete Funktion, Blueprint-Feld oder Kategorie muss
-   vorher in `$SRC` verifiziert werden (`search_files` / `read_text_file`). Wenn etwas nicht
+   vorher in `$SRC` verifiziert werden. Wenn etwas nicht
    auffindbar ist: sagen, dass es unverifiziert ist — nicht plausibel erfinden.
    **Zwei Fallen dabei:**
-   - **`search_files` beweist keine Nichtexistenz.** Über tiefe Verzeichnisbäume liefert es
-     falsche negative Ergebnisse (`15_LOG.md` §6). Für den Nachweis, dass etwas fehlt,
-     braucht es einen vollständigen Durchlauf per Skript in `$DOC\tools\`.
+   - **Ein Negativbefund gilt erst nach vollstaendiger Inhaltssuche** - case-insensitiv
+     ueber den ganzen Baum (`rg -i` bzw. `Select-String`). Das fruehere Filesystem-MCP
+     (`search_files`) lieferte ueber tiefe Baeume falsche negative Ergebnisse
+     (`15_LOG.md` §6).
    - **„Existiert nicht" ≠ „nicht geladen".** Ein Blueprint aus einem inaktiven Mod liegt
      auf der Platte, ist im Spiel aber nicht vorhanden (`16_UNITS.md` §6).
 5. **Der vorhandene Mod-Bestand ist eingefroren.** Die sechs Ordner in `$MODS` (Stand
@@ -93,9 +107,13 @@ Daraus folgt auch:
    weil sie jemand anderem gehören, sondern weil alles **neu gedacht** wird. Sie bleiben
    als Vergleichsstand liegen. Neue Arbeit → **neuer Mod-Ordner mit neuer uid**.
    Konzept und Zuschnitt: `12_NEUSCHNITT.md`.
-6. **`$MODS\.git\` ist tabu.** Kein Schreiben, keine Git-Operationen, kein Simulieren von
-   Commits. Am Ende einer Arbeitseinheit nennt Claude die geänderten Dateien und einen
-   Vorschlag für die Commit-Nachricht — mehr nicht. Siehe `13_GIT.md`.
+   Ebenfalls eingefroren (Entscheidung Paul 2026-10-13): `BasegameRevamp` und
+   `advanced_rebalence` (beide Colin).
+6. **`$MODS\.git\` ist tabu.** Kein Schreiben, keine veraendernden Git-Operationen, kein
+   Simulieren von Commits. Erlaubt sind nur lesende Befehle (`status`, `diff`, `log`,
+   `show`; Entscheidung Paul 2026-10-13). Am Ende einer Arbeitseinheit nennt Claude die
+   geänderten Dateien und einen Vorschlag für die Commit-Nachricht — mehr nicht.
+   Siehe `13_GIT.md`.
 7. **`shadow` nur als letztes Mittel.** Standard ist `hook`. Begründung siehe `02_MODSYSTEM.md`.
 8. **Kein Blueprint-Vollersatz, wenn `Merge = true` reicht.**
 
@@ -106,7 +124,7 @@ Daraus folgt auch:
 ```
 1. VERSTEHEN   → Was genau soll sich im Spiel ändern? Sim oder UI? Blueprint oder Lua?
 2. VERORTEN    → In $SRC die zuständige Originaldatei finden und lesen.
-                 (search_files mit *.lua / *.bp, dann read_text_file)
+                 (rg -i ueber *.lua / *.bp, dann Datei lesen)
 3. PLANEN      → Kürzesten Eingriffspunkt wählen: Blueprint-Merge > Hook > Shadow.
                  Betroffene Dateien + Mod-Ordner benennen, bevor geschrieben wird.
 4. SCHREIBEN   → Nur unter $MODS\<modname>\...
@@ -124,7 +142,7 @@ kostet mehr als eine Rückfrage.
 - **Sprache: Deutsch.** Codekommentare Deutsch, Bezeichner Englisch (Engine-Konvention).
 - **Keine Vermutungen als Befund.** Was nicht belegt ist, wird nicht behauptet.
   Drei Moeglichkeiten, keine vierte:
-  1. **belegen** - Quelle mit vollstaendigem Pfad und Zeilenangabe,
+  1. **belegen** - Quelle mit Pfad (relativ zu `$FA`) und Zeilenangabe,
   2. **als ungeprueft kennzeichnen** und **gleichzeitig als Aufgabe in `TODO.md`
      eintragen**,
   3. **weglassen**.
@@ -136,13 +154,15 @@ kostet mehr als eine Rückfrage.
   Erlebte Faelle: "`commanders` gewinnt gegen `test21000`" (aus der uid-Sortierung
   abgeleitet, die aber nichts erzwingt), "`LOUD Integrated Storage` ist bei vielen
   Spielern aktiv" (frei erfunden - auf dieser Installation ist er nicht aktiv).
-- **Dateien immer mit vollständigem Pfad nennen.** Nie nur `BuildingTemplates.lua` oder
-  `lua\AI\aibuildstructures.lua` — sondern:
+- **Dateien immer mit Pfad relativ zu `$FA` nennen** (Vorgabe Paul, 2026-10-13). Nie nur
+  `BuildingTemplates.lua` oder `lua\AI\aibuildstructures.lua` — sondern:
   ```
-  C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\lua\lua\BuildingTemplates.lua
+  LOUD\gamedata.entpackt\lua\lua\BuildingTemplates.lua
   ```
-  Der Nutzer soll den Pfad direkt kopieren können, ohne suchen zu müssen. Gilt für
-  Antworten **und** für die Dokumentation. Zeilennummern dahinter, wenn bekannt.
+  Der Pfad muss eindeutig sein, ohne suchen zu müssen. Gilt für
+  Antworten **und** für neue Dokumentation. Zeilennummern dahinter, wenn bekannt.
+  Aeltere Doku enthaelt noch absolute Pfade - die bleiben gueltig und werden nicht
+  pauschal umgeschrieben.
   Ausnahme: Verweise auf Dokumente innerhalb von `$DOC` (dort reicht der Dateiname,
   weil sie nebeneinander liegen).
 - **Knapp.** Kein Nacherzählen dessen, was ohnehin im Code steht.
@@ -189,7 +209,7 @@ er aus der übergeordneten und wird nur noch verlinkt.
 | `15_LOG.md` | **`LOUD.log`** — Auswertungsverfahren + **Befundregister** (Warnungen/Fehler mit Code-Rückverfolgung) | nach jedem Testlauf |
 | `16_UNITS.md` | Einheitenliste — optionaler Generator | ergänzend |
 | `17_UNITLISTE.md` | **Einheiten-Index** — Bestand, ID-Systematik, Verweise nach `units\` | Einstieg bei Unit-Fragen |
-| `18_ABLEITUNG.md` | **Ableitung aus `UEF_trans_men`** — vier neue Mods, Befunde, nachgeprüfte Modsystem-Mechanik (mount/hook/shadow/merge) | bei Arbeit an `t4add`, `SquareShields`, `HCPP`, `dynamic_gameplay` |
+| `18_ABLEITUNG.md` | **Ableitung aus `UEF_trans_men`** — vier neue Mods, Befunde, nachgeprüfte Modsystem-Mechanik (mount/hook/shadow/merge) | bei Arbeit an `T4UnitAdditions`, `SquareShields`, `ImprovedHydrocarbonPowerPlants`, `DynamicGameplay` |
 | `units\` | **Einheitendaten** — `units.md`, `pakete.md`, `usermods.md`, `ueberschreibungen.md` | Details |
 | `referenz\` | Verbatim-Kopien der beiden DataPath-Dateien | zum Vergleich bei Verdacht auf Überschreibung |
 | `CHANGELOG.md` | Was wurde wann geändert | nach jeder Änderung |

@@ -15,8 +15,32 @@ lesen kann. Wo eine Datei nur teilweise entfernt wurde, traegt die Kopie hier de
 Jede Datei bekommt im Kopf einen Kommentar: woher sie kam, wann und warum sie entfernt
 wurde, und was stattdessen gilt.
 
-Verwandter Ordner: `_ausrangiert\` - dort liegt aelteres Material aus der KI-Arbeit
-(`lobby.lua.ausrangiert`). Bei Gelegenheit zusammenlegen.
+Der fruehere Ordner `_ausrangiert\` ist am 2026-10-14 hierher ueberfuehrt worden (Paul:
+`_Altlasten` fuehrt). Inhalt siehe Abschnitt CustomAI unten.
+
+---
+
+## AirForceRebalance (2026-10-14)
+
+| Datei | kam aus | Grund |
+|---|---|---|
+| `units\UEL0205\UEL0205_unit.bp` | `usermods\AirForceRebalance\units\UEL0205\` | Merge fuer den Sky Boxer (nur `CanFireFromTransport = true`, Colin). Zurueckgenommen (Paul): reiner UEF-Vorteil; entschieden: keine T2-Flak feuert aus dem Transport |
+
+---
+
+## PlayTest (2026-10-14)
+
+| Datei | kam aus | Grund |
+|---|---|---|
+| `hook\lua\sim\Unit.lua` | `usermods\PlayTest\hook\lua\sim\` | enthielt seit 2026-08-15 nur noch einen Kommentar zum gescheiterten Methodenaustausch auf `Unit.lua`, wurde aber bei jeder Partie geladen. Befund in `mods\PlayTest.md` Abschnitt 4 |
+
+---
+
+## CustomAI (2026-08-08, ueberfuehrt 2026-10-14)
+
+| Datei | kam aus | Grund |
+|---|---|---|
+| `lobby.lua.ausrangiert` | `doc.claude\_ausrangiert\` (urspruenglich `usermods\CustomAI\hook\lua\ui\lobby\lobby.lua`) | Hook zur Lobby-Vorbelegung von Fraktion und Farbe. Wurde nie geladen - Hooks greifen erst beim Sitzungsstart, die Lobby laeuft davor. Verworfen 2026-08-08, Analyse in der Datei bleibt gueltig. Siehe `TODO.md`, Erledigt |
 
 ---
 
@@ -73,6 +97,27 @@ Baumenue heraus.
 Das stuetzt nebenbei unsere Lesart in `SquareShields`, wo `BuildableCategory = { }` gesetzt
 wurde, um die Aufstiegsstufe zu entfernen: eine leere Liste heisst "kein Ausdruck trifft
 zu", also nichts baubar. **Bewiesen ist das damit nicht**, die Lesart ist aber konsistent.
+
+---
+
+## T4UnitAdditions, vormals t4add (2026-10-14)
+
+414 Dateien, die keine Einheit des Mods benutzt. Abhaengigkeitsanalyse in
+`mods\T4UnitAdditions.md` Abschnitt 6. Die Pfadstruktur unter `T4UnitAdditions\` spiegelt den Mod-Ordner.
+Keine Kopfkommentare in den einzelnen Dateien (Emitter-Blueprints, Binaerdateien) -
+diese Tabelle ersetzt sie.
+
+| Was | kam aus | Grund |
+|---|---|---|
+| 397 Emitter | `effects\Emitters\` | von keiner genutzten Klasse referenziert; 388 stammen aus BlackOps, 9 nur aus BattlePack; 47 verweisen noch auf `/mods/BlackOpsUnleashed/textures/` |
+| `EffectEMPAmbient01` (2 Dateien) | `effects\entities\` | nur von einer ungenutzten Klasse in `BlackOpsprojectiles.lua` referenziert |
+| `fire_cloud_alpha_04.dds`, `rb_0036_35.dds` | `textures\particles\` | byte-identisch mit LOUDs `/textures/particles/...`; die zwei Emitter verweisen jetzt dorthin |
+| `BattlePackEffectTemplates.lua` | `lua\` | nur von `NEnergy` benutzt, das niemand importiert |
+| `BlackOpsdefaultcollisionbeams.lua` | `lua\` | nur von Strahlwaffen benutzt, die niemand importiert |
+| `*.lua.vollstaendig` (5) | `lua\` | vollstaendige Fassungen der gekuerzten Bibliotheken |
+| `UEL0401_unit.bp.vollstaendig` + 10 Assets | `units\UEL0401\` | Vollkopie von LOUDs Fatboy, ersetzt durch eine Merge-Datei. Assets identisch mit `LOUD\gamedata.entpackt\units\units\UEL0401\` |
+| `UEL0401_unit.bp.merge` | `units\UEL0401\` | Merge-Datei (zwei Felder), am selben Tag ersetzt durch die allgemeine T4-Transportregel in `hook\lua\system\Blueprints.lua` |
+| `Thumbs.db` | `units\WEL0401\` | Windows-Vorschaucache, lag auch im BattlePack-Original |
 
 ---
 

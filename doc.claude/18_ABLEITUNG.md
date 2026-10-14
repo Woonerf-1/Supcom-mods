@@ -68,7 +68,7 @@ nicht stimmt**. Je Mod gibt es ein eigenes Dokument unter `mods\`.
 
 | Mod | Ordner | uid | Einheiten Soll | Ist |
 |---|---|---|---:|---:|
-| Experimental Additions | `usermods\t4add\` | `expt4modsV01` | 8 | **9** |
+| T4 Unit Additions | `usermods\T4UnitAdditions\` (bis 2026-10-14 `t4add`) | `A0B5C51C-A8F7-47E0-BAEF-DE1FFCC63805` (bis 2026-10-14 `expt4modsV01`) | 8 | **9** |
 | Squareshields | `usermods\SquareShields\` | `D5F66739-FD09-4166-8D73-A5D496772B7C` | 4 | 4 |
 | Improved Hydrocarbons | `usermods\ImprovedHydrocarbonPowerPlants\` | `AD88F006-304B-42E6-8612-E63918A7BE22` | 8 | 8 |
 | Dynamic Gameplay | `usermods\DynamicGameplay\` | `8837F2BC-7C07-4CCF-8F80-34F545858442` | 4 | 4 |
@@ -81,7 +81,13 @@ Dieser Zuschnitt ist **nicht identisch** mit dem aus `12_NEUSCHNITT.md` Abschnit
 ### Einzelne Dokumente
 
 - [mods/SquareShields.md](mods/SquareShields.md) - geprueft und angepasst 2026-08-15
-- `mods/t4add.md` - noch nicht angelegt
+- [mods/T4UnitAdditions.md](mods/T4UnitAdditions.md) - geprueft und angepasst 2026-10-14, im Spiel teilweise geprueft
+- [mods/AirForceRebalance.md](mods/AirForceRebalance.md) - **fuenfter Extrakt**, angelegt 2026-10-14:
+  Colins Luftwaffen-Rebalancing (22 Flugzeuge) plus Flugabwehr (4), im Spiel ungeprueft
+- [mods/NavyRebalance.md](mods/NavyRebalance.md) - **sechster Extrakt**, angelegt 2026-10-14:
+  Colins Marine-Rebalancing (14 Einheiten), im Spiel ungeprueft
+- [mods/TacticalMissileUpgrades.md](mods/TacticalMissileUpgrades.md) - **siebter Extrakt**,
+  angelegt 2026-10-14: Ausbauketten fuer Raketenwerfer und -abwehr (6 Einheiten), im Spiel ungeprueft
 - [mods/ImprovedHydrocarbonPowerPlants.md](mods/ImprovedHydrocarbonPowerPlants.md) - geprueft und angepasst 2026-08-15
 - [mods/DynamicGameplay.md](mods/DynamicGameplay.md) - geprueft und angepasst 2026-08-15
 
@@ -342,14 +348,42 @@ existiert im VFS nicht. Folge: Iyadesu verliert Lauf-, Angriffs- und Todesanimat
 
 ## 6. Offen
 
+### 6.1 Noch nicht verarbeitete Einheiten aus `UEF_trans_men` (Stand 2026-10-14)
+
+Abgeglichen per Dateihash gegen alle Ordner in `usermods\` und gegen die LOUD-Originale in
+`gamedata.entpackt`. Felder per Feldvergleich (Werkzeug wie `mods\AirForceRebalance.md`
+Abschnitt 4). **Status: offen** - keine Entscheidung, kein Mod.
+
+| Einheit | Fraktion | Was | Herkunft | Colins Aenderungen | Frage |
+|---|---|---|---|---|---|
+| SAB0104 Pearl | Aeon | Ingenieurstation | **unklar** - in `gamedata.entpackt` nicht vorhanden; Texte verweisen auf `xrb0104` (Cybran-Station) | eigene Einheit: Masse 1400, `BuildRate` 25, eigenes Modell und Script | Woher stammt sie, ist sie fertig? Gegenstueck zu WSB0104 Dehgarwof (Seraphim, unveraendert in LOUD Unit Additions) |
+| SSL0324 Yenesel | Seraphim | mobile Sensoreinheit | BrewLAN (`brewlan\mods\BrewLAN_LOUD\units\SSL0324\`) | Radar 196 -> 400, Omni 52 -> 100, Energie/s 400 -> 2500, Masse 1650 -> 1200, Bauzeit 2500 -> 5000, Leben 220 -> 260, wendiger, Kartensymbol amphibisch, hinterlaesst ein Wrack; Script geaendert | Einseitig: Gegenstuecke SAL0324 Metatron (Aeon) und SRL0324 Adramelech (Cybran) unveraendert, fuer UEF keins |
+| BAL0310 Wraith | Aeon | schwerer Schwebepanzer | BlackOps (`blackops\mods\BlackOpsUnleashed\units\BAL0310\`) | Masse 1375 -> 1600, Tempo 3 -> 2,5, Hauptkanone 800 -> 600 bei Reichweite 50 -> 64, Waffe 2 120 -> 150 bei Reichweite 37 -> 25, Wasserbombe entfernt; Script geaendert | Einzelstueck - eigener Mod oder zu einem Land-Rebalance? |
+| WRL0404 Megaroach | Cybran | experimenteller Kampfroboter | LOUD Unit Additions (`loud_units\mods\LOUD Unit Additions\units\WRL0404\`) | Masse 95650 -> 63000, Bauzeit 99945 -> 63000, Leben 105500 -> 85500, Tempo 2,4 -> 3, wendiger, Hauptwaffe 1200 -> 1000 mit Schwenkbereich 360 -> 100 Grad, Nebenwaffen halbiert | Passt zu T4UnitAdditions? |
+
+**Schon anderswo, dateigleich mit Colin (kein Handlungsbedarf aus der Ableitung):**
+
+- 9 Massenextraktoren/-speicher (SAB1312, SRB1312, SSB1312 Hyalatoh, SEB1312 Mass Pump 3E,
+  UAB1302, URB1302, UEB1302, XSB1302, UEB3106) in `usermods\T4MassExtractors\units\`;
+  dessen `mod_info.lua` nennt sich noch "Vorlage - noch ohne Inhalt" (veraltet).
+- 5 Einheiten (SRL0319 Dr. Greg House, BSB4205 Au-iya, SRB4313 Nightshade, URB4203 Twilight,
+  SRB2221 Whisper) in `usermods\advanced_rebalence\units\` (Colin, eingefroren).
+
+**Unveraendert gegenueber LOUD (nichts zu extrahieren):** XSL0402 Gewittersturm (Ythotha),
+WSB0104 Dehgarwof, XAS0306 Torrent. **Verworfen:** UEL0205 Sky Boxer (Colins einzige
+Aenderung "feuert aus dem Transport" abgelehnt).
+
+### 6.2 Weitere offene Punkte
+
 - Ob BrewLANs eigener Hook
   `gamedata.entpackt\brewlan\mods\BrewLAN_Units\BrewResearch\hook\lua\sim\AdjacencyBuffs.lua`
   unter LOUD ueberhaupt durchlaeuft: er referenziert `AdjBuffFuncs` und `DefaultBuffAffect`,
   beide sind in LOUDs `AdjacencyBuffs.lua` **`local`** (Z. 1, 3, 4). Ein Hook laeuft in
   derselben *Umgebung*, sieht aber die *Locals* des Originalchunks nicht. Nur mit einem
   Testlauf bei aktivem `BrewLAN_Units` zu klaeren. -> `TODO.md`
-- Ob die Wertaenderungen aus Abschnitt 2 vom Kollegen stammen oder aus `UEF_trans_men`
-  uebernommen sind. Stichprobe `UEBSSG01`: identisch, also Altbestand. Fuer `UAL0402`,
-  `UEL0402`, `WEL0401` noch nicht geprueft.
+- ~~Ob die Wertaenderungen aus Abschnitt 2 vom Kollegen stammen oder aus `UEF_trans_men`
+  uebernommen sind.~~ **Geklaert 2026-10-14:** alle aus `UEF_trans_men`; t4add aendert
+  nur Pfade. Die Tabelle in Abschnitt 2 ist fuer diese drei unvollstaendig - vollstaendige
+  Liste in `mods\T4UnitAdditions.md` Abschnitt 4.
 - Die Scripts der 25 Einheiten gegen ihre Originale - bisher nur fuer `SquareShields`
   vollstaendig und fuer `SRB4402` einzeln gemacht.

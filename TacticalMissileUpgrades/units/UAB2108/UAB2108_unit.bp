@@ -1,0 +1,14 @@
+-- Merge auf LOUDs UAB2108, Ausbaukette von Colin (UEF_trans_men), siehe doc.claude\mods\TacticalMissileUpgrades.md
+-- Serpentine -> Purifier. BuildRate 25 hat LOUD schon (fuer Raketen).
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "uab2108",
+
+    Economy = {
+        BuildableCategory = {'bab2308'},
+    },
+    General = {
+        UpgradesTo = 'bab2308',
+    },
+}

@@ -1,0 +1,23 @@
+-- Merge auf LOUDs XRA0305, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\AirForceRebalance.md
+
+UnitBlueprint {
+    Merge = true,
+    BlueprintId = "xra0305",
+
+    Defense = {
+        Health = 4400,
+        MaxHealth = 4400,
+    },
+    Economy = {
+        BuildCostMass = 1525,
+        BuildTime = 5000,
+    },
+    Weapon = {
+        {
+            Damage = 200,
+        },
+        {
+            Damage = 80,
+        },
+    },
+}

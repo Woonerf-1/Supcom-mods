@@ -64,7 +64,7 @@ Analyseumgebung kopieren, `diff` laufen lassen. Bei `test21000` waren so in eine
 
 | Mod | Ordner | uid | Anliegen |
 |---|---|---|---|
-| Basegame Bugfixes | `usermods\BasegameBugfixes\` | `EFD7502E-1682-4DC2-BBA7-CC4243E74B71` | Fehler in Basiseinheiten beheben |
+| Basegame Bugfixes | `usermods\BasegameBugfixes\` | `4046F209-C6D2-4881-BACF-E434940CDACA` (neu 2026-10-14; die urspruengliche `EFD7502E-...` traegt heute Colins `BasegameRevamp`) | Fehler in LOUDs Code und Basiseinheiten beheben |
 | T4 Mass Extractors | `usermods\T4MassExtractors\` | `F778CB9A-FA72-413F-99A1-80AE74CFE37B` | Massextraktoren der Experimental-Stufe |
 | Custom AI | `usermods\CustomAI\` | `72568B0A-993B-49D4-B2AB-55E68B5C3BE5` | zusaetzliche KI-Gegner zur Auswahl |
 | PlayTest | `usermods\PlayTest\` | `3786F645-B959-44F1-9C52-E3B3C5CA09AA` | Testmod, nicht fuer den Spielbetrieb |

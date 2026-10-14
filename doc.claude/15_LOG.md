@@ -225,6 +225,32 @@ C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\
 Verdacht: eine Prüfung, die beim Verbindungsabbau anschlägt, nicht bei echtem Betrug.
 **Bis dahin nicht bewerten.**
 
+**Nachtrag 2026-10-14 - sehr wahrscheinliche Ursache: LOUD selbst.**
+`LOUD\gamedata.entpackt\lua\lua\ui\game\gamemain.lua` führt rund 3 Sekunden nach
+Spielstart **drei** Konsolenbefehle aus (Z. 161-163):
+
+```lua
+ConExecute('path_armybudget = 6500')
+ConExecute('path_backgroundbudget = 3000')
+ConExecute('path_maxinstantworkunits = 1250')
+```
+
+Der Kommentar davor (Z. 144) lautet "try to turn on cheating so we can issue path
+commands (not working)". In den Logs vom 2026-10-14 stehen genau drei Meldungen direkt
+nach dem Spielstart (nach `PLAYTEST: ... Unterkommandanten erzeugt`, vor dem
+Hotbuild-Laden). Anzahl und Zeitpunkt passen.
+
+- **Nicht PlayTest:** dessen SCUs entstehen im Sim per `CreateUnitHPR`
+  (`usermods\PlayTest\hook\lua\simInit.lua` Z. 47) - Sim-Code unterliegt keiner
+  Cheat-Prüfung.
+- Die Meldung kommt von der Engine, nicht aus `UserSync.lua` Z. 190-219: dessen Zeile
+  `*AI DEBUG CHEATING` fehlt im Log.
+- **Offen:** das ältere Aufkommen "unmittelbar vor `Abandoned by Player`" passt zeitlich
+  nicht dazu. Gegenprobe: eine Partie **ohne** PlayTest - stehen die drei Meldungen
+  wieder kurz nach Spielstart, ist es belegt.
+
+**Bewertung:** harmlos, kein Handlungsbedarf.
+
 ---
 
 ### 🔴 R-06 — `GetResource: Invalid name ""`

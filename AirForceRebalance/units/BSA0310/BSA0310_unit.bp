@@ -1,0 +1,443 @@
+UnitBlueprint {
+
+    AI = {
+        GuardScanRadius = 36,
+        GuardReturnRadius = 65,
+
+		TargetBones = {'XSA0310'},
+    },
+	
+    Air = {
+        AutoLandTime = 1.9,
+        BankFactor = 0.1,
+        BankForward = false,
+		
+        CanFly = true,
+		
+        CirclingDirChangeFrequencySec = 2.5,
+		
+        CirclingElevationChangeRatio = 0.75,
+		
+        CirclingRadiusChangeMaxRatio = 0.85,
+        CirclingRadiusChangeMinRatio = 0.60,
+		
+        CirclingRadiusVsAirMult = 0.46,
+        CirclingTurnMult = 3,
+		
+        KLift = 0.85,
+        KLiftDamping = 0.95,
+		
+        KMove = 0.85,
+        KMoveDamping = 0.8,
+		
+        KTurn = 0.75,
+        KTurnDamping = 0.71,
+		
+        LiftFactor = 4.5,
+		
+        MaxAirspeed = 11,
+        MinAirspeed = 3,
+		
+        StartTurnDistance = 5,
+        Winged = false,
+    },
+	
+    Audio = {
+        Destroyed   = Sound { Bank = 'XSA_Destroy', Cue = 'XSA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        Killed      = Sound { Bank = 'XSA_Destroy', Cue = 'XSA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        StartMove   = Sound { Bank = 'XSA', Cue = 'XSA0203_Move_Start', LodCutoff = 'UnitMove_LodCutoff' },
+        StopMove    = Sound { Bank = 'XSA', Cue = 'XSA0203_Move_Stop', LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection = Sound { Bank = 'SeraphimSelect', Cue = 'Seraphim_Select_Air', LodCutoff = 'UnitMove_LodCutoff' },
+    },
+
+    Buffs = {
+        Regen = {
+            Level1 = 4,
+            Level2 = 8,
+            Level3 = 12,
+            Level4 = 16,
+            Level5 = 20,
+        },
+    },
+	
+    BuildIconSortPriority = 30,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'SERAPHIM',
+        'MOBILE',
+        'AIR',
+        'TECH3',
+        'GROUNDATTACK',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+    },
+	
+    CollisionOffsetY = -0.075,
+	
+    Defense = {
+        ArmorType = 'Light',
+
+        Health = 4450,
+        MaxHealth = 4450,
+        RegenRate = 7,
+
+        SurfaceThreatLevel = 25,
+    },
+	
+    Description = '<LOC bsa0310_desc>Missile Gunship',
+	
+    Display = {
+	
+    	Abilities = {
+			'Tac Missile Barrage every 5 seconds',
+            '2 x Autocannon w Shield Disruptor',
+            '<LOC ability_personalstealth>Personal Stealth',
+        },
+		
+        LayerChangeEffects = {
+            AirLand = { Effects = { { Bones = {'XSA0310'}, Type = 'Landing01' } } },
+            LandAir = { Effects = { { Bones = {'XSA0310'}, Type = 'TakeOff01' } } },
+        },
+        
+        Mesh = { IconFadeInZoom = 130, LODs = { {LODCutoff = 215,LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',ShaderName = 'Seraphim'} } },
+
+        UniformScale = 0.07,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 84000,
+        BuildCostMass = 1600,
+        BuildTime = 5000,
+    },
+	
+    Footprint = {
+        MaxSlope = 0.25,
+        SizeX = 1,
+        SizeZ = 1,
+    },
+	
+    General = {
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Dock = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Seraphim',
+        Icon = 'air',
+        UnitName = '<LOC bsa0310_name>Vulthatha-Ioz',
+    },
+	
+    Intel = {
+    
+        FreeIntel = true,
+
+        RadarStealth = true,
+        
+        VisionRadius = 40,
+    },
+	
+    Interface = {
+        HelpText = 'Missile Gunship',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.6,
+    LifeBarSize = 1.2,
+	
+    Physics = {
+	
+        BuildOnLayerCaps = { LAYER_Air = true },
+		
+        Elevation = 9.5,
+		
+        FuelRechargeRate = 12,
+        FuelUseTime = 420,
+		
+        GroundCollisionOffset = 1.6,
+        MaxSpeed = 0.65,
+        MeshExtentsX = 1.75,
+        MeshExtentsY = 0.7,
+        MeshExtentsZ = 1.75,
+        MotionType = 'RULEUMT_Air',
+    },
+	
+    SelectionSizeX = 1.0,
+    SelectionSizeZ = 1.2,
+    SelectionThickness = 0.4,
+
+	SizeSphere = 1.4,
+	
+    SizeX = 1.75,
+    SizeY = 0.7,
+    SizeZ = 1.75,
+	
+    StrategicIconName = 'icon_gunship3_directfire',
+    StrategicIconSortPriority = 65,
+	
+    Transport = {
+        AirClass = true,
+        ClassGenericUpTo = 2,
+        TransportClass = 2,
+    },
+	
+    Veteran = {
+        Level1 = 9,
+        Level2 = 18,
+        Level3 = 27,
+        Level4 = 36,
+        Level5 = 45,
+    },
+	
+    Weapon = {
+    
+        -- Missiles --
+        
+        {
+            AboveWaterTargetsOnly = true,
+			
+            Audio = {
+                Fire = Sound { Bank = 'XSL_Weapon', Cue = 'XSL0111_LaanseMissile', LodCutoff = 'Weapon_LodCutoff' },
+            },
+			
+            AutoInitiateAttackCommand = true,
+			
+            BallisticArc = 'RULEUBA_None',
+			
+            CollideFriendly = false,
+			
+            Damage = 200,
+            DamageRadius = 1.5,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Missiles',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Land|Water|Seabed',
+                Land = 'Land|Water|Seabed',
+            },
+			
+            FiringTolerance = 2,
+            FiringRandomness = 2.5,
+			
+            Label = 'Missile',
+			
+			MinRadius = 10,
+            MaxRadius = 45,
+			
+            MuzzleChargeDelay = 0.1,
+
+            MuzzleSalvoDelay = 0.3,
+            MuzzleSalvoSize = 8,	-- 2.4 seconds to launch salvo
+
+            MuzzleVelocity = 7,
+			
+			NotExclusive = true,
+			
+            ProjectileId = '/projectiles/SIFLaanseTacticalMissile01/SIFLaanseTacticalMissile01_proj.bp',
+            ProjectileLifetime = 10,
+			
+            RackBones = {
+                {
+                    MuzzleBones = {
+                        'Main_Launcher_Muzzle01',
+                        'Main_Launcher_Muzzle02',
+                        'Main_Launcher_Muzzle03',
+                        'Main_Launcher_Muzzle04',
+                        'Main_Launcher_Muzzle05',
+                        'Main_Launcher_Muzzle06',
+                        'Main_Launcher_Muzzle07',
+                        'Main_Launcher_Muzzle08',
+                    },
+                    RackBone = 'Main_launcher',
+                },
+            },
+
+            RackSalvoReloadTime = 2.6,	-- cycle is 5 seconds = 960/5 =  192 DPS
+
+            SlavedToBody = true,
+            SlavedToBodyArcRange = 30,
+			
+            RangeCategory = 'UWRC_IndirectFire',
+			
+            RateOfFire = 1,
+            TargetCheckInterval = 2,
+			
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'ALLUNITS -WALL',
+            },
+            TargetRestrictDisallow = 'HIGHALTAIR, UNTARGETABLE, WALL',
+			
+            Turreted = false,
+        },
+        
+        -- Shield Drain Autoguns x 2 --
+		
+        {
+            AboveWaterTargetsOnly = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'XSL_Weapon', Cue = 'XSL0303_Bolter', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            
+            BallisticArc = 'RULEUBA_LowArc',
+			
+            CollideFriendly = false,
+			
+            Damage = 40,
+            DamageRadius = 0,
+            DamageType = 'ShieldMult1.4',
+			
+            DisplayName = 'Thau Cannon',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Land|Water|Seabed',
+            },
+            FiringTolerance = 1,
+			
+            Label = 'GunTurret',
+			
+            MaxRadius = 32,
+			
+            MuzzleSalvoDelay = 0.3,
+            MuzzleSalvoSize = 4,
+
+            MuzzleVelocity = 45,
+			
+			NotExclusive = true,
+
+            ProjectileId = '/projectiles/SDFHeavyPhasicAutogun02/SDFHeavyPhasicAutogun02_proj.bp',			
+			ProjectileLifetime = 1,
+
+            RackBones = {
+                { MuzzleBones = {'Left_Muzzle01'}, RackBone = 'Left_Turret' },
+            },
+
+            RangeCategory = 'UWRC_DirectFire',
+			
+            RateOfFire = 0.5,	-- 32 DPS Ground but 45 damage to shields
+
+            TargetCheckInterval = 1.0,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'SHIELD',
+                'MOBILE',
+                'STRUCTURE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Left_Muzzle01',
+            TurretBonePitch = 'Left_Turret',
+            TurretBoneYaw = 'Left_Turret',
+			
+            TurretPitch = -20,
+            TurretPitchRange = 75,
+            TurretPitchSpeed = 35,
+			
+            TurretYaw = 0,
+            TurretYawRange = 45,
+            TurretYawSpeed = 35,
+			
+            Turreted = true,
+        },
+        
+        {
+            AboveWaterTargetsOnly = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'XSL_Weapon', Cue = 'XSL0303_Bolter', LodCutoff = 'Weapon_LodCutoff' },
+            },
+            
+            BallisticArc = 'RULEUBA_LowArc',
+            CollideFriendly = false,
+			
+            Damage = 40,
+            DamageRadius = 0,
+            DamageType = 'ShieldMult1.4',
+			
+            DisplayName = 'Thau Cannon',
+			
+            FireTargetLayerCapsTable = {
+                Air = 'Land|Water|Seabed',
+            },
+            FiringTolerance = 1,
+			
+            Label = 'GunTurret',
+			
+            MaxRadius = 32,
+			
+            MuzzleSalvoDelay = 0.3,
+            MuzzleSalvoSize = 4,
+
+            MuzzleVelocity = 45,
+			
+			NotExclusive = true,
+
+            ProjectileId = '/projectiles/SDFHeavyPhasicAutogun02/SDFHeavyPhasicAutogun02_proj.bp',			
+			ProjectileLifetime = 1,
+
+            RackBones = {
+                { MuzzleBones = {'Right_Muzzle01'}, RackBone = 'Right_Turret' },
+            },
+
+            RateOfFire = 0.5,	-- 32 DPS Ground but 45 damage to shields
+
+            TargetCheckInterval = 1.0,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'SHIELD',
+                'ALLUNITS -WALL',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 1.1,
+			
+            TurretBoneMuzzle = 'Right_Muzzle01',
+            TurretBonePitch = 'Right_Turret',
+            TurretBoneYaw = 'Right_Turret',
+			
+            TurretPitch = -20,
+            TurretPitchRange = 75,
+            TurretPitchSpeed = 30,
+			
+            TurretYaw = 0,
+            TurretYawRange = 45,
+            TurretYawSpeed = 30,
+            Turreted = true,
+        },
+		
+        {
+            Damage = 250,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = 'Normal',
+            DisplayName = 'Air Crash',
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = 'DeathImpact',
+            WeaponCategory = 'Death',
+        },
+		
+    },
+	
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.1,
+        HealthMult = 0.5,
+        MassMult = 0.35,
+		LifeTime = 600,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+            Water = true,
+        },
+    },
+}

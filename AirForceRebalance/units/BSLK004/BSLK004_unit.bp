@@ -1,0 +1,382 @@
+UnitBlueprint {
+	AI = {
+        GuardScanRadius = 44,
+        TargetBones = {'Attachpoint'},
+    },
+
+    Audio = {
+        Destroyed   = Sound { Bank = 'XSL_Destroy', Cue = 'XSL_Destroy_Land_Lrg', LodCutoff = 'UnitMove_LodCutoff'},
+        StartMove   = Sound { Bank = 'XSL', Cue = 'XSL0303_Move_Start', LodCutoff = 'UnitMove_LodCutoff'},
+        UISelection = Sound { Bank = 'SeraphimSelect', Cue = 'Seraphim_Select_Tank', LodCutoff = 'UnitMove_LodCutoff'},
+    },
+	
+    Buffs = {
+        Regen = {
+            Level1 = 1,
+            Level2 = 3,
+            Level3 = 4,
+            Level4 = 6,
+            Level5 = 7,
+        },
+    },
+	
+    BuildIconSortPriority = 35,
+	
+    Categories = {
+        'SELECTABLE',
+        'BUILTBYTIER3FACTORY',
+        'SERAPHIM',
+        'MOBILE',
+        'LAND',
+        'TECH3',
+        'ANTIAIR',
+        'VISIBLETORECON',
+        'RECLAIMABLE',
+    },
+
+    Defense = {
+        ArmorType = 'Normal',
+        Health = 1850,
+        MaxHealth = 1850,
+        RegenRate = 2,
+
+        AirThreatLevel = 35,        
+        SurfaceThreatLevel = 20,
+    },
+	
+    Description = '<LOC bslk004_desc>Lightning AA Tank',
+	
+    Display = {
+        Abilities = {
+            '<LOC ability_radar>Radar',
+            'Lightning Weapon',
+			'Effective against both Ground & Air units',
+        },
+
+		AnimationDeath = {
+            {
+                Animation = '/mods/airforcerebalance/units/BSLK004/BSLK004_death.sca',
+                AnimationRateMax = 8,
+                AnimationRateMin = 8,
+                Weight = 1,
+            },
+        },
+
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 500,
+                    LookupName = '/textures/environment/Falloff_seraphim_lookup.dds',
+                    Scrolling = true,
+                    ShaderName = 'Seraphim',
+                },
+            },
+        },
+
+
+        UniformScale = 0.05,
+    },
+	
+    Economy = {
+        BuildCostEnergy = 3000,
+        BuildCostMass = 450,
+        BuildTime = 2400,
+    },
+	
+    General = {
+        CommandCaps = {
+            RULEUCC_Attack = true,
+            RULEUCC_CallTransport = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Patrol = true,
+            RULEUCC_RetaliateToggle = true,
+            RULEUCC_Stop = true,
+        },
+        FactionName = 'Seraphim',
+        Icon = 'land',
+        UnitName = '<LOC bslk004_name>Uyanah',
+    },
+	
+    Intel = {
+		FreeIntel = true,
+        
+		RadarRadius = 64,
+        VisionRadius = 32,
+    },
+	
+    Interface = {
+        HelpText = 'Unstable Lightning Tank',
+    },
+	
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 0.58,
+    LifeBarSize = 0.8,
+	
+    Physics = {
+        BackUpDistance = 4,
+        BankingSlope = 0,
+        BuildOnLayerCaps = {
+            LAYER_Land = true,
+            LAYER_Water = true,
+        },
+        DragCoefficient = 0.2,
+        MaxAcceleration = 2.5,
+        MaxBrake = 2.5,
+        MaxSpeed = 3.3,
+        MaxSpeedReverse = 1.4,
+        MaxSteerForce = 10,
+        MeshExtentsX = 1,
+        MeshExtentsY = 2.6,
+        MeshExtentsZ = 1.15,
+        MinSpeedPercent = 0,
+        MotionType = 'RULEUMT_Land',
+		RotateOnSpot = false,
+		StandUpright = true,
+        TurnRadius = 0.5,
+        TurnRate = 75,
+    },
+	
+    SelectionSizeX = 0.8,
+    SelectionSizeZ = 0.8,
+    SelectionThickness = 0.3,
+	
+    SizeX = 1,
+    SizeY = 0.5,
+    SizeZ = 1.0,
+	
+    StrategicIconName = 'icon_land3_antiair',
+    StrategicIconSortPriority = 115,
+	
+    Transport = {
+        TransportClass = 3,
+    },
+	
+    Veteran = {
+        Level1 = 9,
+        Level2 = 18,
+        Level3 = 27,
+        Level4 = 36,
+        Level5 = 45,
+    },
+	
+    Weapon = {
+        {
+			AlwaysRecheckTarget = true,
+            AboveWaterTargetsOnly = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'XSL_Weapon', Cue = 'XSL0402_Attack_Zap', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            
+            AutoInitiateAttackCommand = false,
+            BallisticArc = 'RULEUBA_None',
+			
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.5,
+			
+			CannotAttackGround = true,
+			
+            CollideFriendly = false,
+            ContinuousBeam = false,
+			
+            Damage = 40,
+			
+            DamageFriendly = false,
+            DamageRadius = 0,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Unstable Phason Laser',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Air',
+            },
+			
+			FiringRandomness = 0,
+            FiringTolerance = 0.1,
+			
+            Label = 'PhasonBeam',
+			LeadTarget = false,
+			
+            MaxRadius = 44,
+			
+            RackBones = {
+                {
+                    MuzzleBones = {'muzzle01'},
+                    RackBone = 'muzzle01',
+                },
+            },
+
+            RangeCategory = 'UWRC_AntiAir',
+			
+            RateOfFire = 1,		-- 300 DPS Air/2 for repack = 150 DPS Air
+			ReTargetOnMiss = true,
+			
+            TargetCheckInterval = 0.5,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'HIGHPRIAIR',
+                'BOMBER',
+                'GROUNDATTACK',
+                'MOBILE',
+                'ALLUNITS -WALL',
+            },
+            TargetRestrictDisallow = 'LAND,NAVAL,UNTARGETABLE,SATELLITE',
+			
+            TrackingRadius = 1.2,
+			
+            TurretBoneMuzzle = 'muzzle01',
+            TurretBonePitch = 'muzzle01',
+            TurretBoneYaw = 'muzzle01',
+
+            TurretPitch = 30,
+            TurretPitchRange = 180,
+            TurretPitchSpeed = 180,
+			
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 55,
+			
+            Turreted = true,
+			
+			WeaponRepackTimeout = 2,
+			WeaponUnpackAnimation = '/mods/airforcerebalance/units/BSLK004/BSLK004_updummy.sca',
+            WeaponUnpackAnimationRate = 3.8,
+            WeaponUnpackLocksMotion = false,
+			
+            WeaponUnpacks = true,
+        },
+		{
+            AboveWaterTargetsOnly = true,
+            
+            Audio = {
+                Fire = Sound { Bank = 'XSL_Weapon', Cue = 'XSL0402_Attack_Zap', LodCutoff = 'Weapon_LodCutoff'},
+            },
+            
+            AutoInitiateAttackCommand = false,
+            BallisticArc = 'RULEUBA_None',
+			
+            BeamCollisionDelay = 0,
+            BeamLifetime = 0.4,
+			
+            CollideFriendly = false,
+            ContinuousBeam = false,
+			
+            Damage = 20,
+            DamageFriendly = false,
+            DamageRadius = 0,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Unstable Phason Laser 2',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Land',
+            },
+            FiringTolerance = 1,
+            FiringRandomness = 1.25,
+			
+            Label = 'PhasonBeam',
+	
+			LeadTarget = false,
+			
+            MaxRadius = 32,
+			
+            RackBones = {
+                {
+                    MuzzleBones = {'muzzle02'},
+                    RackBone = 'muzzle02',
+                },
+            },
+
+            RangeCategory = 'UWRC_DirectFire',
+			
+            RateOfFire = 0.5,	-- 200 DPS Surface
+			
+            RequireTime = 0,
+
+            TargetCheckInterval = 1.0,
+            TargetPriorities = {
+                'SPECIALHIGHPRI',
+                'MOBILE',
+                'DEFENSE',
+                'ALLUNITS',
+            },
+            TargetRestrictDisallow = 'UNTARGETABLE,AIR,WALL',
+            TrackingRadius = 1.15,
+			
+            TurretBoneMuzzle = 'muzzle02',
+            TurretBonePitch = 'muzzle02',
+            TurretBoneYaw = 'muzzle02',
+			
+            TurretPitch = 0,
+            TurretPitchRange = 60,
+            TurretPitchSpeed = 360,
+			
+            TurretYaw = 0,
+            TurretYawRange = 180,
+            TurretYawSpeed = 360,
+			
+            Turreted = true,
+        },
+		{
+            AboveWaterTargetsOnly = true,
+            BallisticArc = 'RULEUBA_None',
+            BeamCollisionDelay = 0.1,
+            BeamLifetime = 0.2,
+            CollideFriendly = false,
+            ContinuousBeam = false,
+			
+            Damage = 0,
+            DamageFriendly = false,
+            DamageRadius = 0,
+            DamageType = 'Normal',
+			
+            DisplayName = 'Dummy range checker',
+			
+            FireTargetLayerCapsTable = {
+                Land = 'Land|Air',
+            },
+            FiringTolerance = 0,
+			
+            Label = 'Dummy',
+			LeadTarget = false,
+			
+            MaxRadius = 1,
+			
+            RackBones = {
+                {
+                    MuzzleBones = {'DummyMuzzle'},
+                    RackBone = 'DummyMuzzle',
+                },
+            },
+
+            RateOfFire = 0.1,
+            RequireTime = 0,
+			
+            TargetCheckInterval = 2.5,
+            TargetPriorities = {'ALLUNITS'},
+            TargetRestrictDisallow = 'UNTARGETABLE',
+            TrackingRadius = 4,
+
+            Turreted = false,
+
+            WeaponRepackTimeout = 4,
+			WeaponUnpackAnimation = '/mods/airforcerebalance/units/BSLK004/BSLK004_unpack.sca',
+            WeaponUnpackAnimationRate = 6.0,
+            WeaponUnpackLocksMotion = false,
+            WeaponUnpacks = true,
+        },
+    },
+
+    Wreckage = {
+        Blueprint = '/props/DefaultWreckage/DefaultWreckage_prop.bp',
+        EnergyMult = 0.3,
+        HealthMult = 0.9,
+        MassMult = 0.3,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Land = true,
+        },
+    },
+}
