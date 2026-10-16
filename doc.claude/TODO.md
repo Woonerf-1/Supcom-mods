@@ -66,7 +66,7 @@ muss diese Einheiten erst erforschen.
 
 - [ ] **TESTLAUF** - Pruefliste in `mods\AirForceRebalance.md` Abschnitt 11. Neu angelegt
       2026-10-14, nichts im Spiel gesehen. Wichtigste Punkte: Merge wirkt (Kosten im
-      Baumenue), Longbow ohne Lua-Fehler, Ausbauten von Longbow/Bayblade/Vindicator bauen
+      Baumenue), Longbow ohne Lua-Fehler, Ausbauten von Longbow/Vindicator bauen (Bayblade seit 2026-10-16 entfernt)
       fertig.
 - [x] **`BuildRate = 15` fuer Ausbauten** (Longbow, Bayblade, Vindicator) - bestaetigt
       (Paul, 2026-10-14).

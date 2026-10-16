@@ -9,7 +9,7 @@ C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\
 
 **218 Blueprint-Ordner** in fuenf Mods.
 
-Eingefroren, siehe `../08_BESTANDSAUFNAHME.md`. `AcidPools` enthaelt keine Einheiten.
+Eingefroren, siehe `../08_BESTANDSAUFNAHME.md`. `AcidPools` (seit 2026-10-16 `CorrosiveOcean`) enthaelt keine Einheiten.
 
 Geprueft am 2026-08-05: alle fuenf Verzeichnislisten abgeglichen, Summe stimmt.
 

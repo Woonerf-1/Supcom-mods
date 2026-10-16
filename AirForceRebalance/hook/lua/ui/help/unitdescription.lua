@@ -11,8 +11,6 @@ Description['bslk004']      = "Advanced mobile multipurpose unit. Using an uncon
 Description['ual0310']      = "This advanced unit is designed to destroy aircraft and provide tactical missile defense. Equipped with 2 light SAM launchers and a heavier Arrow SAM which can fire from underwater. Upgradeable with a T2 shield."
 Description['ual0310-ptsg'] = "Creates a protective Dome Shield around the Vindicator."
 
-Description['saa0306']      = "Experimental heavy air transport. Can be upgraded with a Shield Dome."
-Description['saa0306-ptsg'] = "Creates a protective Dome Shield around the Bayblade. Requires energy."
 Description['sel0324']      = "Mobile anti-air missile launcher with short-range radar. Can be upgraded with an Omni Sensor."
 Description['sel0324-sre']  = "Extends radar and omni range. Requires energy."
 Description['sra4212']      = "Cloak-capable ambush fighter armed with a particle cannon."

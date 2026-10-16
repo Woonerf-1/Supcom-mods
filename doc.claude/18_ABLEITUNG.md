@@ -1,5 +1,8 @@
 # 18 - Ableitung aus `UEF_trans_men`
 
+> **Seit 2026-10-17 liegt `UEF_trans_men` in `doc.claude\_Altlasten\UEF_trans_men\`** (Paul) -
+> nicht mehr im Spiel. Pfade `usermods\UEF_trans_men\` unten meinen jetzt diesen Ort.
+
 ## 0. Das Ziel
 
 **Wir spielen LOUD.** LOUD ist die Codebasis und der Massstab - nicht das Basisspiel,
@@ -348,7 +351,7 @@ existiert im VFS nicht. Folge: Iyadesu verliert Lauf-, Angriffs- und Todesanimat
 
 ## 6. Offen
 
-### 6.1 Noch nicht verarbeitete Einheiten aus `UEF_trans_men` (Stand 2026-10-14)
+### 6.1 Noch nicht verarbeitete Einheiten aus `UEF_trans_men` (Stand 2026-10-14; seit 2026-10-17 archiviert - im Spiel nicht mehr verfuegbar)
 
 Abgeglichen per Dateihash gegen alle Ordner in `usermods\` und gegen die LOUD-Originale in
 `gamedata.entpackt`. Felder per Feldvergleich (Werkzeug wie `mods\AirForceRebalance.md`

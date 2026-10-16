@@ -11,7 +11,7 @@
 | **Autor** | Colin (Werte und Ideen), Extrakt und Korrekturen 2026-10-14 |
 | **Icon** | `/textures/ui/common/icons/units/SEA0313_icon.dds` - Bausymbol des Tomcat (UEF-Penetration-Fighter), liegt in LOUDs `textures.scd` |
 | **Status** | **angelegt 2026-10-14, im Spiel ungeprueft** |
-| **Umfang** | 26 Einheiten, 149 Dateien, 25 MB |
+| **Umfang** | 25 Einheiten, 136 Dateien, 21 MB (Bayblade am 2026-10-16 entfernt) |
 
 Uebergeordnet: [18_ABLEITUNG.md](../18_ABLEITUNG.md). Alle Pfade relativ zu `$FA`.
 
@@ -27,7 +27,11 @@ Leitlinie wie bei den anderen Extrakten (`18_ABLEITUNG.md` Abschnitt 0): **Colin
 werden uebernommen** (Entscheidung Paul, 2026-10-14). Korrigiert wird nur, was
 nachweislich nicht funktioniert (Abschnitt 6).
 
-## 2. Die 26 Einheiten
+## 2. Die Einheiten
+
+> **2026-10-16: Bayblade (SAA0306) ganz herausgenommen** (Paul). Ordner in
+> `doc.claude\_Altlasten\AirForceRebalance\units\SAA0306\`, Beschreibungen `saa0306`/`saa0306-ptsg`
+> aus dem Hook entfernt. Die Bayblade-Angaben unten bleiben als Nachweis stehen, durchgestrichen.
 
 ### 2.1 Luftueberlegenheitsjaeger (T3) - reine Jagdflugzeuge
 
@@ -73,7 +77,7 @@ nachweislich nicht funktioniert (Abschnitt 6).
 |---|---|---|---|---|---|
 | SRA0201 | Blade Raven | Cybran | T2-Aufklaerer | BrewLAN | Kopie |
 | SEA0310 | Wild Weasel | UEF | T3-Koederflugzeug, Radarstoerung | BrewLAN | Kopie (nur bp + Script; Modell von `UEA0302`) |
-| SAA0306 | Bayblade (BrewLAN: "Solaris") | Aeon | experimenteller Lufttransporter | BrewLAN | Kopie |
+| ~~SAA0306~~ | ~~Bayblade~~ **entfernt 2026-10-16** (BrewLAN: "Solaris") | Aeon | experimenteller Lufttransporter | BrewLAN | Kopie |
 | SRA4212 | Orlok | Cybran | T2 "Ambush Fighter", Jaeger mit Tarnung und Radarstealth | **nur in `UEF_trans_men`** | Kopie, Bausymbol aus Colins `textures\` |
 
 ### 2.6 Flugabwehr - Kategorie `ANTIAIR`, nur Luftwaffen
@@ -182,7 +186,7 @@ Muster: Bauzeit fast verdoppelt, Unterhalt verdoppelt (Helios, Tomcat), wendiger
 |---|---|
 | SRA0201 Blade Raven | neu `Intel.Cloak = true` (Tarnung) |
 | SEA0310 Wild Weasel | **unveraendert** gegenueber BrewLAN |
-| SAA0306 Bayblade | Name "Solaris" -> "Bayblade", HP 5400 -> 7500, Energie 102000 -> 80000, Masse 8250 -> 5250, Absturzschaden 2650 -> 200. **Fester Schild entfernt, stattdessen Ausbau "Shield Dome"** (Schild 7500, 125 Energie/s Unterhalt, Kosten 2160 E / 1000 M). Grundunterhalt 252 E/s entfaellt |
+| ~~SAA0306 Bayblade~~ (entfernt 2026-10-16) | Name "Solaris" -> "Bayblade", HP 5400 -> 7500, Energie 102000 -> 80000, Masse 8250 -> 5250, Absturzschaden 2650 -> 200. **Fester Schild entfernt, stattdessen Ausbau "Shield Dome"** (Schild 7500, 125 Energie/s Unterhalt, Kosten 2160 E / 1000 M). Grundunterhalt 252 E/s entfaellt |
 | SRA4212 Orlok | ohne Quelle in LOUD; Tarnung, Partikelkanone (`CDFParticleCannonWeapon`) |
 
 ### 5.6 Flugabwehr
@@ -215,7 +219,7 @@ Colins Fassung haette Lua-Fehler ausgeloest. Einzelheiten in
 
 Colins Idee (billige Flak, Radar per Ausbau) bleibt.
 
-### 6.2 Bayblade: Ausbau-Name
+### 6.2 Bayblade: Ausbau-Name (Einheit seit 2026-10-16 entfernt)
 
 `RemoveEnhancements = {"ShieldDome", ...}` - der Ausbau heisst `ShieldDomeAdd`. Korrigiert
 nach dem Muster, das Colin beim Longbow richtig hat. Ausserdem zwei tote Script-Zweige
@@ -322,7 +326,7 @@ Basisspiel-Einheiten baut die KI ohnehin.
 5. Longbow: Omni Sensor bauen (ca. 4 s), Radar 150 / Omni 70, Energieverbrauch 750/s;
    Radar aus- und einschalten - **kein Lua-Fehler**; Ausbau entfernen - Radar zurueck auf
    30; Radar-Schuessel dreht sich.
-6. Bayblade: Shield Dome bauen (ca. 2 s), Schild an/aus, Ausbau entfernen und erneut bauen.
+6. ~~Bayblade: Shield Dome bauen (ca. 2 s), Schild an/aus, Ausbau entfernen und erneut bauen.~~ (entfernt)
 7. Vindicator: Schild-Ausbau baut fertig; Arrow-Rakete fliegt.
 8. Uyanah: Blitz trifft Luft, Todesanimation laeuft.
 9. Blade Raven und Orlok tarnen sich.
@@ -337,7 +341,7 @@ Basisspiel-Einheiten baut die KI ohnehin.
 
 ## 13. Quellen
 
-- `LOUD\usermods\UEF_trans_men\units\` - Colins Fassungen (Altbestand, eingefroren)
+- `LOUD\usermods\doc.claude\_Altlasten\UEF_trans_men\units\` - Colins Fassungen (Altbestand, eingefroren)
 - `LOUD\gamedata.entpackt\units\units\` - LOUD-Basiseinheiten
 - `LOUD\gamedata.entpackt\brewlan\mods\BrewLAN_LOUD\units\`
 - `LOUD\gamedata.entpackt\blackops\mods\BlackOpsUnleashed\units\`

@@ -1,13 +1,10 @@
--- Merge auf LOUDs XSS0304, Werte von Colin (UEF_trans_men), siehe doc.claude\mods\NavyRebalance.md
+-- Merge auf LOUDs XSS0304, siehe doc.claude\mods\NavyRebalance.md Abschnitt 5.3
+-- Preise wie LOUD (Paul, 2026-10-17); Flak entfernt per hook\lua\system\Blueprints.lua
 
 UnitBlueprint {
     Merge = true,
     BlueprintId = "xss0304",
 
-    Economy = {
-        BuildCostMass = 2150,
-        BuildTime = 5000,
-    },
     Intel = {
         SonarStealth = false,
     },

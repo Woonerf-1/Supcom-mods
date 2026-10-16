@@ -95,7 +95,7 @@ muss `after` gesetzt werden - `requires` genuegt dafuer nicht
 | `T4MassExtractors` | - |
 
 Die uebrigen eingefrorenen Mods (`AcidPools`, `commanders`, `nomads-4-loud`,
-`NOMADS-try_b4_ur_BI`, `UEF_trans_men`) haben noch keinen Nachfolger. Ob sie einen
+`NOMADS-try_b4_ur_BI`; `UEF_trans_men` seit 2026-10-17 in `_Altlasten`) haben noch keinen Nachfolger. Ob sie einen
 bekommen, ist offen - **nichts auf Verdacht nachbauen** (Abschnitt 6).
 
 ---

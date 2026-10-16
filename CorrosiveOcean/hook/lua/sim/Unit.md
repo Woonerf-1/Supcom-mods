@@ -1,6 +1,6 @@
 # Unit.lua - Corrosive Ocean
 
-Datei: `usermods\AcidPools\hook\lua\sim\Unit.lua`
+Datei: `usermods\CorrosiveOcean\hook\lua\sim\Unit.lua` (Ordner bis 2026-10-16 `AcidPools`)
 Wirkt auf: `/lua/sim/Unit.lua`
 
 ## Herkunft
@@ -83,11 +83,21 @@ wahr; die Schleife konnte nie enden, auch nach dem Tod der Einheit nicht.
 | Kategorie | Grund |
 |---|---|
 | `MotionType` `RULEUMT_Water`, `RULEUMT_SurfacingSub`, `RULEUMT_Air` | Schiffe, U-Boote, Flugzeuge |
-| `NAVAL * FACTORY` | Marinefabriken |
+| `NAVAL` | **alle Schiffe** inkl. Marinefabriken (seit 2026-10-16, vorher nur `NAVAL * FACTORY`) |
 | `ANTINAVY * STRUCTURE` | Torpedostellungen |
 | `SONAR * TECH1/TECH2 * STRUCTURE` | Sonar der Stufen 1 und 2 |
 | `ENGINEER` | Ingenieure - sonst waere Bauen im Wasser unmoeglich |
 | `AIR` | **neu** |
+
+### 5. Alle Schiffe ausgenommen (2026-10-16)
+
+Paul: ein T2-Zerstoerer, der auch an Land laufen kann, starb im Wasser. Das ist die
+**Salem Class** (URS0201, Cybran): `MotionType = 'RULEUMT_AmphibiousFloating'`,
+`AltMotionType = 'RULEUMT_Water'` (`LOUD\gamedata\units.scd`, `units/URS0201/URS0201_unit.bp`
+Z. 154, 176). Die Bewegungsart-Ausnahme griff deshalb nicht, und die Kategorienliste nahm
+nur `NAVAL * FACTORY` aus. Jetzt `NAVAL` insgesamt: was das Spiel als Schiff fuehrt, nimmt
+keinen Schaden - unabhaengig von der Bewegungsart. Die anderen drei T2-Zerstoerer (Exodus,
+Valiant, Uashavoh) waren schon ueber die Bewegungsart ausgenommen.
 
 ## Nicht angefasst: die Schadensformel
 

@@ -1,3 +1,60 @@
+## 2026-10-17 (2) - UEF_trans_men nach _Altlasten
+
+- **Was (Paul):** `usermods\UEF_trans_men\` (1952 Dateien, 329 MB) nach
+  `doc.claude\_Altlasten\UEF_trans_men\` verschoben. Kein anderer Mod verweist auf
+  `/mods/uef_trans_men/` (geprueft).
+- **Befund dabei:** `doc.claude\` wird als `/mods/doc.claude/` eingebunden, und `AllMods()`
+  sucht rekursiv (`mods.lua` Z. 273, `DiskFindFiles('/mods', '*mod_info.lua')`) - ein
+  archiviertes `mod_info.lua` taucht im Mod-Manager auf. Deshalb `mod_info.lua` ->
+  `mod_info.lua.archiv` bei `UEF_trans_men` und `test21000`; falsche Aussage in
+  `_Altlasten\README.md` korrigiert.
+- **Regel fuers ganze Archiv (Paul):** `CLAUDE.md` Regel 9 - archivierte `mod_info.lua` immer
+  als `.archiv`. Archiv geprueft: sonst keine. Alle anderen `DiskFindFiles`-Suchen in LOUD
+  laufen nur ueber aktive Mods - uebrige Archivdateien sind unschaedlich.
+- **Folge:** die 4 offenen Einheiten (Pearl, Yenesel, Wraith, Megaroach) sind im Spiel nicht
+  mehr verfuegbar. Team-PDF liest Colins Fassung jetzt aus dem Archiv.
+- **Wo:** `_Altlasten\UEF_trans_men\`, `_Altlasten\test21000\mod_info.lua.archiv`,
+  `_Altlasten\README.md`, `tools\teamdiff\teamdiff_data.ps1`, `mods\*.md` (Quellpfade),
+  `18_ABLEITUNG.md`, `UEBERGABE_CLAUDE_CODE.md`, `12_NEUSCHNITT.md`
+
+---
+
+## 2026-10-17 (1) - NavyRebalance: Yathsou ohne Flak, Preise wie LOUD
+
+- **Was (Paul):** Yathsou (XSS0304, Seraphim-U-Boot-Jaeger) - Flak "Losaare AA Autocannon"
+  entfernt, Masse/Bauzeit zurueck auf LOUD (3950 / 8000 statt Colins 2150 / 5000).
+  Sonar-Tarnung bleibt aus (Colin).
+- **Wie:** Merge `units\XSS0304\XSS0304_unit.bp` ohne `Economy`; neu
+  `hook\lua\system\Blueprints.lua` entfernt die Waffe mit Label `AA` und den Faehigkeitstext
+  "Anti-Air" (Merge kann keine Listeneintraege loeschen). Waffen werden per Label gesucht
+  (`Unit.lua` Z. 1850, 4249, `LOUD\gamedata\lua.scd`) - Reihenfolge egal.
+- **Wo:** `NavyRebalance\units\XSS0304\XSS0304_unit.bp`, `NavyRebalance\hook\lua\system\Blueprints.lua`,
+  `mods\NavyRebalance.md`, `tools\teamdiff\` (Hook im Datenskript nachgebildet, Text), Team-PDF
+- **Getestet:** statisch; im Spiel nein
+
+---
+
+## 2026-10-16 (1) - Corrosive Ocean: Schiffe ausgenommen, aufgeraeumt; Bayblade raus
+
+- **Corrosive Ocean (Paul):** T2-Zerstoerer, die an Land laufen koennen, starben im Wasser.
+  Ursache: Salem Class (URS0201, Cybran) hat `MotionType = 'RULEUMT_AmphibiousFloating'`
+  (`LOUD\gamedata\units.scd`, `units/URS0201/URS0201_unit.bp` Z. 176) - die
+  Bewegungsart-Ausnahme griff nicht, die Kategorie-Ausnahme deckte nur `NAVAL * FACTORY`.
+  Jetzt `categories.NAVAL` insgesamt ausgenommen. (Paul nannte Aeon; der einzige
+  landgaengige T2-Zerstoerer im Bestand ist der Cybran-Salem - im Spiel pruefen.)
+- **Aufgeraeumt:** Ordner `AcidPools` -> `CorrosiveOcean`, Icon `acidpools.png` ->
+  `CorrosiveOcean.png`, unbenutztes `Corrosive.dds` nach `_Altlasten\CorrosiveOcean\`,
+  `mod_info.lua` mit Kopf, ASCII-Copyright. `uid` unveraendert (Auswahl im Mod-Manager bleibt).
+- **AirForceRebalance:** Bayblade (SAA0306) ganz herausgenommen (Paul) - Ordner nach
+  `_Altlasten\AirForceRebalance\units\SAA0306\`, zwei Beschreibungen entfernt. Jetzt 25 Einheiten.
+- **Wo:** `CorrosiveOcean\` (Umbenennung, `mod_info.lua`, `hook\lua\sim\Unit.lua` + `.md`),
+  `AirForceRebalance\` (Hook-Beschreibungen), `doc.claude\_Altlasten\`, `mods\AirForceRebalance.md`,
+  `08_BESTANDSAUFNAHME.md`, `13_GIT.md`, `UEBERGABE_CLAUDE_CODE.md`, `units\usermods.md`, `TODO.md`,
+  `tools\teamdiff\teamdiff.html`, `team\LOUD-Mods_Aenderungen.pdf`
+- **Getestet:** statisch; im Spiel nein
+
+---
+
 ## 2026-10-14 (12) - Team-PDF Original | Colin | Aktuell
 
 - **Was:** Menschenlesbares PDF fuer das Team (Paul): je Mod und Einheit drei Spalten,

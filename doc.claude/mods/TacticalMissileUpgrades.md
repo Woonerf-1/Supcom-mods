@@ -141,7 +141,7 @@ Z. 364), ausser dem Teilgeschoss der Purifier - dafuer der Auszug in `lua\`.
 
 ## 9. Quellen
 
-- `LOUD\usermods\UEF_trans_men\units\` (UAB2108, UAB4201, UEB4201, BAB2308, BAB4307, WEB4301), `...\projectiles\MirvSerpentine*`
+- `LOUD\usermods\doc.claude\_Altlasten\UEF_trans_men\units\` (UAB2108, UAB4201, UEB4201, BAB2308, BAB4307, WEB4301), `...\projectiles\MirvSerpentine*`
 - `LOUD\gamedata.entpackt\units\units\`
 - `LOUD\gamedata.entpackt\blackops\mods\BlackOpsUnleashed\` (Einheiten, `lua\BlackOpsprojectiles.lua`, `lua\BlackOpsEffectTemplates.lua`, `effects\Emitters\`, `lua\CustomUnits\BO_Buildings.lua`)
 - `LOUD\gamedata.entpackt\WyvernBattlePack\mods\BattlePack\` (WEB4301, `lua\CustomUnits\Wyvern_Units.lua`)

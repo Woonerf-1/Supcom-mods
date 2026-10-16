@@ -97,7 +97,7 @@ foreach ($mod in $mods) {
         $isMerge = Select-String -LiteralPath $curF -Pattern 'Merge\s*=\s*true' -Quiet
         $oDir = $srcDirs[$id]
         $o = Parse (Bp $oDir)
-        $c = Parse (Bp "LOUD\usermods\UEF_trans_men\units\$id")
+        $c = Parse (Bp "LOUD\usermods\doc.claude\_Altlasten\UEF_trans_men\units\$id")
         $n = Parse $curF
         if ($isMerge -and $o) { $m2 = [ordered]@{}; foreach ($k in $o.Keys) { $m2[$k] = $o[$k] }; foreach ($k in $n.Keys) { if ($k -notmatch '\.(Merge|BlueprintId)$') { $m2[$k] = $n[$k] } }; $n = $m2 }
         if ($mod -eq 'ImprovedHydrocarbonPowerPlants') {
@@ -105,6 +105,10 @@ foreach ($mod in $mods) {
             $n['ROOT.Adjacency'] = $(if ($t2) { 'T2PowerGeneratorAdjacencyBuffs' } else { 'T3PowerGeneratorAdjacencyBuffs' }) + ' (Hook)'
             $n['ROOT.Defense.RegenRate'] = $(if ($t2) { '2' } else { '4' }) + ' (Hook, einstellbar)'
             if ($t2) { $n['ROOT.Economy.StorageEnergy'] = '200 (Hook)' }
+        }
+        if ($mod -eq 'NavyRebalance' -and $id -eq 'XSS0304') {   # Flak per Hook entfernt (hook\lua\system\Blueprints.lua)
+            foreach ($k in @($n.Keys)) { if ($k -like 'ROOT.Weapon.`[2`].*') { $n.Remove($k) } }
+            if ($n.Contains('ROOT.Display.Abilities.#')) { $n['ROOT.Display.Abilities.#'] = (($n['ROOT.Display.Abilities.#'] -split '\|') | Where-Object { $_ -ne '<LOC ability_aa>Anti-Air' }) -join '|' }
         }
         $names = NameOf $(if ($n) { $n } elseif ($c) { $c } else { $o })
         $keys = New-Object System.Collections.Generic.List[string]

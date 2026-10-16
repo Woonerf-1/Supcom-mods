@@ -64,7 +64,7 @@ usermods\
 │   └── mods\                  je ein Dokument pro eigenem Mod
 ├── README.md                  Inhalt derzeit nur "#Supcom-mods"
 ├── test.txt                   Inhalt "s" — Testartefakt, kann weg
-├── AcidPools\
+├── AcidPools\                 seit 2026-10-16 CorrosiveOcean\
 ├── commanders\
 ├── nomads-4-loud\
 ├── NOMADS-try_b4_ur_BI\

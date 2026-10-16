@@ -391,5 +391,5 @@ Markdown-Datei daneben mit Verweis im Kurzkommentar.
 - `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\blackops\mods\BlackOpsUnleashed\units\` (`BSL0005`, `BSB2402`)
 - `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\gamedata.entpackt\civ_units\units\XRC2201\`
 - `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\gamedata.entpackt\effects\effects\Emitters\`
-- `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\UEF_trans_men\units\` (Altbestand)
+- `C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance\LOUD\usermods\doc.claude\_Altlasten\UEF_trans_men\units\` (Altbestand)
 - `doc.claude\_Altlasten\DynamicGameplay\`

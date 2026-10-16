@@ -87,16 +87,17 @@ im Spiel" ist `$SRC` bzw. `LOUD\gamedata` - Aktualitaet pruefen nach
 | `DynamicGameplay` | fertig bis auf offene Entscheidungen (TODO.md, Abschnitt DynamicGameplay) | `mods\DynamicGameplay.md` |
 | `T4UnitAdditions` (bis 2026-10-14 `t4add`) | umgesetzt 2026-10-14, Testlauf laeuft | `mods\T4UnitAdditions.md` |
 | `CustomAI` | `customai_aeon_air` seit 2026-08-08 eingefroren; regelbasierte KI geplant, nicht gebaut (CHANGELOG oben) | `mods\CustomAI*.md` |
-| `AcidPools` | ueberarbeitet (ereignisgesteuert), laeuft | - |
+| `CorrosiveOcean` (bis 2026-10-16 `AcidPools`) | ueberarbeitet (ereignisgesteuert), laeuft; seit 2026-10-16 alle Schiffe ausgenommen | `CorrosiveOcean\hook\lua\sim\Unit.md` |
 | `PlayTest` | Testwerkzeug; Nebenwirkungen in `mods\PlayTest.md` Abschnitt 7 | `mods\PlayTest.md` |
 | `T4MassExtractors` | Vorlage | `mods\T4MassExtractors.md` |
 | `BasegameRevamp` | **geklaert 2026-10-14:** war die Bugfix-Vorlage (uid `EFD7502E-...`), von Colin zu eigenem Inhalt umgebaut (BrewLAN-Forschungssystem, Einheit `SRB5383`, Balance an `UAL0301`/`XAB3301`/`XSA0402`). Kein Bugfix-Mod, eingefroren. | - |
 | `BasegameBugfixes` | **neu 2026-10-14**, eigene GUID, enthaelt B-04 (Fatboy-Sichtbarkeit) | `mods\BasegameBugfixes.md` |
-| `AirForceRebalance` | **neu 2026-10-14**, 26 Luftwaffen-/Flugabwehr-Einheiten aus `UEF_trans_men`, im Spiel ungeprueft | `mods\AirForceRebalance.md` |
+| `AirForceRebalance` | **neu 2026-10-14**, 25 Luftwaffen-/Flugabwehr-Einheiten (Bayblade am 2026-10-16 entfernt) aus `UEF_trans_men`, im Spiel ungeprueft | `mods\AirForceRebalance.md` |
 | `NavyRebalance` | **neu 2026-10-14**, 14 Marine-Einheiten aus `UEF_trans_men`, im Spiel ungeprueft | `mods\NavyRebalance.md` |
 | `TacticalMissileUpgrades` | **neu 2026-10-14**, Ausbauketten Serpentine/Volcano/Buzzkill aus `UEF_trans_men`, im Spiel ungeprueft | `mods\TacticalMissileUpgrades.md` |
+| `UEF_trans_men` | **seit 2026-10-17 in `doc.claude\_Altlasten\UEF_trans_men\`** (Paul), `mod_info.lua` als `.archiv`; nur noch Vergleichsquelle fuer das Team-PDF | `_Altlasten\README.md` |
 | `advanced_rebalence` | **neu, undokumentiert.** Autor Colin; Cybran-Minen, T3-Feldingenieure, Tarnfeldgeneratoren, Seraphim-Restoration-Field. Totfelder `mountpoints`/`hooks`, Icon aus `nomads-4-loud`. | - |
-| `UEF_trans_men`, `commanders`, `nomads-4-loud`, `NOMADS-try_b4_ur_BI` | eingefrorener Bestand (`CLAUDE.md` Regel 5) | `08_BESTANDSAUFNAHME.md` |
+| `commanders`, `nomads-4-loud`, `NOMADS-try_b4_ur_BI` | eingefrorener Bestand (`CLAUDE.md` Regel 5) | `08_BESTANDSAUFNAHME.md` |
 
 `BasegameRevamp` und `advanced_rebalence` fallen unter Regel 5 - **eingefroren**
 (Entscheidung Paul, 2026-10-13).

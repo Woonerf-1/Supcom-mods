@@ -34,7 +34,7 @@ Extrakten), mit einer Ausnahme auf Pauls Entscheidung (Abschnitt 5.1).
 | UAS0304 | Silencer | Aeon | T3-Raketen-U-Boot | Basisspiel | Merge |
 | URS0304 | Plan B | Cybran | T3-Raketen-U-Boot | Basisspiel | Merge |
 | UES0304 | Ace | UEF | T3-Raketen-U-Boot | Basisspiel | Merge |
-| XSS0304 | Yathsou | Seraphim | T3-U-Boot-Jaeger (Torpedos + Flak) | Basisspiel | Merge |
+| XSS0304 | Yathsou | Seraphim | T3-U-Boot-Jaeger (Torpedos; Flak seit 2026-10-17 entfernt) | Basisspiel | Merge + Hook |
 | XSS0303 | Iavish | Seraphim | T3-Flugzeugtraeger | Basisspiel | Merge |
 | UES0401 | Atlantis | UEF | T4-Flugzeugtraeger | Basisspiel | Merge |
 | XES0102 | Cooper | UEF | T2-Torpedoboot | Basisspiel | Merge |
@@ -102,7 +102,7 @@ Tigershark, unveraendert bei Sou-istle). Uebernommen wie von Colin.
 | UAS0304 Silencer | Sonar-Tarnung entfernt |
 | URS0304 Plan B | Sonar-Tarnung entfernt |
 | UES0304 Ace | Sonar-Tarnung entfernt |
-| XSS0304 Yathsou | Masse 3950 -> 2150, `BuildTime` 8000 -> 5000, Sonar-Tarnung entfernt (Flak-Buff: bleibt, 5.1) |
+| XSS0304 Yathsou | Colin: Masse 3950 -> 2150, `BuildTime` 8000 -> 5000, Sonar-Tarnung entfernt. **Seit 2026-10-17 (Paul): Preise wie LOUD (3950 / 8000), Flak "Losaare AA Autocannon" ganz entfernt**, Sonar-Tarnung bleibt aus. Die Flak entfernt `hook\lua\system\Blueprints.lua` (Waffe mit Label `AA` und Faehigkeitstext "Anti-Air") - ein Merge kann keine Listeneintraege loeschen. Waffen werden per Label gefunden (`Unit.lua` Z. 1850, 4249 in `LOUD\gamedata\lua.scd`), der Script-Eintrag `AA` bleibt ungenutzt; die Geschuetzklappe oeffnet weiter (nur Optik) |
 
 Muster: die strategischen U-Boote sind per Sonar aufspuerbar.
 
@@ -171,7 +171,7 @@ Muster: die strategischen U-Boote sind per Sonar aufspuerbar.
 
 ## 10. Quellen
 
-- `LOUD\usermods\UEF_trans_men\units\`
+- `LOUD\usermods\doc.claude\_Altlasten\UEF_trans_men\units\`
 - `LOUD\gamedata.entpackt\units\units\`
 - `LOUD\gamedata.entpackt\WyvernBattlePack\mods\BattlePack\units\WEB0404\`
 - `LOUD\gamedata.entpackt\brewlan\mods\BrewLAN_LOUD\units\SES0319\`, `...\lua\FieldEngineers.lua`

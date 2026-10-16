@@ -3,10 +3,22 @@
 Ablage fuer Dateien, die aus einem Mod entfernt wurden, aber nicht verloren gehen sollen.
 
 **Regel:** hier liegt nichts, was das Spiel jemals laedt. Der Ordner ist Teil von
-`doc.claude\` und damit im Git-Repository, aber `doc.claude\` hat kein `mod_info.lua` -
-`AllMods()` in `mods.lua` findet den Ordner also nie als Mod, und keine Datei darin wird
-je ausgefuehrt. Auch `.bp`-Dateien waeren hier folgenlos, weil `LoadBlueprints()` nur
-`m.location` **aktiver** Mods durchsucht.
+`doc.claude\` und damit im Git-Repository. `.bp`-Dateien sind hier folgenlos, weil
+`LoadBlueprints()` nur `m.location` **aktiver** Mods durchsucht.
+
+**Achtung `mod_info.lua` (korrigiert 2026-10-17):** LOUD bindet `doc.claude\` als
+`/mods/doc.claude/` ein (`LOUD\bin\LOUD.log`: `AddSearchPath ... usermods\doc.claude`), und
+`AllMods()` sucht **rekursiv** (`mods.lua` Z. 273 in `LOUD\gamedata\lua.scd`:
+`DiskFindFiles('/mods', '*mod_info.lua')`). Ein archivierter Mod mit `mod_info.lua` taucht
+deshalb im Mod-Manager auf. Archivierte Mods bekommen ihr `mod_info.lua` darum als
+`mod_info.lua.archiv` (so bei `test21000` und `UEF_trans_men`). Die fruehere Aussage
+"`doc.claude\` hat kein `mod_info.lua`, also findet `AllMods()` nichts" war falsch.
+
+**Gilt fuer alles im Archiv** (Paul, 2026-10-17, auch CLAUDE.md Regel 9). Geprueft am
+2026-10-17: ausser den beiden `.archiv`-Dateien liegt hier kein `*mod_info.lua`. Andere
+Dateien sind unschaedlich - die uebrigen `DiskFindFiles`-Aufrufe in LOUD (`aibrain.lua`,
+`EnhancedLobby.lua`, `lobby.lua`, `BlackopsIconSearch.lua`) suchen nur unter
+`mod.location` aktiver Mods.
 
 Endungen wie `.lua` bleiben erhalten, damit man den Inhalt weiter mit Syntaxhervorhebung
 lesen kann. Wo eine Datei nur teilweise entfernt wurde, traegt die Kopie hier den Zusatz
@@ -163,3 +175,18 @@ laengst durch Eigenes ersetzt hat**.
 
 Der Darkness funktioniert in LOUD. Was tatsaechlich fehlte, war der optische Effekt - und
 dessen Ursache liegt woanders, siehe `mods\DynamicGameplay.md` Abschnitt 5.2.
+
+---
+
+## UEF_trans_men (2026-10-17)
+
+| Was | kam aus | Grund |
+|---|---|---|
+| ganzer Ordner `UEF_trans_men\` (1952 Dateien, 329 MB) | `usermods\UEF_trans_men\` | Colins Sammelmod, vollstaendig auf eigene Mods verteilt bzw. bewusst verworfen (Uebersicht `18_ABLEITUNG.md` Abschnitt 6.1). Paul: nach `_Altlasten` |
+| `mod_info.lua` -> `mod_info.lua.archiv` | dort | damit der Mod-Manager ihn nicht mehr findet (siehe Regel oben) |
+
+Bleibt Vergleichsquelle fuer das Team-PDF (`tools\teamdiff\`, Spalte "Colin").
+Nicht mehr verfuegbar im Spiel: die 4 offenen Einheiten (Pearl, Yenesel, Wraith,
+Megaroach) und alles aus Colins Fassung, das in keinem eigenen Mod steckt.
+
+Ebenfalls am 2026-10-17: `test21000\mod_info.lua` -> `mod_info.lua.archiv` (gleicher Grund).

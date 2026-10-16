@@ -116,6 +116,12 @@ Daraus folgt auch:
    Siehe `13_GIT.md`.
 7. **`shadow` nur als letztes Mittel.** Standard ist `hook`. Begründung siehe `02_MODSYSTEM.md`.
 8. **Kein Blueprint-Vollersatz, wenn `Merge = true` reicht.**
+9. **Entfernt wird nie geloescht, sondern nach `doc.claude\_Altlasten\` verschoben** - und dort
+   jede `mod_info.lua` in `mod_info.lua.archiv` umbenannt (Paul, 2026-10-17). Grund:
+   `doc.claude\` wird als `/mods/doc.claude/` eingebunden und `AllMods()` sucht rekursiv
+   (`mods.lua` Z. 273, `DiskFindFiles('/mods', '*mod_info.lua')`) - ein archivierter Mod
+   erschiene sonst im Mod-Manager. Andere Dateien im Archiv sind unschaedlich: alle uebrigen
+   Suchlaeufe gehen nur ueber `mod.location` **aktiver** Mods. Details `_Altlasten\README.md`.
 
 ---
 

@@ -5,7 +5,7 @@ local UnitOld = Unit
 
 local WASSER = { Water = true, Seabed = true, Sub = true }
 
-local AUSGENOMMEN = categories.NAVAL * categories.FACTORY
+local AUSGENOMMEN = categories.NAVAL
                   + categories.ANTINAVY * categories.STRUCTURE
                   + categories.SONAR * categories.TECH1 * categories.STRUCTURE
                   + categories.SONAR * categories.TECH2 * categories.STRUCTURE

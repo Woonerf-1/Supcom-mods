@@ -26,7 +26,7 @@ Die Spalte „Ersetzt durch" in der Übersicht wird gepflegt, sobald ein Neuschn
 
 | Ordner | Name | Autor | uid | Mechanismus | Ersetzt durch |
 |---|---|---|---|---|---|
-| `AcidPools` | Corrosive Ocean | Balthazar | `BREWLANS-22b4-4936-820e-acid00000000` | `hook\lua\sim\Unit.lua` | — |
+| `AcidPools` (seit 2026-10-16 `CorrosiveOcean`) | Corrosive Ocean | Balthazar | `BREWLANS-22b4-4936-820e-acid00000000` | `hook\lua\sim\Unit.lua` | — |
 | `commanders` | Factions for Commanders | „the love for max" | `THISoneIS4myBOImax` | `units\` (4 ACUs) | — |
 | `nomads-4-loud` | Nomads for LOUD | (Pseudonym) | `ILL-BE_FASTERRRR-THAN-PM-BC-OF-icon` | Vollpaket: `hook`, `shadow`, `units`, eigene Mounts | — |
 | `NOMADS-try_b4_ur_BI` | NOMAD BI men | Colin | `2100thousendmilliontest31` | Erweiterung zu Nomads | — |
@@ -48,6 +48,12 @@ Testartefakt).
 ## Details
 
 ### `AcidPools` — Corrosive Ocean
+
+> **Stand 2026-10-16:** Ordner heisst jetzt `CorrosiveOcean`, Icon `CorrosiveOcean.png`,
+> `Corrosive.dds` (unbenutzt) in `_Altlasten\CorrosiveOcean\`, alle Schiffe (`NAVAL`)
+> vom Schaden ausgenommen. Doku: `usermods\CorrosiveOcean\hook\lua\sim\Unit.md`. Der
+> Abschnitt unten ist der historische Befund.
+
 ```
 Corrosive.dds
 hook\lua\sim\Unit.lua
