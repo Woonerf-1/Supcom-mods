@@ -141,6 +141,24 @@ _Nichts offen._
       Erledigt ohne Mod: Sky Boxer (UEL0205, Colins Aenderung verworfen), Torrent
       (XAS0306, unveraendert gegenueber LOUD).
 
+### AdjacencyRebalance (`mods\AdjacencyRebalance.md`)
+
+- [ ] **TESTLAUF** - Pruefliste in `mods\AdjacencyRebalance.md` Abschnitt 6. Neu angelegt
+      2026-10-21, im Spiel ungeprueft.
+
+### AirForceRebalance - Orlok (SRA4212), Befund 2026-10-21
+
+- [ ] **Zweite Kanone der Orlok feuert vermutlich nie.** Blueprint hat zwei Waffen
+      (`MainLaser`, `Laser`), das Script nur eine Klasse (`MainLaser`). Fuer `Laser` liefert
+      LOUD die nackte Basisklasse (`lua.scd`, `lua/sim/Unit.lua` Z. 4249, `GetWeaponClass`);
+      `lua/sim/Weapon.lua` hat weder Salvenzustaende noch `CreateProjectileAtMuzzle` - die
+      stehen erst in `defaultweapons.lua` (Z. 68 ff., Strahl Z. 1840 ff.). Gleiches Muster wie
+      bei Colins Uyanah (`mods\AirForceRebalance.md` 6.3). Folge: tatsaechliche Luft-DPS ca. 92
+      statt 185 (LOUD-Formel). Im Spiel pruefen (feuert nur ein Strahl?), dann Entscheidung
+      Paul: zweite Kanone mit Klasse versehen oder Waffe entfernen.
+- [ ] **Orlok-Tarnkappe:** nur am Boden einschaltbar (`SRA4212_script.lua`, `OnScriptBitClear`
+      nur bei `self.Landed`), bleibt nach dem Abheben an bis zum ersten Schuss; KI-Orloks
+      starten getarnt. Kostet 80 Energie/s. Ist so gewollt? (Paul)
 ### TacticalMissileUpgrades (`mods\TacticalMissileUpgrades.md`)
 
 - [ ] **TESTLAUF** - Pruefliste in `mods\TacticalMissileUpgrades.md` Abschnitt 7. Neu

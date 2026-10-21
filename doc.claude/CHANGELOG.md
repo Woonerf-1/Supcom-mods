@@ -1,3 +1,16 @@
+## 2026-10-21 (1) - Neuer Mod AdjacencyRebalance, aus nomads-4-loud herausgeloest
+
+- **Was (Paul):** Die staerkeren Nachbarschaftsboni aus `nomads-4-loud` (Energiespeicher T1-T3,
+  Experimental-Speicher) als eigener Mod "Adjacency Rebalance". Icon: UEF-Energiespeicher T3.
+- **Wie:** Nomads hatte eine Vollkopie von `lua/sim/AdjacencyBuffs.lua` (2593 Zeilen) mit 24
+  geaenderten Werten. Neu: Hook, der nur die 24 Werte in der globalen Tabelle `Buffs` setzt.
+  `nomads-4-loud` bleibt unangetastet (Paul: "nur rausloesen", wie bei `UEF_trans_men`) -
+  ein kurzzeitiges Verschieben des Nomads-Schattens wurde zurueckgenommen, Git-Stand gleich.
+- **Wo:** neu `usermods\AdjacencyRebalance\` (mod_info, Hook), `mods\AdjacencyRebalance.md`;
+  `TODO.md`, `UEBERGABE_CLAUDE_CODE.md`
+- **Getestet:** statisch; im Spiel nein
+
+---
 ## 2026-10-17 (2) - UEF_trans_men nach _Altlasten
 
 - **Was (Paul):** `usermods\UEF_trans_men\` (1952 Dateien, 329 MB) nach
