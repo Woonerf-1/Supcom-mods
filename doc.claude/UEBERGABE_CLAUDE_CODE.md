@@ -94,6 +94,8 @@ im Spiel" ist `$SRC` bzw. `LOUD\gamedata` - Aktualitaet pruefen nach
 | `BasegameBugfixes` | **neu 2026-10-14**, eigene GUID, enthaelt B-04 (Fatboy-Sichtbarkeit) | `mods\BasegameBugfixes.md` |
 | `AirForceRebalance` | **neu 2026-10-14**, 25 Luftwaffen-/Flugabwehr-Einheiten (Bayblade am 2026-10-16 entfernt) aus `UEF_trans_men`, im Spiel ungeprueft | `mods\AirForceRebalance.md` |
 | `NavyRebalance` | **neu 2026-10-14**, 14 Marine-Einheiten aus `UEF_trans_men`, im Spiel ungeprueft | `mods\NavyRebalance.md` |
+| `Nomads` | **neu 2026-10-22**, Neuaufbau der Nomads-Fraktion (109 Einheiten), braucht Custom Factions mit den Hooks aus `uebergabe\CustomFactions\`; im Spiel ungeprueft | `mods\Nomads.md` |
+| `nomads-4-loud`, `NOMADS-try_b4_ur_BI` | **seit 2026-10-22 in `doc.claude\_Altlasten\`** (Paul), `mod_info.lua` als `.archiv` | `_Altlasten\README.md` |
 | `AdjacencyRebalance` | **neu 2026-10-21**, staerkere Adjacency-Boni der Energie-/Experimental-Speicher, aus `nomads-4-loud` herausgeloest, im Spiel ungeprueft | `mods\AdjacencyRebalance.md` |
 | `TacticalMissileUpgrades` | **neu 2026-10-14**, Ausbauketten Serpentine/Volcano/Buzzkill aus `UEF_trans_men`, im Spiel ungeprueft | `mods\TacticalMissileUpgrades.md` |
 | `UEF_trans_men` | **seit 2026-10-17 in `doc.claude\_Altlasten\UEF_trans_men\`** (Paul), `mod_info.lua` als `.archiv`; nur noch Vergleichsquelle fuer das Team-PDF | `_Altlasten\README.md` |

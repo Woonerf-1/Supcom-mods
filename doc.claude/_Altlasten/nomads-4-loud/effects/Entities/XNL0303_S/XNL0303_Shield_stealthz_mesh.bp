@@ -1,0 +1,12 @@
+MeshBlueprint {
+    LODs = {
+        {
+            MeshName = 'XNL0303_Shield_mesh.scm',
+            ShaderName = 'ShieldFill',
+            LODCutoff = 100,
+        },
+    },
+    IconFadeInZoom = 130,
+    SortOrder = 999,
+    StraddleWater = true,
+}

@@ -188,13 +188,38 @@ _Nichts offen._
 
 _Nichts offen._
 
+### Nomads (`mods\Nomads.md`)
+
+- [ ] **TESTLAUF** (Paul, am Ende aller Phasen) - Pruefliste in `mods\Nomads.md`.
+- [ ] **Custom Factions:** fraktionsneutrale Hooks aus `uebergabe\CustomFactions\` in `CustomFactions.scd`
+      uebernehmen (SupComNet-Seite). Ohne sie fehlen Nomads Vorlagen-Umrechnung, Vorab-Bau, KI-Vorlagen usw.
+- [ ] **KI mit fester Fraktionszahl** (FactionSquads/FactionName, `factionnames`, EnhancementTable, Builder
+      mit FactionIndex 1-4) - eigenes KI-Teilprojekt, Liste `uebergabe\CustomFactions\README.md` Abschnitt 3.
+- [ ] **22 Ressourcenverweise ins Leere**, schon in nomads-4-loud (Projektil-/Meteor-Meshes und -Texturen,
+      XNB9002, XNC0003, XNL0301) - Liste `mods\Nomads.md`.
+- [ ] **Vermischung Fraktions-Mods / Inhalts-Mods besprechen** (Paul): Nomads kennt jetzt die IDs
+      beb1202/beb1302 aus ImprovedHydrocarbonPowerPlants (`mods\Nomads.md` 7). Generisch, Bruecken-Mods oder so lassen?
+- [ ] **Ungeprueft:** `shadowdir` fuegt neue Pfade hinzu (Tasks, Strategie-Icons; `mods\Nomads.md` 6) - im Testlauf.
+- [ ] **`particle.fx` der Quelle** nicht uebernommen (globaler Shader, Teamfarben-Trick) - pruefen, ob Nomads-Effekte
+      ohne ihn falsch aussehen (`mods\Nomads.md` 8).
+- [ ] **Widerspruch Hook-Locals:** der BrewLAN-Punkt unter NavyRebalance sagt, ein Hook sehe die Locals des
+      Originals nicht; die Custom-Factions-Lobby (`factionBmps`) und die neuen CF-Hooks (taunt, sorianutilities,
+      hotbuild, construction) setzen das Gegenteil voraus. Im Testlauf klaeren und eine Fassung streichen.
+
+### Mod-Icons (Paul 2026-10-22: "im Vorbeigehen")
+
+- [ ] `advanced_rebalence` und `commanders` zeigen mit `icon` auf das archivierte
+      `/mods/nomads-4-loud/icons/nomads.bmp` (ins Leere) - wird anders geloest (Paul).
+      Uebrige Bild-Icons (CorrosiveOcean, CustomAI, PlayTest) sind eigene; `_Altlasten` ist egal (Paul:
+      kein oeffentliches Repo).
+
 ### Bestand - aktiv zu beachten
 
-- [ ] `nomads-4-loud` nutzt `shadow\` → blockiert Hooks anderer Mods auf dieselben Dateien.
-      Bei „mein Hook wirkt nicht" zuerst hier nachsehen.
-- [ ] **Nomads-Installation:** `bin\LoudDataPath.lua` ist derzeit die LOUD-Version, nicht
-      die Nomads-Variante. Falls Nomads gespielt werden soll, muss der Nutzer
-      `CopyLoudDataPath.bat` ausführen. → `11_DATAPATH.md` §4.
+- [x] `nomads-4-loud` (shadow, LoudDataPath-Patch) am 2026-10-22 durch `Nomads` ersetzt und nach
+      `_Altlasten` verschoben; `NOMADS-try_b4_ur_BI` (Colin) ebenso (Paul).
+- [x] **Hydrocarbon-Kraftwerke der Nomads** (CNB1202 Eckard, CNB1302 Guenter) aus Colins
+      `NOMADS-try_b4_ur_BI` in `Nomads` uebernommen, nur mit ImprovedHydrocarbonPowerPlants aktiv
+      (`mods\Nomads.md` 4.3). Im Testlauf beide Faelle pruefen (LOUD.log-Zeile `verbesserte Hydrocarbon-Kraftwerke`).
 
 ### CustomAI (`mods\CustomAI*.md`)
 

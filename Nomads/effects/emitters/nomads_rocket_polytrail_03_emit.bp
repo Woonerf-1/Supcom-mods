@@ -1,0 +1,12 @@
+TrailEmitterBlueprint {
+    BlueprintId = 'rocket_polytrail_03',
+    Lifetime = -1.00,
+    TrailLength = 11/2,
+    Size = 0.035,
+    SortOrder = 0,
+    BlendMode = 3,
+    TextureRepeatRate = 0.1,
+    LODCutoff = 300,
+    RepeatTexture = [[/textures/particles/ramp_trail_13.dds]],
+    RampTexture = [[/mods/nomads/textures/particles/ramp_transparency_fade_to_red_inverted_bright.dds]],
+}

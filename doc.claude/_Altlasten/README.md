@@ -190,3 +190,44 @@ Nicht mehr verfuegbar im Spiel: die 4 offenen Einheiten (Pearl, Yenesel, Wraith,
 Megaroach) und alles aus Colins Fassung, das in keinem eigenen Mod steckt.
 
 Ebenfalls am 2026-10-17: `test21000\mod_info.lua` -> `mod_info.lua.archiv` (gleicher Grund).
+
+---
+
+## nomads-4-loud (2026-10-22)
+
+| Was | kam aus | Grund |
+|---|---|---|
+| ganzer Ordner `nomads-4-loud\` (3327 Dateien, 405 MB, laut Git unveraendert) | `usermods\nomads-4-loud\` | Neu aufgebaut als `usermods\Nomads` (Doku `mods\Nomads.md`, Plan `mods\Nomads_Plan.md`); Adjacency-Werte herausgeloest nach `usermods\AdjacencyRebalance`. Paul: danach nach `_Altlasten` |
+| `mod_info.lua` -> `mod_info.lua.archiv` | dort | damit der Mod-Manager ihn nicht mehr findet (siehe Regel oben) |
+
+Bleibt Quelle fuer Herkunftsangaben in den Kommentaren von `Nomads` und `AdjacencyRebalance`.
+Folge: `advanced_rebalence\mod_info.lua` Z. 7 und `commanders\mod_info.lua` Z. 7 zeigen mit
+`icon = "/mods/nomads-4-loud/icons/nomads.bmp"` ins Leere (nur Mod-Manager-Icon). Paul: so lassen,
+der Verweis war nie sinnvoll; wird anders geloest.
+
+`nomads-4-loud\icons\nomads.bmp` am 2026-10-22 entfernt (Paul): war kein Logo, sondern ein privates Foto
+(JPEG mit Endung .bmp, 3456 x 4608). Liegt im Windows-Papierkorb; in der Git-Historie (Commit e55a357,
+auch auf origin/main) bleibt es, bis die Historie bereinigt wird.
+
+---
+
+## Nomads (2026-10-22)
+
+| Datei | kam aus | Grund |
+|---|---|---|
+| `textures\ui\common\game\strategicicons\icon_fighter2_counterfighter_{over,rest,selected,selectedover}.dds`, `icon_fighter4_antiair2_rest.dds`, `icon_fighter3_antiair2_rest.jpg` | `usermods\Nomads\` (kopiert aus nomads-4-loud) | Inhalt PNG mit falscher Endung; von keiner Einheit genutzt; Strategie-Icons laedt die Engine nur unter festem Pfad, unter `/mods/nomads/` also unerreichbar. `icon_fighter3_antiair2_rest` hat LOUD selbst |
+| `textures\ui\nomads\game\avatar-factory-panel\factory-panel_brd_ul copy.dds` | ebenda | Kopie mit Leerzeichen im Namen, nirgends verwendet |
+
+---
+
+## NOMADS-try_b4_ur_BI (2026-10-22)
+
+| Was | kam aus | Grund |
+|---|---|---|
+| ganzer Ordner `NOMADS-try_b4_ur_BI\` (137 Dateien, 49 MB, laut Git unveraendert) | `usermods\NOMADS-try_b4_ur_BI\` | Colins Mod "NOMAD BI men" (uid `2100thousendmilliontest31`), Ergaenzung zu UEF_trans_men fuer Nomads. Paul: nach `_Altlasten` |
+| `mod_info.lua` -> `mod_info.lua.archiv` | dort | Mod-Manager (siehe Regel oben) |
+
+Enthielt u. a. CNB1202 Eckard (Improved Hydrocarbon Power Plant) und CNB1302 Guenter (Advanced Hydrocarbon
+Power Plant) - Ziel der in `Nomads\hook\lua\hotbuild\upgradetab.lua` ausgelassenen Kette xnb1102 -> cnb1202.
+Weitere Blueprints ohne Namen: CAS0401, SAB4401, SEA0106, SEA0401, SSB3301, WAB0201, XEA0002 (ungeprueft, ob
+Aenderungen an LOUD-Einheiten). Mod-Icon `icon\modicon.bmp` ist ein JPEG (Scherzbild-Verdacht, nicht angesehen).

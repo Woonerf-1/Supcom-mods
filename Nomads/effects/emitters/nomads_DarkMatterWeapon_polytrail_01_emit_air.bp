@@ -1,0 +1,13 @@
+TrailEmitterBlueprint {
+    BlueprintId = 'nomads_blackbolt_polytrail_01',
+    Lifetime = -1.00,
+    TrailLength = 1.3,
+    Size = 0.15,
+    SortOrder = 0,
+    BlendMode = 3,
+    TextureRepeatRate = 7,
+    LODCutoff = 160,
+    RampTexture = [[/mods/nomads/textures/particles/blackbolt_munition_01.dds]],
+    RepeatTexture = [[/mods/nomads/textures/particles/ramp_bullets.dds]],
+    RecolourByArmyColour = true, --Summon the most unholy code seen by man in order to get past engine limitations and break through to the realm of the shaders.
+}

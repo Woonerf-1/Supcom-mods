@@ -1,0 +1,14 @@
+MeshBlueprint {
+    IconFadeInZoom = 130,
+    LODs = {
+        {
+            MeshName = '/mods/nomads/units/XNO2302/XNO2302_lod0.scm',
+            AlbedoName = '/mods/nomads/units/XNO2302/XNO2302_albedo.dds',
+            NormalsName = '/mods/nomads/units/XNO2302/XNO2302_normalsTS.dds',
+            SpecularName = '/mods/nomads/units/XNO2302/XNO2302_specteam.dds',
+            LookupName = '/mods/nomads/textures/effects/NomadsBuildNoiseLookup.dds',
+            ShaderName = 'NomadsBuild',
+            LODCutoff = 300,
+        },
+    },
+}

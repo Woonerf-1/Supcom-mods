@@ -1,0 +1,483 @@
+UnitBlueprint{
+    Description = "<LOC XNA0104_desc>Engineering Air Transport",
+    AI = {
+        BeaconName = "UEB5102",
+        TargetBones = {
+            "INA2001",
+            "Front",
+            "Rear",
+        },
+    },
+    Air = {
+        AutoLandTime = 2,
+        BankFactor = 0.1,
+        BankForward = true,
+        CanFly = true,
+        CirclingDirChange = false,
+        CirclingElevationChangeRatio = 0.25,
+        CirclingFlightChangeFrequency = 15,
+        CirclingRadiusChangeMaxRatio = 0.4,
+        CirclingRadiusChangeMinRatio = 0.3,
+        CirclingTurnMult = 1,
+        KLift = 5,
+        KLiftDamping = 5,
+        KMove = 2,
+        KMoveDamping = 2,
+        KRoll = 1,
+        KRollDamping = 1,
+        KTurn = 2,
+        KTurnDamping = 2,
+        LiftFactor = 8,
+        MaxAirspeed = 13.5,
+        StartTurnDistance = 10,
+        TransportHoverHeight = 4,
+    },
+    Audio = {
+        AirUnitWaterImpact = Sound { Bank = 'Explosions',      Cue = 'Expl_Water_Lrg_01',      LodCutoff = 'UnitMove_LodCutoff' },
+        AmbientMove        = Sound { Bank = 'UEA',             Cue = 'UEA0104_Move_Loop',      LodCutoff = 'UnitMove_LodCutoff' },
+        DeathExplosion     = Sound { Bank = 'UEADestroy',      Cue = 'UEA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        Destroyed          = Sound { Bank = 'UEADestroy',      Cue = 'UEA_Destroy_Lrg',        LodCutoff = 'UnitMove_LodCutoff' },
+        Killed             = Sound { Bank = 'UEADestroy',      Cue = 'UEA_Destroy_Air_Killed', LodCutoff = 'UnitMove_LodCutoff' },
+        Landing            = Sound { Bank = 'UEA',             Cue = 'UEA0104_Move_Land',      LodCutoff = 'UnitMove_LodCutoff' },
+        StartMove          = Sound { Bank = 'UEA',             Cue = 'UEA0104_Move_Start',     LodCutoff = 'UnitMove_LodCutoff' },
+        StopMove           = Sound { Bank = 'UEA',             Cue = 'UEA0104_Move_Stop',      LodCutoff = 'UnitMove_LodCutoff' },
+        Thruster           = Sound { Bank = 'UEA',             Cue = 'UEA0104_Move_Thruster',  LodCutoff = 'UnitMove_LodCutoff' },
+        UISelection        = Sound { Bank = 'NomadsInterface', Cue = 'Nomads_Select_Air',      LodCutoff = 'UnitMove_LodCutoff' },
+    },
+    AverageDensity = 1,
+    Buffs = {
+        Regen = {
+            Level1 = 2,
+            Level2 = 4,
+            Level3 = 6,
+            Level4 = 8,
+            Level5 = 10,
+        },
+    },
+    BuildIconSortPriority = 40,
+    Categories = {
+        "AIR",
+        "CANNOTUSEAIRSTAGING",
+        "CANTRANSPORTCOMMANDER",
+        "MOBILE",
+        "CONSTRUCTION",
+        "ENGINEER",
+        "CAPTURE",
+        "NOMADS",
+        "RECLAIMABLE",
+        "SELECTABLE",
+        "SNIPEMODE",
+        "TECH2",
+        "RECLAIM",
+        "REPAIR",
+        "TRANSPORTATION",
+        "TRANSPORTBUILTBYTIER2FACTORY",
+        "TRANSPORTBUILTBYTIER3FACTORY",
+        "TRANSPORTFOCUS",
+        "VISIBLETORECON",
+        "SHOWQUEUE",
+        "PATROLHELPER",
+    },
+    Defense = {
+        AirThreatLevel = 1.5,
+        ArmorType = "Light",
+        EconomyThreatLevel = 0,
+        Health = 1500,
+        MaxHealth = 1500,
+        RegenRate = 2,
+        SubThreatLevel = 0,
+        SurfaceThreatLevel = 8,
+    },
+    Display = {
+        Abilities = { "<LOC ability_transport>Transport" },
+
+        
+        BuildEffect = {
+            ExtendsFront = 0,
+            ExtendsRear = 0,
+        },
+        Mesh = {
+            IconFadeInZoom = 130,
+            LODs = {
+                {
+                    LODCutoff = 500,
+                    ShaderName = "Aeon",
+                },
+            },
+        },
+        PlaceholderMeshName = "UXB0000",
+        SpawnRandomRotation = false,
+        UniformScale = 0.7,
+    },
+    Economy = {
+        BuildCostEnergy = 12000,
+        BuildCostMass = 400,
+        BuildTime = 2400,
+        BuildRate = 10,
+        MaxBuildDistance = 5,
+        BuildableCategory = {
+            'BUILTBYCOMMANDER NOMADS',
+            'BUILTBYTIER2COMMANDER NOMADS',
+            'BUILTBYTIER3COMMANDER NOMADS',
+			'BUILTBYTIER4COMMANDER NOMADS',
+        },
+    },
+
+    Enhancements = {
+
+        Slots = {
+            Back = {
+                name = '<LOC _Back>',
+                },
+                },
+
+        T1Engineering = {
+		
+            BuildCostEnergy = 3000,
+            BuildCostMass = 200,
+            BuildTime = 300,
+			
+            BuildableCategoryAdds = 'BUILTBYTIER1ENGINEER NOMADS',
+			
+            Icon = 'zes',
+
+			NewBuildRate = 15,
+            NewHealth = 1000,
+            NewRegenRate = 5,
+
+            Name = 'Tech 1 Engineering Suite',
+
+            ShowBones = { 'Left_Upgrade' },
+			
+            Slot = 'Back',
+			
+            UpgradeUnitAmbientBones = { 'XNA0104' },
+			
+            UpgradeEffectBones = { 'Left_Turret', 'Left_Upgrade' },
+        },
+
+        T1EngineeringRemove = {
+		
+            BuildCostEnergy = 1,
+            BuildCostMass = 1,
+            BuildTime = 0.1,
+			
+            HideBones = { 'Left_Upgrade' },
+			
+            Icon = 'zes',
+			
+            Name = '<LOC enhancements_0001>Remove Engineering Suite',
+			
+            Prerequisite = 'T1Engineering',
+			
+            RemoveEnhancements = {
+                'T1Engineering',
+                'T1EngineeringRemove',
+            },
+			
+            Slot = 'Back',
+        },
+
+        T2Engineering = {
+		
+            BuildCostEnergy = 5000,
+            BuildCostMass = 300,
+            BuildTime = 500,
+
+            NewBuildRate = 20,
+            NewHealth = 2000,
+            NewRegenRate = 5,
+			
+            BuildableCategoryAdds = 'BUILTBYTIER2COMMANDER NOMADS',
+			
+            Icon = 'aes',
+			
+            Name = '<LOC enhancements_0000>Tech 2 Engineering Suite',
+
+            ShowBones = { 'Left_Upgrade' },
+			
+            Slot = 'Back',
+
+			Prerequisite = 'T1Engineering',
+
+            UpgradeUnitAmbientBones = { 'XNA0104' },
+			
+            UpgradeEffectBones = { 'Left_Turret', 'Left_Upgrade' },
+        },
+		
+        T2EngineeringRemove = {
+		
+            BuildCostEnergy = 1,
+            BuildCostMass = 1,
+            BuildTime = 0.1,
+			
+            HideBones = { 'Left_Upgrade' },
+			
+            Icon = 'aes',
+			
+            Name = '<LOC enhancements_0001>Remove Advanced Engineering Suite',
+			
+            Prerequisite = 'T2Engineering',
+			
+            RemoveEnhancements = {
+                'T1Engineering',
+                'T2Engineering',
+                'T2EngineeringRemove',
+            },
+			
+            Slot = 'Back',
+        },
+
+        T3Engineering = {
+		
+            BuildCostEnergy = 12000,
+            BuildCostMass = 750,
+            BuildTime = 1200,
+
+            NewBuildRate = 23,
+            NewHealth = 4000,
+            NewRegenRate = 5,
+			
+            BuildableCategoryAdds = 'BUILTBYTIER3COMMANDER NOMADS',
+			
+            Icon = 'ees',
+			
+            Name = '<LOC enhancements_0018>Tech 3 Engineering Suite',
+			
+            Prerequisite = 'T2Engineering',
+			
+            Slot = 'Back',
+			
+            ShowBones = { 'Left_Upgrade' },
+			
+            UpgradeUnitAmbientBones = { 'XNA0104' },
+			
+            UpgradeEffectBones = {
+                'Left_Turret',
+                'Left_Upgrade',
+            },
+        },
+		
+        T3EngineeringRemove = {
+
+            BuildCostEnergy = 1,
+            BuildCostMass = 1,
+            BuildTime = 0.1,
+
+            Icon = 'ees',
+
+            Name = '<LOC enhancements_0019>Remove Engineering Suites',
+
+            Prerequisite = 'T3Engineering',
+
+            HideBones = { 'Left_Upgrade' },
+
+            RemoveEnhancements = {'T2Engineering','T1Engineering','T3Engineering','T3EngineeringRemove'},
+
+            Slot = 'Back',
+        },
+
+        T4Engineering = {
+		
+            BuildCostEnergy = 24000,
+            BuildCostMass = 1800,
+            BuildTime = 2400,
+
+            NewBuildRate = 30,
+            NewHealth = 8500,
+            NewRegenRate = 5,
+			
+            BuildableCategoryAdds = 'BUILTBYTIER4COMMANDER NOMADS',
+			
+            Icon = 'exles3',
+			
+            Name = 'Tech 4 Engineering Suite',
+
+            NewRegenRate = 50,
+			
+            Prerequisite = 'T3Engineering',
+			
+            Slot = 'Back',
+			
+            ShowBones = { 'Left_Upgrade' },
+			
+            UpgradeUnitAmbientBones = { 'XNA0104' },
+			
+            UpgradeEffectBones = {'Left_Turret','Left_Upgrade'},
+        },
+		
+        T4EngineeringRemove = {
+
+            BuildCostEnergy = 1,
+            BuildCostMass = 1,
+            BuildTime = 0.1,
+
+            Icon = 'ees',
+
+            Name = '<LOC enhancements_0019>Remove Engineering Suites',
+
+            Prerequisite = 'T4Engineering',
+
+            HideBones = { 'Left_Upgrade' },
+
+            RemoveEnhancements = {'T1Engineering','T2Engineering','T3Engineering','T3EngineeringRemove','T4Engineering','T4EngineeringRemove'},
+
+            Slot = 'Back',
+        },
+
+        AltEngineeringBoost = {
+
+        BuildCostEnergy = 20000,
+        BuildCostMass = 1200,
+        BuildTime = 1800,
+
+        NewBuildRate = 100, -- higher than T3/T4 baseline if chosen instead
+        NewHealth = 3000,
+        NewRegenRate = 10,
+
+        Icon = 'dsu',
+
+        Name = 'High-Speed Engineering Package',
+
+        Slot = 'Back',
+
+        ShowBones = { 'Left_Upgrade' },
+
+        UpgradeUnitAmbientBones = { 'XNA0104' },
+
+        UpgradeEffectBones = { 'Left_Turret','Left_Upgrade' },
+        },
+
+        AltEngineeringBoostRemove = {
+
+        BuildCostEnergy = 1,
+        BuildCostMass = 1,
+        BuildTime = 0.1,
+
+        Icon = 'dsu',
+
+        Name = 'Remove High-Speed Engineering Package',
+
+        Prerequisite = 'AltEngineeringBoost',
+
+        HideBones = { 'Left_Upgrade' },
+
+        RemoveEnhancements = {
+            'AltEngineeringBoost',
+            'AltEngineeringBoostRemove'
+        },
+
+        Slot = 'Back',
+        },
+    },
+
+    Footprint = {
+        MaxSlope = 0.25,
+        SizeX = 1,
+        SizeZ = 6,
+    },
+    General = {
+        BuildBones = {
+            AimBone = 'Front',
+            BuildEffectBones = {'Front'},
+            PitchBone = 'Front',
+            YawBone = 'INA2001',
+        },
+        Category = "Transport",
+        Classification = "RULEUC_MilitaryAircraft",
+        CommandCaps = {
+            RULEUCC_Attack = false,
+            RULEUCC_Capture = true,
+            RULEUCC_Ferry = true,
+            RULEUCC_Guard = true,
+            RULEUCC_Move = true,
+            RULEUCC_Nuke = false,
+            RULEUCC_Patrol = true,
+            RULEUCC_Reclaim = true,
+            RULEUCC_Repair = true,
+            RULEUCC_RetaliateToggle = false,
+            RULEUCC_Stop = true,
+            RULEUCC_Transport = true,
+        },
+        FactionName = "Nomads",
+        Icon = "air",
+        SelectionPriority = 2,
+        TechLevel = "RULEUTL_Advanced",
+        UnitName = "<LOC XNA0104_name>Yoinker",
+        UnitWeight = 1,
+    },
+    Intel = { VisionRadius = 32 },
+    Interface = { HelpText = "<LOC XNA0104_help> Engineering Air Transport" },
+    LifeBarHeight = 0.075,
+    LifeBarOffset = 3,
+    LifeBarSize = 2,
+    Physics = {
+        BuildOnLayerCaps = {
+            LAYER_Air = true,
+            LAYER_Land = true,
+            LAYER_Orbit = false,
+            LAYER_Seabed = false,
+            LAYER_Sub = false,
+            LAYER_Water = false,
+        },
+        Elevation = 9,
+        MaxSpeed = 0.5,
+        MeshExtentsX = 2,
+        MeshExtentsY = 1,
+        MeshExtentsZ = 8.5,
+        MotionType = "RULEUMT_Air",
+    },
+    SelectionSizeX = 1.8,
+    SelectionSizeZ = 5.8,
+    SelectionThickness = 0.19,
+    SizeX = 2.25,
+    SizeXContracted = 2.25,
+    SizeY = 2.1,
+    SizeYContracted = 2.1,
+    SizeZ = 6,
+    SizeZContracted = 3.6,
+    StrategicIconName = "icon_gunship2_engineer",
+    StrategicIconSortPriority = 65,
+    Transport = {
+        AirClass = true,
+        Class2AttachSize = 2,
+        Class3AttachSize = 4,
+        TransportClass = 10,
+    },
+    UseOOBTestZoom = 200,
+    Veteran = {
+        Level1 = 3,
+        Level2 = 6,
+        Level3 = 9,
+        Level4 = 12,
+        Level5 = 15,
+    },
+    Weapon = {
+        {
+            AboveWaterTargetsOnly = true,
+            Damage = 250,
+            DamageFriendly = true,
+            DamageRadius = 1,
+            DamageType = "Normal",
+            DisplayName = "Air Crash",
+            DummyWeapon = true,
+            FiringTolerance = 2,
+            Label = "DeathImpact",
+            WeaponCategory = "Death",
+        },
+    },
+    Wreckage = {
+        Blueprint = "/props/DefaultWreckage/DefaultWreckage_prop.bp",
+        EnergyMult = 0,
+        HealthMult = 0.9,
+        MassMult = 0.9,
+        ReclaimTimeMultiplier = 1,
+        WreckageLayers = {
+            Air = false,
+            Land = true,
+            Seabed = true,
+            Sub = true,
+            Water = true,
+        },
+    },
+}

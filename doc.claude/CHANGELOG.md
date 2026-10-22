@@ -1,3 +1,86 @@
+## 2026-10-22 (6) - Archiv, Mod-Icon, Hydrocarbon-Kraftwerke der Nomads
+
+- **Archiviert (Paul):** `nomads-4-loud` und `NOMADS-try_b4_ur_BI` nach `_Altlasten` (mod_info -> `.archiv`); dazu 7
+  tote/fehlbenannte Dateien aus `Nomads` (`_Altlasten\README.md`). `nomads-4-loud\icons\nomads.bmp` (privates Foto)
+  in den Papierkorb.
+- **Nomads-Mod-Icon:** `Nomads.dds` neu aus dem Fraktions-Logo (Sechseck-Abzeichen, 64x64 A8R8G8B8).
+- **Hydrocarbon:** CNB1202 Eckard / CNB1302 Guenter in `Nomads`, nur aktiv mit ImprovedHydrocarbonPowerPlants
+  (`hook\lua\system\Blueprints.lua`, Wrapper um RegisterAllBlueprints) - `mods\Nomads.md` 4.3.
+- **Sprueche:** Nummernfolge bleibt abhaengig von der Fraktionsreihenfolge (Paul: so lassen).
+- **Getestet:** nein.
+
+---
+## 2026-10-22 (5) - Nomads: Mehr-Fraktionen-Logik nach Custom Factions; Sprueche ohne feste Nummern
+
+- **Grundsatz (Paul):** Was mehrere Fraktionen betrifft, gehoert nach Custom Factions; Nomads liefert nur Daten.
+- **Uebergabe:** `doc.claude\uebergabe\CustomFactions\` (README mit Feld-Vertrag und Belegen) - neben
+  `construction.lua` jetzt `hotbuild\hotbuild.lua`, `BuildingTemplates.lua`, `aibrain.lua` (Vorab-Bau),
+  `basetemplates.lua` + 4 `AI\AIBuilders\Loud_*_Templates.lua` (Layout-Rueckfall), `tarmacs.lua`,
+  `ui\game\taunt.lua` + `AI\sorianutilities.lua`, `EffectUtilities.lua`, `ui\dialogs\createunit.lua`,
+  `editor\MiscBuildConditions.lua` (optional).
+- **Nomads:** die entsprechenden Hooks entfernt (nie committet); neue Felder `LayoutFallback`, `TauntsFile`,
+  `AdjacencyBeam` in `lua\NomadsFaction.lua`; Sprueche in `lua\NomadsTaunts.lua`.
+- **Sprueche:** statt fest 99-116 fortlaufend ab 65 je Fraktion; KI-Liste am Fraktionsindex statt `table.cat`.
+  UTF-8-BOM mitten im alten taunt-Hook entfallen.
+- **Getestet:** nein. Nomads braucht den CF-Stand mit diesen Hooks.
+
+---
+## 2026-10-22 (4) - Nomads Phase 1: Assets kopiert; Vorfall Schreiben ausserhalb usermods
+
+- **Plan:** `mods\Nomads_Plan.md`, freigegeben mit Entscheidungen (Vorlagen-Umrechnung in Custom
+  Factions, alles auf einmal, keine Zwischentests).
+- **Belegt:** Mod-Sounds bindet LOUD automatisch aus `<mod>\sounds` an `/sounds`
+  (`LOUD\bin\CommonDataPath.lua` Z. 124-147). Texte laedt LOUD nur aus `/loc/<sprache>/strings_db.lua`
+  (`lua/system/Localization.lua` Z. 18-45) - die Nomads-Textdatei wird nicht geladen; 23 Schluessel
+  ohne Ersatztext, viele Hilfetexte nur dort. Loesung als fraktionsneutrale Ergaenzung (Plan).
+- **Kopiert:** units, projectiles, effects, env, meshes, textures, sounds, loc, lua aus nomads-4-loud
+  nach `usermods\Nomads\` (3167 Dateien, 380 MB; ohne `desktop.ini`, ohne Zufalls-Icon).
+- **VORFALL:** Der erste Kopierlauf schrieb 3170 Dateien nach `$FA\units\units\`, `$FA\lua\lua\` usw.
+  (ausserhalb `usermods`, Regel 1). Ursache: PowerShell-Variable `$d` (Schleife) ueberschrieb `$D`
+  (Ziel). Sofort entfernt - nur Ordner, die in diesem Lauf neu entstanden und dateigleich mit der
+  Quelle waren; `$FA\sounds` bestand vorher, dort nur der neue Unterordner `sounds\sounds` entfernt
+  (160 Originaleintraege unberuehrt). Kontrolle danach: nichts Neues unter `$FA` ausser `LOUD\usermods`.
+  Neuer Lauf mit Ziel-Pruefung (`StartsWith(usermods\Nomads)`, sonst Abbruch).
+- **Getestet:** nein (Pfade noch nicht umgeschrieben - Phase 2).
+
+---
+## 2026-10-22 (3) - Nomads: Spiel-Hook auf factions.lua fuer den Ladebildschirm
+
+- **Was (Paul):** `Nomads\hook\lua\factions.lua`, gleicher Inhalt wie der Front-End-Hook. Der
+  Ladebildschirm laeuft im Sitzungs-State und sieht die Front-End-Hooks nicht (Uebergabe 3a);
+  der Nomads-Ladefilm erscheint, wenn Nomads die `LoadingFaction` ist und der Mod in der Partie
+  aktiv ist.
+- **Bekannt:** Nomads ist dem Spiel jetzt bekannt, hat aber noch keine Einheiten - nicht waehlen.
+  `construction.lua` Z. 2429/2496 prueft auch die Kategorie `NOMADS` - ungeprueft (siehe `mods\Nomads.md`).
+- **Wo:** neu `Nomads\hook\lua\factions.lua`; `mods\Nomads.md`
+- **Getestet:** nein
+
+---
+## 2026-10-22 (2) - Nomads: Front-End und Lobby
+
+- **Was (Paul):** Fraktion Nomads fuer Hauptmenue/Lobby nach der Uebergabe "Custom Factions":
+  `frontend_hookdir`, Fraktionseintrag, Hook auf `factions.lua`, KI-Namen, Lobby-Tooltip, drei
+  Fraktions-Icons. Abhaengigkeit `requires = { 'custom-factions' }` (uid vorlaeufig, Datei
+  entsteht noch); kein `conflicts` gegen nomads-4-loud (Paul).
+- **Befunde:** LOUD liest `lua\CustomFactions\*.lua`, `PreBuildUnits` und die KI-Vorlagenfelder
+  nicht (FAF-Mechanik; Uebergabe 3.5 widerlegt). Der Hauptmenue-Film der Quelle ist in LOUD
+  wirkungslos - offen. Ohne `ainames.nomads` bricht die Lobby bei KI-Nomaden ab.
+- **Wo:** `Nomads\mod_info.lua`, neu `Nomads\lua\NomadsFaction.lua`,
+  `Nomads\hook_frontend\lua\{factions,ui\lobby\aiNames,ui\help\tooltips}.lua`,
+  `Nomads\textures\ui\common\...\nomads_ico.dds` (3); `mods\Nomads.md`
+- **Nachtrag:** Ladebildschirm `nomads_load.sfd` (24 MB, Kopie) nach `Nomads\movies\`,
+  `loadingMovie` absolut darauf (LOUD nimmt den Pfad direkt, `gamemain.lua` Z. 447-455). Kein
+  Hauptmenue-Film (Paul: der Film ist der Ladebildschirm).
+- **Getestet:** nicht (Custom Factions fehlt). nomads-4-loud laut Git unveraendert.
+
+---
+## 2026-10-22 (1) - Geruest fuer neuen Mod Nomads
+
+- **Was (Paul):** Neuaufbau der Nomads-Fraktion in eigenem Mod `Nomads`; `nomads-4-loud` bleibt
+  unveraendert als Quelle. Icon: Fraktions-Icon der Nomads (Kopie). Inhalt folgt.
+- **Wo:** neu `usermods\Nomads\` (`mod_info.lua`, `Nomads.dds`), `mods\Nomads.md`, `UEBERGABE_CLAUDE_CODE.md`
+
+---
 ## 2026-10-21 (1) - Neuer Mod AdjacencyRebalance, aus nomads-4-loud herausgeloest
 
 - **Was (Paul):** Die staerkeren Nachbarschaftsboni aus `nomads-4-loud` (Energiespeicher T1-T3,
