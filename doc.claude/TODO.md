@@ -199,6 +199,8 @@ _Nichts offen._
       XNB9002, XNC0003, XNL0301) - Liste `mods\Nomads.md`.
 - [ ] **Vermischung Fraktions-Mods / Inhalts-Mods besprechen** (Paul): Nomads kennt jetzt die IDs
       beb1202/beb1302 aus ImprovedHydrocarbonPowerPlants (`mods\Nomads.md` 7). Generisch, Bruecken-Mods oder so lassen?
+- [ ] **XNO2302 Deadline Bau-Effekt** mit LOUD-Shader `NomadBuild` (nur niedrige/mittlere Qualitaet in
+      `effects/mesh.fx`) - im Testlauf auch bei hoher Shader-Qualitaet ansehen (`mods\Nomads.md` 8).
 - [ ] **Ungeprueft:** `shadowdir` fuegt neue Pfade hinzu (Tasks, Strategie-Icons; `mods\Nomads.md` 6) - im Testlauf.
 - [ ] **`particle.fx` der Quelle** nicht uebernommen (globaler Shader, Teamfarben-Trick) - pruefen, ob Nomads-Effekte
       ohne ihn falsch aussehen (`mods\Nomads.md` 8).

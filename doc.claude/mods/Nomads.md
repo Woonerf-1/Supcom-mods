@@ -175,6 +175,13 @@ Jeder Hook gegen den aktuellen LOUD-Stand (`LOUD\gamedata\lua.scd`) geprueft; Ko
 - ASCII, Klammer- und Blockbilanz aller neuen und geaenderten Lua-Dateien geprueft.
 - `nomads-4-loud` laut Git unveraendert (3327 Dateien) und dann archiviert.
 
+**Shader-Namen (Paul 2026-10-22, Tippfehler bei XNO2302 Deadline):** LOUDs `effects.scd`, `effects/mesh.fx` fuehrt
+die Nomads-Shader ohne "s" (abstractTechnique `NomadBuild`, `NomadUnit`, `NomadPowerArmor`, `NomadPhaseShield`,
+`ShieldNomad` ...); FAF schreibt `NomadsBuild` usw. Einziger Verweis im Mod war `units\XNO2302\XNO2302_BuildMesh.bp`
+(`NomadsBuild` -> `NomadBuild`). Dazu `BuildMeshBlueprint` in `XNO2302_unit.bp` auf die Mesh-Id, die LOUD vergibt
+(klein, ohne `.bp`: `/mods/nomads/units/xno2302/xno2302_buildmesh`, `Blueprints.lua` Z. 124-132, 377-380).
+Ungeprueft: LOUDs `NomadBuild` gibt es nur in niedriger und mittlerer Qualitaet - Verhalten bei hoher Shader-Qualitaet.
+
 **Offen aus der Quelle:**
 - `effects\particle.fx`: globaler Partikel-Shader mit Teamfarben-Trick; nicht uebernommen (wuerde LOUDs Shader fuer
   alle Fraktionen ersetzen). Folge: Nomads-Effekte, die Teamfarbe erwarten, erscheinen ohne (ungeprueft).

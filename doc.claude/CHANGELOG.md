@@ -1,3 +1,12 @@
+## 2026-10-22 (7) - Nomads: Shader-Name bei XNO2302 Deadline
+
+- **Was (Paul):** `units\XNO2302\XNO2302_BuildMesh.bp` `ShaderName` `NomadsBuild` (FAF) -> `NomadBuild` (LOUD,
+  `effects.scd` `effects/mesh.fx`, abstractTechnique). `XNO2302_unit.bp` `BuildMeshBlueprint` auf die von LOUD
+  vergebene Mesh-Id (klein, ohne `.bp`). Weitere FAF-Shader-Namen im Mod: keine.
+- **Getestet:** nein. Pruefen: Bau-Effekt der Deadline; bei hoher Shader-Qualitaet (LOUD hat `NomadBuild` nur
+  niedrig/mittel).
+
+---
 ## 2026-10-22 (6) - Archiv, Mod-Icon, Hydrocarbon-Kraftwerke der Nomads
 
 - **Archiviert (Paul):** `nomads-4-loud` und `NOMADS-try_b4_ur_BI` nach `_Altlasten` (mod_info -> `.archiv`); dazu 7

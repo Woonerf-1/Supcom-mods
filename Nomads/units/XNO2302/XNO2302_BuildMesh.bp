@@ -7,7 +7,7 @@ MeshBlueprint {
             NormalsName = '/mods/nomads/units/XNO2302/XNO2302_normalsTS.dds',
             SpecularName = '/mods/nomads/units/XNO2302/XNO2302_specteam.dds',
             LookupName = '/mods/nomads/textures/effects/NomadsBuildNoiseLookup.dds',
-            ShaderName = 'NomadsBuild',
+            ShaderName = 'NomadBuild',     -- LOUD: abstractTechnique "NomadBuild" (effects.scd, mesh.fx); "NomadsBuild" ist der FAF-Name
             LODCutoff = 300,
         },
     },

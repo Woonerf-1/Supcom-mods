@@ -55,7 +55,7 @@ UnitBlueprint{
         SurfaceThreatLevel = 0,
     },
     Display = {
-        BuildMeshBlueprint = "/mods/nomads/units/XNO2302/XNO2302_BuildMesh.bp",
+        BuildMeshBlueprint = "/mods/nomads/units/xno2302/xno2302_buildmesh",   -- Mesh-Id wie LOUD sie vergibt (Blueprints.lua SetLongId Z. 124-132)
         Mesh = {
             IconFadeInZoom = 130,
             LODs = {
