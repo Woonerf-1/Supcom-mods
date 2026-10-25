@@ -86,7 +86,9 @@ muss diese Einheiten erst erforschen.
 
 ### DynamicGameplay (`mods\DynamicGameplay.md`)
 
-_Nichts offen._
+- [ ] **Panopticon (SEB3404): zeigt das Omni-Feld allein getauchte U-Boote?** Engine-Verhalten, ungeprueft.
+      Ab `Xband_Dish` werden sie per Suchlauf mit `WaterVision` sichtbar (`units\SEB3404\SEB3404_Script.md`).
+      Im Spiel: U-Boot im Omni-Radius vor und nach `Xband_Dish`.
 
 ### SquareShields (`mods\SquareShields.md`)
 

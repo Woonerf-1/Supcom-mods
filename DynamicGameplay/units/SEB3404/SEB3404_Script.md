@@ -78,6 +78,11 @@ Grundwerte aus dem `Intel`-Block des Blueprints, Multiplikatoren aus LOUDs
 
 **Kein Sonar.** Die Sicht bleibt bei 16 - die Buffs fassen nur `RadarRadius`, `OmniRadius`
 und `EnergyMaintenance` an. Weitere Werte: `SpyBlipRadius = 2`, `ReactivateTime = 0`.
+Ob das Omni-Feld allein getauchte Einheiten zeigt, entscheidet die Engine - ungeprueft.
+**Aber:** ab `Xband_Dish` markiert der Suchlauf jede feindliche Einheit im Omni-Radius ohne
+Ebenen-Filter (auch U-Boote, nicht getarnte), und der Marker hat `Vision` **und**
+`WaterVision` (`AttachVisEntityToTargetUnit`, Z. 219-234). Im Omni-Radius werden getauchte
+Einheiten dann also voll sichtbar - kein Sonar-Blip, sondern echte Sicht.
 
 Kosten: `sre`-Stufen je 105 147 Energie / 10 515 Masse, `sresre`-Stufen je
 157 720 / 15 772. `Xband_Dish` aendert keine Radien.
