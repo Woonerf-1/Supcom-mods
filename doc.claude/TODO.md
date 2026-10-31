@@ -210,6 +210,15 @@ _Nichts offen._
       Originals nicht; die Custom-Factions-Lobby (`factionBmps`) und die neuen CF-Hooks (taunt, sorianutilities,
       hotbuild, construction) setzen das Gegenteil voraus. Im Testlauf klaeren und eine Fassung streichen.
 
+### EnhancedPauseBehavior (`mods\EnhancedPauseBehavior.md`)
+
+- [ ] **TESTLAUF** (Paul, 2 Spieler) - Anleitung in `mods\EnhancedPauseBehavior.md` Abschnitt 7.
+- [ ] **Ungeprueft (exe):** `SessionSendChatMessage` wird waehrend der Pause zugestellt (FAF-Doku: getrennt von
+      der Simulation).
+- [ ] **Ungeprueft (exe):** ein Spieler kann die Pause eines anderen fortsetzen (abgeleitet aus FAF `pause.lua`).
+- [ ] **Ungeprueft (exe):** ob der Absender seine eigene Session-Nachricht zurueckbekommt (Mod verkraftet beides).
+- [ ] **Ungeprueft (SupComNet):** ob im Mehrspieler `gamemain.OnResume` feuert (Rueckfall ueber `SessionIsPaused()`).
+
 ### Mod-Icons (Paul 2026-10-22: "im Vorbeigehen")
 
 - [ ] `advanced_rebalence` und `commanders` zeigen mit `icon` auf das archivierte

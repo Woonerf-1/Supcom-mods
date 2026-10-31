@@ -3,7 +3,7 @@
 --
 -- Ordner:   LOUD\usermods\EnhancedPauseBehavior\
 -- VFS-Pfad: /mods/enhancedpausebehavior/
--- Doku:     EnhancedPauseBehavior.md (neben dieser Datei)
+-- Doku:     doc.claude\mods\EnhancedPauseBehavior.md
 --
 -- Fortsetzen nach einer Pause nur mit Bereit-Abfrage aller menschlichen
 -- Spieler und anschliessendem Countdown. Nur UI-Lua, keine Sim-Dateien.

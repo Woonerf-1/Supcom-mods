@@ -3,7 +3,7 @@
     Datei:    /mods/enhancedpausebehavior/modules/readycheck.lua
     Zweck:    Bereit-Abfrage und Countdown vor dem Fortsetzen einer Pause
     Abgleich: nur SessionSendChatMessage (ausserhalb der Simulation),
-              Ablauf und Begruendung in EnhancedPauseBehavior.md
+              Ablauf und Begruendung in doc.claude\mods\EnhancedPauseBehavior.md
     Stand:    2026-10-31
 ]]
 

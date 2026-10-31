@@ -196,3 +196,13 @@ Vollständige Analyse: `11_DATAPATH.md` §2.
    inhaltlich korrekt.
 5. **`nomads-4-loud` ist nach jedem LOUD-Update erneut zu installieren** (`.bat` ausführen).
    Kein Mangel des Mods, sondern Folge davon, dass `LOUD\bin\` vom LOUD-Team gepflegt wird.
+
+---
+
+## Vergebene uids neuer Mods
+
+Nach `07_KONVENTIONEN.md` Abschnitt 2. Neue Eintraege werden angehaengt.
+
+| Ordner | Name | uid | Angelegt | Doku |
+|---|---|---|---|---|
+| `EnhancedPauseBehavior` | Enhanced Pause Behavior | `E9410707-B979-462F-B9E8-3DDB886DB31B` | 2026-10-31 | `mods\EnhancedPauseBehavior.md` |

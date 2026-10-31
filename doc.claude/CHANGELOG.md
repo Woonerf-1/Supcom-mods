@@ -1,3 +1,16 @@
+## 2026-10-31 - EnhancedPauseBehavior: neu
+
+- **Was:** neuer Mod `EnhancedPauseBehavior` (uid `E9410707-B979-462F-B9E8-3DDB886DB31B`). Mehrspieler: Fortsetzen
+  nach einer Pause erst, wenn alle menschlichen Spieler bereit sind, dann Countdown 5 s. Nutzt LOUDs vorhandenen
+  Pause-Reiter; Hook auf `/lua/ui/game/tabs.lua`, Huellen um `SessionResume`/`SessionRequestPause`.
+- **Abgleich:** nur `SessionSendChatMessage` (ausserhalb der Simulation, kein Desync-Risiko). `ui_only = false`,
+  damit die Lobby den Mod fuer alle erzwingt; keine Sim-Dateien.
+- **Entscheidungen (Paul):** Countdown 5 s, kein AFK-Notausgang, Texte englisch, eigenes Pause-Icon
+  (`enhancedpausebehavior.png`, 256x256).
+- **Doku:** `mods\EnhancedPauseBehavior.md`; uid in `08_BESTANDSAUFNAHME.md`; Pruefpunkte in `TODO.md`.
+- **Getestet:** nein. Testanleitung in `mods\EnhancedPauseBehavior.md` Abschnitt 7.
+
+---
 ## 2026-10-22 (7) - Nomads: Shader-Name bei XNO2302 Deadline
 
 - **Was (Paul):** `units\XNO2302\XNO2302_BuildMesh.bp` `ShaderName` `NomadsBuild` (FAF) -> `NomadBuild` (LOUD,
