@@ -16,6 +16,7 @@ Kurzübersicht: [`tools\README.md`](tools/README.md)
 | `Expand-Gamedata.ps1` | `.scd`-Archive nach `gamedata.entpackt\` entpacken | Schreibrechte im Ziel | einige Minuten, GB-Bereich |
 | `Test-Maps.ps1` | `maps\` und `usermaps\` auf unvollständige Szenarien prüfen | nur lesend | Sekunden |
 | `scd_als_ordner_*.reg` | `.scd` im Explorer als Archiv öffnen | Registry | sofort |
+| `navysim\Run-NavySim.ps1` | Gefechtssimulation U-Boot-Gruppen (Reichweite, Torpedo-Abwehr); Modell in `navysim\README.md` | nur lesend | Sekunden bis Minuten |
 
 Aufruf jeweils aus dem `tools\`-Ordner. Falls PowerShell die Ausführung verweigert:
 
