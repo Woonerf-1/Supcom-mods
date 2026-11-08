@@ -1,10 +1,8 @@
 --[[
-    Mod:      EnhancedPauseBehavior
-    Datei:    /mods/enhancedpausebehavior/modules/readycheck.lua
-    Zweck:    Bereit-Abfrage und Countdown vor dem Fortsetzen einer Pause
-    Abgleich: nur SessionSendChatMessage (ausserhalb der Simulation),
-              Ablauf und Begruendung in doc.claude\mods\EnhancedPauseBehavior.md
-    Stand:    2026-10-31
+    Enhanced Pause Behavior - ready check and countdown before resuming a pause
+
+    Clients sync only through SessionSendChatMessage (outside the simulation),
+    so the mod cannot cause desyncs.
 ]]
 
 local UIUtil = import('/lua/ui/uiutil.lua')
@@ -166,7 +164,7 @@ local function OnRequest(from, id)
         if check.id == id then
             return
         end
-        -- Gleichzeitige Anfragen: die des niedrigsten Client-Index gilt auf allen Rechnern
+        -- simultaneous requests: the one from the lowest client index wins on every machine
         if check.phase ~= 'check' or from >= check.initiator then
             return
         end
@@ -256,7 +254,7 @@ local function Poll()
             end
         end
     end
-    -- Initiator: Fortsetzen hat nicht gegriffen (Spiel noch pausiert) - erneut anstossen
+    -- initiator: resume did not take effect (game still paused) - try again
     if check.resumeAt and SessionIsPaused() and check.age - check.resumeAt > RETRY_SECONDS then
         check.resumeAt = check.age
         originalResume()
@@ -311,7 +309,7 @@ local function OnCancelButton()
     end
 end
 
--- Pause-Knopf/-Taste waehrend Abfrage oder Countdown: eigenes Bereit zuruecknehmen
+-- pause button/key during the ready check or countdown: withdraw own ready state
 local function Halt()
     if not check then
         return
@@ -478,7 +476,7 @@ function OnChat(sender, msg)
     Handle(msg.from, msg)
 end
 
--- Vom Pause-Knopf (tabs.lua-Hook): wurde das letzte SessionResume abgefangen?
+-- used by the pause button (tabs.lua hook): was the last SessionResume intercepted?
 function ClearBlocked()
     blockedResume = false
 end

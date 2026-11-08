@@ -104,15 +104,11 @@ Beides fragt LOUD in `IsScenarioPlayable()` ab
 (`gamedata\lua\lua\ui\maputil.lua`). Fällt eine Karte durch, erscheint sie **nicht** in der
 Kartenauswahl.
 
-**Warum es das Skript braucht:** LOUDs Warnung nennt die Karte nie beim Namen.
-
-```lua
-local mapName = 'Unknown' or scenario.name      -- Z. 92 und 98
-```
-
-`'Unknown'` ist immer wahr, der `or`-Zweig greift nie — im Log steht deshalb nur
-`Map Unknown is missing a save file!`. Dokumentiert als Fundstelle **B-02** in
-[`mods\BasegameBugfixes.md`](mods/BasegameBugfixes.md).
+**Warum es das Skript gibt:** LOUDs Warnung nannte die Karte früher nie beim Namen
+(`'Unknown' or scenario.name`, Z. 92 und 98), im Log stand nur
+`Map Unknown is missing a save file!`. Seit LOUD-Commit 9e74de6c4 (Fundstelle **B-02**,
+von LOUD übernommen) steht dort der Kartenname. Das Skript bleibt nützlich, weil es alle
+Karten auf einmal prüft, ohne LOUD zu starten.
 
 **Die Fallstrick-Auflösung:** beide Ordner werden ins VFS nach `/maps/` gemountet. Ein
 Szenario in `usermaps\` kann deshalb auf eine Datei in `maps\` verweisen und umgekehrt.

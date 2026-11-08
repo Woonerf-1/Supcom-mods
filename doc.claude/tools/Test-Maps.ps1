@@ -13,13 +13,9 @@
 # WARUM: LOUD prueft beim Laden der Kartenauswahl mit
 # IsScenarioPlayable() (gamedata\lua\lua\ui\maputil.lua), ob save-Datei und
 # armies-Tabelle vorhanden sind, und wirft unvollstaendige Karten aus der Liste.
-# Die Warnung nennt die Karte aber NIE beim Namen:
-#
-#     local mapName = 'Unknown' or scenario.name      -- Z. 92 und 98
-#
-# 'Unknown' ist immer wahr, der or-Zweig greift nie. Im Log steht deshalb nur
-# "Map Unknown is missing a save file!". Dieses Skript schliesst die Luecke.
-# Siehe doc.claude\mods\BasegameBugfixes.md, Fundstelle B-02.
+# Bis LOUD-Commit 9e74de6c4 nannte die Warnung die Karte nie beim Namen
+# ("Map Unknown is missing a save file!", Fundstelle B-02, von LOUD behoben).
+# Dieses Skript prueft alle Karten auf einmal, ohne LOUD zu starten.
 #
 # Nur lesend. Aendert nichts.
 #

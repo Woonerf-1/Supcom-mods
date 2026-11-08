@@ -162,28 +162,11 @@ ueberhaupt greifen (siehe `TODO.md`, `Class()`-Frage) - und ein Eingriff in LOUD
 Wirtschaftslogik fuer **alle** Einheiten. Behelf im Spiel: genug Energiespeicher bauen,
 Faustregel **Speicherkapazitaet >= Sekundenverbrauch der Sensoranlage**.
 
-### B-02 Kartenname fehlt in der Fehlermeldung
+### B-02 - erledigt durch LOUD
 
-| | |
-|---|---|
-| **Datei** | `gamedata\lua\lua\ui\maputil.lua` Z. 92 und 98 |
-| **Quelle** | **LOUD** |
-| **Gefunden** | 2026-08-16 |
-| **Status** | **nicht behoben**, nur dokumentiert |
-
-```lua
-local mapName = 'Unknown' or scenario.name
-WARN('Map '..mapName..' is missing a save file!')
-```
-
-`'Unknown'` ist immer wahr, der `or`-Zweig greift nie. **Jede dieser Meldungen nennt die
-Karte "Unknown"** - die einzige nuetzliche Information fehlt. Steht zweimal in derselben
-Datei (`has no armies table!` und `is missing a save file!`).
-
-Richtig waere `local mapName = scenario.name or 'Unknown'`.
-
-Folge fuer uns: die zwei Warnungen im Log liessen sich nicht zuordnen. Behelf ist
-`tools\Test-Maps.ps1`.
+Kartenname in den Warnungen von `IsScenarioPlayable` (`maputil.lua`). Als PR
+LOUD-Project/Git-LOUD#168 abgegeben, vom LOUD-Team uebernommen (Commit 9e74de6c4 in
+`origin/master`, geprueft 2026-11-05). Bei uns nichts mehr zu tun.
 
 ### B-04 Fatboy bleibt unsichtbar, wenn er sehr schnell gebaut wird
 
@@ -193,7 +176,7 @@ Folge fuer uns: die zwei Warnungen im Log liessen sich nicht zuordnen. Behelf is
 | **Quelle** | **LOUD** |
 | **Gefunden** | 2026-10-14, Fatboy im Testlauf `T4UnitAdditions` (Paul) |
 | **Betrifft** | nur `UEL0401` - einzige Einheit mit `TMobileFactoryUnit` (`WEL0401` importiert unter diesem Namen `MobileUnit`) |
-| **Status** | **behoben 2026-10-14**, jetzt in `LOUD\usermods\BasegameBugfixes\hook\lua\terranunits.lua` (Klassenersatz, Rueckfall wie bei Gebaeuden; zuerst in `T4UnitAdditions`, am selben Tag hierher verschoben). Mechanismus und Ausloeser belegt, **Fix im Spiel bestaetigt** (Paul, 2026-10-14) |
+| **Status** | **behoben 2026-10-14**, jetzt in `LOUD\usermods\BasegameBugfixes\hook\lua\terranunits.lua` (Klassenersatz, Rueckfall wie bei Gebaeuden; zuerst in `T4UnitAdditions`, am selben Tag hierher verschoben). Mechanismus und Ausloeser belegt, **Fix im Spiel bestaetigt** (Paul, 2026-10-14). **An LOUD gemeldet** als PR LOUD-Project/Git-LOUD#169 (2026-11-05, Zweig `pmertens/fatboy-build-visibility`, Commit ededbdc93, `StopBeingBuiltEffects` direkt in `TMobileFactoryUnit`). Vorher-/Nachher-Test gilt als erbracht durch den Test vom 2026-10-14 (gleiche Logik, Paul 2026-11-05) |
 
 **Ablauf:**
 
@@ -230,6 +213,22 @@ nach Bestaetigung im Spiel hierher verschoben, weil es ein LOUD-Fehler ist und k
 der T4-Erweiterung (Paul, 2026-10-14). Dass ein Hook auf `/lua/terranunits.lua` greift, ist
 durch die Diagnose belegt (Log 2026-10-14 01:38); im neuen Mod erwartete Logzeile:
 `Hooked /lua/terranunits.lua with /mods/basegamebugfixes/hook/lua/terranunits.lua`.
+
+### B-05 Nach Lobby-Abbruch falscher Spielbrowser
+
+| | |
+|---|---|
+| **Datei** | `gamedata\lua\lua\ui\lobby\gameselect.lua` Z. 428, 773, 819 |
+| **Quelle** | **LOUD** (UI) |
+| **Gefunden** | 2026-11-07 (Meldung an Paul, verifiziert gegen `origin/master` 8a6ff77b7) |
+| **Status** | **PR vorbereitet**: Zweig `pmertens/gameselect-usesteam` (Commit 8daeb0dde), nicht gepusht, Vorher-/Nachher-Test offen |
+
+Die Rueckruf-Funktionen an `lobby.CreateLobby` rufen `CreateUI(over, exitBehavior)` ohne
+`useSteam`. `ReturnToMenu()` (`lobby.lua` Z. 1532-1546, auch "Abort Connect" Z. 797) baut den
+Browser deshalb mit `useSteam = nil` neu: Steam-Browser wird zu "LAN/IP Connect"; beim
+Direct-IP-Weg (Z. 428) fehlen danach die IP-/Port-Felder, weil sie nur bei
+`useSteam == false` entstehen (Z. 348). Hauptmenue uebergibt `false`/`true`
+(`main.lua` Z. 842/851). Fix: `useSteam` an allen drei Stellen weiterreichen.
 
 ---
 
@@ -292,7 +291,7 @@ Log-Praefix fuer eigene Ausgaben: `BUGFIX:`
 ## 7. Offene Punkte
 
 - [x] Icon: Reparatur-Befehlssymbol des Basisspiels (2026-10-14).
-- [ ] B-01 (UI) und B-02 (UI) gehoeren in einen `ui_only`-Mod oder hierher? Offen.
+- [ ] B-01 (UI) gehoert in einen `ui_only`-Mod oder hierher? Offen.
 - [ ] B-03 bewusst nicht behoben (siehe dort).
 - [ ] Fehlerliste zusammenstellen: was soll behoben werden?
 - [ ] Abgrenzung zu Balance-Aenderungen festlegen

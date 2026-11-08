@@ -1,12 +1,8 @@
 -- ============================================================================
--- EnhancedPauseBehavior
+-- Enhanced Pause Behavior
 --
--- Ordner:   LOUD\usermods\EnhancedPauseBehavior\
--- VFS-Pfad: /mods/enhancedpausebehavior/
--- Doku:     doc.claude\mods\EnhancedPauseBehavior.md
---
--- Fortsetzen nach einer Pause nur mit Bereit-Abfrage aller menschlichen
--- Spieler und anschliessendem Countdown. Nur UI-Lua, keine Sim-Dateien.
+-- Resuming a paused multiplayer game requires all human players to confirm
+-- they are ready, followed by a countdown. UI Lua only, no sim files.
 -- ============================================================================
 
 name        = "Enhanced Pause Behavior"
@@ -15,8 +11,7 @@ description = "Multiplayer: resuming a paused game requires all human players to
 author      = "Paul"
 copyright   = "none"
 
--- Mod-Bild im Mod-Manager, 256x256 PNG wie PlayTest/CustomAI/CorrosiveOcean.
--- Der Wert geht unveraendert an Bitmap:SetTexture() (modmanager.lua).
+-- 256x256 PNG shown in the mod manager
 icon = "/mods/enhancedpausebehavior/enhancedpausebehavior.png"
 
 uid = "E9410707-B979-462F-B9E8-3DDB886DB31B"
@@ -25,9 +20,9 @@ selectable = true
 enabled    = true
 exclusive  = false
 
--- Absichtlich false, obwohl der Mod nur UI-Lua enthaelt: nur Game-Mods
--- gehen ueber gameInfo.GameMods an alle Clients, die Lobby prueft sie
--- (lobby.lua CheckIfHaveMods). Die Bereit-Abfrage braucht den Mod bei allen.
+-- Intentionally false although the mod is UI only: only game mods are passed
+-- to all clients via gameInfo.GameMods and checked by the lobby
+-- (CheckIfHaveMods). The ready check needs the mod on every client.
 ui_only    = false
 
 hookdir   = '/hook'

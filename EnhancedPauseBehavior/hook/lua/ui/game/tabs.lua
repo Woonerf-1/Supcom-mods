@@ -1,12 +1,9 @@
 --[[
-    Mod:      EnhancedPauseBehavior
-    Hookt:    /lua/ui/game/tabs.lua
-    Zweck:    Bereit-Abfrage einhaengen (Create), Pause-Knopf nach abgefangenem
-              Fortsetzen gedrueckt halten (CommonLogic), Abfrage bei Fortsetzen
-              schliessen (OnPause)
-    Original: LOUD\gamedata\lua.scd -> lua/ui/game/tabs.lua
-              (Create Z. 358, CommonLogic Z. 412-497, OnPause Z. 741)
-    Stand:    2026-10-31
+    Enhanced Pause Behavior - hook for /lua/ui/game/tabs.lua
+
+    Create:      installs the ready check
+    CommonLogic: keeps the pause button pressed when a resume was intercepted
+    OnPause:     closes the ready check once the game resumes
 ]]
 
 local EPB_ReadyCheck = import('/mods/enhancedpausebehavior/modules/readycheck.lua')

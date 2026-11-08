@@ -1,3 +1,16 @@
+## 2026-11-08 - EnhancedPauseBehavior: Kommentare englisch
+
+- **Was:** Alle Code-Kommentare in `mod_info.lua`, `hook\lua\ui\game\tabs.lua`, `modules\readycheck.lua` auf
+  Englisch; Ordner-/Doku-Pfade, Zeilenangaben und Datumsstempel aus den Kopfkommentaren entfernt. Code unveraendert.
+- **Grund:** Uebergabe an das LOUD-Team (Paul).
+
+## 2026-11-05 - B-02 von LOUD uebernommen
+
+- **Was:** Fundstelle B-02 (`maputil.lua`, Kartenname in `IsScenarioPlayable`-Warnungen) als PR
+  LOUD-Project/Git-LOUD#168 abgegeben, vom LOUD-Team uebernommen (Commit 9e74de6c4 in `origin/master`).
+- **Doku:** Abschnitt in `mods\BasegameBugfixes.md` auf Erledigt-Vermerk gekuerzt; Verweise in `14_TOOLS.md`,
+  `tools\README.md` und `tools\Test-Maps.ps1` angepasst.
+
 ## 2026-10-31 - EnhancedPauseBehavior: neu
 
 - **Was:** neuer Mod `EnhancedPauseBehavior` (uid `E9410707-B979-462F-B9E8-3DDB886DB31B`). Mehrspieler: Fortsetzen
