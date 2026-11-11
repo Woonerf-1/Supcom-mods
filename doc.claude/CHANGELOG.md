@@ -1,3 +1,17 @@
+## 2026-11-11 - Fraktions-Vorlagen StarCraft und W40K: neu
+
+- **Was:** zwei neue Mods `FactionTemplate_StarCraft` (Zerg, Protoss, Terran) und `FactionTemplate_W40K` (Imperium,
+  Orks, Eldar, Necrons, Tyranids, Chaos), nur in der Lobby waehlbar. Benoetigen Custom Factions. Original-Logos
+  fuer den POC-Screenshot (nur intern, Herkunft in der Doku).
+- **Doku:** `mods\FactionTemplates.md`.
+- **Getestet:** nein.
+
+## 2026-11-08 - B-05 als PR #170 an LOUD
+
+- **Was:** `gameselect.lua` reicht `useSteam` in drei Lobby-Rueckrufen nicht weiter (Steam-Browser wird nach Abbruch
+  zu LAN/IP, Direct-IP-Felder fehlen). Vorher/Nachher getestet, PR LOUD-Project/Git-LOUD#170. Doku in
+  `mods\BasegameBugfixes.md` B-05.
+
 ## 2026-11-08 - EnhancedPauseBehavior: Kommentare englisch
 
 - **Was:** Alle Code-Kommentare in `mod_info.lua`, `hook\lua\ui\game\tabs.lua`, `modules\readycheck.lua` auf

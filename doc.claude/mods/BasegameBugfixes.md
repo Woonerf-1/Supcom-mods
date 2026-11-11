@@ -221,7 +221,7 @@ durch die Diagnose belegt (Log 2026-10-14 01:38); im neuen Mod erwartete Logzeil
 | **Datei** | `gamedata\lua\lua\ui\lobby\gameselect.lua` Z. 428, 773, 819 |
 | **Quelle** | **LOUD** (UI) |
 | **Gefunden** | 2026-11-07 (Meldung an Paul, verifiziert gegen `origin/master` 8a6ff77b7) |
-| **Status** | **PR vorbereitet**: Zweig `pmertens/gameselect-usesteam` (Commit 8daeb0dde), nicht gepusht, Vorher-/Nachher-Test offen |
+| **Status** | **An LOUD gemeldet** als PR LOUD-Project/Git-LOUD#170 (2026-11-08, Zweig `pmertens/gameselect-usesteam`, Commit 8daeb0dde). Vorher/Nachher von Paul bestaetigt 2026-11-08 (Direct IP, Abort Connect; Test-scd `00_test_b05.scd`, wieder entfernt) |
 
 Die Rueckruf-Funktionen an `lobby.CreateLobby` rufen `CreateUI(over, exitBehavior)` ohne
 `useSteam`. `ReturnToMenu()` (`lobby.lua` Z. 1532-1546, auch "Abort Connect" Z. 797) baut den

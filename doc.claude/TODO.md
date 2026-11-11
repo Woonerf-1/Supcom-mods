@@ -43,6 +43,11 @@ muss diese Einheiten erst erforschen.
 
 ## Mods
 
+### FactionTemplates (`mods\FactionTemplates.md`)
+
+- [ ] **Lobby-Test:** erscheinen die 8 Vorlagen-Fraktionen mit Icon und Tooltip? Zeigt die Lobby PNG statt DDS?
+      Ungeprueft.
+
 ### T4UnitAdditions (`mods\T4UnitAdditions.md`)
 
 - [ ] **TESTLAUF `T4UnitAdditions`** - Pruefliste in `mods\T4UnitAdditions.md` Abschnitt 12. Erstmals mit
