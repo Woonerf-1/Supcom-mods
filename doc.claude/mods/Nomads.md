@@ -93,11 +93,11 @@ Jeder Hook gegen den aktuellen LOUD-Stand (`LOUD\gamedata\lua.scd`) geprueft; Ko
 | `sim\buffdefinitions.lua` | nur `ACU_T2/T3/T4_Engineering_NMD` | doppelte Buffs lehnt LOUD ab (`BuffBlueprints.lua` Z. 41-43) |
 | `ui\controls\worldview.lua` | Zielkreuze der Nomads-Faehigkeiten | greift nur bei `mode[2].Behaviour` (sonst Absturz bei LOUDs `TargetLocation`) |
 | `ui\game\orders.lua` | nur `GetCurrentSelection()` | Rest war FAF |
-| `ui\game\unitview.lua`, `ui\game\layouts\unitview_{left,mini,right}.lua` | Capacitor-Symbol und -Balken | doppelter Hintergrund entfernt, ohne `SetBG`, absolute Texturpfade |
+| `ui\game\unitview.lua`, `ui\game\layouts\unitview_{left,mini,right}.lua` | Capacitor-Symbol und -Balken | doppelter Hintergrund entfernt, ohne `SetBG`, absolute Texturpfade; Skin-Name ueber `UIUtil.GetCurrentSkinName()` (Abschnitt 11) |
 | `skins\skins.lua` | Skin `nomads` (texturesPath `/mods/nomads/textures/ui/nomads`) | doppelter Eintrag `dialogColumnColor` entfernt |
 | `ui\help\tooltips.lua` | Spiel-Tooltips | Lobby-Eintraege nach `hook_frontend` |
 | `ui\game\buildmodedata.lua` | Baumodus (Taste B) | Fabrik-IDs auf znb95xx/96xx, nicht existierende IDs (xal0203, xnb4203, xnl0109, xns0301) und Quantentor-Vorgaben entfernt, doppeltes `['D']` behoben |
-| `ui\uiutil.lua` (Spiel und Front-End) | installiert `lua\NomadsLoc.lua` | Texte, Abschnitt 5 |
+| `ui\uiutil.lua` (Spiel und Front-End) | installiert `lua\NomadsLoc.lua`; nur Spiel: Huelle um `SetCurrentSkin`, neu `GetCurrentSkinName()` | Texte, Abschnitt 5; Skin-Name, Abschnitt 11 |
 
 ### 4.2 Neu
 
@@ -215,3 +215,28 @@ Voraussetzung: Custom Factions mit den Hooks aus der Uebergabe; `Nomads` aktiv. 
 9. **Sprueche:** `/65` im Chat; KI-Nomade spricht.
 10. **KI:** Nomads-KI gegen eine LOUD-KI - baut sie, greift sie an, stuerzt etwas ab?
 11. **Log:** keine Fehler mit `nomads` im Pfad; `Hooked ...` fuer alle Nomads-Hooks; fehlende Texturen/Emitter notieren.
+
+## 11. Testlauf 1 (Log eines Mitspielers, ausgewertet 2026-11-12)
+
+Log einer anderen Installation (`C:\Program Files (x86)\...`), Karte Hrungdaks Dryland, Custom Factions und Nomads
+aktiv, `CustomFactions.scd` ohne die Uebergabe-Hooks. Front-End in Ordnung (`Nomads: Fraktion angehaengt, Index 5`,
+`... Hydrocarbon-Kraftwerke aktiv`). Zwei Fehler, beide aus dem Umzug von `/` nach `/mods/nomads/` (Phase 2):
+
+1. **Keine Nomads-Einheit lief.** `lua\nomadsunits.lua` Z. 1 importierte relativ `import('defaultunits.lua')`.
+   LOUDs `import` setzt relative Namen vor den Ordner des Moduls (`Repos\Git-LOUD\gamedata\lua\lua\system\import.lua`
+   Z. 42-44); in nomads-4-loud ergab das `/lua/defaultunits.lua`, jetzt `/mods/nomads/lua/defaultunits.lua` (fehlt).
+   Log: `Error importing '/mods/nomads/lua/nomadsunits.lua'`, ab XNL0001/XNO0001 beim Spielstart.
+   **Behoben:** `import('/lua/defaultunits.lua')`. Weitere relative Importe im Mod: keine.
+2. **Spieloberflaeche brach ab.** Die Hooks `ui\game\layouts\unitview_{left,mini,right}.lua` Z. 12 lasen
+   `UIUtil.currentSkin`; das ist in LOUD eine lokale LazyVar (`Repos\Git-LOUD\gamedata\lua\lua\ui\uiutil.lua` Z. 82).
+   Der Feldzugriff faellt ueber `__module_metatable` auf `_G` durch, und die strikten Globals melden einen Fehler -
+   die Absicherung `UIUtil.currentSkin and ...` greift deshalb nicht. Log: `unitview_mini.lua(211): access to
+   nonexistent global variable "currentSkin"` (LOUDs Datei hat 199 Zeilen, 211 = Hook-Zeile 12), danach Abbruch von
+   `CreateGameInterface` und Folgefehler (LazyVar, `score_mini` `SetFunction`, `avatars` `Show`).
+   **Behoben:** `hook\lua\ui\uiutil.lua` umhuellt `SetCurrentSkin` (LOUD Z. 190-197, gleiche Rueckfall-Regel auf
+   `'uef'`) und liefert `GetCurrentSkinName()`; die drei Hooks nehmen den Namen, sonst `'nomads'`. Aufrufer von
+   `SetCurrentSkin` in LOUD gehen alle ueber das Modul (`UIUtil.SetCurrentSkin`, intern `RotateSkin` Z. 284), im
+   Spiel setzt `gamemain.lua` Z. 201 den Skin vor dem Aufbau der Einheitenansicht (Z. 258).
+
+Beide Korrekturen im Spiel ungeprueft. Danach zu erwarten: die Fehler aus Abschnitt 9 (fehlende Uebergabe-Hooks),
+zuerst bei Tarmacs von Nomads-Gebaeuden und bei der KI.

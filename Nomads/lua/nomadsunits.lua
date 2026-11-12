@@ -1,4 +1,4 @@
-local DefaultUnits = import('defaultunits.lua')
+local DefaultUnits = import('/lua/defaultunits.lua')
 AirFactoryUnit = DefaultUnits.FactoryUnit
 local AirStagingPlatformUnit = DefaultUnits.AirStagingPlatformUnit
 local AirUnit = DefaultUnits.AirUnit

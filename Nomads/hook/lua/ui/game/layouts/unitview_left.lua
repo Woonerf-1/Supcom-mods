@@ -9,7 +9,7 @@ table.insert(iconPositions, {Left = 130, Top = 70})
 table.insert(iconTextures, '/mods/nomads/textures/ui/common/game/unit_view_icons/capacitor.dds')
 
 local function CapacitorBarTexture()
-    local skin = UIUtil.currentSkin and UIUtil.currentSkin() or 'nomads'
+    local skin = UIUtil.GetCurrentSkinName() or 'nomads'
     local path = '/mods/nomads/textures/ui/' .. skin .. '/game/unit-build-over-panel/capacitorbar.dds'
     if DiskGetFileInfo(path) then
         return path

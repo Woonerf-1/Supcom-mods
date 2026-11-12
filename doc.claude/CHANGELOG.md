@@ -1,3 +1,13 @@
+## 2026-11-12 - Nomads: zwei Fehler aus Testlauf 1 behoben
+
+- **Quelle:** LOUD.log eines Mitspielers (Custom Factions + Nomads aktiv); Auswertung `mods\Nomads.md` Abschnitt 11.
+- **Einheiten:** `Nomads\lua\nomadsunits.lua` Z. 1 `import('defaultunits.lua')` -> `import('/lua/defaultunits.lua')`.
+  Der relative Import loeste seit dem Umzug nach `/mods/nomads/` ins Leere auf; damit lief kein Nomads-Einheitenskript.
+- **Oberflaeche:** `Nomads\hook\lua\ui\game\layouts\unitview_{left,mini,right}.lua` lasen das lokale
+  `UIUtil.currentSkin` (strikte Globals -> Abbruch von `CreateGameInterface`). Neu in `Nomads\hook\lua\ui\uiutil.lua`:
+  Huelle um `SetCurrentSkin`, Abfrage `GetCurrentSkinName()`; die drei Hooks nutzen sie.
+- **Getestet:** nein.
+
 ## 2026-11-11 - Fraktions-Vorlagen StarCraft und W40K: neu
 
 - **Was:** zwei neue Mods `FactionTemplate_StarCraft` (Zerg, Protoss, Terran) und `FactionTemplate_W40K` (Imperium,

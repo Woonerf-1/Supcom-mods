@@ -198,6 +198,8 @@ _Nichts offen._
 ### Nomads (`mods\Nomads.md`)
 
 - [ ] **TESTLAUF** (Paul, am Ende aller Phasen) - Pruefliste in `mods\Nomads.md`.
+- [ ] **Testlauf 2:** Korrekturen aus Testlauf 1 pruefen (`mods\Nomads.md` Abschnitt 11) - Nomads-Einheiten
+      entstehen (XNL0001, XNO0001), Spieloberflaeche baut sich auf, Capacitor-Balken im Skin der eigenen Fraktion.
 - [ ] **Custom Factions:** fraktionsneutrale Hooks aus `uebergabe\CustomFactions\` in `CustomFactions.scd`
       uebernehmen (SupComNet-Seite). Ohne sie fehlen Nomads Vorlagen-Umrechnung, Vorab-Bau, KI-Vorlagen usw.
 - [ ] **KI mit fester Fraktionszahl** (FactionSquads/FactionName, `factionnames`, EnhancementTable, Builder
