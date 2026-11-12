@@ -6,7 +6,7 @@ UnitBlueprint{
     },
     BuildIconSortPriority = 160,
     Categories = {
-        "BUILTBYTIER4COMMANDER",
+        "BUILTBYTIER42COMMANDER",
         "COUNTERINTELLIGENCE",
         "DEFENSE",
         "DRAGBUILD",
@@ -132,7 +132,7 @@ UnitBlueprint{
         ToggleCaps = { RULEUTC_ShieldToggle = true },
         UnitName = "<LOC XNB4305_name>Illusionist",
         UnitWeight = 1,
-        UpgradesFrom = "xnb4301",
+
     },
     Intel = {
         RadarStealthFieldRadius = 25,

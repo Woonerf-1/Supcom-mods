@@ -152,7 +152,7 @@ XNL0001 = Class(ACUUnit) {
 
         -- enhancements
         self:RemoveToggleCap('RULEUTC_SpecialToggle')
-        self:AddBuildRestriction( categories.NOMADS * (categories.BUILTBYTIER2COMMANDER + categories.BUILTBYTIER3COMMANDER + categories.BUILTBYTIER4COMMANDER) )
+        self:AddBuildRestriction( categories.NOMADS * (categories.BUILTBYTIER2COMMANDER + categories.BUILTBYTIER3COMMANDER + categories.BUILTBYTIER4COMMANDER + categories.BUILTBYTIER42COMMANDER) )
         
 
         
@@ -1113,127 +1113,7 @@ XNL0001 = Class(ACUUnit) {
             oca:ChangeMaxRadius( bp.NewMaxRadius or wbp.MaxRadius )
         end,
 
-        EXMaelstromQuantum = function(self, bp)
-            self.EnergyConsumption['Total'] = self.EnergyConsumption['Total'] - self.EnergyConsumption[bp.Slot]
-            self.EnergyConsumption[bp.Slot] = bp.ConsumptionPerSecondEnergy
 
-            self.MaelstromFieldName = 'AeonMaelstromBuffField'
-            self.MaelstromFieldOn = false
-            self.MaelstromFieldRadius = 24
-
-            self:AddToggleCap('RULEUTC_SpecialToggle')
-            self:SetScriptBit('RULEUTC_SpecialToggle', true)
-
-            self:ForkThread(self.WeaponRangeReset)
-            self:ForkThread(self.WeaponConfigCheck)
-
-            self.wcChrono01 = false
-            self.wcChrono02 = false
-        end,
-
-        EXMaelstromQuantumRemove = function(self, bp)
-            if self.MaelstromFieldOn then
-                self:SetScriptBit('RULEUTC_SpecialToggle', false)
-            end
-
-            self.EnergyConsumption[bp.Slot] = 0
-
-            self.MaelstromFieldName = false
-            self.MaelstromFieldOn = false
-            self.MaelstromFieldRadius = 1
-
-            self:RemoveToggleCap('RULEUTC_SpecialToggle')
-
-            self:ForkThread(self.WeaponRangeReset)
-            self:ForkThread(self.WeaponConfigCheck)
-
-            self.wcChrono01 = false
-            self.wcChrono02 = false
-        end,
-
-        EXMaelstromFieldExpander = function(self, bp)
-            if self.MaelstromFieldOn then
-                self:SetScriptBit('RULEUTC_SpecialToggle', false)
-            end
-
-            self.EnergyConsumption[bp.Slot] = bp.ConsumptionPerSecondEnergy
-
-            self.MaelstromFieldName = 'AeonMaelstromBuffField2'
-            self.MaelstromFieldRadius = 32
-
-            self:SetScriptBit('RULEUTC_SpecialToggle', true)
-
-            self:ForkThread(self.WeaponRangeReset)
-            self:ForkThread(self.WeaponConfigCheck)
-
-            self.wcChrono01 = true
-            self.wcChrono02 = false
-        end,
-
-        EXMaelstromFieldExpanderRemove = function(self, bp)
-            if self.MaelstromFieldOn then
-                self:SetScriptBit('RULEUTC_SpecialToggle', false)
-            end
-
-            self.EnergyConsumption[bp.Slot] = 0
-
-            self.MaelstromFieldName = false
-            self.MaelstromFieldOn = false
-            self.MaelstromFieldRadius = 1
-
-            self:RemoveToggleCap('RULEUTC_SpecialToggle')
-
-            self:ForkThread(self.WeaponRangeReset)
-            self:ForkThread(self.WeaponConfigCheck)
-
-            self.wcChrono01 = false
-            self.wcChrono02 = false
-        end,
-
-        EXMaelstromQuantumInstability = function(self, bp)
-            Buff.ApplyBuff(self, 'MobilityPenalty')
-
-            if self.MaelstromFieldOn then
-                self:SetScriptBit('RULEUTC_SpecialToggle', false)
-            end
-
-            self.EnergyConsumption[bp.Slot] = bp.ConsumptionPerSecondEnergy
-
-            self.MaelstromFieldName = 'AeonMaelstromBuffField3'
-            self.MaelstromFieldRadius = 40
-
-            self:SetScriptBit('RULEUTC_SpecialToggle', true)
-
-            self:ForkThread(self.WeaponRangeReset)
-            self:ForkThread(self.WeaponConfigCheck)
-
-            self.wcChrono01 = false
-            self.wcChrono02 = true
-        end,
-
-        EXMaelstromQuantumInstabilityRemove = function(self, bp)
-            if self.MaelstromFieldOn then
-                self:SetScriptBit('RULEUTC_SpecialToggle', false)
-            end
-
-            self.EnergyConsumption[bp.Slot] = 0
-
-            self.MaelstromFieldName = false
-            self.MaelstromFieldOn = false
-            self.MaelstromFieldRadius = 1
-
-            self:RemoveToggleCap('RULEUTC_SpecialToggle')
-
-            if Buff.HasBuff(self, 'MobilityPenalty') then
-                Buff.RemoveBuff(self, 'MobilityPenalty')
-            end
-
-            self:ForkThread(self.WeaponRangeReset)
-            self:ForkThread(self.WeaponConfigCheck)
-
-            self.wcChrono01 = false
-            self.wcChrono02 = true
-        end,
         
                 
         Capacitor = function(self, bp)
@@ -1383,7 +1263,7 @@ XNL0001 = Class(ACUUnit) {
             -- restore build restrictions
             self:RestoreBuildRestrictions()
 
-            self:AddBuildRestriction( categories.NOMADS * (categories.BUILTBYTIER2COMMANDER + categories.BUILTBYTIER3COMMANDER + categories.BUILTBYTIER4COMMANDER) )
+            self:AddBuildRestriction( categories.NOMADS * (categories.BUILTBYTIER2COMMANDER + categories.BUILTBYTIER3COMMANDER + categories.BUILTBYTIER4COMMANDER + categories.BUILTBYTIER42COMMANDER) )
 
         end,
         
@@ -1429,7 +1309,7 @@ XNL0001 = Class(ACUUnit) {
 
             -- reset build restrictions
             self:RestoreBuildRestrictions()
-            self:AddBuildRestriction( categories.NOMADS * ( categories.BUILTBYTIER2COMMANDER + categories.BUILTBYTIER3COMMANDER + categories.BUILTBYTIER4COMMANDER) )
+            self:AddBuildRestriction( categories.NOMADS * ( categories.BUILTBYTIER2COMMANDER + categories.BUILTBYTIER3COMMANDER + categories.BUILTBYTIER4COMMANDER + categories.BUILTBYTIER42COMMANDER) )
 
         end,
 
@@ -1445,7 +1325,7 @@ XNL0001 = Class(ACUUnit) {
 
             -- reset build restrictions
             self:RestoreBuildRestrictions()
-            self:AddBuildRestriction( categories.NOMADS * ( categories.BUILTBYTIER2COMMANDER + categories.BUILTBYTIER3COMMANDER + categories.BUILTBYTIER4COMMANDER) )
+            self:AddBuildRestriction( categories.NOMADS * ( categories.BUILTBYTIER2COMMANDER + categories.BUILTBYTIER3COMMANDER + categories.BUILTBYTIER4COMMANDER + categories.BUILTBYTIER42COMMANDER) )
 
         end,
         

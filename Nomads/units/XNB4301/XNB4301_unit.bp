@@ -50,9 +50,9 @@ UnitBlueprint{
     Display = {
         Abilities = {
             "<LOC ability_shielddome>Shield Dome",
-            "<LOC ability_upgradable>Upgradeable",
+
         },
-        AnimationUpgrade = "/mods/nomads/units/XNB4301/XNB4301_UpgradeToT3Stlth.sca",
+
         Mesh = {
             IconFadeInZoom = 130,
             LODs = {
@@ -129,8 +129,7 @@ UnitBlueprint{
         ToggleCaps = { RULEUTC_ShieldToggle = true },
         UnitName = "<LOC XNB4301_name>Wave Shield",
         UnitWeight = 1,
-        UpgradesFrom = "xnb4205",
-        UpgradesTo = "xnb4305",
+        
     },
     Intel = { VisionRadius = 20 },
     Interface = { HelpText = "<LOC XNB4301_help>Heavy Shield Generator" },

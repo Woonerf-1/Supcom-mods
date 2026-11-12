@@ -658,7 +658,7 @@ UnitBlueprint{
             BuildCostMass = 18000,
             BuildTime = 36000,
 			NewestBuildRate = 160,
-            BuildableCategoryAdds = "BUILTBYTIER4COMMANDER NOMADS",
+            BuildableCategoryAdds = {"BUILTBYTIER4COMMANDER NOMADS","BUILTBYTIER42COMMANDER NOMADS"},
 			NewHealth = 3500,
             Icon = 'exles3',
 			
@@ -707,136 +707,7 @@ UnitBlueprint{
 			
             Slot = 'RCH',
         },
-    -- the Maelstrom is a BuffField - and gets its range set there
-		
-        EXMaelstromQuantum = {
 
-            BuildCostEnergy = 35000,
-            BuildCostMass = 3500,
-            BuildTime = 3500,
-
-            Icon = 'exbsh1',
-
-            Name = 'Maelstrom Generator',
-
-            ConsumptionPerSecondEnergy = 450,
-
-
-            Slot = 'Command',
-
-            UpgradeEffectBones = {
-                "ElbowL",
-                "BuildArm1",
-                "BuildArm2",
-            },
-            UpgradeUnitAmbientBones = {'XNL0001'},
-        },
-		
-        EXMaelstromQuantumRemove = {
-
-            BuildCostEnergy = 1,
-            BuildCostMass = 1,
-            BuildTime = 0.1,
-
-            HideBones = {'DamagePack_RLeg_B01','DamagePack_RLeg_B02'},
-
-            Icon = 'exbsh1',
-
-            Name = 'Remove Maelstrom Generator',
-
-            Prerequisite = 'EXMaelstromQuantum',
-
-            RemoveEnhancements = {'EXMaelstromQuantum','EXMaelstromQuantumRemove'},
-
-            Slot = 'Command',
-        },
-		
-        EXMaelstromFieldExpander = {
-
-            BuildCostEnergy = 70000,
-            BuildCostMass = 7000,
-            BuildTime = 3500,
-
-            Icon = 'exbsh2',
-
-            Name = 'Maelstrom Amplifier',
-
-            ConsumptionPerSecondEnergy = 675,
-
-			Prerequisite = 'EXMaelstromQuantum',
-            
-            
-            Slot = 'Command',
-
-            UpgradeEffectBones = {
-                "ElbowL",
-                "BuildArm1",
-                "BuildArm2",
-            },
-            UpgradeUnitAmbientBones = {'XNL0001'},
-        },
-		
-        EXMaelstromFieldExpanderRemove = {
-
-            BuildCostEnergy = 1,
-            BuildCostMass = 1,
-            BuildTime = 0.1,
-
-            HideBones = {'DamagePack_Torso','DamagePack_RLeg_B01','DamagePack_RLeg_B02','DamagePack_LLeg_B01','DamagePack_LLeg_B02'},
-
-            Icon = 'exbsh2',
-
-            Name = 'Remove Maelstrom Amplifier',
-
-            Prerequisite = 'EXMaelstromFieldExpander',
-
-            RemoveEnhancements = {'EXMaelstromQuantum','EXMaelstromFieldExpander','EXMaelstromFieldExpanderRemove'},
-
-            Slot = 'Command',
-        },
-		
-        EXMaelstromQuantumInstability = {
-
-            BuildCostEnergy = 125000,
-            BuildCostMass = 11000,
-            BuildTime = 3500,
-
-            Icon = 'exbsh3',
-
-            Name = 'Maelstrom Focusing',
-
-            ConsumptionPerSecondEnergy = 1080,
-
-			Prerequisite = 'EXMaelstromFieldExpander',
-
-            Slot = 'Command',
-
-            UpgradeEffectBones = {
-                "ElbowL",
-                "BuildArm1",
-                "BuildArm2",
-            },
-            UpgradeUnitAmbientBones = {'XNL0001'},
-        },
-		
-        EXMaelstromQuantumInstabilityRemove = {
-
-            BuildCostEnergy = 1,
-            BuildCostMass = 1,
-            BuildTime = 0.1,
-
-            HideBones = {'DamagePack_LArm','DamagePack_RArm','DamagePack_Torso','DamagePack_RLeg_B01','DamagePack_RLeg_B02','DamagePack_LLeg_B01','DamagePack_LLeg_B02'},
-
-            Icon = 'exbsh3',
-
-            Name = 'Remove Maelstrom Focusing',
-
-            Prerequisite = 'EXMaelstromQuantumInstability',
-
-            RemoveEnhancements = {'EXMaelstromQuantum','EXMaelstromFieldExpander','EXMaelstromQuantumInstability','EXMaelstromQuantumInstabilityRemove'},
-
-            Slot = 'Command',
-        },
 
     },
     General = {
