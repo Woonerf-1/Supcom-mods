@@ -22,9 +22,10 @@ Alle Pfade relativ zu `$FA`. Plan und Entscheidungen: [Nomads_Plan.md](Nomads_Pl
 Neuaufbau der Nomads-Fraktion fuer LOUD (Paul, 2026-10-22), sauber und so, dass weitere optionale Fraktionen
 daneben bestehen koennen:
 
-- **Kein Wurzel-Mount**, kein `LoudDataPath.lua`-Patch. Alles liegt unter `/mods/nomads/`; Anmeldung der Fraktion
-  ueber Custom Factions (Front-End-Hooks per `frontend_hookdir`).
-- **Hook statt Vollkopie.** Shadow nur fuer neue Dateien an festen Engine-Pfaden (Abschnitt 6).
+- **Kein `LoudDataPath.lua`-Patch.** Alles liegt unter `/mods/nomads/`; Anmeldung der Fraktion ueber Custom
+  Factions (Front-End-Hooks per `frontend_hookdir`). **Ausnahme seit 2026-11-12 (Paul):** Dateien, die LOUD nur an
+  festen Wurzelpfaden sucht, liefert das Archiv `usermods\NomadsRoot.scd` (Abschnitt 6).
+- **Hook statt Vollkopie.** Kein Shadow (fuegt keine neuen Dateien hinzu, Abschnitt 6).
 - **Fraktionsneutrales gehoert nach Custom Factions** (Paul): Nomads liefert nur Daten (Felder im Fraktionseintrag,
   eigene Dateien). Die generischen Hooks liegen als Uebergabe in `doc.claude\uebergabe\CustomFactions\`.
 - **Adjacency nicht:** die Adjacency-Werte der Quelle sind der eigenstaendige Mod `AdjacencyRebalance`.
@@ -47,7 +48,9 @@ LOUD\usermods\Nomads\                3192 Dateien, 405 MB
   loc\             2                 Quelltexte (LOUD laedt sie nicht, Abschnitt 5)
   hook\           26                 Spiel-Hooks (Abschnitt 4)
   hook_frontend\   4                 Front-End-Hooks (Abschnitt 3)
-  shadow\         25                 neue Dateien an festen Pfaden (Abschnitt 6)
+  root\           25                 Tasks und Strategie-Icons fuer NomadsRoot.scd (bis 2026-11-12 shadow\, Abschnitt 6)
+
+LOUD\usermods\NomadsRoot.scd          471 Dateien, 2,2 MB, an / eingebunden (Abschnitt 6)
 ```
 
 Nicht uebernommen aus der Quelle (Plan Abschnitt 2): `icons\hook\` (Kopie von `hook\`), Entwicklungsordner,
@@ -134,14 +137,42 @@ Jeder Hook gegen den aktuellen LOUD-Stand (`LOUD\gamedata\lua.scd`) geprueft; Ko
   Quelle belegte fest 99-116 und haette mit jeder weiteren Fraktion kollidiert. Kommt eine weitere Fraktion in der
   Reihenfolge davor, verschiebt sich der Block - Paul: so lassen. KI-Sprueche: `sorianutilities` am Fraktionsindex.
 
-## 6. Shadow (neue Dateien an festen Pfaden)
+## 6. Wurzel-Archiv `NomadsRoot.scd` (Dateien an festen Pfaden)
 
-- `shadow\lua\sim\tasks\` (LaunchNuke, LaunchTacMissile, NomadsAreaBombardment, NomadsIntelProbe,
-  NomadsIntelProbeAdvanced): die Engine laedt Tasks per Namen aus `/lua/sim/tasks/<Name>.lua` (`IssueScript`).
-- `shadow\textures\ui\common\game\strategicicons\` (5 Symbole x 4 Zustaende): Strategie-Icons haben einen festen
-  Pfad. Nur Symbole, die LOUD nicht hat - kein Ueberschreiben.
-- **Ungeprueft:** dass `shadowdir` neue Pfade (ohne Gegenstueck in LOUD) zuverlaessig hinzufuegt - TODO, im Testlauf
-  pruefen (Faehigkeiten, Strategie-Icons dieser Einheiten).
+**Problem.** LOUD bindet einen Mod-Ordner nur unter `/mods/<name>/` ein (dazu `<mod>\sounds` an `/sounds`); nur
+Archive (`.scd`/`.zip`) in `usermods\` kommen an `/` (`LOUD\bin\CommonDataPath.lua`, `mount_mod`/`mount_mods`).
+Einige Dateien sucht LOUD aber nur an festen Wurzelpfaden:
+
+| Was | Gesucht unter | Beleg (`Repos\Git-LOUD\gamedata\lua\lua\...`) |
+|---|---|---|
+| Upgrade-Icons (`Enhancements.*.Icon`) | `/textures/ui/common/game/<Icon>_btn_*.dds` (Einheiten `xn...` haben kein Fraktionsprefix) | `ui\game\construction.lua` Z. 505-643 |
+| Einheiten-Icons im Baumenue | `/textures/ui/common/icons/units/<IconName>_icon.dds` | `ui\game\gamecommon.lua` Z. 14-60 |
+| Order-Icons der Faehigkeiten-Leiste | `UIUtil.UIFile('/game/orders/...')`; Skin-Kette endet bei `default` = `/textures/ui/common` | `ui\uiutil.lua` Z. 357-402, `skins\skins.lua` Z. 18/46/140-142 |
+| Strategie-Icons | `/textures/ui/common/game/strategicicons/` | Engine |
+| Sim-Tasks (`IssueScript`) | `/lua/sim/tasks/<Name>.lua` | Engine |
+
+Der eingebaute Ausweg `Display.AlternateUpgradeIconPath`/`EXIconPaths` wirkt nicht: `BlackopsBlueprintLocator`
+(`BlackopsIconSearch.lua` Z. 11), der die Tabellen fuellt, wird in LOUD nirgends aufgerufen.
+
+**`shadowdir` fuegt keine neuen Dateien hinzu** (belegt, Testlauf 2, Abschnitt 11): die Strategie-Icons
+`icon_land1_aa_arty`, `icon_land2_stunner`, `icon_land3_armored` lagen nur in `shadow\` (weder in LOUD noch im
+BrewLAN-Icon-Paket) und meldeten trotzdem `Unable to load texture`. Der Ordner heisst jetzt `root\`, `shadowdir`
+steht nicht mehr in `mod_info.lua`.
+
+**Loesung (Paul, 2026-11-12).** `doc.claude\tools\Build-NomadsRoot.ps1` packt `Nomads\textures\ui\common\**` (als
+`textures/ui/common/**`) und `Nomads\root\**` (Pfade wie im Ordner) nach `usermods\NomadsRoot.scd`. Ausgelassen wird
+jede Datei, die schon in einem von LOUD eingebundenen Archiv liegt (`LOUD\gamedata\*.scd`, `gamedata\*.scd`,
+`LOUD\bin\BrewLAN-StrategicIconsOverhaul-*.scd`): das Archiv fuegt nur hinzu, ersetzt nichts. Stand 2026-11-12:
+471 Dateien gepackt, 36 Strategie-Icons ausgelassen (factoryhq2/3, gunship1/2_engineer, node3_counterintel - LOUD
+bzw. BrewLAN liefern sie). Namen im Archiv klein, feste Zeitstempel.
+
+- **Nach jeder Aenderung** an `Nomads\textures\ui\common\` oder `Nomads\root\` das Skript neu ausfuehren und
+  `NomadsRoot.scd` mitcommitten. Die Dateien bleiben zusaetzlich unter `/mods/nomads/` erreichbar (Hooks nutzen dort
+  absolute Pfade).
+- **Immer eingebunden**, auch ohne aktiven Nomads-Mod (Archive in `usermods\` kennen keinen Schalter). Unschaedlich,
+  weil nur neue Namen; Einschraenkung bleibt, dass `/lua/sim/tasks/LaunchNuke.lua` usw. auch ohne Nomads existieren.
+- **Ungeprueft:** dass die Tasks aus dem Archiv geladen werden (Faehigkeiten-Leiste: Orbital-Schlag, Sonde, Nuke,
+  Taktikrakete) - TODO, Testlauf 3.
 
 ## 7. Hydrocarbon-Kraftwerke (nur mit ImprovedHydrocarbonPowerPlants)
 
@@ -240,3 +271,20 @@ aktiv, `CustomFactions.scd` ohne die Uebergabe-Hooks. Front-End in Ordnung (`Nom
 
 Beide Korrekturen im Spiel ungeprueft. Danach zu erwarten: die Fehler aus Abschnitt 9 (fehlende Uebergabe-Hooks),
 zuerst bei Tarmacs von Nomads-Gebaeuden und bei der KI.
+
+### Testlauf 2 (Log und Screenshot eines Mitspielers, ausgewertet 2026-11-12)
+
+Gleiche Installation (`C:\Program Files (x86)\...`), Karte Blasted 20. Befunde:
+
+1. **Stand nicht aktuell:** `nomadsunits.lua(1)` laedt weiter `/mods/nomads/lua/defaultunits.lua`, die Korrektur aus
+   Testlauf 1 fehlte dort. Ausserdem `UIFILE Unable to find file /game/unit_view_icons/capacitor.dds` - dieser
+   relative Pfad steht in keinem Commit des Repos; der Nomads-Ordner dort weicht vom Repo ab.
+2. **LoudDataPath veraltet:** `Search path element "...\LOUD\usermods\BrewLAN-StrategicIcons*.scd" does not match any
+   files` - die Datei sucht das BrewLAN-Icon-Paket in `usermods\` statt in `bin\` (aktuelles Original:
+   `LOUD\bin\LoudDataPath.lua` Z. 5). Folge: alle Strategie-Icons des Pakets fehlen dort (u. a. gunship1/2_engineer,
+   node3_counterintel). Nicht unser Code; Mitspieler muss das Original wiederherstellen (LOUD-Updater/Neuinstallation).
+3. **Upgrade-Icons fehlen** (Screenshot: Capacitor-Upgrade des Kommandanten grau), ebenso Order-Icons
+   (`UIFILE Unable to find file /game/orders/unfilled_btn_up.dds`, `autocast_green.dds`) und 3 Strategie-Icons aus
+   `shadow\`. **Behoben** mit `NomadsRoot.scd` (Abschnitt 6).
+4. **KI:** `builder.lua(398): attempt to loop over local 'buildingTmpl' (a nil value)` - keine `BuildingTemplates`
+   fuer Fraktion 5; erwartet, solange die Uebergabe-Hooks fehlen (Abschnitt 9).

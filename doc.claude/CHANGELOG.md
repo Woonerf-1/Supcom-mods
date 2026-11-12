@@ -1,3 +1,16 @@
+## 2026-11-13 - Nomads: Wurzel-Archiv NomadsRoot.scd statt shadow
+
+- **Anlass:** Testlauf 2 (Log und Screenshot eines Mitspielers): Upgrade-Icons, Order-Icons der Faehigkeiten-Leiste
+  und neue Strategie-Icons fehlten. LOUD sucht sie nur an festen Wurzelpfaden (`/textures/ui/common/...`), Mod-Ordner
+  liegen aber unter `/mods/<name>/`; `shadowdir` fuegt nachweislich keine neuen Dateien hinzu.
+- **Neu:** `usermods\NomadsRoot.scd` (471 Dateien, 2,2 MB), von LOUD an `/` eingebunden wie `CustomFactions.scd`.
+  Gebaut von `doc.claude\tools\Build-NomadsRoot.ps1` aus `Nomads\textures\ui\common\` und `Nomads\root\`, ohne
+  Dateien, die LOUD schon hat (36 Strategie-Icons ausgelassen).
+- **Geaendert:** `Nomads\shadow\` -> `Nomads\root\`; `shadowdir` aus `Nomads\mod_info.lua` entfernt. Grundsatz
+  "kein Wurzel-Mount" in `mods\Nomads.md` 1 um diese Ausnahme ergaenzt (Paul).
+- **Doku:** `mods\Nomads.md` 1, 2, 6, 11; `14_TOOLS.md`, `tools\README.md`; `TODO.md`.
+- **Getestet:** nein (Archiv mit `unzip -t` geprueft).
+
 ## 2026-11-12 - Nomads: zwei Fehler aus Testlauf 1 behoben
 
 - **Quelle:** LOUD.log eines Mitspielers (Custom Factions + Nomads aktiv); Auswertung `mods\Nomads.md` Abschnitt 11.

@@ -17,6 +17,7 @@ Kurzübersicht: [`tools\README.md`](tools/README.md)
 | `Test-Maps.ps1` | `maps\` und `usermaps\` auf unvollständige Szenarien prüfen | nur lesend | Sekunden |
 | `scd_als_ordner_*.reg` | `.scd` im Explorer als Archiv öffnen | Registry | sofort |
 | `navysim\Run-NavySim.ps1` | Gefechtssimulation U-Boot-Gruppen (Reichweite, Torpedo-Abwehr); Modell in `navysim\README.md` | nur lesend | Sekunden bis Minuten |
+| `Build-NomadsRoot.ps1` | baut `usermods\NomadsRoot.scd` (Nomads-Dateien an festen Wurzelpfaden); Abschnitt 4a | schreibt nur `usermods\NomadsRoot.scd` | Sekunden |
 
 Aufruf jeweils aus dem `tools\`-Ordner. Falls PowerShell die Ausführung verweigert:
 
@@ -138,6 +139,22 @@ für Volltextsuche bleibt `gamedata.entpackt\` das Mittel der Wahl.
 ⚠️ **Nicht für `.sca`.** Die ursprüngliche Vorlage enthielt einen entsprechenden Eintrag;
 er ist hier bewusst nicht übernommen. `.sca` sind Animationsdateien, keine Archive —
 geprüft: die Datei beginnt mit der Kennung `ANIM`, nicht mit `PK`.
+
+---
+
+## 4a. `Build-NomadsRoot.ps1`
+
+```powershell
+cd "LOUD\usermods\doc.claude\tools"
+.\Build-NomadsRoot.ps1
+```
+
+Packt `Nomads\textures\ui\common\**` und `Nomads\root\**` nach `LOUD\usermods\NomadsRoot.scd`. LOUD bindet Archive in
+`usermods\` an `/` ein, Mod-Ordner nur an `/mods/<name>/` - so erreichen Upgrade-, Order-, Einheiten- und
+Strategie-Icons sowie Sim-Tasks der Nomads ihre festen Pfade. Dateien, die schon in einem LOUD-Archiv liegen
+(`LOUD\gamedata\*.scd`, `gamedata\*.scd`, `LOUD\bin\BrewLAN-StrategicIconsOverhaul-*.scd`), werden ausgelassen und
+aufgelistet. Feste Zeitstempel: gleicher Inhalt, gleiche Datei. Nach jeder Aenderung an den Quellordnern neu
+ausfuehren und `NomadsRoot.scd` mitcommitten. Hintergrund: `mods\Nomads.md` Abschnitt 6.
 
 ---
 

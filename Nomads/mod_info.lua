@@ -28,7 +28,10 @@ exclusive  = false
 ui_only    = false
 
 hookdir   = '/hook'
-shadowdir = '/shadow'
+
+-- Dateien an festen Wurzelpfaden (Upgrade-, Order-, Einheiten-, Strategie-Icons, Tasks) liegen in
+-- usermods\NomadsRoot.scd, gebaut von doc.claude\tools\Build-NomadsRoot.ps1 aus textures\ui\common\ und root\.
+-- shadowdir fuegt keine neuen Dateien hinzu (doc.claude\mods\Nomads.md Abschnitt 6).
 
 -- Front-End- und Lobby-Hooks; angewendet von Custom Factions (schook/lua/userInit.lua).
 frontend_hookdir = '/hook_frontend'

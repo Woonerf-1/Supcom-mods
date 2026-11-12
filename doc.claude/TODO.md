@@ -198,8 +198,14 @@ _Nichts offen._
 ### Nomads (`mods\Nomads.md`)
 
 - [ ] **TESTLAUF** (Paul, am Ende aller Phasen) - Pruefliste in `mods\Nomads.md`.
-- [ ] **Testlauf 2:** Korrekturen aus Testlauf 1 pruefen (`mods\Nomads.md` Abschnitt 11) - Nomads-Einheiten
-      entstehen (XNL0001, XNO0001), Spieloberflaeche baut sich auf, Capacitor-Balken im Skin der eigenen Fraktion.
+- [ ] **Testlauf 3** (Testlauf 2 lief mit veraltetem Nomads-Stand, `mods\Nomads.md` Abschnitt 11): vorher beim
+      Mitspieler Nomads-Ordner auf `origin/main` bringen und `LOUD\bin\LoudDataPath.lua` durch das LOUD-Original
+      ersetzen (sucht dort das BrewLAN-Icon-Paket in `usermods\`). Pruefen: Nomads-Einheiten entstehen (XNL0001,
+      XNO0001), Spieloberflaeche baut sich auf, Capacitor-Balken im Skin der eigenen Fraktion; aus `NomadsRoot.scd`:
+      Upgrade-Icons, Baumenue-Icons, Order-Icons der Faehigkeiten-Leiste, Strategie-Icons land1_aa_arty/
+      land2_stunner/land3_armored.
+- [ ] **Ungeprueft:** Tasks aus `NomadsRoot.scd` werden geladen (Orbital-Schlag, Sonde, Nuke, Taktikrakete;
+      `mods\Nomads.md` 6) - Testlauf 3.
 - [ ] **Custom Factions:** fraktionsneutrale Hooks aus `uebergabe\CustomFactions\` in `CustomFactions.scd`
       uebernehmen (SupComNet-Seite). Ohne sie fehlen Nomads Vorlagen-Umrechnung, Vorab-Bau, KI-Vorlagen usw.
 - [ ] **KI mit fester Fraktionszahl** (FactionSquads/FactionName, `factionnames`, EnhancementTable, Builder
@@ -210,7 +216,8 @@ _Nichts offen._
       beb1202/beb1302 aus ImprovedHydrocarbonPowerPlants (`mods\Nomads.md` 7). Generisch, Bruecken-Mods oder so lassen?
 - [ ] **XNO2302 Deadline Bau-Effekt** mit LOUD-Shader `NomadBuild` (nur niedrige/mittlere Qualitaet in
       `effects/mesh.fx`) - im Testlauf auch bei hoher Shader-Qualitaet ansehen (`mods\Nomads.md` 8).
-- [ ] **Ungeprueft:** `shadowdir` fuegt neue Pfade hinzu (Tasks, Strategie-Icons; `mods\Nomads.md` 6) - im Testlauf.
+- [x] `shadowdir` fuegt neue Pfade hinzu? **Nein** (Testlauf 2, 2026-11-12) - ersetzt durch `NomadsRoot.scd`
+      (`mods\Nomads.md` 6).
 - [ ] **`particle.fx` der Quelle** nicht uebernommen (globaler Shader, Teamfarben-Trick) - pruefen, ob Nomads-Effekte
       ohne ihn falsch aussehen (`mods\Nomads.md` 8).
 - [ ] **Widerspruch Hook-Locals:** der BrewLAN-Punkt unter NavyRebalance sagt, ein Hook sehe die Locals des
