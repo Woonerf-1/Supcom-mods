@@ -150,6 +150,8 @@ Einige Dateien sucht LOUD aber nur an festen Wurzelpfaden:
 | Order-Icons der Faehigkeiten-Leiste | `UIUtil.UIFile('/game/orders/...')`; Skin-Kette endet bei `default` = `/textures/ui/common` | `ui\uiutil.lua` Z. 357-402, `skins\skins.lua` Z. 18/46/140-142 |
 | Strategie-Icons | `/textures/ui/common/game/strategicicons/` | Engine |
 | Sim-Tasks (`IssueScript`) | `/lua/sim/tasks/<Name>.lua` | Engine |
+| Bodenplatten (`Display.Tarmacs[].Albedo = "Tarmacs/..."`) | `/env/common/decals/Tarmacs/` | Engine (Log Testlauf 3) |
+| Partikeltexturen per Name (`CreateLightParticle` u. a.) | `/textures/particles/<name>.dds` | Engine (Log Testlauf 3) |
 
 Der eingebaute Ausweg `Display.AlternateUpgradeIconPath`/`EXIconPaths` wirkt nicht: `BlackopsBlueprintLocator`
 (`BlackopsIconSearch.lua` Z. 11), der die Tabellen fuellt, wird in LOUD nirgends aufgerufen.
@@ -162,7 +164,10 @@ steht nicht mehr in `mod_info.lua`.
 **Loesung (Paul, 2026-11-12).** `doc.claude\tools\Build-NomadsRoot.ps1` packt `Nomads\textures\ui\common\**` (als
 `textures/ui/common/**`) und `Nomads\root\**` (Pfade wie im Ordner) nach `usermods\NomadsRoot.scd`. Ausgelassen wird
 jede Datei, die schon in einem von LOUD eingebundenen Archiv liegt (`LOUD\gamedata\*.scd`, `gamedata\*.scd`,
-`LOUD\bin\BrewLAN-StrategicIconsOverhaul-*.scd`): das Archiv fuegt nur hinzu, ersetzt nichts. Stand 2026-11-12:
+`LOUD\bin\BrewLAN-StrategicIconsOverhaul-*.scd`): das Archiv fuegt nur hinzu, ersetzt nichts. Seit 2026-11-13
+ausserdem `Nomads\env\common\decals\**` (als `env/common/decals/**`) und die Partikeltexturen aus
+`Nomads\textures\particles\`, deren Namen im Nomads-Lua als Zeichenkette stehen (Stand 2026-11-13: 492 Dateien,
+6,4 MB, darunter 14 Tarmacs und 7 Partikel; nicht der ganze Ordner, 24 MB). Stand 2026-11-12:
 471 Dateien gepackt, 36 Strategie-Icons ausgelassen (factoryhq2/3, gunship1/2_engineer, node3_counterintel - LOUD
 bzw. BrewLAN liefern sie). Namen im Archiv klein, feste Zeitstempel.
 
@@ -288,3 +293,28 @@ Gleiche Installation (`C:\Program Files (x86)\...`), Karte Blasted 20. Befunde:
    `shadow\`. **Behoben** mit `NomadsRoot.scd` (Abschnitt 6).
 4. **KI:** `builder.lua(398): attempt to loop over local 'buildingTmpl' (a nil value)` - keine `BuildingTemplates`
    fuer Fraktion 5; erwartet, solange die Uebergabe-Hooks fehlen (Abschnitt 9).
+
+### Testlauf 3 (Log eines Mitspielers, 13.11. 11:19, ausgewertet 2026-11-13)
+
+Bestaetigt: `nomadsroot.scd` wird an `/` eingebunden, Einheiten- und Skin-Fehler aus Testlauf 1/2 sind weg, keine
+`UIFILE`-Warnungen mehr zu Upgrade- und Order-Icons. LoudDataPath beim Mitspieler weiter veraltet (Testlauf 2 Punkt 2).
+Behoben am 2026-11-13:
+
+1. **Tarmacs und Partikel:** `Can't find texture "/env/common/decals/Tarmacs/Tar12x_nomads_01_albedo.dds"` und
+   `"/textures/particles/glow_06_red.dds"`. Blueprint-`Albedo = "Tarmacs/..."` und Namen fuer `CreateLightParticle`
+   sind ebenfalls feste Wurzelpfade. `Build-NomadsRoot.ps1` packt jetzt `Nomads\env\common\decals\**` (14 Dateien) und
+   die 7 Partikeltexturen, deren Namen im Nomads-Lua als Zeichenkette stehen und die LOUD fehlen (Abschnitt 6).
+2. **Capacitor-Buffs:** `XNL0001_script.lua(536): Tried to add a buff that doesn't exist! Name: CapacitorEngineering`.
+   Die vier Buffs wurden nur in `ApplyCapacitorBuffs` (Zustand `Filled`) definiert, `CapacitorDischargeThread`
+   wendet sie auch ohne das an. Jetzt in `Nomads\hook\lua\sim\buffdefinitions.lua` mit den Werten aus dem Skript
+   (nomads-4-loud hatte dort aeltere Werte: Bau x2,0, Sicht/Radar +15). Die erneute Definition zur Laufzeit ist
+   erlaubt (`Repos\Git-LOUD\gamedata\lua\lua\system\BuffBlueprints.lua` Z. 41: Duplikate nur bei Erstregistrierung
+   abgelehnt). Die erste, tote `RemoveCapacitorBuffs` (die zweite ueberschrieb sie im Tabellenkonstruktor) ist entfernt.
+3. **T4-Upgrade:** `XNL0001_script.lua(1289)`: `ParseEntityCategory` bekam eine Liste. `BuildableCategoryAdds` ist
+   seit Commit 2e08446 eine Liste; T2-/T3-/T4Engineering nehmen jetzt Text oder Liste. Dabei gefunden:
+   `T4EngineeringRemove` entfernte `ACU_T3_Engineering_NMD` statt `ACU_T4_Engineering_NMD` - korrigiert.
+4. **XNB0304:** `Error running OnCreate script ... unit has no bone "slider"` (`CreateSlider`). Das Mesh hat den
+   Knochen nicht (wie in nomads-4-loud). `NomadsSharedFactory.OnCreate` (`Nomads\lua\nomadsunits.lua`) legt den Slider
+   nur noch an, wenn `IsValidBone` ihn findet; ohne Slider bricht `MovingArmsThread` sofort ab.
+
+Nicht untersucht: `AddLights: No light emitter bones specified` (Warnung), `woohoo is trying to cheat`.

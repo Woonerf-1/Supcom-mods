@@ -74,9 +74,13 @@ function NomadsSharedFactory( SuperClass )
             -- TODO: Remove once related change gets released in the game patch
             self.BuildEffectBones = self:GetBlueprint().General.BuildBones.BuildEffectBones
 
-            self.ArmSlider1 = CreateSlider(self, self.SliderBone, 0,0,0,0, true)
-            self.ArmSlider1:SetWorldUnits(true)
-            self.Trash:Add(self.ArmSlider1)
+            -- Nicht jedes Mesh hat den Slider-Knochen (z. B. XNB0304). Ohne ArmSlider1 laufen
+            -- MovingArmsThread und GetInitialAndLength nicht (Abfrage in MovingArmsThread).
+            if IsValidBone(self, self.SliderBone) then
+                self.ArmSlider1 = CreateSlider(self, self.SliderBone, 0,0,0,0, true)
+                self.ArmSlider1:SetWorldUnits(true)
+                self.Trash:Add(self.ArmSlider1)
+            end
         end,
 
         StopBuildingEffects = function(self, unitBeingBuilt)

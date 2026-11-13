@@ -1,3 +1,15 @@
+## 2026-11-13 - Nomads: vier Fehler aus Testlauf 3 behoben
+
+- **Quelle:** LOUD.log eines Mitspielers (13.11. 11:19); Auswertung `mods\Nomads.md` Abschnitt 11, Testlauf 3.
+- **Archiv:** `Build-NomadsRoot.ps1` packt zusaetzlich `Nomads\env\common\decals\**` (14 Tarmacs) und 7 per Name
+  genutzte Partikeltexturen nach `textures/particles/`; `NomadsRoot.scd` neu gebaut (492 Dateien, 6,4 MB).
+- **Capacitor:** die vier Capacitor-Buffs stehen jetzt in `Nomads\hook\lua\sim\buffdefinitions.lua` (Entladen brach
+  mit "buff doesn't exist" ab); tote erste `RemoveCapacitorBuffs` in `Nomads\units\XNL0001\XNL0001_script.lua` entfernt.
+- **T2-/T3-/T4-Ingenieur-Upgrade:** `BuildableCategoryAdds` als Text oder Liste; `T4EngineeringRemove` entfernt
+  jetzt `ACU_T4_Engineering_NMD` statt des T3-Buffs.
+- **XNB0304:** `NomadsSharedFactory` (`Nomads\lua\nomadsunits.lua`) legt den Slider nur an, wenn der Knochen existiert.
+- **Getestet:** nein.
+
 ## 2026-11-13 - Nomads: Wurzel-Archiv NomadsRoot.scd statt shadow
 
 - **Anlass:** Testlauf 2 (Log und Screenshot eines Mitspielers): Upgrade-Icons, Order-Icons der Faehigkeiten-Leiste

@@ -16,7 +16,7 @@ Ausführliche Doku: [`..\14_TOOLS.md`](../14_TOOLS.md)
 | `Get-Units.ps1` | erzeugt die vollständige Einheitenliste nach `..\units\` | keine, **nur lesend** |
 | `Expand-Gamedata.ps1` | entpackt `.scd`-Archive nach `gamedata.entpackt\` | Schreibrechte im Zielordner |
 | `Test-Maps.ps1` | prüft `maps\` und `usermaps\` auf unvollständige Szenarien | keine, **nur lesend** |
-| `Build-NomadsRoot.ps1` | baut `usermods\NomadsRoot.scd` aus `Nomads\textures\ui\common\` und `Nomads\root\` (`..\14_TOOLS.md` 4a) | schreibt nur `usermods\NomadsRoot.scd` |
+| `Build-NomadsRoot.ps1` | baut `usermods\NomadsRoot.scd` aus `Nomads\textures\ui\common\`, `Nomads\env\common\decals\`, `Nomads\root\` und benannten Partikeltexturen (`..\14_TOOLS.md` 4a) | schreibt nur `usermods\NomadsRoot.scd` |
 | `scd_als_ordner_an.reg` | `.scd` im Explorer als gepackten Ordner anzeigen | nur aktueller Benutzer, **keine Adminrechte** |
 | `scd_als_ordner_aus.reg` | dasselbe rückgängig machen | nur aktueller Benutzer |
 | `scd_als_ordner_an_systemweit.reg` | Variante für alle Benutzer | **Adminrechte nötig** |

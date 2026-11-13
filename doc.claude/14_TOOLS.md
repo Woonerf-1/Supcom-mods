@@ -149,9 +149,10 @@ cd "LOUD\usermods\doc.claude\tools"
 .\Build-NomadsRoot.ps1
 ```
 
-Packt `Nomads\textures\ui\common\**` und `Nomads\root\**` nach `LOUD\usermods\NomadsRoot.scd`. LOUD bindet Archive in
+Packt `Nomads\textures\ui\common\**`, `Nomads\env\common\decals\**`, `Nomads\root\**` und die per Name im
+Nomads-Lua genutzten Texturen aus `Nomads\textures\particles\` nach `LOUD\usermods\NomadsRoot.scd`. LOUD bindet Archive in
 `usermods\` an `/` ein, Mod-Ordner nur an `/mods/<name>/` - so erreichen Upgrade-, Order-, Einheiten- und
-Strategie-Icons sowie Sim-Tasks der Nomads ihre festen Pfade. Dateien, die schon in einem LOUD-Archiv liegen
+Strategie-Icons, Bodenplatten, Partikeltexturen sowie Sim-Tasks der Nomads ihre festen Pfade. Dateien, die schon in einem LOUD-Archiv liegen
 (`LOUD\gamedata\*.scd`, `gamedata\*.scd`, `LOUD\bin\BrewLAN-StrategicIconsOverhaul-*.scd`), werden ausgelassen und
 aufgelistet. Feste Zeitstempel: gleicher Inhalt, gleiche Datei. Nach jeder Aenderung an den Quellordnern neu
 ausfuehren und `NomadsRoot.scd` mitcommitten. Hintergrund: `mods\Nomads.md` Abschnitt 6.

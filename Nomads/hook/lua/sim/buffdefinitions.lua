@@ -1,6 +1,73 @@
 -- Nomads: Ingenieur-Ausbauten des Kommandanten, siehe doc.claude\mods\Nomads.md (Abschnitt Hooks).
--- Nur die ACU_T*_Engineering_NMD-Buffs (genutzt von units\XNL0001\XNL0001_script.lua); die Capacitor-Buffs
--- definiert XNL0001 zur Laufzeit selbst. AdjBuffFuncs und auto_reload hat LOUDs Datei schon.
+-- ACU_T*_Engineering_NMD-Buffs und die vier Capacitor-Buffs (genutzt von units\XNL0001\XNL0001_script.lua).
+-- Die Capacitor-Buffs muessen hier stehen: CapacitorDischargeThread wendet sie an, ohne dass
+-- ApplyCapacitorBuffs (das sie zur Laufzeit erneut definiert) vorher gelaufen sein muss.
+-- Werte wie in ApplyCapacitorBuffs, damit beide Wege gleich wirken.
+-- AdjBuffFuncs und auto_reload hat LOUDs Datei schon.
+
+BuffBlueprint {
+    Name = 'CapacitorEngineering',
+    DisplayName = 'Capacitor Engineering Boost',
+    BuffType = 'CAPACITORENG',
+    Stacks = 'REPLACE',
+    Duration = -1,
+    Affects = {
+        BuildRate = {
+            Add = 0,
+            Mult = 2.5,
+        },
+    },
+}
+
+BuffBlueprint {
+    Name = 'CapacitorIntel',
+    DisplayName = 'Capacitor Intel Boost',
+    BuffType = 'CAPACITORINTEL',
+    Stacks = 'REPLACE',
+    Duration = -1,
+    Affects = {
+        VisionRadius = {
+            Add = 0,
+            Mult = 1.5,
+        },
+        RadarRadius = {
+            Add = 0,
+            Mult = 1.5,
+        },
+        OmniRadius = {
+            Add = 0,
+            Mult = 1.5,
+        },
+    },
+}
+
+BuffBlueprint {
+    Name = 'CapacitorRegen',
+    DisplayName = 'Capacitor Regen Boost',
+    BuffType = 'CAPACITORREGEN',
+    Stacks = 'REPLACE',
+    Duration = -1,
+    Affects = {
+        Regen = {
+            Add = 150,
+            Mult = 1.0,
+        },
+    },
+}
+
+BuffBlueprint {
+    Name = 'CapacitorROF',
+    DisplayName = 'Capacitor ROF Boost',
+    BuffType = 'CAPACITORROF',
+    Stacks = 'REPLACE',
+    Duration = -1,
+    Affects = {
+        RateOfFire = {
+            Add = 0,
+            Mult = 1.5,
+        },
+    },
+}
 
 BuffBlueprint { Name = 'ACU_T2_Engineering_NMD',
     BuffType = 'ACUBUILDRATE',

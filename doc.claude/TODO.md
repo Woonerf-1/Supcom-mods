@@ -198,14 +198,18 @@ _Nichts offen._
 ### Nomads (`mods\Nomads.md`)
 
 - [ ] **TESTLAUF** (Paul, am Ende aller Phasen) - Pruefliste in `mods\Nomads.md`.
-- [ ] **Testlauf 3** (Testlauf 2 lief mit veraltetem Nomads-Stand, `mods\Nomads.md` Abschnitt 11): vorher beim
+- [x] **Testlauf 3** (ausgewertet 2026-11-13, `mods\Nomads.md` 11; Testlauf 2 lief mit veraltetem Nomads-Stand, `mods\Nomads.md` Abschnitt 11): vorher beim
       Mitspieler Nomads-Ordner auf `origin/main` bringen und `LOUD\bin\LoudDataPath.lua` durch das LOUD-Original
       ersetzen (sucht dort das BrewLAN-Icon-Paket in `usermods\`). Pruefen: Nomads-Einheiten entstehen (XNL0001,
       XNO0001), Spieloberflaeche baut sich auf, Capacitor-Balken im Skin der eigenen Fraktion; aus `NomadsRoot.scd`:
       Upgrade-Icons, Baumenue-Icons, Order-Icons der Faehigkeiten-Leiste, Strategie-Icons land1_aa_arty/
       land2_stunner/land3_armored.
+- [ ] **Testlauf 4** (Korrekturen aus Testlauf 3, `mods\Nomads.md` 11): Nomads-Bodenplatten und Leuchteffekte
+      sichtbar, Capacitor entladen ohne Buff-Fehler, T4-Ingenieur-Upgrade und dessen Entfernen, XNB0304 baut ohne
+      Fehler. LoudDataPath beim Mitspieler weiterhin veraltet.
 - [ ] **Ungeprueft:** Tasks aus `NomadsRoot.scd` werden geladen (Orbital-Schlag, Sonde, Nuke, Taktikrakete;
-      `mods\Nomads.md` 6) - Testlauf 3.
+      `mods\Nomads.md` 6) - in Testlauf 3 nicht ausgeloest, Testlauf 4.
+- [ ] **Nicht untersucht** (Testlauf 3): `AddLights: No light emitter bones specified`, `woohoo is trying to cheat`.
 - [ ] **Custom Factions:** fraktionsneutrale Hooks aus `uebergabe\CustomFactions\` in `CustomFactions.scd`
       uebernehmen (SupComNet-Seite). Ohne sie fehlen Nomads Vorlagen-Umrechnung, Vorab-Bau, KI-Vorlagen usw.
 - [ ] **KI mit fester Fraktionszahl** (FactionSquads/FactionName, `factionnames`, EnhancementTable, Builder

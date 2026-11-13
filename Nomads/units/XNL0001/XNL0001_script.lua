@@ -438,13 +438,6 @@ XNL0001 = Class(ACUUnit) {
         Buff.ApplyBuff(self, 'CapacitorROF')
     end,
 
-    RemoveCapacitorBuffs = function(self)
-        if Buff.HasBuff(self, 'CapacitorEngineering') then Buff.RemoveBuff(self, 'CapacitorEngineering') end
-        if Buff.HasBuff(self, 'CapacitorIntel')       then Buff.RemoveBuff(self, 'CapacitorIntel')       end
-        if Buff.HasBuff(self, 'CapacitorRegen')        then Buff.RemoveBuff(self, 'CapacitorRegen')        end
-        if Buff.HasBuff(self, 'CapacitorROF')          then Buff.RemoveBuff(self, 'CapacitorROF')          end
-    end,
-
     -- =========================================================================
     -- CAPACITOR — Filled: apply buffs immediately, no energy pumping yet
     -- =========================================================================
@@ -1238,8 +1231,12 @@ XNL0001 = Class(ACUUnit) {
             table.insert(self.BuildEffectBones, 'BuildBeam2')
 
             -- make new structures available
-            local cat = ParseEntityCategory(bp.BuildableCategoryAdds)
-            self:RemoveBuildRestriction(cat)
+            -- BuildableCategoryAdds darf Text oder Liste sein (Liste seit Commit 2e08446)
+            local adds = bp.BuildableCategoryAdds
+            if type(adds) == 'string' then adds = { adds } end
+            for _, c in ipairs(adds or {}) do
+                self:RemoveBuildRestriction(ParseEntityCategory(c))
+            end
 
             -- add buff
 
@@ -1272,8 +1269,12 @@ XNL0001 = Class(ACUUnit) {
             -- new build FX bone available
             table.insert(self.BuildEffectBones, 'BuildBeam3')
             -- make new structures available
-            local cat = ParseEntityCategory(bp.BuildableCategoryAdds)
-            self:RemoveBuildRestriction(cat)
+            -- BuildableCategoryAdds darf Text oder Liste sein (Liste seit Commit 2e08446)
+            local adds = bp.BuildableCategoryAdds
+            if type(adds) == 'string' then adds = { adds } end
+            for _, c in ipairs(adds or {}) do
+                self:RemoveBuildRestriction(ParseEntityCategory(c))
+            end
 
             -- add buff
 
@@ -1286,8 +1287,12 @@ XNL0001 = Class(ACUUnit) {
 
             table.insert(self.BuildEffectBones, 'BuildBeam3')
             -- make new structures available
-            local cat = ParseEntityCategory(bp.BuildableCategoryAdds)
-            self:RemoveBuildRestriction(cat)
+            -- BuildableCategoryAdds darf Text oder Liste sein (Liste seit Commit 2e08446)
+            local adds = bp.BuildableCategoryAdds
+            if type(adds) == 'string' then adds = { adds } end
+            for _, c in ipairs(adds or {}) do
+                self:RemoveBuildRestriction(ParseEntityCategory(c))
+            end
 
             -- add buff
 
@@ -1319,8 +1324,8 @@ XNL0001 = Class(ACUUnit) {
             table.removeByValue(self.BuildEffectBones, 'BuildBeam3')
             table.removeByValue(self.BuildEffectBones, 'BuildBeam2')
             -- remove buff
-            if Buff.HasBuff( self, 'ACU_T3_Engineering_NMD' ) then
-                Buff.RemoveBuff( self, 'ACU_T3_Engineering_NMD' )
+            if Buff.HasBuff( self, 'ACU_T4_Engineering_NMD' ) then
+                Buff.RemoveBuff( self, 'ACU_T4_Engineering_NMD' )
             end
 
             -- reset build restrictions

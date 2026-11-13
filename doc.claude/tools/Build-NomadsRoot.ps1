@@ -11,6 +11,9 @@
 
     Quellen (Pfad im Archiv in Klammern):
       Nomads\textures\ui\common\**   (textures/ui/common/**)
+      Nomads\env\common\decals\**    (env/common/decals/**, Tarmacs aus den Blueprints)
+      Nomads\textures\particles\<n>.dds  (textures/particles/<n>.dds, nur Namen, die im
+                                      Nomads-Lua-Code als Zeichenkette vorkommen)
       Nomads\root\**                 (wie im Ordner, z. B. lua/sim/tasks/..., textures/ui/common/...)
 
     Ausgelassen wird jede Datei, die es in einem von LOUD eingebundenen Archiv schon gibt
@@ -63,7 +66,27 @@ function Add-Source([string]$dir, [string]$prefix) {
     }
 }
 Add-Source (Join-Path $nomads 'textures\ui\common') 'textures/ui/common/'
+Add-Source (Join-Path $nomads 'env\common\decals') 'env/common/decals/'
 Add-Source (Join-Path $nomads 'root') ''
+
+# Partikeltexturen: CreateLightParticle & Co. bekommen nur einen Namen, die Engine sucht
+# /textures/particles/<name>.dds. Aufgenommen wird jeder Name, der im Nomads-Lua-Code als
+# Zeichenkette steht und als Datei in Nomads\textures\particles\ liegt.
+$particles = Join-Path $nomads 'textures\particles'
+$names = New-Object 'System.Collections.Generic.HashSet[string]'
+foreach ($f in Get-ChildItem $nomads -Recurse -File -Filter *.lua) {
+    $text = [System.IO.File]::ReadAllText($f.FullName)
+    foreach ($m in [regex]::Matches($text, '[''"]([A-Za-z0-9_]+)[''"]')) {
+        [void]$names.Add($m.Groups[1].Value.ToLowerInvariant())
+    }
+}
+foreach ($n in $names) {
+    $src = Join-Path $particles ($n + '.dds')
+    if (Test-Path -LiteralPath $src -PathType Leaf) {
+        $key = 'textures/particles/' + $n + '.dds'
+        if (-not $files.ContainsKey($key)) { $files[$key] = (Get-Item -LiteralPath $src).FullName }
+    }
+}
 
 $skipped = @($files.Keys | Where-Object { $existing.Contains($_) } | Sort-Object)
 $packed  = @($files.Keys | Where-Object { -not $existing.Contains($_) } | Sort-Object)
